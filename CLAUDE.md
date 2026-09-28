@@ -51,10 +51,11 @@ pas un discours. **Le moins de travail possible** : on change la peau et le cont
 |---|---|
 | `app/` | L'application (site statique, Cloudflare). Serveur local : `app/lancer-serveur.bat` → http://localhost:8767 (8766 reste au DOMAF) |
 | `app/assets/js/config.js` | URL Supabase + clé publishable (publique). Jamais de `sb_secret_…` |
-| `app/data/mock.js` | Données du **mode démo** (`?mock=1`) — à passer en Vimas |
+| `app/data/mock.js` | Données du **mode démo** (`?mock=1`) — contenu Vimas de jour (étape 6, 29/09) |
 | `vimas_visuels/` | Maquette statique déjà ré-habillée Vimas (27/09) : **référence** pour l'habillage de `app/` |
 | `supabase/` | Scripts de la base (identiques à DOMAF). `contenu-essai/` = contenu fictif à remplacer par une version Vimas |
-| `QUESTIONS-VIMAS.md` | Banque de questions du coffre (copie DOMAF, à adapter) |
+| `QUESTIONS-VIMAS.md` | Banque de questions du coffre (adaptée Vimas le 29/09 ; source : `supabase/outils/banque_questions.py`) |
+| `outils/plan/` | Fond du plan (Majestic Cinéma, OpenStreetMap) : `python outils/plan/fond_plan.py` → `app/assets/js/plan-fond.js` |
 | `docs/NOTES-MOTEUR-DOMAF.md` | **Tous les pièges techniques du moteur** (ancien CLAUDE.md DOMAF). À relire avant de toucher une page. |
 | `docs/PLAN-DOMAF-archive.md` | Plan et journal complets du DOMAF (référence) |
 

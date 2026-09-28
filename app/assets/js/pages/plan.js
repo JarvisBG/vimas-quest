@@ -58,7 +58,7 @@ document.addEventListener("app:ready", async () => {
   /* ======================================================================
      Dessin du site
      ====================================================================== */
-  /* Le fond : Stade de Bonamoussadi, dessiné par outils/plan/fond_plan.py à partir
+  /* Le fond : Majestic Cinéma (Université de Yaoundé I), dessiné par outils/plan/fond_plan.py à partir
      d'OpenStreetMap (assets/js/plan-fond.js, dans le cache hors ligne). Les
      scènes y ajoutent leur halo de couleur ; boussole et échelle par-dessus. */
   function dessinerFond() {

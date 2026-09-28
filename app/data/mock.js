@@ -221,15 +221,15 @@ window.MOCK = {
 
 
   /* ---------- Plan (page 7) ----------
-     Coordonnées dans le dessin (1000 × 700, nord en haut). 1 unité = 0,40 m. */
+     Coordonnées dans le dessin (1000 × 700, nord en haut). 1 unité = 0,28 m. */
   planConfig: {
-    metresParUnite: 0.4,     // = App.planFond.metresParUnite (outils/plan/fond_plan.py)
+    metresParUnite: 0.28,    // = App.planFond.metresParUnite (outils/plan/fond_plan.py)
     metresParMinute: 60,     // marche dans la foule
     telephoneSecurite: "0800000000",   // FICTIF : à remplacer par le numéro réel de la sécurité du festival
     libelleTelephone: "Sécurité du festival (numéro de démo)",
-    // Emprise du plan (Stade de Bonamoussadi), pour placer le joueur grâce au GPS
+    // Emprise du plan (Majestic Cinéma, Université de Yaoundé I), pour placer le joueur grâce au GPS
     // = App.planFond.geo : si le fond est régénéré, recopier ici
-    geo: { nord: 4.095845, sud: 4.093315, ouest: 9.7378, est: 9.7414 }
+    geo: { nord: 3.860097, sud: 3.858325, ouest: 11.495347, est: 11.497868 }
   },
   categoriesLieux: {
     scene:     { nom: "Scènes",        icone: "micro",    couleur: "nuit" },
@@ -242,51 +242,52 @@ window.MOCK = {
     service:   { nom: "Services",      icone: "info",     couleur: "papier" },
     entree:    { nom: "Entrées",       icone: "entree",   couleur: "papier" }
   },
-  /* Lieux de DÉMO placés sur le vrai fond (Stade de Bonamoussadi, assets/js/plan-fond.js,
-     1 unité = 0,40 m). Enceinte : x 341 → 662, y 120 → 576 ; terrain : x 405 → 601,
-     y 220 → 494 ; tribune couverte à l'ouest (x 353 → 400). Les vrais emplacements
-     viendront de l'organisation (table lieux, colonnes x / y). */
+  /* Lieux de DÉMO placés sur le vrai fond (Majestic Cinéma, assets/js/plan-fond.js,
+     1 unité = 0,28 m). Enceinte du Majestic : x 357 → 643, y 155 → 545 (écran et bâtiments
+     à l'ouest, parking à l'est) ; l'axe principal du campus longe l'enceinte au sud-ouest.
+     Village des stands (fictif) sur le terrain dégagé à l'est. Les vrais emplacements
+     viendront de Vimas Production (table lieux, colonnes x / y). */
   lieux: [
-    { id: "soleil",          cat: "scene", nom: "Grande Scène",   x: 503, y: 245, pmr: true, desc: "Grande scène et écran géant. Plateforme PMR à droite de la régie." },
-    { id: "clairiere",       cat: "scene", nom: "Le Yard Reggae", x: 525, y: 540, pmr: true, desc: "Scène reggae en plein air, sous les arbres du campus." },
-    { id: "dock",            cat: "scene", nom: "La Salle Majestic", x: 632, y: 330, pmr: true, desc: "La salle de cinéma transformée en scène couverte." },
-    { id: "kiosque",         cat: "scene", nom: "Le Podium Mode", x: 450, y: 395, pmr: true, desc: "Podium des défilés de mode et des battles de danse." },
-    { id: "chapiteau",       cat: "scene", nom: "Le Sound System", x: 385, y: 530, pmr: false, desc: "Mur d'enceintes des sets dancehall et dub. Accès PMR par l'arrière, demande à un bénévole." },
+    { id: "soleil",          cat: "scene", nom: "Grande Scène",      x: 455, y: 280, pmr: true, desc: "Devant l'écran du Majestic : concerts et écran géant. Plateforme PMR à droite de la régie." },
+    { id: "dock",            cat: "scene", nom: "La Salle Majestic", x: 415, y: 390, pmr: true, desc: "La salle du Majestic transformée en scène couverte." },
+    { id: "kiosque",         cat: "scene", nom: "Le Podium Mode",    x: 560, y: 395, pmr: true, desc: "Podium des défilés de mode et des battles de danse, sur le parking du Majestic." },
+    { id: "clairiere",       cat: "scene", nom: "Le Yard Reggae",    x: 800, y: 320, pmr: true, desc: "Scène reggae en plein air, sous les arbres, à l'est du Majestic." },
+    { id: "chapiteau",       cat: "scene", nom: "Le Sound System",   x: 880, y: 650, pmr: false, desc: "Mur d'enceintes des sets dancehall et dub, sur la pelouse au sud-est. Accès PMR par le chemin de gauche, demande à un bénévole." },
 
-    { id: "st-radio",        cat: "stand", nom: "Radio Écho",        x: 632, y: 200, desc: "Studio en direct et interviews d'artistes." },
-    { id: "st-telco",        cat: "stand", nom: "Salon Telco+",      x: 632, y: 155, desc: "Wi-Fi du festival et bornes de recharge." },
-    { id: "st-kora",         cat: "stand", nom: "Maison Kora",       x: 632, y: 420, desc: "Artisans luthiers, essais d'instruments." },
-    { id: "st-brasserie",    cat: "stand", nom: "Brasserie du Port", x: 560, y: 425, desc: "Bar central, sur la pelouse." },
-    { id: "st-fraicheur",    cat: "stand", nom: "Fraîcheur Lab",     x: 632, y: 265, desc: "Brumisateurs et gourdes à remplir." },
-    { id: "st-quest",    cat: "stand", nom: "Stand Vimas Quest",   x: 615, y: 550, horaires: "10h à 21h30", desc: "Accueil du jeu, retrait des lots, aide aux joueurs." },
+    { id: "st-radio",        cat: "stand", nom: "Radio Écho",        x: 700, y: 400, desc: "Studio en direct et interviews d'artistes." },
+    { id: "st-telco",        cat: "stand", nom: "Salon Telco+",      x: 760, y: 425, desc: "Wi-Fi du festival et bornes de recharge." },
+    { id: "st-kora",         cat: "stand", nom: "Maison Kora",       x: 700, y: 470, desc: "Artisans, créateurs de mode et essais d'instruments." },
+    { id: "st-brasserie",    cat: "stand", nom: "Brasserie du Port", x: 770, y: 485, desc: "Bar central du village." },
+    { id: "st-fraicheur",    cat: "stand", nom: "Fraîcheur Lab",     x: 835, y: 455, desc: "Brumisateurs et gourdes à remplir." },
+    { id: "st-quest",        cat: "stand", nom: "Stand Vimas Quest", x: 575, y: 505, horaires: "10h à 21h30", desc: "Accueil du jeu, retrait des lots, aide aux joueurs. Juste après l'entrée." },
 
-    { id: "st-yassa",        cat: "food", nom: "Chez Yassa",       x: 372, y: 150, desc: "Village food, coin nord-ouest." },
-    { id: "st-braise",       cat: "food", nom: "Le Braisé",        x: 418, y: 178, desc: "Village food." },
-    { id: "st-sucre",        cat: "food", nom: "Sucre & Sel",      x: 372, y: 205, desc: "Village food, desserts." },
-    { id: "st-plantain",     cat: "food", nom: "Plantain Express", x: 462, y: 150, desc: "Village food." },
+    { id: "st-yassa",        cat: "food", nom: "Chez Yassa",       x: 865, y: 520, desc: "Village food, à l'est du Majestic." },
+    { id: "st-braise",       cat: "food", nom: "Le Braisé",        x: 910, y: 495, desc: "Village food." },
+    { id: "st-sucre",        cat: "food", nom: "Sucre & Sel",      x: 945, y: 535, desc: "Village food, desserts." },
+    { id: "st-plantain",     cat: "food", nom: "Plantain Express", x: 830, y: 545, desc: "Village food." },
 
-    { id: "eau-1", cat: "eau", nom: "Point d'eau Nord",    x: 560, y: 160, desc: "Eau potable gratuite, derrière la Grande Scène." },
-    { id: "eau-2", cat: "eau", nom: "Point d'eau Sud",     x: 575, y: 515, desc: "Eau potable gratuite." },
-    { id: "eau-3", cat: "eau", nom: "Point d'eau Est",     x: 645, y: 475, desc: "Eau potable gratuite." },
-    { id: "eau-4", cat: "eau", nom: "Point d'eau Village", x: 470, y: 205, desc: "Eau potable gratuite." },
+    { id: "eau-1", cat: "eau", nom: "Point d'eau Grande Scène",  x: 415, y: 245, desc: "Eau potable gratuite, derrière la Grande Scène." },
+    { id: "eau-2", cat: "eau", nom: "Point d'eau Yard Reggae",   x: 760, y: 355, desc: "Eau potable gratuite." },
+    { id: "eau-3", cat: "eau", nom: "Point d'eau Sound System",  x: 930, y: 620, desc: "Eau potable gratuite." },
+    { id: "eau-4", cat: "eau", nom: "Point d'eau Village",       x: 730, y: 530, desc: "Eau potable gratuite." },
 
-    { id: "wc-1", cat: "toilettes", nom: "Toilettes Nord",    x: 600, y: 140, pmr: true },
-    { id: "wc-2", cat: "toilettes", nom: "Toilettes Tribune", x: 376, y: 478, pmr: true },
-    { id: "wc-3", cat: "toilettes", nom: "Toilettes Est",     x: 650, y: 378, pmr: true },
-    { id: "wc-4", cat: "toilettes", nom: "Toilettes Sud",     x: 478, y: 562, pmr: true },
+    { id: "wc-1", cat: "toilettes", nom: "Toilettes Nord",     x: 545, y: 180, pmr: true },
+    { id: "wc-2", cat: "toilettes", nom: "Toilettes Yard",     x: 880, y: 380, pmr: true },
+    { id: "wc-3", cat: "toilettes", nom: "Toilettes Majestic", x: 620, y: 460, pmr: true },
+    { id: "wc-4", cat: "toilettes", nom: "Toilettes Village",  x: 760, y: 540, pmr: true },
 
-    { id: "secours-1", cat: "secours", nom: "Poste de secours principal", x: 565, y: 562, horaires: "Ouvert en continu", desc: "Médecins, infirmiers, point d'écoute. Signalé par un grand drapeau rouge." },
-    { id: "secours-2", cat: "secours", nom: "Point secours Grande Scène",       x: 545, y: 205, horaires: "Pendant les concerts", desc: "Équipe de secouristes près de la grande scène." },
+    { id: "secours-1", cat: "secours", nom: "Poste de secours principal", x: 615, y: 420, horaires: "Ouvert en continu", desc: "Médecins, infirmiers, point d'écoute. Signalé par un grand drapeau rouge." },
+    { id: "secours-2", cat: "secours", nom: "Point secours Grande Scène", x: 525, y: 320, horaires: "Pendant les concerts", desc: "Équipe de secouristes près de la grande scène." },
 
-    { id: "abri-1", cat: "abri", nom: "Tribune nord", x: 377, y: 300, desc: "La tribune couverte sert d'abri en cas d'orage." },
-    { id: "abri-2", cat: "abri", nom: "Tribune sud",  x: 377, y: 420, desc: "La tribune couverte sert d'abri en cas d'orage." },
+    { id: "abri-1", cat: "abri", nom: "Abri Yard Reggae", x: 850, y: 300, desc: "Abri couvert sous les arbres en cas d'averse." },
+    { id: "abri-2", cat: "abri", nom: "Hall du Majestic", x: 505, y: 215, desc: "Le hall du Majestic sert d'abri en cas d'averse." },
 
-    { id: "dedicaces",    cat: "service", nom: "Tente dédicaces",       x: 600, y: 470, desc: "Séances de dédicaces des artistes, voir le programme." },
-    { id: "consigne",     cat: "service", nom: "Consigne et recharge",  x: 652, y: 520, horaires: "10h à 22h", desc: "Casiers et recharge de téléphone." },
-    { id: "info",         cat: "service", nom: "Point info",            x: 430, y: 562, desc: "Objets trouvés, informations, accessibilité." },
+    { id: "dedicaces",    cat: "service", nom: "Tente dédicaces",       x: 600, y: 350, desc: "Séances de dédicaces des artistes, près du Podium Mode. Voir le programme." },
+    { id: "consigne",     cat: "service", nom: "Consigne et recharge",  x: 665, y: 520, horaires: "10h à 22h", desc: "Casiers et recharge de téléphone." },
+    { id: "info",         cat: "service", nom: "Point info",            x: 690, y: 565, desc: "Objets trouvés, informations, accessibilité." },
 
-    { id: "entree-principale", cat: "entree", nom: "Entrée principale", x: 655, y: 572, desc: "Contrôle des billets et bracelets." },
-    { id: "entree-nord",       cat: "entree", nom: "Entrée nord",       x: 503, y: 124, desc: "Sortie de secours et accès livraisons." }
+    { id: "entree-principale", cat: "entree", nom: "Entrée principale", x: 630, y: 575, desc: "Sur l'axe principal du campus. Contrôle des tickets et bracelets." },
+    { id: "entree-nord",       cat: "entree", nom: "Entrée nord",       x: 470, y: 150, desc: "Sortie de secours et accès livraisons." }
   ],
 
 

@@ -1411,7 +1411,7 @@
      déjà gardée sur le téléphone par le programme : 0 requête en venant du
      programme. Stands scannés : la collection (player_collection, copie de
      2 min partagée avec la page Collection) ; visiteurs : rien. Alerte abris :
-     la copie « annonces ». Le fond (Stade de Bonamoussadi) est un fichier du
+     la copie « annonces ». Le fond (Majestic Cinéma) est un fichier du
      site (assets/js/plan-fond.js, OpenStreetMap), rien ne vient de la base.
      Un lieu sans position (x / y vides) n'est pas dessiné : il reste dans la
      liste.
