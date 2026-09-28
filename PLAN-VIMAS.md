@@ -18,7 +18,7 @@
 > Étapes 1 à 4 terminées ; **étape 5 (console) terminée** sauf le tirage au sort final (mis de côté par Jarvis,
 > proposition dans la case 5.1). 5.4 : `admin/statistiques.html` faite ; correctif des droits
 > `supabase/correctifs/2026-09-28_vimas-5.4-droits.sql` **appliqué en ligne par Jarvis le 28/09** (annulation :
-> `…_ANNULER.sql`). Question ouverte : écran de secours du vendeur (bloc Otaku). Ensuite : **étape 6 — contenu de démo hors ligne**
+> `…_ANNULER.sql`). **Site en ligne depuis le 29/09** (`vimasquest-v3`, remplace DOMAF). Question ouverte : écran de secours du vendeur (bloc Otaku). Ensuite : **étape 6 — contenu de démo hors ligne**
 > (`app/data/mock.js` : 2 jours, scènes, line-up fictif, stands, questions du coffre, horaires de jour 10 h → 22 h).
 > Essai d'une page de console sans compte : copie de page + script qui remplace `C.garde` / `C.appel` / `C.sb` /
 > `C.confirmer` (effacer ensuite). Essai SQL sans PostgreSQL installé : `supabase/outils/banc/audit_pglite.mjs` (PGlite).
@@ -49,6 +49,7 @@
 | 28/09/2026 | **5.3 terminée** : carnets (GM), impression des tickets, espace vendeur, sur le modèle d'Otaku (recherche du joueur par pseudo, décision de Jarvis), aucun SQL ; commit + push. |
 | 28/09/2026 | **5.4 terminée** (côté dépôt) : écran Statistiques (aucun SQL, modèle d'Otaku, CSV, impression), essayé dans Chrome sur une fausse base ; correctif des droits (décision de Jarvis : vendeur sans écriture sur la roue et le blind test, pilotage de secours gardé comme Otaku ; `live_board` / `leaderboard_view` retirées), essayé sur PGlite (aller-retour avec l'annulation) ; `sources/20_blind_test.sql` perdu depuis le DOMAF, restauré ; générateur et audit attendu à jour. **Correctif pas encore appliqué en ligne.** |
 | 28/09/2026 | Correctif des droits **appliqué en ligne** par Jarvis ; vérifié par l'API publique : `live_board` / `leaderboard_view` introuvables (PGRST202), `admin_create_prize` / `admin_quiz_start` toujours là (refusées à la clé publique). Le correctif tenant en une transaction, les 17 gardes sont passées avec. |
+| 29/09/2026 | **Première mise en ligne Vimas** sur festival-quest (demande de Jarvis) : `sw.js` → `vimasquest-v3`, `npx wrangler deploy` (version `3ba21ade`), wrangler connecté sur ce PC. Vérifié : accueil Vimas, compte à rebours, console et statistiques servies, fichiers internes en 404. La démo DOMAF est remplacée. Contenu encore fictif DOMAF (étape 6). |
 
 ---
 
@@ -162,9 +163,9 @@ Le moteur DOMAF est calé sur des **soirées de concerts** : à adapter (étapes
 - [ ] Compte GM Vimas de démo + un compte vendeur d'essai
 
 ## Étape 10 — Mise en ligne sur festival-quest
-- [ ] `VERSION` de `sw.js`, `cd app && npx wrangler deploy` (remplace la démo DOMAF)
+- [x] `VERSION` de `sw.js`, `cd app && npx wrangler deploy` (remplace la démo DOMAF) — première fois le 29/09 (`vimasquest-v3`) ; à refaire après l'étape 6/9
 - [ ] Étiquettes QR imprimées **depuis le site en ligne** (console → étiquettes)
-- [ ] Vérifier `app/.assetsignore` (aucun fichier interne en ligne)
+- [x] Vérifier `app/.assetsignore` (aucun fichier interne en ligne) — 29/09 : `wrangler.jsonc`, `*.md`, `lancer-serveur.bat` en 404
 
 ## Étape 11 — Recette complète
 - [ ] Parcours festivalier sur 2–3 vrais téléphones, réseau dégradé, hors ligne
