@@ -24,6 +24,7 @@ document.addEventListener("app:ready", async () => {
   const scene = $("[data-scene]");
   const plateau = $("[data-plateau]");
   App.ecran.echelle(scene);
+  App.$$("[data-eq]").forEach((el) => App.eq(el, Number(el.dataset.eq)));
   App.ecran.curseurAuto();
 
   const cfg = await App.data.get("blindTest");
@@ -180,7 +181,7 @@ document.addEventListener("app:ready", async () => {
       <div class="boss-bt${grand ? " boss-bt--grand" : ""}${pv.vaincu ? " is-vaincu" : ""}" data-boss>
         ${App.photo({ nom: boss.nom, photo: boss.photo }, grand ? "lg" : "md")}
         <div class="boss-bt__corps">
-          <p class="boss-bt__lib">${pv.vaincu ? "Conquis par le public !" : "Le boss du soir"}</p>
+          <p class="boss-bt__lib">${pv.vaincu ? "Conquis par le public !" : "Le boss de la manche"}</p>
           <p class="affiche boss-bt__nom">${esc(boss.nom)}</p>
           <div class="boss-bt__barre" role="img" aria-label="${fmt.nombre(pv.restants)} points de vie sur ${fmt.nombre(boss.pvMax)}"><i style="width:${(part * 100).toFixed(1)}%"></i></div>
           <p class="boss-bt__pv chiffres">${fmt.nombre(pv.restants)} / ${fmt.nombre(boss.pvMax)} PV</p>
@@ -220,7 +221,7 @@ document.addEventListener("app:ready", async () => {
       <div class="bt-vue vue-attente">
         <div>
           <h1 class="affiche vue-attente__titre">Blind<br>test</h1>
-          <p class="vue-attente__heure">${aHeure ? `Ce soir à ${esc(fmt.heure(cfg.horaire))}, départ dans` : "Prochaine manche très bientôt"}</p>
+          <p class="vue-attente__heure">${aHeure ? `Aujourd'hui à ${esc(fmt.heure(cfg.horaire))}, départ dans` : "Prochaine manche très bientôt"}</p>
           <p class="vue-attente__compte" data-compte>${aHeure ? compte(e.restant) : ""}</p>
           <ol class="etapes-bt">
             <li><b>1</b> Ouvre le jeu</li>
@@ -265,10 +266,7 @@ document.addEventListener("app:ready", async () => {
       <div class="bt-vue vue-question${e.boss ? " avec-boss" : ""}" data-vue-question>
         <div class="colonne-son">
           <div class="chrono" data-chrono role="timer" aria-label="Temps restant"><span class="chrono__s" data-chrono-s></span></div>
-          <div class="platine" aria-hidden="true">
-            <span class="platine__disque"></span>
-            <canvas class="platine__visu" width="170" height="150" data-visu></canvas>
-          </div>
+          <canvas class="visu" width="400" height="120" data-visu aria-hidden="true"></canvas>
           ${carteBoss(e.boss)}
         </div>
         <div class="colonne-jeu">
@@ -408,7 +406,7 @@ document.addEventListener("app:ready", async () => {
     if (!c) return;
     const g = c.getContext("2d");
     g.clearRect(0, 0, c.width, c.height);
-    const n = 14, larg = c.width / n;
+    const n = 24, larg = c.width / n;
     let valeurs;
     if (audio.analyseur && audio.boucle && !enPause()) {
       const data = new Uint8Array(audio.analyseur.frequencyBinCount);
@@ -418,7 +416,7 @@ document.addEventListener("app:ready", async () => {
       const t = Date.now() / 180;
       valeurs = Array.from({ length: n }, (_, i) => enPause() || etat?.phase !== "question" ? 0.08 : 0.25 + 0.7 * Math.abs(Math.sin(t + i * 0.9) * Math.cos(t / 3 + i)));
     }
-    g.fillStyle = "#F9A209";
+    g.fillStyle = "#FFC72C";
     valeurs.forEach((v, i) => {
       const h = Math.max(6, v * c.height);
       g.fillRect(i * larg + 2, c.height - h, larg - 4, h);

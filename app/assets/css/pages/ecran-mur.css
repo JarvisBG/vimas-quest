@@ -16,27 +16,7 @@
   display: flex; align-items: center; justify-content: space-between; gap: 40px;
   border-bottom: 2px solid rgba(255, 248, 238, .22);
 }
-.enseigne { display: flex; align-items: center; gap: 22px; min-width: 0; }
-.enseigne__sceau {
-  display: grid; place-items: center; flex: none;
-  width: 84px; height: 84px; border-radius: 50%;
-  background: var(--sodium); color: var(--nuit);
-}
-.enseigne__sceau .eq { width: 46px; height: 40px; }
-.enseigne__nom { font-size: 60px; line-height: 1; color: var(--papier); }
-.enseigne__sous { margin-top: 6px; font-size: 22px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #F7D4C4; }
-
-/* Un relevé réglé, pas des tuiles : des nombres séparés par des filets */
-.releve { display: flex; align-items: stretch; }
-.releve__c { display: grid; justify-items: end; align-content: center; padding: 0 40px; text-align: right; }
-.releve__c + .releve__c { border-left: 2px solid rgba(255, 248, 238, .22); }
-.releve__c:last-child { padding-right: 0; }
-.releve__v { font-family: var(--font-affiche); font-weight: 400; font-size: 58px; line-height: 1; color: var(--papier); }
-.releve__l { margin-top: 6px; font-size: 20px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #F7D4C4; white-space: nowrap; }
-.etat { display: inline-flex; align-items: center; gap: 10px; }
-.etat__point { width: 14px; height: 14px; border-radius: 50%; background: var(--vert); }
-.etat.is-horsligne { color: var(--sodium); }
-.etat.is-horsligne .etat__point { background: transparent; border: 3px solid var(--sodium); }
+/* Enseigne, relevé et état : communs aux écrans géants (ecran.css) */
 
 /* ---------- La scène : un panneau à la fois ---------- */
 .mur-scene { position: relative; min-height: 0; margin: 34px 0 28px; }
@@ -78,7 +58,7 @@
 .marche__xp { font-family: var(--font-affiche); font-size: 40px; line-height: 1; }
 .marche__xp small { font-size: .55em; color: var(--texte-doux); }
 .marche__socle {
-  align-self: stretch; margin: 6px -18px 0; display: grid; place-items: center;
+  align-self: stretch; width: calc(100% + 36px); margin: 6px -18px 0; display: grid; place-items: center;
   font-family: var(--font-affiche); font-size: 84px; line-height: 1; color: var(--papier);
   background: var(--bleu); height: var(--h, 120px);
 }

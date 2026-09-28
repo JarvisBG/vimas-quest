@@ -12,9 +12,7 @@ body.ecran.is-curseur-cache, body.ecran.is-curseur-cache * { cursor: none !impor
   transform: translate(-50%, -50%) scale(var(--echelle, 1));
   transform-origin: center;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse 900px 600px at 50% -10%, rgba(217, 10, 34, .55), transparent 70%),
-    var(--nuit);
+  background: var(--nuit);
 }
 
 /* Pastille d'état */
@@ -28,6 +26,31 @@ body.ecran.is-curseur-cache, body.ecran.is-curseur-cache * { cursor: none !impor
 .etat-direct.is-horsligne .etat-direct__point { animation: none; background: transparent; border: 4px solid var(--nuit); }
 @keyframes clignote-e { 50% { opacity: .15; } }
 @keyframes remplit { to { transform: scaleX(1); } }
+
+/* ---------- Enseigne et relevé (mur, blind test) ----------
+   Modèle Otaku Quest : la marque à gauche, des chiffres séparés par des filets
+   à droite, un point d'état fixe (vert = direct, creux = données anciennes). */
+.enseigne { display: flex; align-items: center; gap: 22px; min-width: 0; }
+.enseigne__sceau {
+  display: grid; place-items: center; flex: none;
+  width: 84px; height: 84px; border-radius: 50%;
+  background: var(--sodium); color: var(--nuit);
+}
+.enseigne__sceau .eq { width: 46px; height: 40px; }
+.enseigne__nom { font-size: 60px; line-height: 1; color: var(--papier); }
+.enseigne__sous { margin-top: 6px; font-size: 22px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #F7D4C4; }
+
+/* Un relevé réglé, pas des tuiles : des nombres séparés par des filets */
+.releve { display: flex; align-items: stretch; }
+.releve__c { display: grid; justify-items: end; align-content: center; padding: 0 40px; text-align: right; }
+.releve__c + .releve__c { border-left: 2px solid rgba(255, 248, 238, .22); }
+.releve__c:last-child { padding-right: 0; }
+.releve__v { font-family: var(--font-affiche); font-weight: 400; font-size: 58px; line-height: 1; color: var(--papier); }
+.releve__l { margin-top: 6px; font-size: 20px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #F7D4C4; white-space: nowrap; }
+.etat { display: inline-flex; align-items: center; gap: 10px; }
+.etat__point { width: 14px; height: 14px; border-radius: 50%; background: var(--vert); }
+.etat.is-horsligne { color: var(--sodium); }
+.etat.is-horsligne .etat__point { background: transparent; border: 3px solid var(--sodium); }
 
 /* ---------- Aide régie ---------- */
 .aide-regie {
