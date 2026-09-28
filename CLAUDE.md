@@ -6,7 +6,7 @@
 
 ## En une phrase
 
-**Maquette de démonstration** pour convaincre Vimas Production : le moteur DOMAF Quest
+Application **complète** (festivalier, écrans géants, console), d'abord montrée en démonstration à Vimas Production : le moteur DOMAF Quest
 (lui-même issu de The Otaku Quest) ré-habillé aux couleurs du **VIMAS FEST**, sur la **même
 base Supabase** et le **même lien** que la démo DOMAF. Objectif : montrer une app qui tourne,
 pas un discours. **Le moins de travail possible** : on change la peau et le contenu, pas le moteur.
@@ -41,6 +41,8 @@ pas un discours. **Le moins de travail possible** : on change la peau et le cont
 | Moteur | **Inchangé**. Aucune modification SQL de structure. Tout identifiant côté base reste tel quel (préfixe de QR `DQ-`, noms de fonctions, `jour_jeu()` à l'heure de Douala = même fuseau que Yaoundé). |
 | Dossier | `vimas/vimas-quest/` = copie de `domaf/` (app, supabase, outils) sans offre ni archives. |
 | Contenu | **Fictif** (line-up inventé, pas de vrais noms d'artistes) tant que Vimas n'a pas signé. |
+| Périmètre | **On termine l'app** (décision du 28/09) : y compris la console restante (animation, régie blind test, billetterie, statistiques). Plan complet : étapes 1 → 13 de `PLAN-VIMAS.md`. |
+| Dépôt | **Dépôt GitHub propre à Vimas** (privé), distinct de `JarvisBG/domaf`. Le nom `domaf-quest` du projet Supabase est accepté tel quel. |
 
 ## Où sont les choses
 
@@ -64,8 +66,8 @@ pas un discours. **Le moins de travail possible** : on change la peau et le cont
 - **Rien de public au nom de Vimas sans prévenir Jarvis** : le lien est public ; la maquette doit
   afficher clairement « démonstration » tant que Vimas n'a pas validé (logos partenaires compris).
 - Changer `VERSION` dans `app/sw.js` à chaque mise en ligne (`cd app && npx wrangler deploy`).
-- Git : le `.git` de `domaf/` déposé était vide. Dépôt local à créer ici ; le dépôt GitHub
-  `JarvisBG/domaf` n'est pas celui de ce projet. Ne pas pousser sans accord de Jarvis.
+- Git : dépôt local ici ; `gh` n'est pas installé → Jarvis crée le dépôt vide sur github.com.
+  Le dépôt `JarvisBG/domaf` n'est pas celui de ce projet.
 - Le workflow `.github/workflows/reveil-supabase.yml` réveille la même base : inutile de le doubler.
 
 ## Méthode de travail
