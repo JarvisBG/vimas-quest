@@ -49,7 +49,7 @@ document.addEventListener("app:ready", async () => {
     let html = parJour.map(({ jour, liste }) => `
       <section class="jour-mp" aria-labelledby="jour-${jour.id}">
         <h2 class="affiche jour-mp__titre" id="jour-${jour.id}">${esc(jour.long)}
-          <small>${jour.id === d.ceSoir ? "Ce soir, " : ""}${liste.length} concert${liste.length > 1 ? "s" : ""}</small></h2>
+          <small>${jour.id === d.ceSoir ? "Aujourd'hui, " : ""}${liste.length} concert${liste.length > 1 ? "s" : ""}</small></h2>
         <ol class="frise">${frise(liste)}</ol>
       </section>`).join("");
 

@@ -17,18 +17,16 @@ window.MOCK = {
   },
 
   jours: [
-    { id: "jeu", court: "Jeu. 26", long: "Jeudi 26 novembre",    date: "2026-11-26" },
-    { id: "ven", court: "Ven. 27", long: "Vendredi 27 novembre", date: "2026-11-27" },
-    { id: "sam", court: "Sam. 28", long: "Samedi 28 novembre",   date: "2026-11-28" },
-    { id: "dim", court: "Dim. 29", long: "Dimanche 29 novembre", date: "2026-11-29" }
+    { id: "sam", court: "Sam. 26", long: "Samedi 26 décembre",   date: "2026-12-26" },
+    { id: "dim", court: "Dim. 27", long: "Dimanche 27 décembre", date: "2026-12-27" }
   ],
 
   scenes: [
-    { id: "soleil",    nom: "Scène Soleil",   couleur: "sodium" },
-    { id: "clairiere", nom: "La Clairière",   couleur: "vert" },
-    { id: "dock",      nom: "Le Dock",        couleur: "rose" },
-    { id: "kiosque",   nom: "Le Kiosque",     couleur: "bleu" },
-    { id: "chapiteau", nom: "Chapiteau Nuit", couleur: "nuit" }
+    { id: "soleil",    nom: "Grande Scène",      couleur: "sodium" },
+    { id: "clairiere", nom: "Le Yard Reggae",    couleur: "vert" },
+    { id: "dock",      nom: "La Salle Majestic", couleur: "rose" },
+    { id: "kiosque",   nom: "Le Podium Mode",    couleur: "bleu" },
+    { id: "chapiteau", nom: "Le Sound System",   couleur: "nuit" }
   ],
 
   /* duree en minutes ; bio courte pour la fiche artiste.
@@ -38,43 +36,43 @@ window.MOCK = {
      Les images demo-artiste-*.webp sont SYNTHETIQUES, pas des photos reelles.
      En base : artistes.photo_url. */
   artistes: [
-    { id: "a1",  nom: "Nova Kassa",        genre: "Afro-pop",   scene: "soleil",    jour: "ven", debut: "22:30", duree: 90, tete: true,
+    { id: "a3",  nom: "Mboa Brass Band",   genre: "Fanfare",   scene: "kiosque",   jour: "sam", debut: "11:00", duree: 60,
+      bio: "Onze musiciens qui ouvrent le festival en déambulant entre les stands, sans partition, et finissent toujours au milieu du public." },
+    { id: "a2",  nom: "Roots Mbeng",       genre: "Reggae",    scene: "clairiere", jour: "sam", debut: "14:00", duree: 60,
+      bio: "Reggae roots chanté en français, en anglais et en langues locales : des basses lourdes et des messages qui font lever les poings." },
+    { id: "a5",  nom: "Défilé Wax & Roots", genre: "Mode",     scene: "kiosque",   jour: "sam", debut: "16:00", duree: 45,
+      bio: "Les créateurs des stands défilent sur le podium : wax, streetwear et silhouettes inspirées des Caraïbes." },
+    { id: "a6",  nom: "Lady Soca",         genre: "Soca",      scene: "dock",      jour: "sam", debut: "17:30", duree: 60,
+      bio: "L'énergie du carnaval de Trinidad en plein Yaoundé : drapeaux, sifflets et chorégraphies reprises par toute la salle." },
+    { id: "a4",  nom: "Selecta Yard",      genre: "Dancehall", scene: "chapiteau", jour: "sam", debut: "19:00", duree: 90,
+      bio: "Sound system dancehall : dubplates, riddims jamaïcains et afro, pour danser jusqu'à la fermeture." },
+    { id: "a1",  nom: "Nova Kassa",        genre: "Afro-pop",  scene: "soleil",    jour: "sam", debut: "20:30", duree: 90, tete: true,
       photo: "assets/photos/demo-artiste-1.webp",
-      bio: "Voix solaire et refrains qui restent en tête : Nova Kassa ouvre le festival avec son deuxième album, porté par une section de cuivres." },
-    { id: "a2",  nom: "Les Lampadaires",   genre: "Rock",       scene: "dock",      jour: "ven", debut: "20:15", duree: 60,
-      bio: "Quatre amis, deux guitares et beaucoup de volume. Le groupe fête ses 20 ans de scène." },
-    { id: "a3",  nom: "Mboa Brass Band",   genre: "Fanfare",    scene: "kiosque",   jour: "ven", debut: "18:00", duree: 60,
-      bio: "Onze musiciens qui déambulent, jouent sans partition et finissent toujours au milieu du public." },
-    { id: "a4",  nom: "Pixel Griot",       genre: "Électro",    scene: "chapiteau", jour: "ven", debut: "00:30", duree: 90,
-      bio: "Des machines faites maison et des samples de griots : un set pour danser jusqu'à la fermeture." },
-    { id: "a5",  nom: "Ilé Sound System",  genre: "Dub",        scene: "clairiere", jour: "sam", debut: "19:00", duree: 60,
-      bio: "Un mur d'enceintes, des basses profondes et un MC qui fait chanter toute La Clairière." },
-    { id: "a6",  nom: "Dune Électrique",   genre: "Psyché",     scene: "dock",      jour: "sam", debut: "21:00", duree: 60,
-      bio: "Rock psychédélique aux longues montées hypnotiques, projections comprises." },
-    { id: "a7",  nom: "Ama Rise",          genre: "Soul",       scene: "soleil",    jour: "sam", debut: "23:00", duree: 90, tete: true,
+      bio: "Voix solaire et refrains qui restent en tête : Nova Kassa clôture le samedi avec son deuxième album, porté par une section de cuivres." },
+    { id: "a12", nom: "Ilé Sound System",  genre: "Dub",       scene: "clairiere", jour: "dim", debut: "12:00", duree: 60,
+      bio: "Un mur d'enceintes, des basses profondes et un MC qui fait chanter tout le Yard dès midi." },
+    { id: "a10", nom: "Battle Kompa & Coupé-décalé", genre: "Danse", scene: "kiosque", jour: "dim", debut: "15:00", duree: 60,
+      bio: "Duels de danseurs en un contre un, jugés par le public : kompa, coupé-décalé, dancehall et bikutsi." },
+    { id: "a8",  nom: "Sœur Vinyle",       genre: "Reggae",    scene: "chapiteau", jour: "dim", debut: "16:30", duree: 90,
+      bio: "Uniquement des vinyles : du ska des années 60 au reggae de la semaine, en passant par le dub." },
+    { id: "a7",  nom: "Ama Rise",          genre: "Zouk",      scene: "dock",      jour: "dim", debut: "17:00", duree: 60, tete: true,
       photo: "assets/photos/demo-artiste-2.webp",
-      bio: "La révélation soul de l'année, chantée en trois langues, accompagnée d'un chœur de huit voix." },
-    { id: "a8",  nom: "Sœur Vinyle",       genre: "DJ set",     scene: "chapiteau", jour: "sam", debut: "01:00", duree: 90,
-      bio: "Uniquement des vinyles, des pépites des années 70 aux sorties de la semaine." },
-    { id: "a9",  nom: "Tanka",             genre: "Rap",        scene: "soleil",    jour: "dim", debut: "21:45", duree: 90, tete: true,
-      photo: "assets/photos/demo-artiste-3.webp",
-      bio: "Le rappeur clôture le festival avec un show pensé pour le DOMAF et quelques invités surprises." },
-    { id: "a10", nom: "Orchestre Minuit",  genre: "Jazz",       scene: "kiosque",   jour: "dim", debut: "18:30", duree: 60,
-      bio: "Big band de jazz qui improvise sur des standards africains et caribéens." },
-    { id: "a11", nom: "Kalé & les Ondes",  genre: "Makossa nouvelle vague", scene: "clairiere", jour: "dim", debut: "20:00", duree: 60,
+      bio: "La révélation zouk de l'année, chantée en trois langues, accompagnée d'un chœur de huit voix." },
+    { id: "a11", nom: "Kalé & les Ondes",  genre: "Makossa",   scene: "clairiere", jour: "dim", debut: "18:30", duree: 60,
       bio: "La makossa revisitée avec une kora, des synthés et beaucoup d'énergie." },
-    { id: "a12", nom: "Bleu Cobalt",       genre: "Indie",      scene: "dock",      jour: "dim", debut: "19:15", duree: 60,
-      bio: "Pop indé mélancolique et lumineuse, premier concert du groupe en Afrique centrale." }
+    { id: "a9",  nom: "Tanka",             genre: "Rap",       scene: "soleil",    jour: "dim", debut: "20:30", duree: 90, tete: true,
+      photo: "assets/photos/demo-artiste-3.webp",
+      bio: "Le rappeur clôture le VIMAS FEST avec un show pensé pour l'occasion et quelques invités surprises." }
   ],
 
   /* Séances de dédicaces (programme, fiches artistes, mission m4) */
   dedicaces: [
-    { artiste: "a7", jour: "sam", debut: "19:30", fin: "20:15", lieu: "Tente dédicaces, esplanade est", lieuId: "dedicaces" },
-    { artiste: "a1", jour: "ven", debut: "20:00", fin: "20:45", lieu: "Tente dédicaces, esplanade est", lieuId: "dedicaces" },
-    { artiste: "a9", jour: "dim", debut: "19:00", fin: "19:45", lieu: "Tente dédicaces, esplanade est", lieuId: "dedicaces" }
+    { artiste: "a1", jour: "sam", debut: "18:30", fin: "19:15", lieu: "Tente dédicaces, près du Podium Mode", lieuId: "dedicaces" },
+    { artiste: "a7", jour: "dim", debut: "15:30", fin: "16:15", lieu: "Tente dédicaces, près du Podium Mode", lieuId: "dedicaces" },
+    { artiste: "a9", jour: "dim", debut: "18:30", fin: "19:15", lieu: "Tente dédicaces, près du Podium Mode", lieuId: "dedicaces" }
   ],
 
-  programmeConfig: { ouverture: "17:00", fermeture: "02:30", pixelsParMinute: 2 },
+  programmeConfig: { ouverture: "10:00", fermeture: "22:30", pixelsParMinute: 2 },
 
   /* Temps de marche : calculé depuis les positions des lieux (App.minutesMarche). */
   rappelsParDefaut: { actif: true, avance: 15 },
@@ -83,22 +81,20 @@ window.MOCK = {
   infos: {
     adresse: "Majestic Cinéma, Université de Yaoundé I (Ngoa-Ekellé)",
     horaires: [
-      { jour: "jeu", portes: "14:00", fin: "00:00" },
-      { jour: "ven", portes: "16:00", fin: "03:00" },
-      { jour: "sam", portes: "15:00", fin: "03:00" },
-      { jour: "dim", portes: "15:00", fin: "00:00" }
+      { jour: "sam", portes: "10:00", fin: "22:00" },
+      { jour: "dim", portes: "10:00", fin: "22:00" }
     ],
     acces: [
-      { icone: "billet", titre: "Navettes gratuites", texte: "Départ toutes les 20 minutes depuis la gare routière centrale, de 15h à 3h30. Montre ton billet au chauffeur." },
+      { icone: "billet", titre: "Navettes gratuites", texte: "Départ toutes les 20 minutes depuis la gare routière centrale, de 9h à 22h30. Montre ton ticket au chauffeur." },
       { icone: "lieu", titre: "Taxis et motos-taxis", texte: "Zone de dépose et de reprise balisée devant l'entrée principale. Ne traverse pas le boulevard hors des passages." },
       { icone: "plan", titre: "Parking", texte: "Parking gardé à 400 m, fléché depuis le rond-point. Places limitées : privilégie les navettes." },
       { icone: "eclair", titre: "Vélos et trottinettes", texte: "Stationnement gratuit et surveillé près de l'entrée nord." }
     ],
     accessibilite: [
-      "Plateformes surélevées devant la Scène Soleil, La Clairière, Le Dock et Le Kiosque",
+      "Plateformes surélevées devant la Grande Scène, le Yard Reggae, la Salle Majestic et le Podium Mode",
       "Toilettes adaptées dans chaque bloc sanitaire",
       "Prêt de fauteuils et de sièges-cannes au Point info",
-      "Boucle magnétique à la Scène Soleil, gilets vibrants sur réservation",
+      "Boucle magnétique à la Grande Scène, gilets vibrants sur réservation",
       "Accompagnateur gratuit sur présentation de la carte d'invalidité"
     ],
     interdits: [
@@ -116,10 +112,10 @@ window.MOCK = {
       { id: "qr-illisible", q: "Un QR du site ne se scanne pas.", r: "Essaie avec la lampe du scanner, puis utilise « Saisir un code » : chaque QR a un code court imprimé en dessous (par exemple SOL-4821)." },
       { id: "rescanner", q: "Puis-je scanner le même QR plusieurs fois ?", r: "Chaque QR rapporte des XP une fois par jour. Le lendemain, il redevient actif." },
       { id: "reseau", q: "Le réseau ne passe pas, je perds mes points ?", r: "Non. Tes réponses au blind test sont renvoyées automatiquement, et le Wi-Fi gratuit Telco+ est disponible près des scènes." },
-      { id: "batterie", q: "Mon téléphone n'a plus de batterie.", r: "Des bornes de recharge gratuites sont à la Consigne (16h à 3h) et au Salon Telco+. Ta partie est sauvegardée : rien n'est perdu." },
-      { id: "lots", q: "Jusqu'à quand puis-je retirer mes lots ?", r: "Jusqu'au dimanche 23h au Stand Vimas Quest, avec ton bon de retrait et ton billet. Les lots non retirés ne sont pas envoyés par la poste." },
+      { id: "batterie", q: "Mon téléphone n'a plus de batterie.", r: "Des bornes de recharge gratuites sont à la Consigne (10h à 22h) et au Salon Telco+. Ta partie est sauvegardée : rien n'est perdu." },
+      { id: "lots", q: "Jusqu'à quand puis-je retirer mes lots ?", r: "Jusqu'au dimanche 21h30 au Stand Vimas Quest, avec ton bon de retrait et ton billet. Les lots non retirés ne sont pas envoyés par la poste." },
       { id: "mineurs", q: "Les mineurs peuvent-ils jouer ?", r: "Oui, à partir de 12 ans, accompagnés d'un adulte sur le site. Les lots avec de l'alcool ne sont jamais remis aux mineurs." },
-      { id: "sortie", q: "Puis-je sortir et revenir ?", r: "Oui, ton bracelet permet de sortir et de revenir autant de fois que tu veux jusqu'à 1h du matin." },
+      { id: "sortie", q: "Puis-je sortir et revenir ?", r: "Oui, ton bracelet permet de sortir et de revenir autant de fois que tu veux jusqu'à 20h." },
       { id: "pseudo", q: "Mon pseudo est-il visible par tout le monde ?", r: "Oui, dans les classements et sur l'écran géant. Il ne contient jamais ton nom : choisis un pseudo qui ne permet pas de t'identifier." },
       { id: "donnees", q: "Comment supprimer mes données de jeu ?", r: "Passe au Stand Vimas Quest avec ton code secret : l'équipe efface ta partie (points, badges, collection, votes). Pour simplement quitter ta partie sur ce téléphone, utilise « Déconnecter ce téléphone » en bas de cette page." }
     ]
@@ -174,14 +170,14 @@ window.MOCK = {
 
   /* Coffre du scan : l'XP d'un scan attend la réponse à une question.
      Démo seulement : en mode serveur, la question vient de scan_qr. */
-  coffreConfig: { xpParReponse: 10, soirDebut: "20:00" },
+  coffreConfig: { xpParReponse: 10, soirDebut: "18:00" },
 
   /* Banque du coffre : copie de supabase/01_reference.sql (micro_questions),
      fabriquée par le même script (supabase/outils/banque_questions.py). Garder les deux identiques. */
   banqueQuestions: [
     {"id": 1, "code": "S1", "theme": "venue", "moment": "toujours", "chaqueJour": false, "ordreFixe": false, "type": "choix", "question": "Tu es venu comment aujourd'hui ?", "options": [{"valeur": "a-pied", "libelle": "À pied"}, {"valeur": "moto-taxi", "libelle": "Moto-taxi"}, {"valeur": "taxi", "libelle": "Taxi"}, {"valeur": "voiture-personnelle", "libelle": "Voiture personnelle"}, {"valeur": "bus", "libelle": "Bus"}]},
-    {"id": 2, "code": "S2", "theme": "venue", "moment": "toujours", "chaqueJour": false, "ordreFixe": false, "type": "choix", "question": "Tu as connu le DOMAF comment ?", "options": [{"valeur": "un-ami-m-en-a-parle", "libelle": "Un ami m'en a parlé"}, {"valeur": "facebook-ou-instagram", "libelle": "Facebook ou Instagram"}, {"valeur": "tiktok", "libelle": "TikTok"}, {"valeur": "whatsapp", "libelle": "WhatsApp"}, {"valeur": "radio-ou-tele", "libelle": "Radio ou télé"}, {"valeur": "une-affiche", "libelle": "Une affiche"}, {"valeur": "autrement", "libelle": "Autrement", "bas": true}]},
-    {"id": 3, "code": "S3", "theme": "venue", "moment": "toujours", "chaqueJour": false, "ordreFixe": true, "type": "choix", "question": "C'est ton combientième DOMAF ?", "options": [{"valeur": "mon-tout-premier", "libelle": "Mon tout premier"}, {"valeur": "le-2e-ou-le-3e", "libelle": "Le 2e ou le 3e"}, {"valeur": "je-viens-presque-chaque-", "libelle": "Je viens presque chaque année"}]},
+    {"id": 2, "code": "S2", "theme": "venue", "moment": "toujours", "chaqueJour": false, "ordreFixe": false, "type": "choix", "question": "Tu as connu le VIMAS FEST comment ?", "options": [{"valeur": "un-ami-m-en-a-parle", "libelle": "Un ami m'en a parlé"}, {"valeur": "facebook-ou-instagram", "libelle": "Facebook ou Instagram"}, {"valeur": "tiktok", "libelle": "TikTok"}, {"valeur": "whatsapp", "libelle": "WhatsApp"}, {"valeur": "radio-ou-tele", "libelle": "Radio ou télé"}, {"valeur": "une-affiche", "libelle": "Une affiche"}, {"valeur": "autrement", "libelle": "Autrement", "bas": true}]},
+    {"id": 3, "code": "S3", "theme": "venue", "moment": "toujours", "chaqueJour": false, "ordreFixe": false, "type": "choix", "question": "Tu es venu surtout pour…", "options": [{"valeur": "les-concerts", "libelle": "Les concerts"}, {"valeur": "la-mode-et-les-stands", "libelle": "La mode et les stands"}, {"valeur": "la-danse", "libelle": "La danse"}, {"valeur": "accompagner-quelqu-un", "libelle": "Accompagner quelqu'un"}, {"valeur": "tout-le-festival", "libelle": "Tout le festival", "bas": true}]},
     {"id": 4, "code": "S4", "theme": "venue", "moment": "toujours", "chaqueJour": false, "ordreFixe": false, "type": "choix", "question": "Tu es venu avec qui ?", "options": [{"valeur": "seul", "libelle": "Seul"}, {"valeur": "avec-des-amis", "libelle": "Avec des amis"}, {"valeur": "en-couple", "libelle": "En couple"}, {"valeur": "en-famille", "libelle": "En famille"}, {"valeur": "avec-des-collegues", "libelle": "Avec des collègues"}]},
     {"id": 5, "code": "S6", "theme": "venue", "moment": "toujours", "chaqueJour": false, "ordreFixe": false, "type": "choix", "question": "Tu écoutes ta musique surtout où ?", "options": [{"valeur": "sur-une-appli-de-streami", "libelle": "Sur une appli de streaming"}, {"valeur": "sur-youtube", "libelle": "Sur YouTube"}, {"valeur": "sur-tiktok", "libelle": "Sur TikTok"}, {"valeur": "a-la-radio", "libelle": "À la radio"}, {"valeur": "en-concert-surtout", "libelle": "En concert, surtout"}]},
     {"id": 6, "code": "S7", "theme": "ecoute", "moment": "toujours", "chaqueJour": false, "ordreFixe": false, "type": "choix", "question": "Ton appli de musique principale ?", "options": [{"valeur": "boomplay", "libelle": "Boomplay"}, {"valeur": "audiomack", "libelle": "Audiomack"}, {"valeur": "spotify", "libelle": "Spotify"}, {"valeur": "youtube-music", "libelle": "YouTube Music"}, {"valeur": "apple-music", "libelle": "Apple Music"}, {"valeur": "deezer", "libelle": "Deezer"}, {"valeur": "aucune", "libelle": "Aucune", "bas": true}]},
@@ -207,12 +203,12 @@ window.MOCK = {
     {"id": 26, "code": "S27", "theme": "partenaires", "moment": "toujours", "chaqueJour": false, "ordreFixe": false, "type": "choix", "question": "Le réseau social que tu ouvres le plus ?", "options": [{"valeur": "whatsapp", "libelle": "WhatsApp"}, {"valeur": "tiktok", "libelle": "TikTok"}, {"valeur": "facebook", "libelle": "Facebook"}, {"valeur": "instagram", "libelle": "Instagram"}, {"valeur": "snapchat", "libelle": "Snapchat"}, {"valeur": "x", "libelle": "X"}]},
     {"id": 27, "code": "S28", "theme": "partenaires", "moment": "toujours", "chaqueJour": false, "ordreFixe": false, "type": "choix", "question": "Au festival, tu bois plutôt…", "options": [{"valeur": "de-la-biere", "libelle": "De la bière"}, {"valeur": "du-soda", "libelle": "Du soda"}, {"valeur": "du-jus", "libelle": "Du jus"}, {"valeur": "de-l-eau", "libelle": "De l'eau"}, {"valeur": "un-energisant", "libelle": "Un énergisant"}, {"valeur": "rien", "libelle": "Rien", "bas": true}]},
     {"id": 28, "code": "S30", "theme": "partenaires", "moment": "toujours", "chaqueJour": false, "ordreFixe": false, "type": "choix", "question": "Tu manges quoi au festival ?", "options": [{"valeur": "grillades-soya", "libelle": "Grillades / soya"}, {"valeur": "plats-locaux", "libelle": "Plats locaux"}, {"valeur": "fast-food", "libelle": "Fast-food"}, {"valeur": "rien-je-mange-avant", "libelle": "Rien, je mange avant", "bas": true}]},
-    {"id": 29, "code": "S31", "theme": "profil", "moment": "toujours", "chaqueJour": false, "ordreFixe": true, "type": "choix", "question": "Tu vis à Douala depuis…", "options": [{"valeur": "toujours", "libelle": "Toujours"}, {"valeur": "plus-de-5-ans", "libelle": "Plus de 5 ans"}, {"valeur": "moins-de-5-ans", "libelle": "Moins de 5 ans"}, {"valeur": "je-n-y-vis-pas", "libelle": "Je n'y vis pas"}]},
+    {"id": 29, "code": "S31", "theme": "profil", "moment": "toujours", "chaqueJour": false, "ordreFixe": true, "type": "choix", "question": "Tu vis à Yaoundé depuis…", "options": [{"valeur": "toujours", "libelle": "Toujours"}, {"valeur": "plus-de-5-ans", "libelle": "Plus de 5 ans"}, {"valeur": "moins-de-5-ans", "libelle": "Moins de 5 ans"}, {"valeur": "je-n-y-vis-pas", "libelle": "Je n'y vis pas"}]},
     {"id": 30, "code": "S32", "theme": "profil", "moment": "toujours", "chaqueJour": false, "ordreFixe": false, "type": "choix", "question": "À la maison, tu parles surtout…", "options": [{"valeur": "francais", "libelle": "Français"}, {"valeur": "anglais", "libelle": "Anglais"}, {"valeur": "pidgin", "libelle": "Pidgin"}, {"valeur": "une-langue-locale", "libelle": "Une langue locale"}]},
     {"id": 31, "code": "S33", "theme": "profil", "moment": "toujours", "chaqueJour": false, "ordreFixe": true, "type": "choix", "question": "Tu as des enfants ?", "options": [{"valeur": "oui", "libelle": "Oui"}, {"valeur": "non", "libelle": "Non"}]},
     {"id": 32, "code": "N1", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": true, "type": "choix", "question": "Ta journée, tu la notes comment ?", "options": [{"valeur": "decevante", "libelle": "Décevante"}, {"valeur": "moyenne", "libelle": "Moyenne"}, {"valeur": "bien", "libelle": "Bien"}, {"valeur": "tres-bien", "libelle": "Très bien"}, {"valeur": "inoubliable", "libelle": "Inoubliable"}]},
     {"id": 33, "code": "N2", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": true, "type": "artiste", "question": "Ton concert préféré aujourd'hui ?"},
-    {"id": 34, "code": "N3", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": false, "type": "choix", "question": "Ce qui t'a le plus plu aujourd'hui ?", "options": [{"valeur": "la-musique", "libelle": "La musique"}, {"valeur": "l-ambiance", "libelle": "L'ambiance"}, {"valeur": "le-jeu-domaf-quest", "libelle": "Le jeu Vimas Quest"}, {"valeur": "la-nourriture", "libelle": "La nourriture"}, {"valeur": "l-organisation", "libelle": "L'organisation"}, {"valeur": "les-rencontres", "libelle": "Les rencontres"}]},
+    {"id": 34, "code": "N3", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": false, "type": "choix", "question": "Ce qui t'a le plus plu aujourd'hui ?", "options": [{"valeur": "la-musique", "libelle": "La musique"}, {"valeur": "l-ambiance", "libelle": "L'ambiance"}, {"valeur": "le-jeu-vimas-quest", "libelle": "Le jeu Vimas Quest"}, {"valeur": "la-nourriture", "libelle": "La nourriture"}, {"valeur": "l-organisation", "libelle": "L'organisation"}, {"valeur": "les-rencontres", "libelle": "Les rencontres"}]},
     {"id": 35, "code": "N4", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": true, "type": "choix", "question": "L'attente à l'entrée ?", "options": [{"valeur": "rapide", "libelle": "Rapide"}, {"valeur": "correcte", "libelle": "Correcte"}, {"valeur": "trop-longue", "libelle": "Trop longue"}]},
     {"id": 36, "code": "N5", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": true, "type": "choix", "question": "L'attente au bar ?", "options": [{"valeur": "rapide", "libelle": "Rapide"}, {"valeur": "correcte", "libelle": "Correcte"}, {"valeur": "trop-longue", "libelle": "Trop longue"}]},
     {"id": 37, "code": "N6", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": true, "type": "choix", "question": "L'attente aux food-trucks ?", "options": [{"valeur": "rapide", "libelle": "Rapide"}, {"valeur": "correcte", "libelle": "Correcte"}, {"valeur": "trop-longue", "libelle": "Trop longue"}]},
@@ -220,7 +216,7 @@ window.MOCK = {
     {"id": 39, "code": "N8", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": true, "type": "choix", "question": "Combien as-tu dépensé aujourd'hui, sans le billet ?", "options": [{"valeur": "rien-du-tout", "libelle": "Rien du tout"}, {"valeur": "moins-de-2-000-fcfa", "libelle": "Moins de 2 000 FCFA"}, {"valeur": "2-000-a-5-000-fcfa", "libelle": "2 000 à 5 000 FCFA"}, {"valeur": "5-000-a-10-000-fcfa", "libelle": "5 000 à 10 000 FCFA"}, {"valeur": "plus-de-10-000-fcfa", "libelle": "Plus de 10 000 FCFA"}]},
     {"id": 40, "code": "N9", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": false, "type": "choix", "question": "Ce qu'on doit améliorer en priorité ?", "options": [{"valeur": "plus-de-stands", "libelle": "Plus de stands"}, {"valeur": "moins-d-attente", "libelle": "Moins d'attente"}, {"valeur": "plus-d-activites", "libelle": "Plus d'activités"}, {"valeur": "plus-de-place", "libelle": "Plus de place"}, {"valeur": "la-nourriture", "libelle": "La nourriture"}, {"valeur": "rien-c-etait-bien", "libelle": "Rien, c'était bien", "bas": true}]},
     {"id": 41, "code": "N10", "theme": "soir", "moment": "soir", "chaqueJour": false, "ordreFixe": true, "type": "choix", "question": "Conseillerais-tu Vimas Quest à un ami ? (0 = pas du tout, 10 = carrément)", "options": [{"valeur": "0", "libelle": "0"}, {"valeur": "1", "libelle": "1"}, {"valeur": "2", "libelle": "2"}, {"valeur": "3", "libelle": "3"}, {"valeur": "4", "libelle": "4"}, {"valeur": "5", "libelle": "5"}, {"valeur": "6", "libelle": "6"}, {"valeur": "7", "libelle": "7"}, {"valeur": "8", "libelle": "8"}, {"valeur": "9", "libelle": "9"}, {"valeur": "10", "libelle": "10"}]},
-    {"id": 42, "code": "N11", "theme": "soir", "moment": "soir", "chaqueJour": false, "ordreFixe": true, "type": "choix", "question": "Tu reviendras au DOMAF l'an prochain ?", "options": [{"valeur": "oui-sur", "libelle": "Oui, sûr"}, {"valeur": "peut-etre", "libelle": "Peut-être"}, {"valeur": "non", "libelle": "Non"}]}
+    {"id": 42, "code": "N11", "theme": "soir", "moment": "soir", "chaqueJour": false, "ordreFixe": true, "type": "choix", "question": "Tu reviendras au VIMAS FEST l'an prochain ?", "options": [{"valeur": "oui-sur", "libelle": "Oui, sûr"}, {"valeur": "peut-etre", "libelle": "Peut-être"}, {"valeur": "non", "libelle": "Non"}]}
   ],
 
 
@@ -251,25 +247,25 @@ window.MOCK = {
      y 220 → 494 ; tribune couverte à l'ouest (x 353 → 400). Les vrais emplacements
      viendront de l'organisation (table lieux, colonnes x / y). */
   lieux: [
-    { id: "soleil",          cat: "scene", nom: "Scène Soleil",   x: 503, y: 245, pmr: true, desc: "Grande scène au nord du terrain, face à la pelouse. Plateforme PMR à droite de la régie." },
-    { id: "clairiere",       cat: "scene", nom: "La Clairière",   x: 525, y: 540, pmr: true, desc: "Scène en plein air au sud du terrain." },
-    { id: "dock",            cat: "scene", nom: "Le Dock",        x: 632, y: 330, pmr: true, desc: "Scène sur l'esplanade est, le long des écoles." },
-    { id: "kiosque",         cat: "scene", nom: "Le Kiosque",     x: 450, y: 395, pmr: true, desc: "Petite scène sur la pelouse, concerts acoustiques et fanfares." },
-    { id: "chapiteau",       cat: "scene", nom: "Chapiteau Nuit", x: 385, y: 530, pmr: false, desc: "Chapiteau des sets de nuit, coin sud-ouest. Accès PMR par l'arrière, demande à un bénévole." },
+    { id: "soleil",          cat: "scene", nom: "Grande Scène",   x: 503, y: 245, pmr: true, desc: "Grande scène et écran géant. Plateforme PMR à droite de la régie." },
+    { id: "clairiere",       cat: "scene", nom: "Le Yard Reggae", x: 525, y: 540, pmr: true, desc: "Scène reggae en plein air, sous les arbres du campus." },
+    { id: "dock",            cat: "scene", nom: "La Salle Majestic", x: 632, y: 330, pmr: true, desc: "La salle de cinéma transformée en scène couverte." },
+    { id: "kiosque",         cat: "scene", nom: "Le Podium Mode", x: 450, y: 395, pmr: true, desc: "Podium des défilés de mode et des battles de danse." },
+    { id: "chapiteau",       cat: "scene", nom: "Le Sound System", x: 385, y: 530, pmr: false, desc: "Mur d'enceintes des sets dancehall et dub. Accès PMR par l'arrière, demande à un bénévole." },
 
     { id: "st-radio",        cat: "stand", nom: "Radio Écho",        x: 632, y: 200, desc: "Studio en direct et interviews d'artistes." },
     { id: "st-telco",        cat: "stand", nom: "Salon Telco+",      x: 632, y: 155, desc: "Wi-Fi du festival et bornes de recharge." },
     { id: "st-kora",         cat: "stand", nom: "Maison Kora",       x: 632, y: 420, desc: "Artisans luthiers, essais d'instruments." },
     { id: "st-brasserie",    cat: "stand", nom: "Brasserie du Port", x: 560, y: 425, desc: "Bar central, sur la pelouse." },
     { id: "st-fraicheur",    cat: "stand", nom: "Fraîcheur Lab",     x: 632, y: 265, desc: "Brumisateurs et gourdes à remplir." },
-    { id: "st-quest",    cat: "stand", nom: "Stand Vimas Quest",   x: 615, y: 550, horaires: "16h à 23h", desc: "Accueil du jeu, retrait des lots, aide aux joueurs." },
+    { id: "st-quest",    cat: "stand", nom: "Stand Vimas Quest",   x: 615, y: 550, horaires: "10h à 21h30", desc: "Accueil du jeu, retrait des lots, aide aux joueurs." },
 
     { id: "st-yassa",        cat: "food", nom: "Chez Yassa",       x: 372, y: 150, desc: "Village food, coin nord-ouest." },
     { id: "st-braise",       cat: "food", nom: "Le Braisé",        x: 418, y: 178, desc: "Village food." },
     { id: "st-sucre",        cat: "food", nom: "Sucre & Sel",      x: 372, y: 205, desc: "Village food, desserts." },
     { id: "st-plantain",     cat: "food", nom: "Plantain Express", x: 462, y: 150, desc: "Village food." },
 
-    { id: "eau-1", cat: "eau", nom: "Point d'eau Nord",    x: 560, y: 160, desc: "Eau potable gratuite, derrière la Scène Soleil." },
+    { id: "eau-1", cat: "eau", nom: "Point d'eau Nord",    x: 560, y: 160, desc: "Eau potable gratuite, derrière la Grande Scène." },
     { id: "eau-2", cat: "eau", nom: "Point d'eau Sud",     x: 575, y: 515, desc: "Eau potable gratuite." },
     { id: "eau-3", cat: "eau", nom: "Point d'eau Est",     x: 645, y: 475, desc: "Eau potable gratuite." },
     { id: "eau-4", cat: "eau", nom: "Point d'eau Village", x: 470, y: 205, desc: "Eau potable gratuite." },
@@ -280,13 +276,13 @@ window.MOCK = {
     { id: "wc-4", cat: "toilettes", nom: "Toilettes Sud",     x: 478, y: 562, pmr: true },
 
     { id: "secours-1", cat: "secours", nom: "Poste de secours principal", x: 565, y: 562, horaires: "Ouvert en continu", desc: "Médecins, infirmiers, point d'écoute. Signalé par un grand drapeau rouge." },
-    { id: "secours-2", cat: "secours", nom: "Point secours Soleil",       x: 545, y: 205, horaires: "Pendant les concerts", desc: "Équipe de secouristes près de la grande scène." },
+    { id: "secours-2", cat: "secours", nom: "Point secours Grande Scène",       x: 545, y: 205, horaires: "Pendant les concerts", desc: "Équipe de secouristes près de la grande scène." },
 
     { id: "abri-1", cat: "abri", nom: "Tribune nord", x: 377, y: 300, desc: "La tribune couverte sert d'abri en cas d'orage." },
     { id: "abri-2", cat: "abri", nom: "Tribune sud",  x: 377, y: 420, desc: "La tribune couverte sert d'abri en cas d'orage." },
 
     { id: "dedicaces",    cat: "service", nom: "Tente dédicaces",       x: 600, y: 470, desc: "Séances de dédicaces des artistes, voir le programme." },
-    { id: "consigne",     cat: "service", nom: "Consigne et recharge",  x: 652, y: 520, horaires: "16h à 3h", desc: "Casiers et recharge de téléphone." },
+    { id: "consigne",     cat: "service", nom: "Consigne et recharge",  x: 652, y: 520, horaires: "10h à 22h", desc: "Casiers et recharge de téléphone." },
     { id: "info",         cat: "service", nom: "Point info",            x: 430, y: 562, desc: "Objets trouvés, informations, accessibilité." },
 
     { id: "entree-principale", cat: "entree", nom: "Entrée principale", x: 655, y: 572, desc: "Contrôle des billets et bracelets." },
@@ -317,11 +313,11 @@ window.MOCK = {
     { id: "lot-boisson",   nom: "Boisson offerte au bar",     rarete: "commun",     stock: 600, icone: "couverts" },
     { id: "lot-vinyle",    nom: "Vinyle dédicacé",            rarete: "rare",       stock: 40,  icone: "onde" },
     { id: "lot-fosse",     nom: "Place en fosse avant-scène", rarete: "epique",     stock: 12,  icone: "micro" },
-    { id: "lot-pass",      nom: "Pass 4 jours 2027",          rarete: "legendaire", stock: 0,   icone: "billet" }
+    { id: "lot-pass",      nom: "Pass 2 jours, 2e édition",   rarete: "legendaire", stock: 0,   icone: "billet" }
   ],
 
   blindTest: {
-    horaire: "21:30", lieu: "Écran géant, Scène Soleil", questions: 15,
+    horaire: "17:00", lieu: "Écran géant, Grande Scène", questions: 15,
     lienJeu: "https://vimasquest.example/blind",
     durees: { intro: 4, question: 20, revelation: 9, classement: 10, fin: 90 }, // secondes
     classementToutesLes: 5
@@ -331,21 +327,21 @@ window.MOCK = {
      motif = notes MIDI, onde = timbre, tempo = BPM. En production : fichiers audio sous licence.
      La bonne réponse ne doit jamais être envoyée aux téléphones avant la révélation. */
   blindQuestions: [
-    { categorie: "Artiste",    question: "Qui joue ce morceau ?",                        choix: ["Nova Kassa", "Ama Rise", "Tanka", "Bleu Cobalt"],                          bonne: 0, reponse: "Nova Kassa, « Lumière du lac »",      anecdote: "Écrit en une nuit sur la rive du lac.",            motif: [64, 67, 69, 67, 64, 62, 60, 62], onde: "triangle", tempo: 112 },
-    { categorie: "Instrument", question: "Quel instrument ouvre ce morceau ?",           choix: ["Balafon", "Kora", "Saxophone", "Guitare électrique"],                     bonne: 1, reponse: "Kalé & les Ondes, « Rive gauche »",   anecdote: "La kora compte ici 21 cordes.",                     motif: [69, 72, 76, 72, 69, 67, 69, 64], onde: "sine",     tempo: 96 },
-    { categorie: "Style",      question: "De quel style s'agit-il ?",                   choix: ["Makossa", "Dub", "Jazz", "Rock"],                                         bonne: 1, reponse: "Ilé Sound System, « Basse fréquence »", anecdote: "Enregistré avec un seul micro.",                  motif: [45, 45, 52, 45, 48, 45, 43, 45], onde: "square",   tempo: 74 },
-    { categorie: "Année",      question: "En quelle année est sorti ce titre ?",        choix: ["2009", "2014", "2019", "2023"],                                           bonne: 2, reponse: "Orchestre Minuit, « Minuit pile »",   anecdote: "Leur premier disque, pressé à 300 exemplaires.",   motif: [62, 65, 69, 72, 71, 67, 64, 62], onde: "sine",     tempo: 88 },
-    { categorie: "Artiste",    question: "Quel groupe de l'affiche joue ici ?",         choix: ["Les Lampadaires", "Dune Électrique", "Mboa Brass Band", "Pixel Griot"],   bonne: 2, reponse: "Mboa Brass Band, « Grand défilé »",   anecdote: "Onze musiciens, zéro partition.",                   motif: [60, 64, 67, 72, 67, 64, 65, 67], onde: "sawtooth", tempo: 126 },
-    { categorie: "Instrument", question: "Quel instrument tient la mélodie ?",          choix: ["Trompette", "Violon", "Flûte", "Synthétiseur"],                           bonne: 3, reponse: "Pixel Griot, « Code source »",        anecdote: "Le synthé a été construit par l'artiste.",          motif: [72, 74, 76, 79, 76, 74, 72, 67], onde: "square",   tempo: 128 },
-    { categorie: "Scène",      question: "Sur quelle scène joue ce groupe ce soir ?",   choix: ["Le Dock", "La Clairière", "Le Kiosque", "Chapiteau Nuit"],                bonne: 0, reponse: "Dune Électrique, « Mirage »",         anecdote: "Ils ouvrent le Dock à 21h.",                        motif: [57, 60, 64, 63, 60, 57, 55, 57], onde: "sawtooth", tempo: 100 },
-    { categorie: "Tempo",      question: "Ce morceau est plutôt…",                      choix: ["Très lent", "Modéré", "Rapide", "Très rapide"],                           bonne: 2, reponse: "Tanka, « Pas de côté »",              anecdote: "140 battements par minute.",                        motif: [67, 67, 70, 67, 65, 63, 65, 67], onde: "triangle", tempo: 140 },
-    { categorie: "Artiste",    question: "Qui joue ce morceau ?",                        choix: ["Sœur Vinyle", "Bleu Cobalt", "Ama Rise", "Nova Kassa"],                   bonne: 1, reponse: "Bleu Cobalt, « Néon »",               anecdote: "Premier concert du groupe en Afrique centrale.",   motif: [64, 68, 71, 76, 75, 71, 68, 64], onde: "triangle", tempo: 118 },
-    { categorie: "Style",      question: "De quel style s'agit-il ?",                   choix: ["Soul", "Rock", "Fanfare", "Électro"],                                     bonne: 0, reponse: "Ama Rise, « Encore une fois »",       anecdote: "Chanté en trois langues.",                          motif: [60, 63, 67, 70, 68, 67, 63, 60], onde: "sine",     tempo: 80 },
-    { categorie: "Instrument", question: "Quelle percussion entend-on ?",               choix: ["Batterie", "Cajón", "Djembé", "Tambour d'eau"],                           bonne: 2, reponse: "Kalé & les Ondes, « Pluie »",         anecdote: "Le djembé vient d'un atelier de Bafoussam.",        motif: [48, 48, 55, 48, 51, 48, 46, 48], onde: "square",   tempo: 104 },
-    { categorie: "Année",      question: "En quelle année est sorti ce titre ?",        choix: ["1998", "2004", "2011", "2021"],                                           bonne: 1, reponse: "Les Lampadaires, « Rue des Palmiers »", anecdote: "Réédité pour les 20 ans du groupe.",               motif: [62, 66, 69, 74, 73, 69, 66, 62], onde: "sawtooth", tempo: 122 },
-    { categorie: "Artiste",    question: "Quel groupe de l'affiche joue ici ?",         choix: ["Tanka", "Les Lampadaires", "Pixel Griot", "Kalé & les Ondes"],            bonne: 1, reponse: "Les Lampadaires, « Coupure de courant »", anecdote: "Joué pour la première fois à Vimas Quest 2023.",  motif: [59, 62, 66, 71, 69, 66, 64, 62], onde: "sawtooth", tempo: 132 },
-    { categorie: "Style",      question: "De quel style s'agit-il ?",                   choix: ["Psyché", "Dub", "Afro-pop", "Jazz"],                                      bonne: 3, reponse: "Orchestre Minuit, « Swing du port »", anecdote: "Improvisé à 80 % sur scène.",                      motif: [65, 69, 72, 75, 74, 72, 69, 65], onde: "sine",     tempo: 116 },
-    { categorie: "Finale",     question: "Qui clôture le festival dimanche ?",          choix: ["Tanka", "Nova Kassa", "Orchestre Minuit", "Ama Rise"],                    bonne: 0, reponse: "Tanka, « Dernier tour »",             anecdote: "Rendez-vous dimanche à 21h45, Scène Soleil.",      motif: [67, 71, 74, 79, 78, 74, 71, 67], onde: "triangle", tempo: 124 }
+    { categorie: "Artiste",    question: "Qui joue ce morceau ?",                         choix: ["Nova Kassa", "Ama Rise", "Tanka", "Lady Soca"],                                 bonne: 0, reponse: "Nova Kassa, « Lumière du lac »",           anecdote: "Écrit en une nuit sur la rive du lac.",                motif: [64, 67, 69, 67, 64, 62, 60, 62], onde: "triangle", tempo: 112 },
+    { categorie: "Instrument", question: "Quel instrument ouvre ce morceau ?",            choix: ["Balafon", "Kora", "Saxophone", "Guitare électrique"],                         bonne: 1, reponse: "Kalé & les Ondes, « Rive gauche »",        anecdote: "La kora compte ici 21 cordes.",                         motif: [69, 72, 76, 72, 69, 67, 69, 64], onde: "sine",     tempo: 96 },
+    { categorie: "Style",      question: "De quel style s'agit-il ?",                    choix: ["Makossa", "Dub", "Zouk", "Soca"],                                             bonne: 1, reponse: "Ilé Sound System, « Basse fréquence »",    anecdote: "Enregistré avec un seul micro.",                        motif: [45, 45, 52, 45, 48, 45, 43, 45], onde: "square",   tempo: 74 },
+    { categorie: "Année",      question: "En quelle année est sorti ce titre ?",         choix: ["2009", "2014", "2019", "2023"],                                               bonne: 2, reponse: "Roots Mbeng, « Jah au marché »",           anecdote: "Leur premier disque, pressé à 300 exemplaires.",       motif: [62, 65, 69, 72, 71, 67, 64, 62], onde: "sine",     tempo: 88 },
+    { categorie: "Artiste",    question: "Quel groupe de l'affiche joue ici ?",          choix: ["Roots Mbeng", "Lady Soca", "Mboa Brass Band", "Selecta Yard"],                bonne: 2, reponse: "Mboa Brass Band, « Grand défilé »",        anecdote: "Onze musiciens, zéro partition.",                       motif: [60, 64, 67, 72, 67, 64, 65, 67], onde: "sawtooth", tempo: 126 },
+    { categorie: "Instrument", question: "Quel instrument tient la mélodie ?",           choix: ["Trompette", "Violon", "Flûte", "Synthétiseur"],                               bonne: 3, reponse: "Selecta Yard, « Riddim maison »",          anecdote: "Le riddim a été composé sur un synthé fait maison.",   motif: [72, 74, 76, 79, 76, 74, 72, 67], onde: "square",   tempo: 128 },
+    { categorie: "Scène",      question: "Sur quelle scène joue cette artiste samedi ?", choix: ["La Salle Majestic", "Le Yard Reggae", "Le Podium Mode", "Le Sound System"], bonne: 0, reponse: "Lady Soca, « Carnaval »",                  anecdote: "Rendez-vous samedi à 17h30 dans la Salle Majestic.",   motif: [57, 60, 64, 63, 60, 57, 55, 57], onde: "sawtooth", tempo: 100 },
+    { categorie: "Tempo",      question: "Ce morceau est plutôt…",                       choix: ["Très lent", "Modéré", "Rapide", "Très rapide"],                               bonne: 2, reponse: "Tanka, « Pas de côté »",                   anecdote: "140 battements par minute.",                            motif: [67, 67, 70, 67, 65, 63, 65, 67], onde: "triangle", tempo: 140 },
+    { categorie: "Artiste",    question: "Qui joue ce morceau ?",                         choix: ["Sœur Vinyle", "Selecta Yard", "Roots Mbeng", "Kalé & les Ondes"],             bonne: 2, reponse: "Roots Mbeng, « Rue des Palmiers »",        anecdote: "Chanté en trois langues sur le même refrain.",          motif: [64, 68, 71, 76, 75, 71, 68, 64], onde: "triangle", tempo: 118 },
+    { categorie: "Style",      question: "De quel style s'agit-il ?",                    choix: ["Zouk", "Reggae", "Fanfare", "Dancehall"],                                     bonne: 0, reponse: "Ama Rise, « Encore une fois »",            anecdote: "Un chœur de huit voix sur le refrain.",                 motif: [60, 63, 67, 70, 68, 67, 63, 60], onde: "sine",     tempo: 80 },
+    { categorie: "Instrument", question: "Quelle percussion entend-on ?",                choix: ["Batterie", "Cajón", "Djembé", "Tambour d'eau"],                               bonne: 2, reponse: "Kalé & les Ondes, « Pluie »",              anecdote: "Le djembé vient d'un atelier de Bafoussam.",            motif: [48, 48, 55, 48, 51, 48, 46, 48], onde: "square",   tempo: 104 },
+    { categorie: "Année",      question: "En quelle année est sorti ce titre ?",         choix: ["1998", "2004", "2011", "2021"],                                               bonne: 1, reponse: "Sœur Vinyle, « Ska du samedi »",           anecdote: "Un 45 tours retrouvé chez un disquaire de Mokolo.",     motif: [62, 66, 69, 74, 73, 69, 66, 62], onde: "sawtooth", tempo: 122 },
+    { categorie: "Artiste",    question: "Quel groupe de l'affiche joue ici ?",          choix: ["Tanka", "Roots Mbeng", "Selecta Yard", "Kalé & les Ondes"],                   bonne: 3, reponse: "Kalé & les Ondes, « Coupure de courant »", anecdote: "Joué pour la première fois en 2023.",                   motif: [59, 62, 66, 71, 69, 66, 64, 62], onde: "sawtooth", tempo: 132 },
+    { categorie: "Style",      question: "De quel style s'agit-il ?",                    choix: ["Soca", "Dub", "Afro-pop", "Kompa"],                                           bonne: 0, reponse: "Lady Soca, « Drapeaux »",                  anecdote: "Écrit pour le carnaval de Port of Spain.",              motif: [65, 69, 72, 75, 74, 72, 69, 65], onde: "sine",     tempo: 116 },
+    { categorie: "Finale",     question: "Qui clôture le festival dimanche ?",           choix: ["Tanka", "Nova Kassa", "Ama Rise", "Roots Mbeng"],                              bonne: 0, reponse: "Tanka, « Dernier tour »",                  anecdote: "Rendez-vous dimanche à 20h30, Grande Scène.",           motif: [67, 71, 74, 79, 78, 74, 71, 67], onde: "triangle", tempo: 124 }
   ],
 
   quizDemo: {
@@ -366,10 +362,10 @@ window.MOCK = {
   ],
 
   bandeau: [
-    "Blind test chaque soir à 21h30",
-    "Des QR codes cachés sur tout le site",
-    "Classement en direct sur l'écran géant",
-    "Votes ouverts pour ton stand préféré",
+    "Reggae, dancehall, zouk et soca tout le week-end",
+    "Défilé mode et battle de danse sur le Podium",
+    "Des QR codes cachés entre les stands",
+    "Blind test géant à 17h sur la Grande Scène",
     "Lots à retirer au stand Vimas Quest"
   ],
 
@@ -439,21 +435,21 @@ window.MOCK = {
     { id: "m1",  titre: "Tournée des scènes",    categorie: "musique",     action: "scanner",    objectif: 3,  xp: 150, jetons: 3,
       texte: "Assiste à 3 concerts sur 3 scènes différentes et scanne le QR de chaque scène." },
     { id: "m2",  titre: "La relique",            categorie: "exploration", action: "scanner",    objectif: 1,  xp: 200, jetons: 5, lieu: "soleil",
-      texte: "Une relique est cachée près de la Scène Soleil. À toi de la trouver." },
+      texte: "Une relique est cachée près de la Grande Scène. À toi de la trouver." },
     { id: "m3",  titre: "Gourmet du festival",   categorie: "gourmand",    action: "scanner",    objectif: 4,  xp: 80,  jetons: 2,
       texte: "Scanne le QR de 4 food-trucks différents." },
     { id: "m4",  titre: "Chasseur de dédicaces", categorie: "musique",     action: "staff",      objectif: 1,  xp: 250, jetons: 5, lieu: "kiosque",
       texte: "Passe à la séance de dédicaces et fais valider ta mission par l'équipe sur place." },
     { id: "m5",  titre: "Première note",         categorie: "exploration", action: "scanner",    objectif: 1,  xp: 30,  jetons: 1, lieu: "soleil",
-      texte: "Scanne le QR de la Scène Soleil." },
-    { id: "m6",  titre: "Défi éclair : le Dock", categorie: "defi",        action: "scanner",    objectif: 1,  xp: 120, jetons: 4, lieu: "dock",
-      texte: "Scanne le QR du Dock avant 21h.", jour: "sam", finHeure: "21:00" },
+      texte: "Scanne le QR de la Grande Scène." },
+    { id: "m6",  titre: "Défi éclair : la Salle Majestic", categorie: "defi", action: "scanner", objectif: 1,  xp: 120, jetons: 4, lieu: "dock",
+      texte: "Scanne le QR de la Salle Majestic avant 18h.", jour: "sam", finHeure: "18:00" },
     { id: "m7",  titre: "Oreille absolue",       categorie: "musique",     action: "blind-test", objectif: 10, xp: 300, jetons: 8, rangMin: "Groupie",
       texte: "Donne 10 bonnes réponses au blind test géant." },
     { id: "m8",  titre: "Jury du festival",      categorie: "social",      action: "votes",      objectif: 3,  xp: 60,  jetons: 2,
       texte: "Vote pour 3 stands dans les Coups de cœur." },
-    { id: "m9",  titre: "Échauffement",          categorie: "defi",        action: "staff",      objectif: 1,  xp: 100, jetons: 2, lieu: "soleil",
-      texte: "Danse devant la Scène Soleil et fais valider par un bénévole en gilet jaune." },
+    { id: "m9",  titre: "Échauffement",          categorie: "defi",        action: "staff",      objectif: 1,  xp: 100, jetons: 2, lieu: "kiosque",
+      texte: "Danse devant le Podium Mode et fais valider par un bénévole en gilet jaune." },
     { id: "m10", titre: "Bien hydraté",          categorie: "exploration", action: "scanner",    objectif: 2,  xp: 40,  jetons: 1,
       texte: "Scanne le QR de 2 points d'eau différents." }
   ],
@@ -468,7 +464,7 @@ window.MOCK = {
 
   /* Tournoi du jour : meilleur score de la veille (en base : roi_veille(),
      table tournament_kings). Affiché à partir du 2e jour. */
-  roiVeille: { pseudo: "Kora_77", points: 1240, jour: "vendredi" },
+  roiVeille: { pseudo: "Kora_77", points: 1240, jour: "samedi" },
 
   /* Progression simulée d'un joueur. Futur : GET /api/joueurs/moi/carte */
   etatsJoueur: {
@@ -477,38 +473,39 @@ window.MOCK = {
       jour: { scans: 7, xp: 320 },
       favoris: ["a1", "a6", "a7", "a12", "a11", "a9"],
       progression: { m1: 2, m3: 1, m2: 0, m4: 0, m5: 1, m9: 1, m8: 1, m10: 0 },
-      terminees: { m5: { heure: "17:02" }, m9: { heure: "18:15", par: "Awa, équipe Vimas Quest" } },
+      terminees: { m5: { heure: "11:02" }, m9: { heure: "15:15", par: "Awa, équipe Vimas Quest" } },
       collection: {
         badges: {
-          "b-premiere-note": { jour: "2026-11-27", heure: "17:02" },
-          "b-leve-tot":      { jour: "2026-11-27", heure: "16:40" },
-          "b-noctambule":    { jour: "2026-11-28", heure: "00:48" },
-          "b-curieux":       { jour: "2026-11-27", heure: "21:15" },
-          "b-echauffement":  { jour: "2026-11-28", heure: "18:15" },
-          "b-oreille-or":    { jour: "2026-11-28", heure: "19:05" }
+          "b-premiere-note": { jour: "2026-12-26", heure: "11:02" },
+          "b-leve-tot":      { jour: "2026-12-26", heure: "10:40" },
+          "b-noctambule":    { jour: "2026-12-26", heure: "20:48" },
+          "b-curieux":       { jour: "2026-12-26", heure: "16:15" },
+          "b-echauffement":  { jour: "2026-12-26", heure: "15:15" },
+          "b-oreille-or":    { jour: "2026-12-26", heure: "17:20" }
         },
         artistes: {
-          a3: { jour: "2026-11-27", heure: "18:10" },
-          a2: { jour: "2026-11-27", heure: "20:30" },
-          a4: { jour: "2026-11-28", heure: "00:48" },
-          a5: { jour: "2026-11-28", heure: "19:12", dedicace: true }
+          a3: { jour: "2026-12-26", heure: "11:10" },
+          a2: { jour: "2026-12-26", heure: "14:30" },
+          a5: { jour: "2026-12-26", heure: "16:12" },
+          a1: { jour: "2026-12-26", heure: "18:40", dedicace: true },
+          a4: { jour: "2026-12-26", heure: "19:48" }
         },
         stands: {
-          "st-kora":      { jour: "2026-11-28", heure: "20:12" },
-          "st-radio":     { jour: "2026-11-27", heure: "17:20" },
-          "st-brasserie": { jour: "2026-11-27", heure: "19:45" },
-          "st-braise":    { jour: "2026-11-28", heure: "19:48" },
-          "st-quest": { jour: "2026-11-27", heure: "16:40" }
+          "st-kora":      { jour: "2026-12-26", heure: "14:12" },
+          "st-radio":     { jour: "2026-12-26", heure: "12:20" },
+          "st-brasserie": { jour: "2026-12-26", heure: "13:45" },
+          "st-braise":    { jour: "2026-12-26", heure: "13:48" },
+          "st-quest":     { jour: "2026-12-26", heure: "10:40" }
         },
         reliques: {
-          "QR-REL-02": { jour: "2026-11-27", heure: "22:05" }
+          "QR-REL-02": { jour: "2026-12-26", heure: "15:05" }
         }
       },
       activite: [
-        { heure: "20:12", type: "scan",    texte: "Stand Maison Kora",                    xp: 20 },
-        { heure: "19:48", type: "mission", texte: "Gourmet du festival, 1 sur 4",         xp: 20 },
-        { heure: "19:05", type: "badge",   texte: "Badge Oreille d'or débloqué",          xp: 50 },
-        { heure: "18:40", type: "scan",    texte: "Scène La Clairière",                   xp: 30 }
+        { heure: "14:12", type: "scan",    texte: "Stand Maison Kora",                    xp: 20 },
+        { heure: "13:48", type: "mission", texte: "Gourmet du festival, 1 sur 4",         xp: 20 },
+        { heure: "12:40", type: "scan",    texte: "Scène Le Yard Reggae",                 xp: 30 },
+        { heure: "12:05", type: "scan",    texte: "Stand Radio Écho",                     xp: 20 }
       ]
     },
     debutant: {
@@ -527,25 +524,25 @@ window.MOCK = {
   /* Annonces (page 15). niveau : urgent | important | info ; type : meteo | horaire | surprise | securite | jeu | pratique
      jour + heure = publication ; fin = fin de validité (même jour, ou le lendemain si avant 8h). */
   annonces: [
-    { id: "n1", niveau: "urgent", type: "meteo", jour: "sam", heure: "19:55", fin: "23:59",
-      titre: "Risque d'orage vers 23h", texte: "Abris ouverts près de La Clairière et du Dock. Suis les consignes des bénévoles.",
+    { id: "n1", niveau: "important", type: "meteo", jour: "sam", heure: "15:55", fin: "18:00",
+      titre: "Averse possible vers 18h", texte: "En cas de pluie, abris ouverts près du Yard Reggae et dans le hall du Majestic. Suis les consignes des bénévoles.",
       lien: { href: "plan.html?lieu=abri-1", libelle: "Voir les abris" }, lu: false },
-    { id: "n5", niveau: "important", type: "jeu", jour: "sam", heure: "20:00", fin: "21:00",
-      titre: "Défi éclair : le Dock", texte: "Scanne le QR du Dock avant 21h pour gagner 120 XP et 4 jetons.",
-      lien: { href: "missions.html#m6", libelle: "Voir le défi" }, lu: false },
-    { id: "n4", niveau: "important", type: "horaire", jour: "sam", heure: "19:45",
-      titre: "Dédicaces d'Ama Rise prolongées", texte: "La séance continue jusqu'à 20h30 à la tente dédicaces, près du Kiosque.",
+    { id: "n5", niveau: "important", type: "jeu", jour: "sam", heure: "16:00", fin: "17:00",
+      titre: "Blind test géant à 17h", texte: "Rendez-vous devant l'écran de la Grande Scène : 15 questions, des jetons pour le top 10.",
+      lien: { href: "blind-test.html", libelle: "Préparer mon téléphone" }, lu: false },
+    { id: "n4", niveau: "important", type: "horaire", jour: "sam", heure: "16:10", fin: "19:15",
+      titre: "Dédicaces de Nova Kassa à 18h30", texte: "La séance a lieu à la tente dédicaces, près du Podium Mode. Arrive 15 minutes avant.",
       lien: { href: "plan.html?lieu=dedicaces", libelle: "Y aller" }, lu: true },
-    { id: "n2", niveau: "info", type: "surprise", jour: "sam", heure: "19:30", fin: "22:35",
-      titre: "Session surprise au Kiosque", texte: "Mboa Brass Band rejoue 20 minutes à 22h15.",
-      lien: { href: "plan.html?lieu=kiosque", libelle: "Voir le Kiosque" }, lu: false },
-    { id: "n3", niveau: "info", type: "pratique", jour: "sam", heure: "17:10",
-      titre: "Nouveau point d'eau", texte: "Un point d'eau gratuit est ouvert derrière la Scène Soleil.",
+    { id: "n2", niveau: "info", type: "surprise", jour: "sam", heure: "15:30", fin: "17:05",
+      titre: "Défilé prolongé sur le Podium", texte: "Les créateurs des stands refont un passage de 15 minutes à 16h45.",
+      lien: { href: "plan.html?lieu=kiosque", libelle: "Voir le Podium Mode" }, lu: false },
+    { id: "n3", niveau: "info", type: "pratique", jour: "sam", heure: "11:10",
+      titre: "Nouveau point d'eau", texte: "Un point d'eau gratuit est ouvert derrière la Grande Scène.",
       lien: { href: "plan.html?lieu=eau-1", libelle: "Voir sur le plan" }, lu: true },
-    { id: "n6", niveau: "info", type: "pratique", jour: "ven", heure: "23:40", fin: "03:30",
-      titre: "Navette supplémentaire à 3h30", texte: "Une dernière navette part vers la gare routière à 3h30.", lu: true },
-    { id: "n7", niveau: "important", type: "surprise", jour: "ven", heure: "18:00", fin: "23:00",
-      titre: "La relique n°7 est de retour", texte: "Cherche du côté de la Scène Soleil…", lu: true }
+    { id: "n6", niveau: "info", type: "pratique", jour: "sam", heure: "10:30", fin: "22:30",
+      titre: "Navette supplémentaire à 22h30", texte: "Une dernière navette part vers la gare routière à 22h30, les deux soirs.", lu: true },
+    { id: "n7", niveau: "important", type: "surprise", jour: "sam", heure: "13:00", fin: "20:00",
+      titre: "La relique n°7 est de retour", texte: "Cherche du côté de la Grande Scène…", lu: true }
   ],
 
   typesAnnonces: {
@@ -574,15 +571,15 @@ window.MOCK = {
     ],
     retrait: {
       lieu: "Stand Vimas Quest, entrée principale",
-      horaires: "Tous les jours de 16h à 23h",
-      limite: { jour: "dim", heure: "23:00" }
+      horaires: "Samedi et dimanche de 10h à 21h30",
+      limite: { jour: "dim", heure: "21:30" }
     }
   },
   /* Bons déjà obtenus par le joueur de démo */
   bonsDeBase: {
     j1: [
-      { code: "BON-7Q2K-41", lot: "lot-boisson",   statut: "retire",    creeLe: { jour: "2026-11-27", heure: "20:02" }, retireLe: { jour: "2026-11-27", heure: "20:10" }, par: "Awa" },
-      { code: "BON-3M8D-17", lot: "lot-casquette", statut: "a-retirer", creeLe: { jour: "2026-11-28", heure: "19:40" } }
+      { code: "BON-7Q2K-41", lot: "lot-boisson",   statut: "retire",    creeLe: { jour: "2026-12-26", heure: "15:02" }, retireLe: { jour: "2026-12-26", heure: "15:10" }, par: "Awa" },
+      { code: "BON-3M8D-17", lot: "lot-casquette", statut: "a-retirer", creeLe: { jour: "2026-12-26", heure: "14:40" } }
     ]
   },
 
@@ -591,19 +588,19 @@ window.MOCK = {
      pctJoueurs : part des joueurs qui possèdent le badge (calculée par le serveur) */
   badges: [
     { id: "b-premiere-note", nom: "Première note",  texte: "Scanner ton premier QR de scène.",                 rarete: "commun",     forme: "rond",    icone: "onde",     pctJoueurs: 91, lien: "scanner.html" },
-    { id: "b-leve-tot",      nom: "Lève-tôt",       texte: "Scanner un QR avant 17h.",                         rarete: "commun",     forme: "hexa",    icone: "horloge",  pctJoueurs: 44, lien: "scanner.html" },
+    { id: "b-leve-tot",      nom: "Lève-tôt",       texte: "Scanner un QR avant midi.",                         rarete: "commun",     forme: "hexa",    icone: "horloge",  pctJoueurs: 44, lien: "scanner.html" },
     { id: "b-curieux",       nom: "Curieux",        texte: "Scanner 5 stands différents.",                     rarete: "commun",     forme: "rond",    icone: "plan",     pctJoueurs: 38, lien: "plan.html" },
     { id: "b-echauffement",  nom: "Échauffement",   texte: "Réussir la mission Échauffement.",                 rarete: "commun",     forme: "hexa",    icone: "eclair",   pctJoueurs: 27, lien: "missions.html#m9" },
     { id: "b-gourmet",       nom: "Gourmet",        texte: "Terminer la mission Gourmet du festival.",         rarete: "rare",       forme: "rond",    icone: "couverts", pctJoueurs: 22, lien: "missions.html#m3" },
     { id: "b-tournee",       nom: "En tournée",     texte: "Terminer la mission Tournée des scènes.",          rarete: "rare",       forme: "etoile",  icone: "micro",    pctJoueurs: 19, lien: "missions.html#m1" },
-    { id: "b-noctambule",    nom: "Noctambule",     texte: "Scanner une scène pendant un concert après minuit.", rarete: "rare",     forme: "ecusson", icone: "etoile",   pctJoueurs: 17, lien: "programme.html" },
+    { id: "b-noctambule",    nom: "Jusqu'au bout",  texte: "Scanner une scène pendant le dernier concert de la journée.", rarete: "rare",     forme: "ecusson", icone: "etoile",   pctJoueurs: 17, lien: "programme.html" },
     { id: "b-jury",          nom: "Jury",           texte: "Voter pour 3 stands dans les Coups de cœur.",      rarete: "commun",     forme: "ecusson", icone: "coeur",    pctJoueurs: 31, lien: "coups-de-coeur.html" },
     { id: "b-fouineur",      nom: "Fouineur",       texte: "Trouver une relique.",                            rarete: "epique",     forme: "etoile",  icone: "cible",    pctJoueurs: 9,  lien: "collection.html" },
     { id: "b-autographe",    nom: "Autographe",     texte: "Rencontrer un artiste en séance de dédicaces.",    rarete: "epique",     forme: "ecusson", icone: "etoile",   pctJoueurs: 7,  lien: "missions.html#m4" },
     { id: "b-oreille-or",    nom: "Oreille d'or",   texte: "Finir dans le top 10 d'une manche du blind test.", rarete: "epique",     forme: "etoile",  icone: "micro",    pctJoueurs: 5,  lien: "blind-test.html" },
-    { id: "b-marathon",      nom: "Marathonien",    texte: "Scanner au moins un QR chacun des 4 jours.",       rarete: "rare",       forme: "hexa",    icone: "calendrier", pctJoueurs: 12, lien: "scanner.html" },
+    { id: "b-marathon",      nom: "Marathonien",    texte: "Scanner au moins un QR les deux jours.",       rarete: "rare",       forme: "hexa",    icone: "calendrier", pctJoueurs: 12, lien: "scanner.html" },
     { id: "b-podium",        nom: "Podium",         texte: "Finir une journée dans le top 3 du classement.",   rarete: "legendaire", forme: "etoile",  icone: "trophee",  pctJoueurs: 1,  lien: "classement.html" },
-    { id: "b-secret-1",      nom: "Sous les étoiles", texte: "Être là au bon moment, au bon endroit.",         rarete: "legendaire", forme: "rond",    icone: "etoile",   pctJoueurs: 2,  secret: true },
+    { id: "b-secret-1",      nom: "Sous le soleil", texte: "Être là au bon moment, au bon endroit.",         rarete: "legendaire", forme: "rond",    icone: "etoile",   pctJoueurs: 2,  secret: true },
     { id: "b-secret-2",      nom: "Backstage",      texte: "Quelqu'un en coulisses détient la clé.",           rarete: "epique",     forme: "ecusson", icone: "cadenas",  pctJoueurs: 3,  secret: true }
   ],
 
@@ -616,15 +613,15 @@ window.MOCK = {
 
   stands: [
     { id: "st-kora",      nom: "Maison Kora",        type: "stand",     qr: "QR-KORA",     zone: "Allée des artisans" },
-    { id: "st-radio",     nom: "Radio Écho",         type: "stand",     qr: "QR-RADIO",    zone: "Près de la Scène Soleil" },
+    { id: "st-radio",     nom: "Radio Écho",         type: "stand",     qr: "QR-RADIO",    zone: "Près de la Grande Scène" },
     { id: "st-brasserie", nom: "Brasserie du Port",  type: "stand",     qr: "QR-BRASS",    zone: "Bar central" },
     { id: "st-telco",     nom: "Salon Telco+",       type: "stand",     qr: "QR-TELCO",    zone: "Entrée nord" },
-    { id: "st-fraicheur", nom: "Fraîcheur Lab",      type: "stand",     qr: "QR-FRAICH",   zone: "Derrière Le Dock" },
+    { id: "st-fraicheur", nom: "Fraîcheur Lab",      type: "stand",     qr: "QR-FRAICH",   zone: "Derrière la Salle Majestic" },
     { id: "st-quest", nom: "Stand Vimas Quest",    type: "stand",     qr: "QR-RSN",      zone: "Entrée principale" },
     { id: "st-yassa",     nom: "Chez Yassa",         type: "foodtruck", qr: "QR-FT-YASSA", zone: "Village food" },
     { id: "st-braise",    nom: "Le Braisé",          type: "foodtruck", qr: "QR-FT-BRAISE", zone: "Village food" },
     { id: "st-sucre",     nom: "Sucre & Sel",        type: "foodtruck", qr: "QR-FT-SUCRE", zone: "Village food" },
-    { id: "st-plantain",  nom: "Plantain Express",   type: "foodtruck", qr: "QR-FT-PLANT", zone: "Près de La Clairière" }
+    { id: "st-plantain",  nom: "Plantain Express",   type: "foodtruck", qr: "QR-FT-PLANT", zone: "Près du Yard Reggae" }
   ],
 
   /* ---------- Coups de cœur (page 13) ----------
@@ -633,7 +630,7 @@ window.MOCK = {
   votesConfig: {
     coeurs: 3,
     cloture: { jour: "dim", heure: "20:00" },
-    resultats: "Dimanche à 22h sur l'écran géant de la Scène Soleil"
+    resultats: "Dimanche à 20h15 sur l'écran géant de la Grande Scène"
   },
   /* Totaux simulés des autres festivaliers (futur : GET /api/votes/tendances) */
   votesTendances: {
@@ -668,11 +665,11 @@ window.MOCK = {
      Le code court (sous le QR) permet la saisie manuelle.
      Futur : POST /api/scans { code } — la liste complète ne sera jamais envoyée au téléphone. */
   qrcodes: [
-    { code: "QR-SOLEIL",   court: "SOL-4821", type: "scene",     nom: "Scène Soleil",          xp: 30,  jetons: 1, lieu: "soleil",    missions: ["m5", "m1"] },
-    { code: "QR-DOCK",     court: "DCK-3307", type: "scene",     nom: "Le Dock",               xp: 30,  jetons: 1, lieu: "dock",      missions: ["m1", "m6"] },
+    { code: "QR-SOLEIL",   court: "SOL-4821", type: "scene",     nom: "Grande Scène",          xp: 30,  jetons: 1, lieu: "soleil",    missions: ["m5", "m1"] },
+    { code: "QR-DOCK",     court: "DCK-3307", type: "scene",     nom: "La Salle Majestic",     xp: 30,  jetons: 1, lieu: "dock",      missions: ["m1", "m6"] },
     { code: "QR-RADIO",    court: "RAD-5510", type: "stand",     nom: "Stand Radio Écho",      xp: 20,  jetons: 1 },
     { code: "QR-FT-BRAISE", court: "BRA-7781", type: "foodtruck", nom: "Food-truck Le Braisé",  xp: 15,  jetons: 0, missions: ["m3"] },
-    { code: "QR-EAU-1",    court: "EAU-1001", type: "service",   nom: "Point d'eau Soleil",    xp: 10,  jetons: 0, missions: ["m10"] },
+    { code: "QR-EAU-1",    court: "EAU-1001", type: "service",   nom: "Point d'eau Grande Scène", xp: 10,  jetons: 0, missions: ["m10"] },
     { code: "QR-KORA",     court: "KOR-1150", type: "stand",     nom: "Stand Maison Kora",     xp: 20,  jetons: 1 },
     { code: "QR-FT-YASSA", court: "YAS-6624", type: "foodtruck", nom: "Food-truck Chez Yassa", xp: 15,  jetons: 0, missions: ["m3"] },
     { code: "QR-CACHE-07", court: "CAC-0707", type: "relique",   nom: "Le vinyle d'or",        xp: 150, jetons: 5, missions: ["m2"],
@@ -680,11 +677,11 @@ window.MOCK = {
       badge: { id: "b-fouineur", nom: "Fouineur", texte: "Trouver une relique" } },
     { code: "QR-REL-02",   court: "REL-0202", type: "relique",   nom: "La baguette du chef",   xp: 75,  jetons: 2,
       rarete: "commune", indice: "Elle attend près de ceux qui nourrissent le festival." },
-    { code: "QR-REL-03",   court: "REL-0303", type: "relique",   nom: "Le micro de 2010",      xp: 300, jetons: 8,
-      rarete: "legendaire", indice: "Quinze ans de festival la regardent depuis la plus haute marche." },
+    { code: "QR-REL-03",   court: "REL-0303", type: "relique",   nom: "La première bobine",    xp: 300, jetons: 8,
+      rarete: "legendaire", indice: "Le Majestic l'a projetée avant toi, tout en haut des marches." },
     { code: "QR-DEDI-AMA", court: "AMA-2026", type: "dedicace",  nom: "Dédicace d'Ama Rise",   xp: 100, jetons: 2, artiste: "a7",
       badge: { id: "b-autographe", nom: "Autographe", texte: "Rencontrer un artiste" } },
-    { code: "QR-FEU",      court: "FEU-2345", type: "surprise",  nom: "Feu d'artifice",        xp: 80,  jetons: 3, actifDes: "23:45" }
+    { code: "QR-FEU",      court: "FEU-2345", type: "surprise",  nom: "Parade de clôture",     xp: 80,  jetons: 3, actifDes: "21:45" }
   ],
 
   typesQR: {
@@ -699,5 +696,5 @@ window.MOCK = {
 
   /* create_player ne donne ni XP ni jetons de départ : le joueur commence à zéro,
      comme sur Otaku. Seule la première mission est affichée pour le lancer. */
-  bonusBienvenue: { xp: 0, jetons: 0, rang: "Spectateur", premiereMission: "Scanne le QR de la Scène Soleil" }
+  bonusBienvenue: { xp: 0, jetons: 0, rang: "Spectateur", premiereMission: "Scanne le QR de la Grande Scène" }
 };

@@ -64,7 +64,7 @@ insert into public.badges (name, icon, description, rarete, forme, secret, lien)
 on conflict (name) do nothing;
 
 -- ----------------------------------------------------------------------------
--- Banque de questions du coffre (étape 6.3 bis, QUESTIONS-DOMAF.md)
+-- Banque de questions du coffre (étape 6.3 bis, QUESTIONS-VIMAS.md)
 -- ----------------------------------------------------------------------------
 -- Posées une par une après un scan réussi : l'XP du scan attend la réponse.
 -- Réponses en listes fermées : le joueur ne tape rien. Les valeurs ne
@@ -78,11 +78,11 @@ insert into public.micro_questions (id, ordre, code, theme, moment, chaque_jour,
   'Tu es venu comment aujourd''hui ?',
   '[{"valeur": "a-pied", "libelle": "À pied"}, {"valeur": "moto-taxi", "libelle": "Moto-taxi"}, {"valeur": "taxi", "libelle": "Taxi"}, {"valeur": "voiture-personnelle", "libelle": "Voiture personnelle"}, {"valeur": "bus", "libelle": "Bus"}]'::jsonb),
  (2, 2, 'S2', 'venue', 'toujours', false, false, 'choix',
-  'Tu as connu le DOMAF comment ?',
+  'Tu as connu le VIMAS FEST comment ?',
   '[{"valeur": "un-ami-m-en-a-parle", "libelle": "Un ami m''en a parlé"}, {"valeur": "facebook-ou-instagram", "libelle": "Facebook ou Instagram"}, {"valeur": "tiktok", "libelle": "TikTok"}, {"valeur": "whatsapp", "libelle": "WhatsApp"}, {"valeur": "radio-ou-tele", "libelle": "Radio ou télé"}, {"valeur": "une-affiche", "libelle": "Une affiche"}, {"valeur": "autrement", "libelle": "Autrement", "bas": true}]'::jsonb),
- (3, 3, 'S3', 'venue', 'toujours', false, true, 'choix',
-  'C''est ton combientième DOMAF ?',
-  '[{"valeur": "mon-tout-premier", "libelle": "Mon tout premier"}, {"valeur": "le-2e-ou-le-3e", "libelle": "Le 2e ou le 3e"}, {"valeur": "je-viens-presque-chaque-", "libelle": "Je viens presque chaque année"}]'::jsonb),
+ (3, 3, 'S3', 'venue', 'toujours', false, false, 'choix',
+  'Tu es venu surtout pour…',
+  '[{"valeur": "les-concerts", "libelle": "Les concerts"}, {"valeur": "la-mode-et-les-stands", "libelle": "La mode et les stands"}, {"valeur": "la-danse", "libelle": "La danse"}, {"valeur": "accompagner-quelqu-un", "libelle": "Accompagner quelqu''un"}, {"valeur": "tout-le-festival", "libelle": "Tout le festival", "bas": true}]'::jsonb),
  (4, 4, 'S4', 'venue', 'toujours', false, false, 'choix',
   'Tu es venu avec qui ?',
   '[{"valeur": "seul", "libelle": "Seul"}, {"valeur": "avec-des-amis", "libelle": "Avec des amis"}, {"valeur": "en-couple", "libelle": "En couple"}, {"valeur": "en-famille", "libelle": "En famille"}, {"valeur": "avec-des-collegues", "libelle": "Avec des collègues"}]'::jsonb),
@@ -159,7 +159,7 @@ insert into public.micro_questions (id, ordre, code, theme, moment, chaque_jour,
   'Tu manges quoi au festival ?',
   '[{"valeur": "grillades-soya", "libelle": "Grillades / soya"}, {"valeur": "plats-locaux", "libelle": "Plats locaux"}, {"valeur": "fast-food", "libelle": "Fast-food"}, {"valeur": "rien-je-mange-avant", "libelle": "Rien, je mange avant", "bas": true}]'::jsonb),
  (29, 29, 'S31', 'profil', 'toujours', false, true, 'choix',
-  'Tu vis à Douala depuis…',
+  'Tu vis à Yaoundé depuis…',
   '[{"valeur": "toujours", "libelle": "Toujours"}, {"valeur": "plus-de-5-ans", "libelle": "Plus de 5 ans"}, {"valeur": "moins-de-5-ans", "libelle": "Moins de 5 ans"}, {"valeur": "je-n-y-vis-pas", "libelle": "Je n''y vis pas"}]'::jsonb),
  (30, 30, 'S32', 'profil', 'toujours', false, false, 'choix',
   'À la maison, tu parles surtout…',
@@ -175,7 +175,7 @@ insert into public.micro_questions (id, ordre, code, theme, moment, chaque_jour,
   '[]'::jsonb),
  (34, 34, 'N3', 'soir', 'soir', true, false, 'choix',
   'Ce qui t''a le plus plu aujourd''hui ?',
-  '[{"valeur": "la-musique", "libelle": "La musique"}, {"valeur": "l-ambiance", "libelle": "L''ambiance"}, {"valeur": "le-jeu-domaf-quest", "libelle": "Le jeu DOMAF Quest"}, {"valeur": "la-nourriture", "libelle": "La nourriture"}, {"valeur": "l-organisation", "libelle": "L''organisation"}, {"valeur": "les-rencontres", "libelle": "Les rencontres"}]'::jsonb),
+  '[{"valeur": "la-musique", "libelle": "La musique"}, {"valeur": "l-ambiance", "libelle": "L''ambiance"}, {"valeur": "le-jeu-vimas-quest", "libelle": "Le jeu Vimas Quest"}, {"valeur": "la-nourriture", "libelle": "La nourriture"}, {"valeur": "l-organisation", "libelle": "L''organisation"}, {"valeur": "les-rencontres", "libelle": "Les rencontres"}]'::jsonb),
  (35, 35, 'N4', 'soir', 'soir', true, true, 'choix',
   'L''attente à l''entrée ?',
   '[{"valeur": "rapide", "libelle": "Rapide"}, {"valeur": "correcte", "libelle": "Correcte"}, {"valeur": "trop-longue", "libelle": "Trop longue"}]'::jsonb),
@@ -195,10 +195,10 @@ insert into public.micro_questions (id, ordre, code, theme, moment, chaque_jour,
   'Ce qu''on doit améliorer en priorité ?',
   '[{"valeur": "plus-de-stands", "libelle": "Plus de stands"}, {"valeur": "moins-d-attente", "libelle": "Moins d''attente"}, {"valeur": "plus-d-activites", "libelle": "Plus d''activités"}, {"valeur": "plus-de-place", "libelle": "Plus de place"}, {"valeur": "la-nourriture", "libelle": "La nourriture"}, {"valeur": "rien-c-etait-bien", "libelle": "Rien, c''était bien", "bas": true}]'::jsonb),
  (41, 41, 'N10', 'soir', 'soir', false, true, 'choix',
-  'Conseillerais-tu DOMAF Quest à un ami ? (0 = pas du tout, 10 = carrément)',
+  'Conseillerais-tu Vimas Quest à un ami ? (0 = pas du tout, 10 = carrément)',
   '[{"valeur": "0", "libelle": "0"}, {"valeur": "1", "libelle": "1"}, {"valeur": "2", "libelle": "2"}, {"valeur": "3", "libelle": "3"}, {"valeur": "4", "libelle": "4"}, {"valeur": "5", "libelle": "5"}, {"valeur": "6", "libelle": "6"}, {"valeur": "7", "libelle": "7"}, {"valeur": "8", "libelle": "8"}, {"valeur": "9", "libelle": "9"}, {"valeur": "10", "libelle": "10"}]'::jsonb),
  (42, 42, 'N11', 'soir', 'soir', false, true, 'choix',
-  'Tu reviendras au DOMAF l''an prochain ?',
+  'Tu reviendras au VIMAS FEST l''an prochain ?',
   '[{"valeur": "oui-sur", "libelle": "Oui, sûr"}, {"valeur": "peut-etre", "libelle": "Peut-être"}, {"valeur": "non", "libelle": "Non"}]'::jsonb)
 on conflict (id) do nothing;
 

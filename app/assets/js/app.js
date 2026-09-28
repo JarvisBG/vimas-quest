@@ -932,7 +932,7 @@
       return {
         phase: "EXPLORATION",
         top,
-        roi: { pseudo: noms.debut[2] + noms.fin[5], points: 1620 },
+        roi: App.jourFestival() > window.MOCK.jours[0].date ? { pseudo: noms.debut[2] + noms.fin[5], points: 1620 } : null,   // pas de roi le 1er jour
         joueurs: cfg.general.total + Math.floor(minutes / 2),
         joueursJour: c.total + Math.floor(minutes / 3),
         scansJour: 21400 + minutes * 37 + Math.floor(graine(tranche) * 30),
@@ -1539,9 +1539,9 @@
     async demoNouvelleAnnonce() {
       await attendre(200);
       const exemples = [
-        { niveau: "info", type: "surprise", titre: "Jam session au Kiosque", texte: "Des musiciens du festival improvisent ensemble pendant 30 minutes.", lien: { href: "plan.html?lieu=kiosque", libelle: "Voir le Kiosque" } },
+        { niveau: "info", type: "surprise", titre: "Battle surprise au Podium", texte: "Les danseurs du festival s'affrontent pendant 30 minutes, le public vote.", lien: { href: "plan.html?lieu=kiosque", libelle: "Voir le Podium Mode" } },
         { niveau: "important", type: "horaire", titre: "Changement d'horaire", texte: "Le set de Sœur Vinyle commence 15 minutes plus tôt.", lien: { href: "programme.html#a8", libelle: "Voir le concert" } },
-        { niveau: "urgent", type: "securite", titre: "Accès Dock fermé", texte: "L'accès au Dock par l'allée des artisans est fermé. Passe par le Kiosque.", lien: { href: "plan.html?lieu=dock", libelle: "Voir le plan" } }
+        { niveau: "urgent", type: "securite", titre: "Accès Majestic fermé", texte: "L'accès à la Salle Majestic par l'allée des stands est fermé. Passe par le Podium Mode.", lien: { href: "plan.html?lieu=dock", libelle: "Voir le plan" } }
       ];
       const n = (window.MOCK.annonces.filter((a) => a.id.startsWith("demo")).length) % exemples.length;
       const maintenant = App.maintenant().getTime();
@@ -1573,7 +1573,7 @@
   /* ---------- Horloge ----------
      En démo, on simule une soirée du festival pour que le tableau de bord ait du sens.
      La simulation avance en temps réel à partir du chargement de la page. */
-  App.config.horlogeDemo = "2026-11-28T20:25:00+01:00";
+  App.config.horlogeDemo = "2026-12-26T16:25:00+01:00";
   App.config.fuseau = "Africa/Douala"; /* fuseau du festival (UTC+1), indépendant du téléphone */
   const chargement = Date.now();
   App.maintenant = () => (App.config.demo && App.config.horlogeDemo

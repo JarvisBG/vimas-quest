@@ -57,7 +57,7 @@ document.addEventListener("app:ready", async () => {
       <div class="vue-j">
         <h2 class="affiche vue-j__titre">Blind test géant</h2>
         <div class="rdv">
-          <p class="rdv__lib">${loin ? "Prochaine manche" : `Ce soir à ${esc(fmt.heure(cfg.horaire))}, ${esc(cfg.lieu)}`}</p>
+          <p class="rdv__lib">${loin ? "Prochaine manche" : `Aujourd'hui à ${esc(fmt.heure(cfg.horaire))}, ${esc(cfg.lieu)}`}</p>
           <p class="rdv__compte" data-compte>${loin ? esc(fmt.heure(cfg.horaire)) : mmss(e.restant)}</p>
           <p data-conseil>${e.restant < 10 * 60000 ? "Garde cette page ouverte : la manche démarre toute seule." : `${fmt.nombre(e.connectes)} joueurs déjà prêts.`}</p>
         </div>
@@ -456,7 +456,7 @@ document.addEventListener("app:ready", async () => {
     // « ce soir », « demain » ou le jour du festival
     function quandManche(t) {
       const d = t - Date.now();
-      if (d < 20 * 3600000) return "ce soir";
+      if (d < 20 * 3600000) return "aujourd'hui";
       if (d < 44 * 3600000) return "demain";
       const j = jours.find((x) => App.dateFestival(x.date, cfg.horaire).getTime() === t);
       return j ? j.long.toLowerCase() : "pendant le festival";
@@ -469,7 +469,7 @@ document.addEventListener("app:ready", async () => {
         <div class="vue-j">
           <h2 class="affiche vue-j__titre">Blind test géant</h2>
           <div class="rdv">
-            <p class="rdv__lib">${ceSoir ? `Ce soir à ${esc(fmt.heure(cfg.horaire))}, ${esc(cfg.lieu)}` : t ? "Chaque soir du festival" : "Le festival est terminé"}</p>
+            <p class="rdv__lib">${ceSoir ? `Aujourd'hui à ${esc(fmt.heure(cfg.horaire))}, ${esc(cfg.lieu)}` : t ? "Chaque jour du festival" : "Le festival est terminé"}</p>
             <p class="rdv__compte" data-compte>${ceSoir ? mmss(t - Date.now()) : t ? esc(fmt.heure(cfg.horaire)) : "À l'an prochain"}</p>
             <p>${t ? "Garde cette page ouverte : la manche s'affiche toute seule dès que la régie la lance." : "Merci d'avoir joué !"}</p>
           </div>
@@ -481,7 +481,7 @@ document.addEventListener("app:ready", async () => {
       vue.innerHTML = `
         <div class="vue-j vue-j--intro">
           <h2 class="affiche vue-j__titre">Ça commence !</h2>
-          ${e.boss ? `<p class="pastille pastille--sodium">Ce soir : ${esc(e.boss.nom)}</p>` : ""}
+          ${e.boss ? `<p class="pastille pastille--sodium">Aujourd'hui : ${esc(e.boss.nom)}</p>` : ""}
           <p class="texte-clair">${e.total} questions. Regarde l'écran géant : la première arrive dans un instant.</p>
           <div class="eq intro-eq" data-eq-intro></div>
           ${regles}

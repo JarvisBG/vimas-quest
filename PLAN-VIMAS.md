@@ -18,12 +18,14 @@
 > Étapes 1 à 4 terminées ; **étape 5 (console) terminée** sauf le tirage au sort final (mis de côté par Jarvis,
 > proposition dans la case 5.1). 5.4 : `admin/statistiques.html` faite ; correctif des droits
 > `supabase/correctifs/2026-09-28_vimas-5.4-droits.sql` **appliqué en ligne par Jarvis le 28/09** (annulation :
-> `…_ANNULER.sql`). **Site en ligne depuis le 29/09** (`vimasquest-v3`, remplace DOMAF). Question ouverte : écran de secours du vendeur (bloc Otaku). Ensuite : **étape 6 — contenu de démo hors ligne**
-> (`app/data/mock.js` : 2 jours, scènes, line-up fictif, stands, questions du coffre, horaires de jour 10 h → 22 h).
+> `…_ANNULER.sql`). **Site en ligne depuis le 29/09** (`vimasquest-v3`). **Étape 6 (contenu de démo) terminée le 29/09**,
+> pas encore remise en ligne (changer `VERSION` de `sw.js` → `vimasquest-v4` puis `npx wrangler deploy`, wrangler connecté).
+> Ensuite : **étape 7 — plan du site** (fond du Majestic Cinéma / campus de Yaoundé I depuis OpenStreetMap via `outils/plan/`,
+> jamais Google Maps ; lieux placés ; `geo` / `metresParUnite` dans `planConfig`). Question ouverte : écran de secours du vendeur.
 > Essai d'une page de console sans compte : copie de page + script qui remplace `C.garde` / `C.appel` / `C.sb` /
 > `C.confirmer` (effacer ensuite). Essai SQL sans PostgreSQL installé : `supabase/outils/banc/audit_pglite.mjs` (PGlite).
 > Rappels : base Supabase **partagée** avec l'ancien DOMAF (`domaf-quest`) → sauvegarde SQL avant toute écriture ;
-> festival supposé **de jour, 10 h → 22 h** (contenu à adapter en étape 6) ; serveur local
+> festival supposé **de jour, 10 h → 22 h** (contenu de démo fait, base en étape 8) ; serveur local
 > `app/lancer-serveur.bat` → http://localhost:8767 ; pour tester dans Chrome, désinscrire le service worker
 > puis changer de page (voir `CLAUDE.md`). Travail étape par étape, validation de Jarvis avant la suivante,
 > échanges en français.
@@ -50,6 +52,7 @@
 | 28/09/2026 | **5.4 terminée** (côté dépôt) : écran Statistiques (aucun SQL, modèle d'Otaku, CSV, impression), essayé dans Chrome sur une fausse base ; correctif des droits (décision de Jarvis : vendeur sans écriture sur la roue et le blind test, pilotage de secours gardé comme Otaku ; `live_board` / `leaderboard_view` retirées), essayé sur PGlite (aller-retour avec l'annulation) ; `sources/20_blind_test.sql` perdu depuis le DOMAF, restauré ; générateur et audit attendu à jour. **Correctif pas encore appliqué en ligne.** |
 | 28/09/2026 | Correctif des droits **appliqué en ligne** par Jarvis ; vérifié par l'API publique : `live_board` / `leaderboard_view` introuvables (PGRST202), `admin_create_prize` / `admin_quiz_start` toujours là (refusées à la clé publique). Le correctif tenant en une transaction, les 17 gardes sont passées avec. |
 | 29/09/2026 | **Première mise en ligne Vimas** sur festival-quest (demande de Jarvis) : `sw.js` → `vimasquest-v3`, `npx wrangler deploy` (version `3ba21ade`), wrangler connecté sur ce PC. Vérifié : accueil Vimas, compte à rebours, console et statistiques servies, fichiers internes en 404. La démo DOMAF est remplacée. Contenu encore fictif DOMAF (étape 6). |
+| 29/09/2026 | **Étape 6 terminée** : contenu de démo Vimas de jour (2 jours, 10 h → 22 h, line-up fictif recalé, blind test 17 h, annonces sur l'horloge de démo), banque de questions Vimas (démo + SQL), formulations de jour dans les pages, contrôle dans Chrome. Pas encore remis en ligne. |
 
 ---
 
@@ -139,12 +142,15 @@ Le moteur DOMAF est calé sur des **soirées de concerts** : à adapter (étapes
   - Inventaire (28/09) : **statistiques sans SQL** (`profil_stats` = fiche, contacts, questions du coffre, cœurs ; `stats_parcours` = jours, retour au lendemain, temps passé, heures, profondeur, top QR ; `admin_stats`) — le sondage de sortie d'Otaku a été retiré au DOMAF (6.3 bis). **Droits** : 29 fonctions acceptent un vendeur (`is_equipe`) ; aucune politique RLS. Otaku ouvrait exprès le *pilotage* du raid au vendeur (secours), jamais l'écriture. `live_board` / `leaderboard_view` : plus appelées par l'app. Proposition soumise à Jarvis.
 - [ ] Chaque sous-étape : essai au banc local (`supabase/outils/banc/`) avant la base en ligne
 
-## Étape 6 — Contenu de démo hors ligne (`app/data/mock.js`)
-- [ ] Festival : 2 jours, scènes (Grande Scène, Yard Reggae, Salle Majestic, Podium Mode, Sound System Nuit), line-up **fictif** (reggae, caribéen, urbain, danse, mode)
-- [ ] Stands, food, QR (codes courts), missions, badges, lots, annonces, FAQ
-- [ ] Banque de questions du coffre : `QUESTIONS-VIMAS.md` → `supabase/outils/banque_questions.py` (mock + SQL, identiques)
-- [ ] Blind test : manches et boss **fictifs** ou libres de droits (pas de photos de vraies personnes)
-- [ ] Faux joueurs du classement / de l'écran aux pseudos Vimas
+## Étape 6 — Contenu de démo hors ligne (`app/data/mock.js`) ✅ (29/09)
+- [x] Festival : **samedi 26 et dimanche 27 décembre**, **de jour** (portes 10 h → 22 h, grille 10 h → 22 h 30), scènes Grande Scène · Le Yard Reggae · La Salle Majestic · Le Podium Mode · **Le Sound System** (« Nuit » retiré) — identifiants techniques gardés (`soleil`, `clairiere`, `dock`, `kiosque`, `chapiteau` : QR et base y renvoient). Line-up **fictif** repris de `vimas_visuels/` et recalé de jour : 6 artistes par jour (fanfare 11 h, reggae, défilé mode, soca, dancehall, afro-pop en clôture du samedi ; dub, battle de danse, DJ vinyles, zouk, makossa, rap en clôture du dimanche), 3 dédicaces
+- [x] Infos (horaires, navettes 9 h → 22 h 30, consigne, lots jusqu'au dimanche 21 h 30, sorties jusqu'à 20 h), accessibilité, missions (défi éclair Salle Majestic avant 18 h), badges (Lève-tôt avant midi, « Jusqu'au bout » au lieu de Noctambule, Marathonien sur 2 jours, « Sous le soleil »), lots (Pass 2e édition), roue (retrait 10 h → 21 h 30), QR (Grande Scène, Salle Majestic, relique « La première bobine », parade de clôture 21 h 45), coups de cœur (résultats dimanche 20 h 15), annonces de démo **calées sur l'horloge de démo** (samedi 26, 16 h 25), dates du joueur de démo. Stands et food-trucks : noms génériques gardés
+- [x] Banque de questions : `banque_questions.py` → `mock.js` **et** `01_reference.sql` (identiques) : VIMAS FEST au lieu de DOMAF, Yaoundé au lieu de Douala, S3 « Tu es venu surtout pour… » (1re édition : plus de « combientième DOMAF »). Questions « de fin de journée » dès **18 h** en démo (`coffreConfig.soirDebut`) ; `QUESTIONS-VIMAS.md` à jour
+- [x] Blind test : **17 h**, Grande Scène, 15 questions sur le line-up fictif (extraits synthétisés, aucune vraie personne)
+- [x] Faux joueurs : pseudos générés (mots de musique neutres), rien à changer
+- [x] Pages : « Ce soir » → « Aujourd'hui », « chaque soir » → « chaque jour » (accueil, programme, mon programme, blind test, infos, carte) ; horloge de démo → **samedi 26 décembre, 16 h 25** ; roue (dates des bons), classement (« depuis samedi »), scanner de démo, annonces de démo de la console, exemples de la console. Écran géant : plus de « Roi d'hier » le 1er jour
+- Contrôle dans Chrome (mode démo, 390 px) : accueil, programme, carte, blind test (« dans 35 min »), infos, annonces, roue, écran géant — aucune erreur JavaScript
+- **Reste pour la base (étapes 8 et 9)** : `micro_config.soir_debut` → 18 h, badges Noctambule / Lève-tôt / Marathonien (règles en SQL), banque de questions en base (`on conflict do nothing` : la mettre à jour, pas seulement l'insérer), heure du blind test. Plan : fond et positions encore ceux du Stade de Bonamoussadi → **étape 7**
 
 ## Étape 7 — Plan du site
 - [ ] Fond du Majestic Cinéma / campus de Yaoundé I (OpenStreetMap via `outils/plan/`, jamais Google Maps)

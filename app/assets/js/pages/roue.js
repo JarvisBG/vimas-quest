@@ -141,7 +141,7 @@ document.addEventListener("app:ready", async () => {
   }
 
   const quand = (q) => {
-    const j = { "2026-11-26": "jeu.", "2026-11-27": "ven.", "2026-11-28": "sam.", "2026-11-29": "dim." }[q.jour]
+    const j = { "2026-12-26": "sam.", "2026-12-27": "dim." }[q.jour]
       || String(q.jour).split("-").reverse().slice(0, 2).join("/"); // hors festival : 18/09
     return `${j} à ${fmt.heure(q.heure)}`;
   };

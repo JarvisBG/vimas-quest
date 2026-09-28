@@ -1,4 +1,4 @@
-# Banque de questions — DOMAF Quest (étape 6.3 bis)
+# Banque de questions — Vimas Quest (reprise du DOMAF, adaptée le 29/09/2026)
 
 > **Validé par Jarvis le 19/09/2026** (S29 bières retirée, transport une seule fois, tirage au sort final validé). Rayer, corriger, ajouter directement dans ce fichier.
 > Règles : une question = **un seul tapotement** (liste fermée, jamais de texte libre dans le coffre).
@@ -8,7 +8,7 @@
 Légende :
 - **Fiche** : posée à l'inscription (on peut passer) ; si elle est passée, elle revient **en premier** dans le coffre du scan.
 - **Scan** : posée dans le coffre après un scan réussi, n'importe quand.
-- **Soir** : posée dans le coffre **après 20 h**, seulement si le joueur a scanné ce jour-là (reprend le sondage du soir).
+- **Soir** : posée dans le coffre **après 18 h** (festival de jour ; démo : `coffreConfig.soirDebut`, base : `micro_config.soir_debut` à régler en étape 8), seulement si le joueur a scanné ce jour-là (reprend le sondage du soir).
 
 ---
 
@@ -18,11 +18,11 @@ Légende :
 |---|---|---|---|
 | F1 | Tu as quel âge ? | 13-15 · 16-18 · 19-24 · 25-30 · 31-40 · 41 et plus *(ordre fixe)* | existe (31+ à découper en 31-40 / 41+) |
 | F2 | Tu es… | Un homme · Une femme | existe |
-| F3 | Tu habites où ? | 20 quartiers de Douala + « un autre quartier » + « une autre ville » *(ordre fixe, déjà trié)* | existe |
+| F3 | Tu habites où ? | 20 quartiers de Yaoundé + « un autre quartier » + « une autre ville » *(ordre fixe, déjà trié)* | existe |
 | F4 | Ta musique, c'est surtout… | Afrobeats · Makossa · Bikutsi · Coupé-décalé · Rap / Hip-hop · R&B / Soul · Gospel · Reggae / Dancehall · Rumba / Ndombolo · Jazz · Électro · Zouk / Kompa · Autre | existe |
 | F5 | Dans la vie, tu es… | Élève · Étudiant · Salarié · À mon compte / commerçant · En recherche d'emploi · Autre | nouveau |
 | F6 | Tu vas à combien de concerts par an ? | Aucun, c'est mon premier · 1 ou 2 · 3 à 5 · Plus de 5 *(ordre fixe)* | nouveau |
-| F7 | Ton numéro de téléphone | champ numéro (+237) · case « Le DOMAF peut me contacter » · case « Les partenaires du DOMAF peuvent me contacter » (**jamais pré-cochées**) — **seulement si F1 ≥ 19-24** | table `player_contact` existe |
+| F7 | Ton numéro de téléphone | champ numéro (+237) · case « Vimas Production peut me contacter » · case « Les partenaires du VIMAS FEST peuvent me contacter » (**jamais pré-cochées**) — **seulement si F1 ≥ 19-24** | table `player_contact` existe |
 
 Accroche du F7 : « **Ne perds jamais ta carte** (le stand la retrouve avec ton numéro) **+ participe au tirage au sort final** ».
 
@@ -33,8 +33,8 @@ Accroche du F7 : « **Ne perds jamais ta carte** (le stand la retrouve avec ton 
 | # | Question | Réponses |
 |---|---|---|
 | S1 | Tu es venu comment aujourd'hui ? | À pied · Moto-taxi · Taxi · Voiture personnelle · Bus |
-| S2 | Tu as connu le DOMAF comment ? | Un ami · Facebook / Instagram · TikTok · WhatsApp · Radio / télé · Une affiche · Autrement |
-| S3 | C'est ton combientième DOMAF ? | Mon tout premier · Le 2e ou le 3e · Je viens presque chaque année *(ordre fixe)* |
+| S2 | Tu as connu le VIMAS FEST comment ? | Un ami · Facebook / Instagram · TikTok · WhatsApp · Radio / télé · Une affiche · Autrement |
+| S3 | Tu es venu surtout pour… | Les concerts · La mode et les stands · La danse · Accompagner quelqu'un · Tout le festival *(1re édition : remplace « C'est ton combientième DOMAF ? »)* |
 | S4 | Tu es venu avec qui ? | Seul · Avec des amis · En couple · En famille · Avec des collègues |
 | S5 | Tu penses dépenser combien sur place ? | ~~(doublon avec Soir « dépense »)~~ → **retirée** |
 | S6 | Tu écoutes ta musique surtout où ? | Appli de streaming · YouTube · TikTok · Radio · En concert |
@@ -86,24 +86,24 @@ Accroche du F7 : « **Ne perds jamais ta carte** (le stand la retrouve avec ton 
 
 | # | Question | Réponses |
 |---|---|---|
-| S31 | Tu vis à Douala depuis… | Toujours · Plus de 5 ans · Moins de 5 ans · Je n'y vis pas *(ordre fixe)* |
+| S31 | Tu vis à Yaoundé depuis… | Toujours · Plus de 5 ans · Moins de 5 ans · Je n'y vis pas *(ordre fixe)* |
 | S32 | À la maison, tu parles surtout… | Français · Anglais · Pidgin · Une langue locale |
 | S33 | Tu as des enfants ? | Oui · Non |
 
-## H. Coffre du soir (sondage du soir fondu, après 20 h)
+## H. Coffre de fin de journée (sondage du soir fondu, après 18 h)
 
 | # | Question | Réponses | D'où |
 |---|---|---|---|
 | N1 | Ta journée, tu la notes comment ? | Décevante · Moyenne · Bien · Très bien · Inoubliable *(ordre fixe)* | `note` |
 | N2 | Ton concert préféré aujourd'hui ? | artistes qui ont joué ce jour-là | `concert` |
-| N3 | Ce qui t'a le plus plu aujourd'hui ? | La musique · L'ambiance · Le jeu DOMAF Quest · La nourriture · L'organisation · Les rencontres | `plus` (3 choix → **1 seul**) |
+| N3 | Ce qui t'a le plus plu aujourd'hui ? | La musique · L'ambiance · Le jeu Vimas Quest · La nourriture · L'organisation · Les rencontres | `plus` (3 choix → **1 seul**) |
 | N4 | L'attente à l'entrée ? | Rapide · Correcte · Trop longue *(ordre fixe)* | `attente` éclatée |
 | N5 | L'attente au bar ? | idem | `attente` |
 | N6 | L'attente aux food-trucks ? | idem | `attente` |
 | N7 | Les toilettes ? | Propres et rapides · Correctes · À revoir *(ordre fixe)* | `attente` |
 | N8 | Combien as-tu dépensé aujourd'hui (sans le billet) ? | Rien · Moins de 2 000 · 2 000 à 5 000 · 5 000 à 10 000 · Plus de 10 000 FCFA *(ordre fixe)* | `depense` |
 | N9 | Ce qu'on doit améliorer en priorité ? | Plus de stands · Moins d'attente · Plus d'activités · Plus de place · La nourriture · Rien, c'était bien | `ameliorer` (**1 seul**) |
-| N10 | Conseillerais-tu DOMAF Quest à un ami ? | 0 à 10 *(ordre fixe)* | `jeu` |
+| N10 | Conseillerais-tu Vimas Quest à un ami ? | 0 à 10 *(ordre fixe)* | `jeu` |
 | N11 | Tu reviendras l'an prochain ? | Oui, sûr · Peut-être · Non *(ordre fixe)* | `revenir` |
 | — | ~~Un mot pour l'équipe~~ | texte libre → **retirée** du coffre (pas en un tapotement) | `mot` |
 
@@ -112,5 +112,5 @@ S1 et S4 (transport, avec qui) : posées **une seule fois** (décision du 19/09)
 
 ---
 
-**Total** : 7 questions de fiche + 31 au scan + 11 le soir = **49**. Un joueur actif (10 à 15 scans par jour) les épuise en 3 ou 4 jours.
+**Total** : 7 questions de fiche + 31 au scan + 11 le soir = **49**. Un joueur actif (10 à 15 scans par jour) en voit la plupart sur les 2 jours du VIMAS FEST.
 **Quand la banque est vide**, le coffre s'ouvre sans question.

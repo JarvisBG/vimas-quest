@@ -1,5 +1,5 @@
 """
-Banque de questions du coffre du scan (étape 6.3 bis), source : QUESTIONS-DOMAF.md.
+Banque de questions du coffre du scan (étape 6.3 bis), source : QUESTIONS-VIMAS.md.
 
   python supabase/outils/banque_questions.py      → insert SQL (à coller dans 01_reference.sql)
   python supabase/outils/banque_questions.py js   → bloc banqueQuestions (à coller dans app/data/mock.js)
@@ -17,8 +17,8 @@ def slug(t):
 # une option finissant par « * » reste en bas même quand l'ordre est mélangé
 B = [
  ("S1","venue","toujours",False,False,"choix","Tu es venu comment aujourd'hui ?",["À pied","Moto-taxi","Taxi","Voiture personnelle","Bus"]),
- ("S2","venue","toujours",False,False,"choix","Tu as connu le DOMAF comment ?",["Un ami m'en a parlé","Facebook ou Instagram","TikTok","WhatsApp","Radio ou télé","Une affiche","Autrement*"]),
- ("S3","venue","toujours",False,True,"choix","C'est ton combientième DOMAF ?",["Mon tout premier","Le 2e ou le 3e","Je viens presque chaque année"]),
+ ("S2","venue","toujours",False,False,"choix","Tu as connu le VIMAS FEST comment ?",["Un ami m'en a parlé","Facebook ou Instagram","TikTok","WhatsApp","Radio ou télé","Une affiche","Autrement*"]),
+ ("S3","venue","toujours",False,False,"choix","Tu es venu surtout pour…",["Les concerts","La mode et les stands","La danse","Accompagner quelqu'un","Tout le festival*"]),
  ("S4","venue","toujours",False,False,"choix","Tu es venu avec qui ?",["Seul","Avec des amis","En couple","En famille","Avec des collègues"]),
  ("S6","venue","toujours",False,False,"choix","Tu écoutes ta musique surtout où ?",["Sur une appli de streaming","Sur YouTube","Sur TikTok","À la radio","En concert, surtout"]),
  ("S7","ecoute","toujours",False,False,"choix","Ton appli de musique principale ?",["Boomplay","Audiomack","Spotify","YouTube Music","Apple Music","Deezer","Aucune*"]),
@@ -44,20 +44,20 @@ B = [
  ("S27","partenaires","toujours",False,False,"choix","Le réseau social que tu ouvres le plus ?",["WhatsApp","TikTok","Facebook","Instagram","Snapchat","X"]),
  ("S28","partenaires","toujours",False,False,"choix","Au festival, tu bois plutôt…",["De la bière","Du soda","Du jus","De l'eau","Un énergisant","Rien*"]),
  ("S30","partenaires","toujours",False,False,"choix","Tu manges quoi au festival ?",["Grillades / soya","Plats locaux","Fast-food","Rien, je mange avant*"]),
- ("S31","profil","toujours",False,True,"choix","Tu vis à Douala depuis…",["Toujours","Plus de 5 ans","Moins de 5 ans","Je n'y vis pas"]),
+ ("S31","profil","toujours",False,True,"choix","Tu vis à Yaoundé depuis…",["Toujours","Plus de 5 ans","Moins de 5 ans","Je n'y vis pas"]),
  ("S32","profil","toujours",False,False,"choix","À la maison, tu parles surtout…",["Français","Anglais","Pidgin","Une langue locale"]),
  ("S33","profil","toujours",False,True,"choix","Tu as des enfants ?",["Oui","Non"]),
  ("N1","soir","soir",True,True,"choix","Ta journée, tu la notes comment ?",["Décevante","Moyenne","Bien","Très bien","Inoubliable"]),
  ("N2","soir","soir",True,True,"artiste","Ton concert préféré aujourd'hui ?",[]),
- ("N3","soir","soir",True,False,"choix","Ce qui t'a le plus plu aujourd'hui ?",["La musique","L'ambiance","Le jeu DOMAF Quest","La nourriture","L'organisation","Les rencontres"]),
+ ("N3","soir","soir",True,False,"choix","Ce qui t'a le plus plu aujourd'hui ?",["La musique","L'ambiance","Le jeu Vimas Quest","La nourriture","L'organisation","Les rencontres"]),
  ("N4","soir","soir",True,True,"choix","L'attente à l'entrée ?",["Rapide","Correcte","Trop longue"]),
  ("N5","soir","soir",True,True,"choix","L'attente au bar ?",["Rapide","Correcte","Trop longue"]),
  ("N6","soir","soir",True,True,"choix","L'attente aux food-trucks ?",["Rapide","Correcte","Trop longue"]),
  ("N7","soir","soir",True,True,"choix","Les toilettes ?",["Propres et rapides","Correctes","À revoir"]),
  ("N8","soir","soir",True,True,"choix","Combien as-tu dépensé aujourd'hui, sans le billet ?",["Rien du tout","Moins de 2 000 FCFA","2 000 à 5 000 FCFA","5 000 à 10 000 FCFA","Plus de 10 000 FCFA"]),
  ("N9","soir","soir",True,False,"choix","Ce qu'on doit améliorer en priorité ?",["Plus de stands","Moins d'attente","Plus d'activités","Plus de place","La nourriture","Rien, c'était bien*"]),
- ("N10","soir","soir",False,True,"choix","Conseillerais-tu DOMAF Quest à un ami ? (0 = pas du tout, 10 = carrément)",[str(i) for i in range(11)]),
- ("N11","soir","soir",False,True,"choix","Tu reviendras au DOMAF l'an prochain ?",["Oui, sûr","Peut-être","Non"]),
+ ("N10","soir","soir",False,True,"choix","Conseillerais-tu Vimas Quest à un ami ? (0 = pas du tout, 10 = carrément)",[str(i) for i in range(11)]),
+ ("N11","soir","soir",False,True,"choix","Tu reviendras au VIMAS FEST l'an prochain ?",["Oui, sûr","Peut-être","Non"]),
 ]
 
 def q(t): return "'" + t.replace("'", "''") + "'"

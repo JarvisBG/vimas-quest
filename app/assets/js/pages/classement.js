@@ -76,7 +76,7 @@ document.addEventListener("app:ready", async () => {
       ? `${d.total} joueur${d.total > 1 ? "s" : ""} dans ta bande, classés à l'XP total`
       : etat.periode === "jour"
         ? `${fmt.nombre(d.total)} joueurs actifs aujourd'hui, XP gagnés depuis l'ouverture`
-        : `${fmt.nombre(d.total)} joueurs depuis jeudi`;
+        : `${fmt.nombre(d.total)} joueurs depuis samedi`;
 
     rendrePodium(podium);
     rendreListe(d, amis);

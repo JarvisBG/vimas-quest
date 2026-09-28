@@ -119,7 +119,7 @@ document.addEventListener("app:ready", async () => {
   /* ---------- Blind test : question d'essai ---------- */
   const bt = d.blindTest;
   $("[data-blind-infos]").innerHTML = `
-    <li>${icon("horloge")} Chaque soir à ${fmt.heure(bt.horaire)}</li>
+    <li>${icon("horloge")} Chaque jour à ${fmt.heure(bt.horaire)}</li>
     <li>${icon("lieu")} ${esc(bt.lieu)}</li>
     <li>${icon("micro")} ${bt.questions} extraits par manche</li>`;
 

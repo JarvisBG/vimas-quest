@@ -48,7 +48,7 @@ document.addEventListener("app:ready", async () => {
         <button class="jour-p" type="button" role="tab" id="jour-${j.id}" aria-controls="panneau-p"
           aria-selected="${j.id === etat.jour}" tabindex="${j.id === etat.jour ? 0 : -1}" data-jour="${j.id}" aria-label="${esc(j.long)}, ${nb} concerts">
           <span class="jour-p__nom">${esc(j.court)}</span>
-          <span class="jour-p__info">${j.id === ceSoir ? "Ce soir" : `${nb} concert${nb > 1 ? "s" : ""}`}</span>
+          <span class="jour-p__info">${j.id === ceSoir ? "Aujourd'hui" : `${nb} concert${nb > 1 ? "s" : ""}`}</span>
         </button>`;
     }).join("");
     panneau.setAttribute("aria-labelledby", `jour-${etat.jour}`);
