@@ -77,6 +77,10 @@ pas un discours. **Le moins de travail possible** : on change la peau et le cont
 - Contrôle visuel sans redimensionner Chrome : réécrire la page avec des `<iframe>` de 390 px (le redimensionnement
   de fenêtre ne prend pas). Edge sans fenêtre (`--headless`) impose une largeur minimale : captures trompeuses sous ~500 px.
 - Le workflow `.github/workflows/reveil-supabase.yml` réveille la même base : inutile de le doubler.
+- **Tester une page de console sans compte** : copie temporaire `admin/_essai-<page>.html` + `_essai.js` chargé entre `console.js` et le script de la page, qui remplace `C.garde`, `C.appel`, `C.sb`, `C.confirmer` et force `document.hidden` à `false` ; effacer ensuite. Jarvis préfère le **contrôle visuel dans Chrome** (onglet à part : ne jamais toucher un onglet qu'il a ouvert) ; si l'extension est déconnectée, Edge sans fenêtre (`--dump-dom`, profil neuf à chaque fois) avec un script de scénario.
+- **Rester simple, comme The Otaku Quest** : quand un parcours existe dans Otaku (`../../Otaku_Quest/admin/`), le reprendre plutôt qu'inventer (ex. le vendeur trouve le joueur par son pseudo, pas en scannant un QR).
+- Git : pas d'identité configurée sur ce PC → `git -c user.name="Jarvis" -c user.email=2utilisateursivraj@gmail.com commit …` (même auteur que les commits précédents).
+- Console d'administration : étapes 5.0 → 5.3 faites le 28/09 (dates, annonces, roue, cœurs, régie du blind test, carnets, espace vendeur), **aucun SQL écrit** ; tirage au sort final mis de côté. Détail et prochain prompt : `PLAN-VIMAS.md`.
 
 ## Méthode de travail
 
