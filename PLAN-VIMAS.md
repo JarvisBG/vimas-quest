@@ -13,8 +13,8 @@
 ## ▶ Prochain prompt (en cas de coupure)
 
 > Continue le projet Vimas Quest : lis `CLAUDE.md` et `PLAN-VIMAS.md` (et `docs/NOTES-MOTEUR-DOMAF.md`
-> avant de toucher une page), puis attaque l'**étape 4** — écrans géants (`app/ecran/`) : textes et marque,
-> contrôle à 1920 × 1080. Rappel : festival **de jour, 10 h → 22 h** (hypothèse), contenu à adapter en étape 6.
+> avant de toucher une page), puis termine l'**étape 4** — plateau du blind test (`app/ecran/blind-test.html`),
+> le mur est fait (modèle Otaku). Skill `impeccable` installé (`~/.claude/skills/impeccable`). Rappel : festival **de jour, 10 h → 22 h** (hypothèse), contenu à adapter en étape 6.
 
 ---
 
@@ -27,6 +27,7 @@
 | 28/09/2026 | Décision de Jarvis : on **termine** l'application pour Vimas (festivalier + console + écrans). Plan complet réécrit (étapes 1 → 13). |
 | 28/09/2026 | Dépôt GitHub JarvisBG/vimas-quest créé et poussé. **Étape 2 terminée** : couleurs, icônes, marque, manifeste ; `VERSION` du service worker = `vimasquest-v1` ; serveur local sur le port **8767** (8766 = DOMAF). |
 | 28/09/2026 | Hypothèse de Jarvis : festival **de jour** (affiche = village de stands) → horaires provisoires **10 h – 22 h**. **Étape 3 terminée** (textes, clés, consentement, quartiers de Yaoundé, partenaires, bandeau « maquette ») ; les 2 jours passent à l'étape 6 avec le contenu. |
+| 28/09/2026 | Mur de l'écran géant refait sur le modèle d'Otaku Quest (un panneau à la fois, enseigne sobre, une annonce en pied) + passe `impeccable polish`. Skill impeccable (pbakaus/impeccable) installé dans `~/.claude/skills/` à la demande de Jarvis. |
 
 ---
 
@@ -78,8 +79,10 @@ Le moteur DOMAF est calé sur des **soirées de concerts** : à adapter (étapes
 - la journée de jeu 6 h → 6 h reste valable
 
 ## Étape 4 — Écrans géants
-- [ ] `ecran/mur.html` et `ecran/blind-test.html` aux couleurs Vimas (projecteur : contraste fort sur fond nuit)
-- [ ] Textes et marque de l'écran ; test à 1920 × 1080
+- [x] **Mur refait sur le modèle d'Otaku Quest** (28/09, jugé « touffu » par Jarvis) : une enseigne sobre (marque + joueurs / scans / heure séparés par des filets), **un panneau à la fois en plein écran** qui tourne (tournoi du jour : podium + registre 4 à 10 · derniers exploits : deux carnets · programme · rejoindre : grand QR + 3 étapes · blind test · festival et partenaires), une seule annonce à la fois en pied (plus de bandeau défilant), crédit « Propulsé par loJIC Solutions », pastilles de rotation. Panneau vide = sauté. Données et temps réel inchangés (`App.api.mur`, un appel).
+- [x] Passe `impeccable polish` : point « En direct » et horloge fixes (plus de clignotement), couleur des scènes en pastille (plus de barre latérale), partenaires en grille 3 × 2, blind test sans chevauchement
+- [ ] `ecran/blind-test.html` (plateau du blind test) : même regard, à vérifier avec Jarvis
+- [ ] Contenu des panneaux (horaires de jour, blind test l'après-midi) : avec l'étape 6
 
 ## Étape 5 — Console d'administration (finir ce que le DOMAF n'a pas fini)
 - [ ] 5.0 Marque Vimas dans la console (le style néon est gardé), dates du festival dans `console-programme.js`

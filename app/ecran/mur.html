@@ -14,60 +14,109 @@
   <link rel="stylesheet" href="../assets/css/pages/ecran-mur.css">
 </head>
 <body class="ecran">
-  <!-- Toute la mise en page est dessinée en 1920 × 1080 puis mise à l'échelle -->
+  <!-- Toute la mise en page est dessinée en 1920 × 1080 puis mise à l'échelle.
+       Modèle d'Otaku Quest (live/live.html) : une enseigne, UN sujet à la fois
+       en plein écran (les panneaux tournent), une annonce et le crédit en pied. -->
   <div class="scene-ecran scene-ecran--mur" data-scene>
 
+    <!-- L'enseigne et le relevé -->
     <header class="mur-tete">
-      <div class="mur-tete__marque">
-        <span class="eq mur-tete__eq" data-eq="6"></span>
-        <span class="affiche mur-tete__nom">Vimas Quest</span>
-        <span class="mur-tete__lieu" data-lieu>Écran géant</span>
+      <div class="enseigne">
+        <span class="enseigne__sceau"><span class="eq" data-eq="5"></span></span>
+        <div>
+          <p class="affiche enseigne__nom">Vimas Quest</p>
+          <p class="enseigne__sous"><span data-festival>VIMAS FEST</span> · <span data-lieu>Écran géant</span></p>
+        </div>
       </div>
-      <div class="mur-tete__direct">
-        <span class="etat-direct" data-etat><span class="etat-direct__point"></span><span data-etat-texte>En direct</span></span>
-        <span class="mur-chiffre"><strong class="chiffres" data-nb-joueurs>–</strong> joueurs</span>
-        <span class="mur-chiffre"><strong class="chiffres" data-nb-scans>–</strong> scans aujourd'hui</span>
+      <div class="releve">
+        <p class="releve__c"><strong class="releve__v chiffres" data-nb-joueurs>–</strong><span class="releve__l">joueurs</span></p>
+        <p class="releve__c"><strong class="releve__v chiffres" data-nb-scans>–</strong><span class="releve__l">scans aujourd'hui</span></p>
+        <p class="releve__c releve__c--heure"><strong class="releve__v chiffres" data-horloge aria-live="off">--:--</strong>
+          <span class="releve__l etat" data-etat><i class="etat__point"></i><span data-etat-texte>En direct</span></span></p>
       </div>
-      <p class="mur-horloge affiche chiffres" data-horloge aria-live="off">--:--</p>
     </header>
 
-    <main class="mur-corps">
+    <!-- La scène : un sujet à la fois -->
+    <main class="mur-scene" aria-live="polite">
 
-      <!-- A. Tournoi du jour (XP gagnés depuis 6 h) -->
-      <section class="panneau panneau--top" aria-labelledby="t-top">
-        <h1 class="panneau__titre affiche" id="t-top">Tournoi <span>du jour</span></h1>
-        <p class="top-roi" data-roi hidden></p>
-        <ol class="top" data-top></ol>
+      <!-- 1. Le tournoi du jour -->
+      <section class="panneau" data-panneau="tournoi">
+        <div class="panneau__tete">
+          <h1 class="affiche panneau__titre">Le tournoi <span>du jour</span></h1>
+          <p class="panneau__note" data-roi></p>
+        </div>
+        <div class="tournoi">
+          <div class="podium" data-podium></div>
+          <ol class="carnet registre" data-registre></ol>
+        </div>
       </section>
 
-      <!-- B. Diaporama : concerts, blind test -->
-      <section class="panneau panneau--diapo" aria-live="polite" data-diapo>
-        <div class="diapo__barre"><i data-diapo-barre></i></div>
-        <div class="diapo__points" data-diapo-points></div>
-        <div class="diapo__contenu" data-diapo-contenu></div>
+      <!-- 2. Les derniers exploits -->
+      <section class="panneau" data-panneau="exploits">
+        <div class="panneau__tete">
+          <h2 class="affiche panneau__titre">Les derniers <span>exploits</span></h2>
+          <p class="panneau__note">À l'instant, dans les allées</p>
+        </div>
+        <div class="exploits" data-exploits></div>
       </section>
 
-      <!-- C. Exploits + QR -->
-      <div class="colonne-c">
-        <section class="panneau panneau--exploits" aria-labelledby="t-exploits">
-          <h2 class="panneau__titre affiche" id="t-exploits">Derniers exploits</h2>
-          <ol class="exploits" data-exploits></ol>
-        </section>
-        <section class="rejoindre" aria-label="Rejoindre le jeu">
+      <!-- 3. Au programme -->
+      <section class="panneau" data-panneau="programme">
+        <div class="panneau__tete">
+          <h2 class="affiche panneau__titre" data-prog-titre>À suivre</h2>
+          <p class="panneau__note" data-prog-note></p>
+        </div>
+        <div class="programme" data-programme></div>
+      </section>
+
+      <!-- 4. Le blind test -->
+      <section class="panneau panneau--blind" data-panneau="blind">
+        <div class="blind">
+          <p class="affiche blind__titre">Blind test</p>
+          <p class="affiche blind__heure chiffres" data-blind-heure></p>
+          <p class="blind__dans" data-blind-dans></p>
+          <p class="blind__texte" data-blind-texte></p>
+          <div class="eq blind__eq" data-eq-blind></div>
+        </div>
+      </section>
+
+      <!-- 5. Rejoins le jeu -->
+      <section class="panneau" data-panneau="rejoindre">
+        <div class="rejoindre">
           <div class="rejoindre__qr" data-qr-rejoindre></div>
           <div class="rejoindre__texte">
-            <p class="affiche rejoindre__titre">Rejoins le jeu</p>
-            <p>Scanne ce code : ta carte de jeu est prête en une minute.</p>
+            <p class="affiche rejoindre__titre">Rejoins <span>le jeu</span></p>
+            <ol class="rejoindre__etapes">
+              <li><b>1</b> Scanne ce code avec ton téléphone</li>
+              <li><b>2</b> Choisis un pseudo : ta carte est prête</li>
+              <li><b>3</b> Chasse les QR des stands et grimpe au classement</li>
+            </ol>
             <p class="rejoindre__url" data-url-rejoindre></p>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+
+      <!-- 6. Le festival et ses partenaires -->
+      <section class="panneau" data-panneau="partenaires">
+        <div class="vitrine">
+          <p class="vitrine__sur" data-vitrine-sur></p>
+          <p class="affiche vitrine__nom">Vimas <span>Fest</span></p>
+          <p class="vitrine__dates" data-vitrine-dates></p>
+          <ul class="vitrine__partenaires" data-partenaires></ul>
+        </div>
+      </section>
     </main>
 
-    <!-- Bandeau d'annonces -->
+    <!-- Le pied : une annonce, le crédit, la position dans la rotation -->
     <footer class="mur-pied">
-      <span class="mur-pied__lib affiche"><svg class="icon" aria-hidden="true"><use href="#i-cloche"></use></svg> Infos</span>
-      <div class="mur-pied__piste-cadre"><div class="mur-pied__piste" data-bandeau></div></div>
+      <p class="annonce" data-annonce>
+        <span class="annonce__etiq"><svg class="icon" aria-hidden="true"><use href="#i-cloche"></use></svg> <span data-annonce-etiq>Annonce</span></span>
+        <span class="annonce__texte" data-annonce-texte></span>
+      </p>
+      <div class="pied-bas">
+        <p class="credit">Propulsé par <strong>loJIC Solutions</strong> · 698 376 108</p>
+        <div class="pastilles" data-pastilles></div>
+      </div>
     </footer>
 
     <!-- Alerte urgente plein écran -->
@@ -86,8 +135,8 @@
       <p class="affiche">Commandes régie</p>
       <ul>
         <li><kbd>F</kbd> plein écran</li>
-        <li><kbd>Espace</kbd> pause du diaporama</li>
-        <li><kbd>←</kbd> <kbd>→</kbd> diapo précédente / suivante</li>
+        <li><kbd>Espace</kbd> pause de la rotation</li>
+        <li><kbd>←</kbd> <kbd>→</kbd> panneau précédent / suivant</li>
         <li><kbd>U</kbd> afficher l'alerte urgente</li>
         <li><kbd>H</kbd> afficher / masquer cette aide</li>
       </ul>

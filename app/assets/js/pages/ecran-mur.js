@@ -1,6 +1,9 @@
 /* ==========================================================================
    Page 29 — Écran géant : mur en direct
    Aucune session joueur. Tout se met à jour seul ; la régie a quelques raccourcis clavier.
+   Mise en page (28/09, modèle Otaku Quest) : UN panneau à la fois en plein écran
+   (tournoi, exploits, programme, rejoindre, blind test, festival), qui tournent ;
+   une seule annonce à la fois en pied. Un panneau vide est sauté.
 
    Données (étape 5.1) : TOUT le mur vient d'un seul appel, App.api.mur()
    (serveur : mur_direct — tournoi du jour, compteurs, exploits, annonces, phase).
@@ -31,18 +34,25 @@ document.addEventListener("app:ready", async () => {
   App.ecran.echelle(scene);
 
   /* ---------- Données du site ---------- */
-  let blindTest, prog = { scenes: [], concerts: [] };
+  let blindTest, festival, partenaires = [], prog = { scenes: [], concerts: [] };
   try {
-    blindTest = await App.data.get("blindTest");
+    [blindTest, festival, partenaires] = await Promise.all(["blindTest", "festival", "partenaires"].map(App.data.get));
   } catch (e) {
     console.error(e);
     return;
   }
   $$("[data-eq]").forEach((el) => App.eq(el, Number(el.dataset.eq)));
+  $("[data-festival]").textContent = festival.nom;
 
   /* QR pour rejoindre : l'adresse du site où l'écran est servi */
   try { $("[data-qr-rejoindre]").innerHTML = App.qrSvg(CONFIG.lienRejoindre, { niveau: "Q", titre: "QR pour rejoindre le jeu" }); } catch (e) { /* librairie absente */ }
   $("[data-url-rejoindre]").innerHTML = esc(CONFIG.lienRejoindre.replace(/^https?:\/\//, "")).replace(/\//g, "<wbr>/");
+
+  /* Vitrine : le festival et ses partenaires (données du site, fixes) */
+  $("[data-vitrine-sur]").textContent = `${festival.edition === 1 ? "1ʳᵉ" : `${festival.edition}ᵉ`} édition · ${festival.lieu}`;
+  $("[data-vitrine-dates]").textContent = festival.dates;
+  $("[data-partenaires]").innerHTML = partenaires.map((p) =>
+    `<li><strong>${esc(p.nom)}</strong><span>${esc(p.role)}</span></li>`).join("");
 
   /* ---------- État de connexion ---------- */
   let derniereReussite = Date.now();
@@ -69,7 +79,7 @@ document.addEventListener("app:ready", async () => {
   }
 
   /* ======================================================================
-     Programme (concerts du diaporama, nom de la scène)
+     Programme (panneau « programme », nom de la scène)
      ====================================================================== */
   async function majProgramme() {
     prog = await api.programme({ joueur: false });
@@ -78,191 +88,185 @@ document.addEventListener("app:ready", async () => {
   }
 
   /* ======================================================================
-     A. Tournoi du jour, avec animation des changements de place (FLIP)
+     1. Tournoi du jour : podium (3 premiers) + registre (4e à 10e)
      ====================================================================== */
   const anciennesPlaces = new Map();
   function rendreTop(d) {
     $("[data-nb-joueurs]").textContent = fmt.nombre(d.joueurs);
     $("[data-nb-scans]").textContent = fmt.nombre(d.scansJour);
-    const roi = $("[data-roi]");
-    roi.hidden = !d.roi;
-    if (d.roi) roi.innerHTML = `Roi d'hier : <strong>${esc(d.roi.pseudo)}</strong>, ${fmt.nombre(d.roi.points)} XP`;
+    $("[data-roi]").innerHTML = d.roi
+      ? `Roi d'hier : <strong>${esc(d.roi.pseudo)}</strong>, ${fmt.nombre(d.roi.points)} XP`
+      : "Remise à zéro chaque matin à 6 h";
 
-    const liste = $("[data-top]");
-    if (!d.top.length) {
-      liste.innerHTML = `<li class="top-vide">Le tournoi repart de zéro à 6 h. Premier QR scanné, première place !</li>`;
-      anciennesPlaces.clear();
-      return;
-    }
-    const avant = new Map($$(".top-ligne", liste).map((li) => [li.dataset.pseudo, li.getBoundingClientRect().top]));
-    const echelleActuelle = scene.getBoundingClientRect().height / 1080;
-
-    liste.innerHTML = d.top.map((j, i) => {
+    const evo = (j, rang) => {
       const ancien = anciennesPlaces.get(j.pseudo);
-      const rang = i + 1;
-      const evo = ancien === undefined ? "" : ancien > rang ? "is-monte" : ancien < rang ? "is-descend" : "";
-      return `
-        <li class="top-ligne${avant.has(j.pseudo) ? "" : " is-nouveau"}" data-pseudo="${esc(j.pseudo)}" data-evo="${evo}">
-          <span class="top-ligne__rang">${j.place}</span>
-          ${App.avatar(j.avatar, j.pseudo, "sm")}
-          <span class="top-ligne__pseudo">${esc(j.pseudo)}</span>
-          <span class="top-ligne__xp">${fmt.nombre(j.points)} <small>XP</small></span>
-          <span class="top-ligne__evo ${evo}" aria-hidden="true"></span>
-        </li>`;
-    }).join("");
+      return ancien === undefined ? "" : ancien > rang ? "is-monte" : ancien < rang ? "is-descend" : "";
+    };
+    const marche = (j, rang) => j ? `
+      <div class="marche marche--${rang}">
+        ${App.avatar(j.avatar, j.pseudo, "lg")}
+        <p class="marche__pseudo">${esc(j.pseudo)}</p>
+        <p class="marche__xp">${fmt.nombre(j.points)} <small>XP</small></p>
+        <p class="marche__socle">${rang}</p>
+      </div>` : `
+      <div class="marche marche--${rang} is-vacant">
+        <p class="marche__pseudo">À prendre</p>
+        <p class="marche__xp">&nbsp;</p>
+        <p class="marche__socle">${rang}</p>
+      </div>`;
+    $("[data-podium]").innerHTML = marche(d.top[1], 2) + marche(d.top[0], 1) + marche(d.top[2], 3);
 
-    if (!App.reduceMotion) {
-      $$(".top-ligne", liste).forEach((li) => {
-        if (!avant.has(li.dataset.pseudo)) return;
-        const delta = (avant.get(li.dataset.pseudo) - li.getBoundingClientRect().top) / echelleActuelle;
-        if (!delta) return;
-        li.style.transform = `translateY(${delta}px)`;
-        li.style.transition = "none";
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          li.style.transition = "transform .9s cubic-bezier(.2,.8,.2,1)";
-          li.style.transform = "";
-          if (li.dataset.evo === "is-monte") {
-            li.classList.add("is-monte-flash");
-            setTimeout(() => li.classList.remove("is-monte-flash"), 1600);
-          }
-        }));
-      });
-    }
+    const reste = d.top.slice(3, 10);
+    const registre = $("[data-registre]");
+    registre.style.setProperty("--n", Math.max(reste.length, 1));
+    registre.innerHTML = reste.length ? reste.map((j, i) => `
+      <li class="ligne">
+        <span class="registre__place">${j.place}</span>
+        ${App.avatar(j.avatar, j.pseudo, "sm")}
+        <span class="registre__pseudo">${esc(j.pseudo)}</span>
+        <span class="registre__evo ${evo(j, i + 4)}" aria-hidden="true"></span>
+        <span class="registre__xp">${fmt.nombre(j.points)} <small>XP</small></span>
+      </li>`).join("")
+      : `<li class="vide">${d.top.length ? "Les places 4 à 10 attendent leurs joueurs." : "Premier QR scanné, première place !"}</li>`;
+
     anciennesPlaces.clear();
     d.top.forEach((j, i) => anciennesPlaces.set(j.pseudo, i + 1));
   }
 
   /* ======================================================================
-     B. Diaporama : concerts, blind test
-     ====================================================================== */
-  const DIAPOS = [
-    { id: "concerts", rendu: diapoConcerts },
-    { id: "blind", rendu: diapoBlind }
-  ];
-  let indexDiapo = 0, minuteurDiapo = null, enPause = false, minuteurInterne = null;
-  let phase = "EXPLORATION";
-  const enManche = () => phase === "QUIZ" || phase === "RAID";
-  const zoneDiapo = $("[data-diapo-contenu]");
-  scene.style.setProperty("--duree-diapo", `${CONFIG.rotation / 1000}s`);
-
-  function afficherDiapo(i) {
-    indexDiapo = (i + DIAPOS.length) % DIAPOS.length;
-    clearInterval(minuteurInterne);
-    DIAPOS[indexDiapo].rendu();
-    $("[data-diapo-points]").innerHTML = DIAPOS.map((_, k) => `<i class="${k === indexDiapo ? "is-actif" : ""}"></i>`).join("");
-    const barre = $("[data-diapo-barre]");
-    barre.classList.remove("is-anime"); void barre.offsetWidth;
-    if (!enPause) barre.classList.add("is-anime");
-    clearTimeout(minuteurDiapo);
-    if (!enPause) minuteurDiapo = setTimeout(() => afficherDiapo(indexDiapo + 1), CONFIG.rotation);
-  }
-
-  function diapoConcerts() {
-    const now = App.maintenant().getTime();
-    const liste = prog.concerts
-      .filter((c) => c.finMs > now && c.debutMs - now < 8 * 3600000)
-      .sort((a, b) => a.debutMs - b.debutMs);
-    const enCours = liste.filter((c) => c.debutMs <= now);
-    const suivants = liste.filter((c) => c.debutMs > now).slice(0, enCours.length ? 3 : 5);
-    zoneDiapo.innerHTML = `
-      <div class="diapo">
-        <h2 class="affiche diapo__titre">${enCours.length ? "Sur scène" : "À suivre"}</h2>
-        ${enCours.map((c) => `
-          <div class="en-scene">
-            <p class="en-scene__lib">En ce moment, ${esc(c.scene.nom)}</p>
-            <p class="affiche en-scene__nom">${esc(c.nom)}</p>
-            <p class="en-scene__meta">${c.genre ? `${esc(c.genre)}, ` : ""}depuis ${App.duree(now - c.debutMs)}</p>
-          </div>`).join("")}
-        ${enCours.length && suivants.length ? `<h3 class="affiche" style="font-size:48px">Ensuite</h3>` : ""}
-        <div class="suivants">
-          ${suivants.map((c) => `
-            <div class="suivant c-${c.scene.couleur}">
-              <span><span class="suivant__heure">${App.heureFestival(new Date(c.debutMs))}</span><span class="suivant__dans">dans ${App.duree(c.debutMs - now)}</span></span>
-              <span><span class="suivant__nom">${esc(c.nom)}</span><span class="suivant__scene" style="display:block">${esc(c.scene.nom)}${c.genre ? `, ${esc(c.genre)}` : ""}</span></span>
-            </div>`).join("")}
-        </div>
-        ${!enCours.length && !suivants.length ? `<p class="vide-diapo">${prog.concerts.length ? "Fin des concerts pour ce soir. Merci et à demain !" : "Programme bientôt annoncé."}</p>` : ""}
-      </div>`;
-  }
-
-  /* Horaire : réglage du site (blindTest.horaire). « C'est maintenant » dès que
-     la régie lance la manche (phase QUIZ / RAID, reçue en temps réel). */
-  function diapoBlind() {
-    const debut = App.dateFestival(App.jourFestival(), blindTest.horaire).getTime();
-    const tic = () => {
-      const dans = $(".blind-dans", zoneDiapo);
-      if (!dans) return;
-      const ecart = debut - App.maintenant().getTime();
-      $(".diapo--blind", zoneDiapo).classList.toggle("is-direct", enManche());
-      dans.textContent = enManche() ? "C'est maintenant, sors ton téléphone !"
-        : ecart > 0 ? `Départ dans ${App.duree(ecart)}`
-        : ecart > -30 * 60000 ? "Ça commence, sors ton téléphone !" : "Prochaine manche demain";
-    };
-    zoneDiapo.innerHTML = `
-      <div class="diapo diapo--blind">
-        <h2 class="affiche diapo__titre">Blind test</h2>
-        <p class="blind-heure">${fmt.heure(blindTest.horaire)}</p>
-        <p class="blind-dans"></p>
-        <p class="blind-texte">${blindTest.questions} extraits, tout le public joue depuis son téléphone. Podium sur cet écran.</p>
-        <div class="eq blind-eq" data-eq-blind></div>
-      </div>`;
-    App.eq($("[data-eq-blind]"), 48);
-    tic();
-    minuteurInterne = setInterval(tic, 1000);
-  }
-
-  /* La régie lance une manche : le diaporama passe tout de suite sur le blind test */
-  function appliquerPhase(nouvelle) {
-    const avant = enManche();
-    phase = nouvelle || "EXPLORATION";
-    if (enManche() && !avant && !enPause) afficherDiapo(DIAPOS.findIndex((d) => d.id === "blind"));
-  }
-
-  /* ======================================================================
-     C. Exploits
+     2. Exploits : deux carnets de 4 lignes
      ====================================================================== */
   const STYLE_EXPLOIT = {
-    relique: { icone: "cible",   couleur: "var(--rose)" },
-    badge:   { icone: "etoile",  couleur: "var(--sodium)" },
-    mission: { icone: "valide",  couleur: "var(--vert)" },
-    roue:    { icone: "roue",    couleur: "var(--papier)" },
-    rang:    { icone: "trophee", couleur: "#FF9A85" }
+    relique: { icone: "cible",   merite: true },
+    badge:   { icone: "etoile",  merite: true },
+    mission: { icone: "valide",  merite: false },
+    roue:    { icone: "roue",    merite: false },
+    rang:    { icone: "trophee", merite: true }
   };
-  const LIB_BADGE = { commun: "Badge commun", rare: "Badge rare", epique: "Badge épique", legendaire: "Badge légendaire !" };
-  const LIB_RELIQUE = { commune: "Relique commune", rare: "Relique rare", legendaire: "Relique légendaire !" };
-  const MAX_EXPLOITS = 7;
-  const exploitsVus = new Set();
+  const LIB_BADGE = { commun: "badge commun", rare: "badge rare", epique: "badge épique", legendaire: "badge légendaire !" };
+  const LIB_RELIQUE = { commune: "relique commune", rare: "relique rare", legendaire: "relique légendaire !" };
+  let exploits = [];
 
   function texteExploit(e) {
     const guil = (s) => `« ${s} »`;
     switch (e.type) {
-      case "relique": return { texte: `a trouvé la relique ${guil(e.nom)}`, gain: LIB_RELIQUE[e.detail] || "Relique" };
-      case "badge":   return { texte: e.nom ? `décroche le badge ${guil(e.nom)}` : "décroche un badge secret", gain: LIB_BADGE[e.detail] || "Badge" };
-      case "mission": return { texte: `termine la mission ${guil(e.nom)}`, gain: e.detail ? `+${fmt.nombre(Number(e.detail))} XP` : "Mission" };
-      case "roue":    return { texte: `gagne ${guil(e.nom)} à la roue`, gain: e.detail === "badge" ? "Badge" : "Lot à retirer au stand" };
-      default:        return { texte: `passe au rang ${e.nom}`, gain: "Nouveau rang" };
+      case "relique": return `a trouvé la relique ${guil(e.nom)}, ${LIB_RELIQUE[e.detail] || "relique"}`;
+      case "badge":   return e.nom ? `décroche le badge ${guil(e.nom)}, ${LIB_BADGE[e.detail] || "badge"}` : "décroche un badge secret";
+      case "mission": return `termine la mission ${guil(e.nom)}${e.detail ? `, +${fmt.nombre(Number(e.detail))} XP` : ""}`;
+      case "roue":    return `gagne ${guil(e.nom)} à la roue`;
+      default:        return `passe au rang ${e.nom}`;
     }
   }
 
-  function rendreExploits(exploits) {
-    const liste = $("[data-exploits]");
-    // Du plus ancien au plus récent : chaque nouveau passe en tête
-    exploits.filter((e) => !exploitsVus.has(e.id)).reverse().forEach((e) => {
-      exploitsVus.add(e.id);
+  function rendreExploits(liste) {
+    exploits = liste.slice(0, 8);
+    const zone = $("[data-exploits]");
+    const ligne = (e) => {
       const s = STYLE_EXPLOIT[e.type] || STYLE_EXPLOIT.badge;
-      const { texte, gain } = texteExploit(e);
       const heure = App.heureFestival(new Date(App.maintenant().getTime() - (Date.now() - e.dateMs)));
-      const li = document.createElement("li");
-      li.className = "exploit";
-      li.innerHTML = `
-        <span class="exploit__icone" style="--c:${s.couleur}">${icon(s.icone)}</span>
-        <span class="exploit__texte"><strong>${esc(e.pseudo)}</strong> ${esc(texte)}
-          <span class="exploit__meta">${esc(heure)}, ${esc(gain)}</span></span>`;
-      liste.prepend(li);
-    });
-    while (liste.children.length > MAX_EXPLOITS) liste.lastElementChild.remove();
-    if (exploitsVus.size > 200) exploitsVus.clear();   // l'écran tourne toute la nuit
-    exploits.forEach((e) => exploitsVus.add(e.id));
+      return `
+        <div class="ligne exploit">
+          <span class="exploit__sceau${s.merite ? " is-merite" : ""}">${icon(s.icone)}</span>
+          <div class="exploit__c">
+            <p class="exploit__qui">${esc(e.pseudo)}</p>
+            <p class="exploit__quoi">${esc(texteExploit(e))}</p>
+          </div>
+          <span class="exploit__heure">${esc(heure)}</span>
+        </div>`;
+    };
+    const moities = exploits.length > 4 ? [exploits.slice(0, 4), exploits.slice(4)] : [exploits];
+    zone.classList.toggle("is-solo", moities.length === 1);
+    zone.innerHTML = moities.map((m) => `<div class="carnet" style="--n:${m.length}">${m.map(ligne).join("")}</div>`).join("");
+  }
+
+  /* ======================================================================
+     3. Programme : ce qui se passe, puis ce qui arrive
+     ====================================================================== */
+  function rendreProgramme() {
+    const now = App.maintenant().getTime();
+    const liste = prog.concerts
+      .filter((c) => c.finMs > now && c.debutMs - now < 8 * 3600000)
+      .sort((a, b) => a.debutMs - b.debutMs);
+    const enCours = liste.filter((c) => c.debutMs <= now)[0];
+    const suivants = liste.filter((c) => c.debutMs > now).slice(0, 4);
+    $("[data-prog-titre]").innerHTML = enCours ? "Sur <span>scène</span>" : "À <span>suivre</span>";
+    $("[data-prog-note]").textContent = suivants.length > 1 ? `Les ${suivants.length} prochains rendez-vous` : "";
+    const zone = $("[data-programme]");
+    zone.classList.toggle("is-solo", !enCours || !suivants.length);
+    zone.innerHTML = `
+      ${enCours ? `
+        <div class="en-scene">
+          <p class="en-scene__lib">En ce moment, ${esc(enCours.scene.nom)}</p>
+          <p class="affiche en-scene__nom">${esc(enCours.nom)}</p>
+          <p class="en-scene__meta">${enCours.genre ? `${esc(enCours.genre)}, ` : ""}depuis ${App.duree(now - enCours.debutMs)}</p>
+        </div>` : ""}
+      ${suivants.length ? `
+        <div class="carnet suivants" style="--n:${suivants.length}">
+          ${suivants.map((c) => `
+            <div class="ligne suivant c-${c.scene.couleur}">
+              <span class="suivant__pastille" aria-hidden="true"></span>
+              <span class="suivant__heure">${App.heureFestival(new Date(c.debutMs))}</span>
+              <div class="suivant__c">
+                <p class="suivant__nom">${esc(c.nom)}</p>
+                <p class="suivant__scene">${esc(c.scene.nom)}${c.genre ? `, ${esc(c.genre)}` : ""}</p>
+              </div>
+              <span class="suivant__dans">dans ${App.duree(c.debutMs - now)}</span>
+            </div>`).join("")}
+        </div>` : ""}`;
+    return Boolean(enCours || suivants.length);
+  }
+
+  /* ======================================================================
+     4. Blind test. « C'est maintenant » dès que la régie lance la manche
+     (phase QUIZ / RAID, reçue en temps réel).
+     ====================================================================== */
+  let phase = "EXPLORATION";
+  const enManche = () => phase === "QUIZ" || phase === "RAID";
+  $("[data-blind-heure]").textContent = fmt.heure(blindTest.horaire);
+  $("[data-blind-texte]").textContent = `${blindTest.questions} extraits, tout le public joue depuis son téléphone. Podium sur cet écran.`;
+  App.eq($("[data-eq-blind]"), 56);
+  function ticBlind() {
+    const debut = App.dateFestival(App.jourFestival(), blindTest.horaire).getTime();
+    const ecart = debut - App.maintenant().getTime();
+    $('[data-panneau="blind"]').classList.toggle("is-direct", enManche());
+    $("[data-blind-dans]").textContent = enManche() ? "C'est maintenant, sors ton téléphone !"
+      : ecart > 0 ? `Départ dans ${App.duree(ecart)}`
+      : ecart > -30 * 60000 ? "Ça commence, sors ton téléphone !" : "Prochaine manche demain";
+  }
+
+  /* ======================================================================
+     La rotation : un panneau à la fois. Un panneau sans contenu est sauté.
+     ====================================================================== */
+  const PANNEAUX = [
+    { id: "tournoi",     present: () => true },
+    { id: "exploits",    present: () => exploits.length > 0 },
+    { id: "programme",   present: rendreProgramme },
+    { id: "rejoindre",   present: () => true },
+    { id: "blind",       present: () => true },
+    { id: "partenaires", present: () => partenaires.length > 0 }
+  ];
+  let indexPanneau = 0, minuteurPanneau = null, enPause = false;
+  scene.style.setProperty("--duree-panneau", `${CONFIG.rotation / 1000}s`);
+
+  function afficherPanneau(i, sens = 1) {
+    for (let n = 0; n < PANNEAUX.length; n++, i += sens) {
+      i = (i + PANNEAUX.length) % PANNEAUX.length;
+      if (PANNEAUX[i].present()) break;
+    }
+    indexPanneau = i;
+    const id = PANNEAUX[i].id;
+    $$("[data-panneau]").forEach((el) => el.classList.toggle("is-actif", el.dataset.panneau === id));
+    const visibles = PANNEAUX.filter((p) => p.id === id || p.present());
+    $("[data-pastilles]").innerHTML = visibles.map((p) => `<i class="${p.id === id ? "is-actif" : ""}"></i>`).join("");
+    clearTimeout(minuteurPanneau);
+    if (!enPause) minuteurPanneau = setTimeout(() => afficherPanneau(indexPanneau + 1), CONFIG.rotation);
+  }
+
+  /* La régie lance une manche : l'écran passe tout de suite sur le blind test */
+  function appliquerPhase(nouvelle) {
+    const avant = enManche();
+    phase = nouvelle || "EXPLORATION";
+    if (enManche() && !avant && !enPause) afficherPanneau(PANNEAUX.findIndex((p) => p.id === "blind"));
   }
 
   /* ======================================================================
@@ -270,22 +274,27 @@ document.addEventListener("app:ready", async () => {
      ====================================================================== */
   let urgente = null, derniereAlerte = 0, minuteurAlerte = null;
 
+  let fileAnnonces = [], indexAnnonce = 0;
+  const ANNONCE_DEFAUT = { titre: "Bienvenue", texte: "Scanne les QR des stands pour gagner des XP." };
+
   function rendreAnnonces(annonces) {
     const maintenant = Date.now();
     const actives = annonces.filter((a) => !a.finMs || a.finMs > maintenant);
-    const toutes = [...actives.filter((a) => a.niveau === "urgent"), ...actives.filter((a) => a.niveau !== "urgent")];
-    const items = toutes.map((a) => `<span><strong>${esc(a.titre)}</strong>${esc(a.texte)}</span>`).join("")
-      || `<span><strong>Bienvenue</strong>Scanne les QR du site pour gagner des XP.</span>`;
-    const piste = $("[data-bandeau]");
-    const contenu = items + items;
-    if (piste.innerHTML !== contenu) {
-      piste.innerHTML = contenu;
-      scene.style.setProperty("--duree-bandeau", `${Math.max(40, toutes.length * 18)}s`);
-    }
+    fileAnnonces = [...actives.filter((a) => a.niveau === "urgent"), ...actives.filter((a) => a.niveau !== "urgent")];
     const avant = urgente && urgente.id;
     urgente = actives.find((a) => a.niveau === "urgent") || null;
     // Nouvelle alerte : tout de suite ; sinon rappel toutes les 3 minutes
     if (urgente && (urgente.id !== avant || Date.now() - derniereAlerte > CONFIG.alerteIntervalle)) afficherAlerte();
+  }
+
+  /* Une annonce à la fois, qui change toutes les 9 s */
+  function annonceSuivante() {
+    const a = fileAnnonces.length ? fileAnnonces[indexAnnonce++ % fileAnnonces.length] : ANNONCE_DEFAUT;
+    $("[data-annonce]").classList.toggle("is-urgente", a.niveau === "urgent");
+    $("[data-annonce-etiq]").textContent = a.niveau === "urgent" ? "Important" : "Annonce";
+    const texte = $("[data-annonce-texte]");
+    texte.innerHTML = `<strong>${esc(a.titre)}</strong>${esc(a.texte)}`;
+    texte.style.animation = "none"; void texte.offsetWidth; texte.style.animation = "";
   }
 
   function afficherAlerte(force = false) {
@@ -342,11 +351,11 @@ document.addEventListener("app:ready", async () => {
     else if (k === " ") {
       e.preventDefault();
       enPause = !enPause;
-      $("[data-diapo]").classList.toggle("is-pause", enPause);
-      if (enPause) clearTimeout(minuteurDiapo); else afficherDiapo(indexDiapo + 1);
+      scene.classList.toggle("is-pause", enPause);
+      if (enPause) clearTimeout(minuteurPanneau); else afficherPanneau(indexPanneau + 1);
     }
-    else if (e.key === "ArrowRight") afficherDiapo(indexDiapo + 1);
-    else if (e.key === "ArrowLeft") afficherDiapo(indexDiapo - 1);
+    else if (e.key === "ArrowRight") afficherPanneau(indexPanneau + 1);
+    else if (e.key === "ArrowLeft") afficherPanneau(indexPanneau - 1, -1);
     else if (k === "u") afficherAlerte(true);
     else if (k === "h") $("[data-aide]").hidden = !$("[data-aide]").hidden;
     else if (e.key === "Escape") { $("[data-aide]").hidden = true; $("[data-alerte]").hidden = true; }
@@ -357,9 +366,13 @@ document.addEventListener("app:ready", async () => {
      ====================================================================== */
   horloge();
   await Promise.all([sur(majProgramme), sur(relire)]);
-  afficherDiapo(0);
+  afficherPanneau(0);
+  annonceSuivante();
+  ticBlind();
 
   setInterval(horloge, 1000);
+  setInterval(ticBlind, 1000);
+  setInterval(annonceSuivante, 9000);
   setInterval(() => sur(majProgramme), 5 * 60000);   // copie « programme » : 0 appel la plupart du temps
   setInterval(() => marquer(false), 15000);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) programmer(0); });
