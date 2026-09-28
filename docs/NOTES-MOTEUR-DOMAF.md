@@ -124,7 +124,7 @@ Supabase **dédiée**.
 - `select unnest(array[...]) ... order by random() limit 1` renvoie toujours le 1er élément
   (tri avant dépliage). Toujours mettre `unnest` dans le FROM. Bug présent en prod Otaku.
 - **Annonces** : lecture publique de `announcements` (48 h), copie « annonces » gardée 1 min et partagée par tous les compteurs. Niveau = `type` (danger = urgent, alerte = important). `lien` n'accepte qu'une page du site. Fermer = `admin_fermer_annonce` (l'annonce passe dans « Anciennes »).
-- Contenu des QR imprimés (format Otaku) : jeu = `…/scanner.html?code=DQ-XXXXXX`, ticket = `…/inscription.html?t=XXXXXXXX` (8 caractères). La base en ligne n'a **encore aucun QR** : un scan réussi n'a été vérifié que sur le banc local.
+- Contenu des QR imprimés (format Otaku) : jeu = `…/scanner.html?code=DQ-XXXXXX`, ticket = `…/inscription.html?ticket=XXXXXXXX` (8 caractères ; `?t=` accepté aussi). La base en ligne n'a **encore aucun QR** : un scan réussi n'a été vérifié que sur le banc local.
 - Validation staff d'une mission : le QR du téléphone contient `DQ-JOUEUR:<id du joueur>` (public), jamais le code secret. La console (étape 5) devra le lire et appeler `admin_validate_quest`.
 - Rangs : les seuils de `mock.js` (`rangs`) doivent rester ceux de `level_for_xp` / `rank_for_level` (550 / 1 750 / 4 050 / 7 150 XP).
 - Cache de la carte : `carte.<id joueur>` (20 s, gardé sur le téléphone). Toute page qui change XP/jetons/missions doit appeler `App.cache.oublier(App.cleCarte())`.

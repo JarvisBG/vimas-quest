@@ -17,10 +17,11 @@
 > Lis d'abord `CLAUDE.md` et `PLAN-VIMAS.md`, et `docs/NOTES-MOTEUR-DOMAF.md` avant de toucher une page.
 > Étapes 1 à 4 terminées, 5.0 terminée, **5.1 faite sauf le tirage au sort final** (mis de côté par Jarvis,
 > proposition dans la case 5.1) : écrans Annonces, Roue et lots, Coups de cœur essayés sur une fausse base et poussés.
-> 5.2 (régie du blind test) terminée. Attaque la **5.3 — billetterie** : carnets de tickets (GM, `admin/carnets.html`)
-> + espace vendeur (encaissement ; aujourd'hui un vendeur est renvoyé vers `connexion.html?vendeur=1`). Comparer
-> d'abord les fonctions existantes (tables `tickets`, `carnets`, fonctions `ticket_*`, `carnet*`, `vendeur*`, `pass_*`)
-> et soumettre à Jarvis ce qui manque avant d'écrire du SQL. Essai sans compte : copie de page + script qui remplace
+> 5.2 (régie) et 5.3 (billetterie : carnets, tickets, espace vendeur) terminées. Attaque la **5.4 — statistiques**
+> (`admin/statistiques.html` : parcours, profil, micro-questions, consentements — `profil_stats`, `admin_stats`…)
+> **+ relecture des droits** : plusieurs fonctions acceptent `is_equipe()` et donc un vendeur (lots de la roue,
+> régie du blind test, `admin_set_phase`) ; retirer `live_board` / `leaderboard_view` si inutiles. Comparer d'abord
+> ce qui existe et soumettre à Jarvis ce qui manque avant d'écrire du SQL. Essai sans compte : copie de page + script qui remplace
 > `C.garde` / `C.appel` / `C.sb` / `C.confirmer` et force `document.hidden` à `false` (effacer ensuite) ; si
 > l'extension Chrome est déconnectée, Edge sans fenêtre (`--headless=new --dump-dom`, **profil neuf à chaque
 > essai**, sinon il ressert d'anciens fichiers) avec un script de scénario qui écrit ses résultats dans la page.
@@ -48,6 +49,7 @@
 | 28/09/2026 | Jarvis : « laisse d'abord le tirage ». Écrans **Annonces**, **Roue et lots**, **Coups de cœur** écrits sur les fonctions existantes (aucun SQL). Non essayés, non committés (shell indisponible). |
 | 28/09/2026 | Shell revenu (hors mode automatique) : `node --check` OK, les trois écrans essayés dans Chrome sur une fausse base, un défaut d'affichage corrigé ; commit + push. |
 | 28/09/2026 | **5.2 terminée** : régie du blind test (aucun SQL), essayée dans Edge sans fenêtre (scénario complet), un doublon de question corrigé ; commit + push. |
+| 28/09/2026 | **5.3 terminée** : carnets (GM), impression des tickets, espace vendeur, sur le modèle d'Otaku (recherche du joueur par pseudo, décision de Jarvis), aucun SQL ; commit + push. |
 
 ---
 
@@ -120,7 +122,13 @@ Le moteur DOMAF est calé sur des **soirées de concerts** : à adapter (étapes
   - `admin/blind-test.html` + `console-blind.js` : liste des manches → une manche (préparation : boss, PV avec repère, questions 2 à 4 réponses, extrait, départ, pochette, révélation, ordre ; direct : chrono, répartition des réponses, bonne réponse, PV du boss, top 5, relu chaque seconde ; fin : récompenses puis « Rouvrir le jeu »). Confirmations : lancer, couper un chrono, terminer. Adresse d'extrait vérifiée avant envoi (sinon doublon de question, trouvé à l'essai)
   - Essayée de bout en bout sur une fausse base dans **Edge sans fenêtre** (extension Chrome déconnectée) : scénario automatique + capture ; fichiers d'essai effacés
   - Au passage : « Remettre un lot » accepte aussi le QR du bon (`DQ-BON:…`) ; numéros d'étape DOMAF (6.5–6.8) remplacés dans la console
-- [ ] 5.3 Billetterie : carnets de tickets (GM) + espace vendeur (encaissement)
+- [x] 5.3 Billetterie : carnets de tickets (GM) + espace vendeur (encaissement) (28/09)
+  - **Modèle d'Otaku**, aucune fonction SQL nouvelle (tout existait : `billetterie_stats`, `carnet_liste/etat/creer/attribuer/rendre/reprendre/pointer`, `billetterie_config` modifiable par le GM, `vendeur_award_bonus`, `admin_manual_quests`, `admin_validate_quest`). Le vendeur trouve le joueur **par son pseudo** (table `players`, lecture publique, comme Otaku) — décision de Jarvis : pas de QR du joueur à scanner
+  - `admin/carnets.html` + `console-carnets.js` (GM) : chiffres (encaissé du jour / en tout, à rapporter, papier en main, libres, payant ou gratuit), carnets, par vendeur, réglages « jeu payant » + prix + message (confirmation avant de rendre payant), nouveau carnet → impression, fiche d'un carnet (compte vendeur par e-mail, rendre des codes / tous les libres, annuler un retour, désactiver)
+  - **Tickets imprimés** (`console-etiquettes.js`, `E.tickets`) : 15 par A4, QR → `inscription.html?ticket=CODE`, code en clair, prix, carnet et rang, « ESSAI » en travers hors du site en ligne. ⚠ La page d'inscription lit `?ticket=` (les notes disaient `?t=`) : elle accepte maintenant les deux. **Étiquettes de QR repassées aux couleurs Vimas** (elles avaient gardé celles de Résonance)
+  - `admin/vendeur.html` + `console-vendeur.js` (rôle vendeur, une colonne pour téléphone) : recette du jour, mon carnet, mode sans papier (QR d'un code libre, codes déjà montrés retenus sur le téléphone), récompenser un joueur (pseudo → +25/+50/+100 avec motif, missions « validées par l'équipe »). Les comptes vendeurs y sont envoyés à la connexion (plus de message « bientôt »)
+  - Essais : scénarios complets dans Edge sans fenêtre + contrôle visuel dans Chrome (table resserrée, grilles 2 × 2 sur téléphone, motif avant les montants) ; fichiers d'essai effacés
+  - `inscription.js` modifié (page du téléphone) : penser à changer `VERSION` de `sw.js` à la mise en ligne
 - [ ] 5.4 Statistiques (parcours, profil, micro-questions, consentements) + relecture des droits ; retirer `live_board` / `leaderboard_view` si inutiles
 - [ ] Chaque sous-étape : essai au banc local (`supabase/outils/banc/`) avant la base en ligne
 

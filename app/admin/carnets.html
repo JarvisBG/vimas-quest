@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <title>Carnets | Console Vimas Quest</title>
+  <script src="../assets/js/console-theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/console.css">
+</head>
+<body class="sans-sw">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <div class="bg-layer bg-glow"></div>
+  <div class="bg-layer bg-grid"></div>
+
+  <div class="console-grille">
+    <nav class="cnav" aria-label="Console">
+      <a class="cnav__marque" href="index.html"><i data-icon="onde"></i> VIMAS QUEST</a>
+      <p class="cnav__tag" data-console-tag>Game Master</p>
+      <div data-console-nav></div>
+      <div class="cnav__pied">
+        <p class="cnav__qui" data-console-qui></p>
+        <button class="cnav__sortir" type="button" data-console-sortir><i data-icon="sortie"></i> Déconnexion</button>
+      </div>
+    </nav>
+    <div class="console-voile" data-console-voile></div>
+    <button class="ctete__menu" type="button" aria-expanded="false" data-console-menu><i data-icon="menu"></i><span class="sr-only">Ouvrir le menu</span></button>
+
+    <div class="console-principal">
+      <div class="ccorps">
+        <header class="ctete">
+          <div class="ctete__titres">
+            <p class="ctete__sur">Billetterie</p>
+            <h1 class="ctete__titre">Carnets de tickets</h1>
+            <p class="ctete__sous" data-resume>Chargement…</p>
+          </div>
+          <div class="ctete__actions">
+            <button class="cbtn cbtn--primaire" type="button" data-nouveau>Nouveau carnet</button>
+            <span class="cpuce-admin"><i data-icon="cadenas"></i><span data-console-nom>GM</span></span>
+          </div>
+        </header>
+
+        <main class="ccontenu" id="contenu" data-console-contenu>
+          <div class="cchiffres" data-chiffres></div>
+
+          <div class="cdeux">
+            <div class="ccolonne">
+              <section class="cpanneau cpanneau--table" aria-labelledby="t-carnets">
+                <div class="cpanneau__tete">
+                  <h2 class="cpanneau__titre" id="t-carnets"><i data-icon="billet"></i> Carnets</h2>
+                  <span class="cpanneau__note">dû = (remis − rendus) × prix</span>
+                </div>
+                <div class="ctable-defile">
+                  <table class="ctable">
+                    <thead>
+                      <tr>
+                        <th scope="col">Carnet</th>
+                        <th scope="col" class="ctable__nb">Activés</th>
+                        <th scope="col" class="ctable__nb">Dû</th>
+                        <th scope="col"><span class="sr-only">Actions</span></th>
+                      </tr>
+                    </thead>
+                    <tbody data-carnets><tr><td colspan="4" class="cvide">Chargement…</td></tr></tbody>
+                  </table>
+                </div>
+              </section>
+
+              <section class="cpanneau" aria-labelledby="t-vendeurs">
+                <h2 class="cpanneau__titre" id="t-vendeurs"><i data-icon="passeport"></i> Par vendeur</h2>
+                <ul class="cliste" data-vendeurs></ul>
+              </section>
+            </div>
+
+            <div class="ccolonne">
+              <section class="cpanneau" aria-labelledby="t-reglages">
+                <h2 class="cpanneau__titre" id="t-reglages"><i data-icon="cadenas"></i> Jeu payant</h2>
+                <form class="cform" data-reglages novalidate>
+                  <label class="ccase"><input type="checkbox" name="actif"><span>Il faut un ticket du jour pour gagner des points<small>Décoché : le jeu est gratuit, les tickets ne servent à rien (réglage conseillé pour la démonstration).</small></span></label>
+                  <label class="champ">
+                    <span class="champ__label">Prix d'une journée (FCFA)</span>
+                    <input class="saisie" name="prix" type="number" min="0" max="1000000" step="50" required>
+                    <span class="champ__aide">Imprimé sur les tickets : fixe-le avant d'imprimer.</span>
+                  </label>
+                  <label class="champ">
+                    <span class="champ__label">Message aux joueurs sans ticket</span>
+                    <textarea class="saisie" name="message" maxlength="200"></textarea>
+                  </label>
+                  <p class="message" role="alert" data-reglages-erreur hidden></p>
+                  <button class="cbtn" type="submit"><i data-icon="coche"></i> Enregistrer</button>
+                </form>
+              </section>
+
+              <section class="cpanneau" aria-labelledby="t-aide">
+                <h2 class="cpanneau__titre" id="t-aide"><i data-icon="info"></i> Deux chiffres, deux moments</h2>
+                <p class="cvide"><strong>Encaissé</strong> = tickets activés × prix : de l'argent prouvé (un joueur est entré avec). C'est le chiffre à comparer à la caisse en cours de journée.</p>
+                <p class="cvide"><strong>À rapporter</strong> = (remis − rendus) × prix : il n'est juste qu'une fois les invendus rendus. Avant, il compte comme vendus les tickets encore dans la liasse. L'écart entre les deux, c'est le papier en main. <strong>Le papier fait foi.</strong></p>
+              </section>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nouveau carnet -->
+  <dialog class="cboite" data-boite-nouveau aria-labelledby="bn-titre">
+    <form class="cboite__corps cform" data-form-nouveau novalidate>
+      <h2 class="cboite__titre" id="bn-titre">Nouveau carnet</h2>
+      <label class="champ">
+        <span class="champ__label">Vendeur</span>
+        <input class="saisie" name="vendeur" maxlength="60" required autocomplete="off" placeholder="Awa, stand d'accueil">
+      </label>
+      <label class="champ">
+        <span class="champ__label">Nombre de tickets</span>
+        <input class="saisie" name="nb" type="number" min="1" max="500" step="1" value="45" required>
+        <span class="champ__aide">De 1 à 500 ; 45 = 3 planches A4.</span>
+      </label>
+      <label class="champ">
+        <span class="champ__label">Note (facultative)</span>
+        <input class="saisie" name="note" maxlength="120" autocomplete="off">
+      </label>
+      <p class="message" role="alert" data-nouveau-erreur hidden></p>
+      <div class="cboite__actions">
+        <button class="cbtn" type="button" data-fermer>Annuler</button>
+        <button class="cbtn cbtn--primaire" type="submit">Créer et imprimer</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Gérer un carnet -->
+  <dialog class="cboite cfiche" data-boite-carnet aria-labelledby="bc-titre">
+    <div class="cfiche__tete">
+      <span class="cfiche__avatar"><i data-icon="billet"></i></span>
+      <div class="cfiche__titres">
+        <h2 class="cboite__titre" id="bc-titre" data-c-titre>Carnet</h2>
+        <p class="cfiche__sous" data-c-sous></p>
+      </div>
+      <button class="cbtn cbtn--icone" type="button" data-fermer><i data-icon="fermer"></i><span class="sr-only">Fermer</span></button>
+    </div>
+    <div class="cfiche__corps cform">
+      <div class="cfiche__stats cfiche__stats--4" data-c-stats></div>
+
+      <section class="cfiche__bloc">
+        <p class="csous-titre">Compte du vendeur</p>
+        <p class="champ__aide" data-c-compte></p>
+        <form class="cform--ligne" data-form-compte novalidate>
+          <label class="sr-only" for="c-email">E-mail du compte vendeur</label>
+          <input class="saisie" id="c-email" name="email" type="email" autocomplete="off" placeholder="e-mail du compte vendeur">
+          <button class="cbtn" type="submit">Rattacher</button>
+        </form>
+      </section>
+
+      <section class="cfiche__bloc">
+        <p class="csous-titre">Invendus rendus</p>
+        <p class="champ__aide">Tape (ou scanne) les codes des tickets rendus, un par ligne. Un ticket rendu ne s'active plus. « Tous les libres » neutralise d'un coup tout ce qui n'a pas été activé.</p>
+        <textarea class="saisie" data-c-codes rows="3" placeholder="K7PM 2QXA"></textarea>
+        <div class="cregie__actions">
+          <button class="cbtn" type="button" data-rendre>Rendre ces codes</button>
+          <button class="cbtn" type="button" data-rendre-tous>Rendre tous les libres</button>
+          <button class="cbtn" type="button" data-reprendre>Annuler le retour de ces codes</button>
+        </div>
+      </section>
+
+      <p class="message" role="alert" data-c-erreur hidden></p>
+
+      <section class="cfiche__bloc">
+        <p class="csous-titre">Tickets</p>
+        <div class="cq-choix" data-c-tickets></div>
+      </section>
+    </div>
+    <div class="cfiche__pied">
+      <button class="cbtn cbtn--danger" type="button" data-desactiver></button>
+      <button class="cbtn" type="button" data-imprimer-carnet><i data-icon="billet"></i> Imprimer</button>
+      <button class="cbtn" type="button" data-fermer>Fermer</button>
+    </div>
+  </dialog>
+
+  <!-- Impression -->
+  <dialog class="cboite cfiche cimpression" data-impression aria-labelledby="i-titre">
+    <div class="cfiche__tete">
+      <span class="cfiche__avatar"><i data-icon="billet"></i></span>
+      <div class="cfiche__titres">
+        <h2 class="cboite__titre" id="i-titre">Imprimer les tickets</h2>
+        <p class="cfiche__sous" data-i-sous></p>
+      </div>
+      <button class="cbtn cbtn--icone" type="button" data-fermer><i data-icon="fermer"></i><span class="sr-only">Fermer</span></button>
+    </div>
+    <div class="cfiche__corps cform">
+      <p class="message" role="alert" data-i-essai hidden></p>
+      <iframe class="cimpression__apercu" data-i-apercu title="Aperçu des tickets"></iframe>
+      <p class="champ__aide">Aperçu du papier. Dans la fenêtre d'impression : échelle 100 %, sans marges ajoutées ; « Enregistrer au format PDF » donne un fichier pour l'imprimerie.</p>
+    </div>
+    <div class="cfiche__pied">
+      <button class="cbtn" type="button" data-fermer>Fermer</button>
+      <button class="cbtn cbtn--primaire" type="button" data-i-lancer><i data-icon="billet"></i> Imprimer</button>
+    </div>
+  </dialog>
+
+  <script src="../assets/js/config.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/vendor/supabase.min.js" defer></script>
+  <script src="../assets/js/vendor/qrcode-generator.min.js" defer></script>
+  <script src="../assets/js/serveur.js" defer></script>
+  <script src="../assets/js/console.js" defer></script>
+  <script src="../assets/js/console-etiquettes.js" defer></script>
+  <script src="../assets/js/pages/console-carnets.js" defer></script>
+</body>
+</html>

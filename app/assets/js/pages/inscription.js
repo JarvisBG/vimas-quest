@@ -656,7 +656,8 @@ document.addEventListener("app:ready", async () => {
   history.replaceState({ ecran: ecranDepart() }, "", "");
 
   // Arrivée depuis le QR d'un ticket lu avec l'appareil photo : inscription.html?ticket=DQ-XXXX
-  const param = new URLSearchParams(location.search).get("ticket");
+  const recherche = new URLSearchParams(location.search);
+  const param = recherche.get("ticket") || recherche.get("t");   // ?t= : ancien format des tickets Otaku
   if (param && !joueur) {
     history.replaceState({ ecran: "accueil" }, "", "inscription.html");
     const code = extraireTicket(param);

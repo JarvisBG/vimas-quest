@@ -655,3 +655,15 @@ a.cpuce { text-decoration: none; }
 .cq-choix span { font-size: .74rem; padding: 2px 8px; border-radius: 999px; color: var(--ink-dim); border: 1px solid rgba(var(--surf), .1); }
 .cq-choix span.is-bonne { color: var(--success); border-color: rgba(74, 222, 128, .4); }
 tr.is-en-cours td { background: rgba(139, 92, 246, .08); }
+
+/* ---------- Espace vendeur (5.3 Vimas) : une colonne, pensé pour le téléphone ---------- */
+.cvendeur__corps { max-width: 46rem; margin: 0 auto; padding: 20px 16px 48px; }
+.cvendeur__ticket { display: grid; justify-items: center; gap: 10px; padding: 18px; border-radius: 16px; background: #FFFFFF; color: #3B0A12; text-align: center; }
+.cvendeur__ticket svg { width: min(72vw, 260px); height: auto; display: block; }
+.cvendeur__ticket strong { font-family: var(--font-mono); font-size: 1.5rem; letter-spacing: .12em; }
+.cvendeur__ticket small { font-size: .78rem; color: #6B4A50; }
+.cvendeur .cliste button.cliste__texte { text-align: left; background: none; border: 0; color: inherit; cursor: pointer; padding: 0; font: inherit; }
+.cvendeur .cfiche__stats { grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 620px) { .cvendeur .cfiche__stats { grid-template-columns: repeat(4, 1fr); } }
+.cfiche__stats--4 { grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 520px) { .cfiche__stats--4 { grid-template-columns: repeat(4, 1fr); } }

@@ -46,7 +46,8 @@
       { page: "coups-de-coeur.html", nom: "Coups de cœur", icone: "coeur" }
     ] },
     { groupe: "Billetterie", liens: [
-      { page: "carnets.html", nom: "Carnets", icone: "billet", etape: "5.3", gm: true }
+      { page: "carnets.html", nom: "Carnets", icone: "billet", gm: true },
+      { page: "vendeur.html", nom: "Espace vendeur", icone: "passeport", gm: true }
     ] },
     { groupe: "Bilan", liens: [
       { page: "statistiques.html", nom: "Statistiques", icone: "onde", etape: "5.4" }
@@ -120,9 +121,8 @@
     return data && data.session;
   }
 
-  /* Page d'arrivée selon le rôle. Vendeur : son espace arrive à l'étape 5.3 ;
-     d'ici là, la page de connexion le lui dit. */
-  C.destination = (acces) => (acces && acces.vendeur ? "connexion.html?vendeur=1" : "index.html");
+  /* Page d'arrivée selon le rôle : le vendeur a son espace à lui */
+  C.destination = (acces) => (acces && acces.vendeur ? "vendeur.html" : "index.html");
 
   C.connecter = async (email, motDePasse) => {
     const { data, error } = await C.sb().auth.signInWithPassword({ email, password: motDePasse });
@@ -149,8 +149,9 @@
   };
 
   /* Garde d'entrée : renvoie l'accès, ou null si la page a été quittée.
-     options.gm : écran réservé au Game Master. */
-  C.garde = async ({ gm = false } = {}) => {
+     options.gm : écran réservé au Game Master ; options.vendeur : page ouverte
+     aussi aux vendeurs (leur espace), les autres pages les y renvoient. */
+  C.garde = async ({ gm = false, vendeur = false } = {}) => {
     const session = await sessionActuelle();
     if (!session) { C.versConnexion(); return null; }
     let acces = accesConnu(session.user.id);
@@ -160,7 +161,7 @@
       if (acces && acces.membre) C.retenirAcces(acces, session.user.id);
     }
     if (!acces || !acces.membre) { await C.deconnecter(); return null; }
-    if (acces.vendeur) { location.replace(C.destination(acces)); return null; }
+    if (acces.vendeur && !vendeur) { location.replace(C.destination(acces)); return null; }
     C.menu(acces);
     if (gm && !acces.gm) {
       const main = App.$("[data-console-contenu]");

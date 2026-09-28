@@ -19,15 +19,8 @@ document.addEventListener("app:ready", async () => {
     erreur.hidden = !texte;
   };
 
-  const partir = (acces) => {
-    if (acces.vendeur) {           // son espace arrive à l'étape 5.3
-      $("[data-vendeur]").hidden = false;
-      form.hidden = true;
-      $("[data-sortir]").hidden = false;
-      return;
-    }
-    location.replace(retour || C.destination(acces));
-  };
+  /* Le vendeur va toujours à son espace (jamais à une page de la console) */
+  const partir = (acces) => location.replace(acces.vendeur ? C.destination(acces) : (retour || C.destination(acces)));
 
   $("[data-sortir]").addEventListener("click", C.deconnecter);
 
@@ -42,7 +35,6 @@ document.addEventListener("app:ready", async () => {
   } catch (e) {
     if (e.code === "RESEAU") montrerErreur(C.message(e));
   }
-  if (params.get("vendeur") === "1") { $("[data-vendeur]").hidden = false; $("[data-sortir]").hidden = false; }
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();

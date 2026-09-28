@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <title>Espace vendeur | Vimas Quest</title>
+  <script src="../assets/js/console-theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/console.css">
+</head>
+<body class="sans-sw cvendeur">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <div class="bg-layer bg-glow"></div>
+  <div class="bg-layer bg-grid"></div>
+
+  <div class="ccorps cvendeur__corps">
+    <header class="ctete">
+      <div class="ctete__titres">
+        <p class="ctete__sur">Vimas Quest · billetterie</p>
+        <h1 class="ctete__titre" data-bonjour>Espace vendeur</h1>
+        <p class="ctete__sous">Ta recette, ton carnet, et les récompenses aux joueurs.</p>
+      </div>
+      <div class="ctete__actions">
+        <a class="cbtn" href="index.html" data-vers-console hidden><i data-icon="retour"></i> Console</a>
+        <button class="cbtn" type="button" data-sortir><i data-icon="sortie"></i> Déconnexion</button>
+      </div>
+    </header>
+
+    <main class="ccontenu" id="contenu">
+      <p class="message message--info" data-gratuit hidden><i data-icon="info"></i><span>Le jeu est <strong>gratuit</strong> en ce moment (billetterie coupée par le Game Master) : les joueurs n'ont pas besoin de ticket.</span></p>
+
+      <!-- 1. Recette -->
+      <section class="cpanneau" aria-labelledby="t-recette">
+        <div class="cpanneau__tete">
+          <h2 class="cpanneau__titre" id="t-recette"><i data-icon="billet"></i> Ma recette du jour</h2>
+          <button class="cbtn" type="button" data-actualiser>Actualiser</button>
+        </div>
+        <div class="cfiche__stats" data-recette><p class="cvide">Chargement…</p></div>
+        <p class="champ__aide">« Activés » compte les tickets scannés par les joueurs. Un ticket vendu il y a deux minutes et pas encore scanné n'y est pas encore : c'est ton papier qui fait foi.</p>
+      </section>
+
+      <!-- 2. Mon carnet -->
+      <section class="cpanneau" aria-labelledby="t-carnet">
+        <h2 class="cpanneau__titre" id="t-carnet"><i data-icon="passeport"></i> Mon carnet</h2>
+        <div data-carnets><p class="cvide">Chargement…</p></div>
+      </section>
+
+      <!-- 3. Sans papier -->
+      <section class="cpanneau" aria-labelledby="t-sans-papier">
+        <h2 class="cpanneau__titre" id="t-sans-papier"><i data-icon="qr"></i> Mode sans papier</h2>
+        <p class="cvide">Plus de tickets imprimés sous la main ? Encaisse d'abord, puis montre un code de ton carnet à l'écran : le joueur le scanne avec son téléphone. Ce ticket compte comme vendu.</p>
+        <div class="cvendeur__ticket" data-ticket hidden></div>
+        <div class="cregie__actions">
+          <button class="cbtn cbtn--primaire" type="button" data-montrer>Montrer un ticket</button>
+          <button class="cbtn" type="button" data-suivant hidden>Ticket suivant</button>
+          <button class="cbtn" type="button" data-cacher hidden>Cacher</button>
+        </div>
+      </section>
+
+      <!-- 4. Récompenser un joueur -->
+      <section class="cpanneau" aria-labelledby="t-joueur">
+        <h2 class="cpanneau__titre" id="t-joueur"><i data-icon="etoile"></i> Récompenser un joueur</h2>
+        <p class="cvide">Cherche le joueur par son pseudo. Tu pourras lui offrir des points, ou valider une mission « validée par l'équipe ».</p>
+        <div data-recherche-zone>
+          <label class="sr-only" for="recherche">Pseudo du joueur</label>
+          <input class="saisie" id="recherche" type="search" autocomplete="off" maxlength="30" placeholder="Pseudo du joueur…" data-recherche>
+          <ul class="cliste" data-resultats></ul>
+        </div>
+        <div data-joueur hidden>
+          <div class="cregie__ligne">
+            <p class="cregie__question" data-joueur-nom></p>
+            <button class="cbtn" type="button" data-changer>Changer</button>
+          </div>
+          <p class="csous-titre">Offrir des points</p>
+          <p class="champ__aide">Pour une belle tenue, une danse, un coup de main. Repère : un stand scanné vaut 50 XP. Le geste est annoncé sur l'écran géant, à ton nom.</p>
+          <label class="champ">
+            <span class="champ__label">Pour quoi ? (facultatif, affiché sur l'écran)</span>
+            <input class="saisie" maxlength="60" autocomplete="off" placeholder="Meilleure tenue du stand" data-motif>
+          </label>
+          <div class="cregie__actions" data-montants>
+            <button class="cbtn" type="button" data-xp="25">+25</button>
+            <button class="cbtn" type="button" data-xp="50">+50</button>
+            <button class="cbtn" type="button" data-xp="100">+100</button>
+          </div>
+          <p class="csous-titre">Missions à valider</p>
+          <ul class="cliste" data-missions></ul>
+        </div>
+        <p class="message" role="alert" data-joueur-message hidden></p>
+      </section>
+    </main>
+  </div>
+
+  <script src="../assets/js/config.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/vendor/supabase.min.js" defer></script>
+  <script src="../assets/js/vendor/qrcode-generator.min.js" defer></script>
+  <script src="../assets/js/serveur.js" defer></script>
+  <script src="../assets/js/console.js" defer></script>
+  <script src="../assets/js/console-etiquettes.js" defer></script>
+  <script src="../assets/js/pages/console-vendeur.js" defer></script>
+</body>
+</html>

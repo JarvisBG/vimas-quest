@@ -17,7 +17,8 @@
   if (!App) return;
   const esc = App.esc;
 
-  const ENCRES = { nuit: "#0A1440", sodium: "#FFD23F", bleu: "#1F3FD1", rose: "#FF5FA2", vert: "#2BB673" };
+  /* Palette Vimas (mêmes valeurs que style.css : --nuit, --sodium, --bleu = rouge, --rose = orange, --vert) */
+  const ENCRES = { nuit: "#3B0A12", sodium: "#FFC72C", bleu: "#D90A22", rose: "#F9A209", vert: "#1FA05A" };
   /* Mêmes noms que typesQR (mock.js) ; l'encre de couleur de chaque type */
   const TYPES = {
     scene: { nom: "Scène", encre: "sodium" },
@@ -109,6 +110,75 @@ body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-se
   .page { background: #FFFFFF; box-shadow: 0 6px 24px rgba(0, 0, 0, .35); }
 }
 </style></head><body>${pages.join("") || '<p style="padding:24px">Aucun QR à imprimer.</p>'}</body></html>`;
+  };
+
+  /* ---------- Tickets de jeu (billetterie, étape 5.3 Vimas) ----------
+     Un ticket = une journée de jeu. Son QR mène à l'inscription, code déjà
+     rempli (inscription.html?ticket=CODE) ; le code est aussi imprimé en clair
+     (4 + 4 caractères) pour la saisie à la main. 15 tickets par A4 (3 × 5),
+     pointillés de découpe ; le carnet et le rang servent au pointage. */
+  E.adresseTicket = (code) => new URL(`inscription.html?ticket=${encodeURIComponent(code)}`, App.racine).href;
+
+  function ticket(t, carnet, prix, essai) {
+    const qr = App.qrSvg(E.adresseTicket(t.code), { niveau: "Q", marge: 2, encre: ENCRES.nuit, fond: "#FFFFFF", titre: t.code });
+    return `<div class="tkt">
+      <div class="tkt__bande"><span class="tkt__marque">VIMAS QUEST</span><span class="tkt__prix">${prix ? `${esc(Number(prix).toLocaleString("fr-FR"))} FCFA` : "Ticket"}</span></div>
+      <div class="tkt__corps">
+        <div class="tkt__qr">${qr}</div>
+        <div class="tkt__texte">
+          <strong>1 journée de jeu</strong>
+          <span>VIMAS FEST · 26–27 déc.</span>
+          <span class="tkt__code">${esc(t.code.slice(0, 4))} ${esc(t.code.slice(4))}</span>
+          <small>Scanne le QR, ou tape le code à l'inscription.</small>
+        </div>
+      </div>
+      <div class="tkt__pied"><span>Carnet ${esc(carnet.numero)} · n° ${esc(t.rang)}</span><span>${esc(carnet.vendeur_nom)}</span></div>
+      ${essai ? '<div class="tkt__essai">ESSAI</div>' : ""}
+    </div>`;
+  }
+
+  E.tickets = (carnet, tickets, prix) => {
+    const essai = E.essai();
+    const pages = [];
+    for (let i = 0; i < tickets.length; i += 15) {
+      pages.push(`<section class="page">${tickets.slice(i, i + 15).map((t) => ticket(t, carnet, prix, essai)).join("")}</section>`);
+    }
+    const police = new URL("assets/fonts/Anton-Regular.woff2", App.racine).href;
+    return `<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Tickets Vimas Quest — carnet ${esc(carnet.numero)}</title><style>
+@font-face { font-family: "Anton"; src: url("${police}") format("woff2"); font-display: block; }
+@page { size: A4 portrait; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #FFFFFF; }
+body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: ${ENCRES.nuit};
+  -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page { width: 210mm; height: 297mm; padding: 8mm; display: grid; overflow: hidden;
+  grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(5, 1fr);
+  break-after: page; page-break-after: always; }
+.page:last-child { break-after: auto; page-break-after: auto; }
+.tkt { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; gap: 1.6mm;
+  padding: 2.6mm 3mm; outline: 0.2mm dashed #B8BCC8; outline-offset: -0.1mm; }
+.tkt__bande { display: flex; justify-content: space-between; align-items: baseline; padding: 1mm 2mm;
+  background: ${ENCRES.bleu}; color: #FFFFFF; font-family: "Anton", Impact, sans-serif; letter-spacing: .04em; line-height: 1.1; }
+.tkt__marque { font-size: 4mm; }
+.tkt__prix { font-size: 3.4mm; color: ${ENCRES.sodium}; }
+.tkt__corps { display: flex; gap: 2.4mm; align-items: center; min-height: 0; }
+.tkt__qr { flex: none; width: 27mm; height: 27mm; }
+.tkt__qr svg { width: 100%; height: 100%; display: block; }
+.tkt__texte { display: grid; gap: .8mm; min-width: 0; font-size: 2.5mm; line-height: 1.2; }
+.tkt__texte strong { font-family: "Anton", Impact, sans-serif; font-weight: 400; font-size: 4mm; text-transform: uppercase; letter-spacing: .02em;
+  text-shadow: .3mm .2mm 0 ${ENCRES.rose}; }
+.tkt__code { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 4.2mm; font-weight: 700; letter-spacing: .08em; }
+.tkt__texte small { font-size: 2.1mm; color: #6B4A50; }
+.tkt__pied { display: flex; justify-content: space-between; gap: 2mm; border-top: .25mm solid ${ENCRES.nuit}; padding-top: .8mm;
+  font-size: 2.2mm; font-weight: 600; white-space: nowrap; overflow: hidden; }
+.tkt__essai { position: absolute; left: -20%; right: -20%; top: 42%; transform: rotate(-22deg); padding: 1mm 0; text-align: center;
+  background: rgba(226, 59, 59, .85); color: #FFFFFF; font-family: "Anton", Impact, sans-serif; font-size: 5mm; letter-spacing: .1em; }
+@media screen {
+  html, body { background: #8A8F9C; }
+  body { padding: 16px; display: grid; gap: 16px; justify-content: center; }
+  .page { background: #FFFFFF; box-shadow: 0 6px 24px rgba(0, 0, 0, .35); }
+}
+</style></head><body>${pages.join("") || '<p style="padding:24px">Aucun ticket à imprimer.</p>'}</body></html>`;
   };
 
   /* Charge le document dans le cadre et attend la police (sinon le 1er
