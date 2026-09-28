@@ -12,9 +12,22 @@
 
 ## ▶ Prochain prompt (en cas de coupure)
 
-> Continue le projet Vimas Quest : lis `CLAUDE.md` et `PLAN-VIMAS.md` (et `docs/NOTES-MOTEUR-DOMAF.md`
-> avant de toucher une page), puis attaque l'**étape 5** — console (5.0 marque et dates, puis 5.1 animation).
-> Écrans et pages festivalier passés au skill `impeccable` (`~/.claude/skills/impeccable`). Rappel : festival **de jour, 10 h → 22 h** (hypothèse), contenu à adapter en étape 6.
+> Continue le projet **Vimas Quest** (dossier `C:\Users\HP\Documents\PROJETS\vimas\vimas-quest`, dépôt
+> GitHub `JarvisBG/vimas-quest`, branche `main` — commit + push à chaque fin de tâche, tu y es autorisé).
+> Lis d'abord `CLAUDE.md` et `PLAN-VIMAS.md`, et `docs/NOTES-MOTEUR-DOMAF.md` avant de toucher une page.
+> Étapes 1 à 4 terminées (habillage, textes, écrans géants refaits sur le modèle d'Otaku Quest, passe
+> anti-« IA » avec le skill `impeccable`). Attaque l'**étape 5 — console d'administration** (`app/admin/`,
+> style néon d'Otaku gardé) :
+> - **5.0** marque Vimas déjà posée ; reste les **dates du festival** dans `app/assets/js/pages/console-programme.js`
+>   (grille de 4 jours de novembre → sam. 26 et dim. 27 décembre 2026, journées **10 h → 22 h**) ;
+> - puis **5.1 Animation** : roue (lots, coût, plafond, retrait des bons), annonces, coups de cœur (clôture,
+>   palmarès), tirage au sort final. Comparer d'abord ce que la base offre (`supabase/sources/`, fonctions
+>   `console_*` / `admin_*`) et soumettre à Jarvis ce qui manque avant d'écrire du SQL.
+> Rappels : base Supabase **partagée** avec l'ancien DOMAF (`domaf-quest`) → sauvegarde SQL avant toute écriture ;
+> festival supposé **de jour, 10 h → 22 h** (contenu à adapter en étape 6) ; serveur local
+> `app/lancer-serveur.bat` → http://localhost:8767 ; pour tester dans Chrome, désinscrire le service worker
+> puis changer de page (voir `CLAUDE.md`). Travail étape par étape, validation de Jarvis avant la suivante,
+> échanges en français.
 
 ---
 
@@ -29,6 +42,7 @@
 | 28/09/2026 | Hypothèse de Jarvis : festival **de jour** (affiche = village de stands) → horaires provisoires **10 h – 22 h**. **Étape 3 terminée** (textes, clés, consentement, quartiers de Yaoundé, partenaires, bandeau « maquette ») ; les 2 jours passent à l'étape 6 avec le contenu. |
 | 28/09/2026 | Mur de l'écran géant refait sur le modèle d'Otaku Quest (un panneau à la fois, enseigne sobre, une annonce en pied) + passe `impeccable polish`. Skill impeccable (pbakaus/impeccable) installé dans `~/.claude/skills/` à la demande de Jarvis. |
 | 28/09/2026 | Plateau du blind test aligné sur le mur ; passe anti-« IA » sur toutes les pages festivalier (détecteur impeccable) ; `sw.js` → `vimasquest-v2`. **Étape 4 terminée** (hors contenu de jour, étape 6). |
+| 28/09/2026 | Fin de session : fichiers de progression à jour, prochain prompt préparé (étape 5, console). |
 
 ---
 
