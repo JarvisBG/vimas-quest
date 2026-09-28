@@ -20,6 +20,7 @@
 | Date | Fait |
 |---|---|
 | 28/09/2026 | Cadrage : maquette pour Vimas, même base et même lien que DOMAF. Copie de `domaf/` → `vimas-quest/` (sans offre ni archives), docs de suivi créés. |
+| 28/09/2026 | Vérifié : le mode démo (`?mock=1`) accepte les vrais QR imprimés (`scanner.html?code=QR-…`), sans base. Limites : chaque téléphone joue seul, classement et écran géant simulés. Ajout de l'étape 4 bis (finir la console : 6.5 → 6.8 du DOMAF). |
 
 ---
 
@@ -53,6 +54,13 @@
 - [ ] Missions, badges, lots de la roue, annonces adaptés (musique, danse, mode)
 - [ ] Banque de questions du coffre (`QUESTIONS-VIMAS.md` → script → `mock.js` + SQL)
 - [ ] Blind test : manches et « boss » reggae / caribéen (sans photos de vraies personnes)
+
+## Étape 4 bis — Finir la console (reste du DOMAF, étapes 6.5 → 6.8 de l'archive)
+> Côté joueur et écrans : terminé. Côté console, il manque de quoi **piloter** le jeu sans passer par l'éditeur SQL.
+- [ ] Animation : roue (lots, coût, plafond, retrait des bons), annonces, coups de cœur (clôture, palmarès), tirage au sort final
+- [ ] Régie du blind test : manches, questions (extrait, pochette), boss, lancement en direct
+- [ ] Billetterie : carnets (GM) + espace vendeur
+- [ ] Statistiques (parcours, profil, micro-questions, consentements) + relecture des droits
 
 ## Étape 5 — Base de données (la même que DOMAF)
 - [ ] Sauvegarde SQL de la base avant toute écriture
