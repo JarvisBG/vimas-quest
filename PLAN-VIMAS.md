@@ -18,8 +18,8 @@
 > Étapes 1 à 4 terminées ; **étape 5 (console) terminée** sauf le tirage au sort final (mis de côté par Jarvis,
 > proposition dans la case 5.1). 5.4 : `admin/statistiques.html` faite ; correctif des droits
 > `supabase/correctifs/2026-09-28_vimas-5.4-droits.sql` **appliqué en ligne par Jarvis le 28/09** (annulation :
-> `…_ANNULER.sql`). **Site en ligne depuis le 29/09** (`vimasquest-v3`). **Étape 6 (contenu de démo) terminée le 29/09**,
-> pas encore remise en ligne (changer `VERSION` de `sw.js` → `vimasquest-v4` puis `npx wrangler deploy`, wrangler connecté).
+> `…_ANNULER.sql`). **Site en ligne depuis le 29/09**. **Étape 6 (contenu de démo) terminée le 29/09**,
+> **mise en ligne le 29/09** (`vimasquest-v4` ; prochaine mise en ligne : `v5` puis `npx wrangler deploy`, wrangler connecté).
 > Ensuite : **étape 7 — plan du site** (fond du Majestic Cinéma / campus de Yaoundé I depuis OpenStreetMap via `outils/plan/`,
 > jamais Google Maps ; lieux placés ; `geo` / `metresParUnite` dans `planConfig`). Question ouverte : écran de secours du vendeur.
 > Essai d'une page de console sans compte : copie de page + script qui remplace `C.garde` / `C.appel` / `C.sb` /
@@ -53,6 +53,7 @@
 | 28/09/2026 | Correctif des droits **appliqué en ligne** par Jarvis ; vérifié par l'API publique : `live_board` / `leaderboard_view` introuvables (PGRST202), `admin_create_prize` / `admin_quiz_start` toujours là (refusées à la clé publique). Le correctif tenant en une transaction, les 17 gardes sont passées avec. |
 | 29/09/2026 | **Première mise en ligne Vimas** sur festival-quest (demande de Jarvis) : `sw.js` → `vimasquest-v3`, `npx wrangler deploy` (version `3ba21ade`), wrangler connecté sur ce PC. Vérifié : accueil Vimas, compte à rebours, console et statistiques servies, fichiers internes en 404. La démo DOMAF est remplacée. Contenu encore fictif DOMAF (étape 6). |
 | 29/09/2026 | **Étape 6 terminée** : contenu de démo Vimas de jour (2 jours, 10 h → 22 h, line-up fictif recalé, blind test 17 h, annonces sur l'horloge de démo), banque de questions Vimas (démo + SQL), formulations de jour dans les pages, contrôle dans Chrome. Pas encore remis en ligne. |
+| 29/09/2026 | Étape 6 **mise en ligne** : `sw.js` → `vimasquest-v4`, `npx wrangler deploy` (version `41a35e22`) ; vérifié en ligne (sw v4, contenu Vimas de jour, fichiers internes en 404). |
 
 ---
 
