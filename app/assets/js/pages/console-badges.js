@@ -45,7 +45,7 @@ document.addEventListener("app:ready", async () => {
     "Autographe": "Première séance de dédicaces",
     "Jury": "3e stand dans les coups de cœur",
     "Oreille d'or": "Top 10 d'une manche de blind test",
-    "Lève-tôt": "Un scan entre 6 h et 17 h (heure de Douala)",
+    "Lève-tôt": "Un scan entre 6 h et 17 h (heure du Cameroun)",
     "Noctambule": "Une scène scannée pendant un concert, entre minuit et 6 h",
     "Marathonien": "Au moins un scan chacune des 4 journées",
     "Podium": "Top 3 de la journée à la clôture (phase « Clôture »)"

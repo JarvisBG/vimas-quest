@@ -27,7 +27,7 @@ document.addEventListener("app:ready", async () => {
   $$("[data-eq]").forEach((el) => App.eq(el, Number(el.dataset.eq)));
 
   /* ---------- Hero ---------- */
-  $("[data-edition]").textContent = `${d.festival.edition}e édition`;
+  $("[data-edition]").textContent = `${d.festival.edition}${d.festival.edition === 1 ? "re" : "e"} édition`;
   $("[data-dates]").textContent = d.festival.dates;
   $("[data-lieu]").textContent = d.festival.lieu;
   App.countdown($("[data-countdown] .countdown"), d.festival.ouverture, {

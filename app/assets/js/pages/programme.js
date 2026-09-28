@@ -369,7 +369,7 @@ document.addEventListener("app:ready", async () => {
     const a = concertPrincipal(id);
     if (!a) return;
     const url = `${location.origin}${location.pathname}#${id}`;
-    const texte = `${a.nom} au DOMAF, ${etat.d.jours.find((j) => j.id === a.jour).long} à ${HEURE(a.debutMs)}, ${a.scene.nom}`;
+    const texte = `${a.nom} au VIMAS FEST, ${etat.d.jours.find((j) => j.id === a.jour).long} à ${HEURE(a.debutMs)}, ${a.scene.nom}`;
     try {
       if (navigator.share) await navigator.share({ title: a.nom, text: texte, url });
       else { await navigator.clipboard.writeText(`${texte} ${url}`); App.toast("Lien copié."); }

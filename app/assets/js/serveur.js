@@ -72,9 +72,9 @@
 
   /* Dernière réponse connue, pour afficher quelque chose quand le réseau sature */
   const memoire = {
-    lire(cle) { try { return JSON.parse(localStorage.getItem(`domafquest.memo.${cle}`)); } catch (e) { return null; } },
+    lire(cle) { try { return JSON.parse(localStorage.getItem(`vimasquest.memo.${cle}`)); } catch (e) { return null; } },
     ecrire(cle, valeur) {
-      try { localStorage.setItem(`domafquest.memo.${cle}`, JSON.stringify({ t: Date.now(), v: valeur })); } catch (e) { /* plein */ }
+      try { localStorage.setItem(`vimasquest.memo.${cle}`, JSON.stringify({ t: Date.now(), v: valeur })); } catch (e) { /* plein */ }
     }
   };
 
@@ -94,7 +94,7 @@
      et on relit la base en arrière-plan. L'écran ne clignote pas et le
      joueur ne regarde jamais un écran vide sur le réseau du festival.
      ====================================================================== */
-  const PREFIXE = "domafquest.cache.";
+  const PREFIXE = "vimasquest.cache.";
   const vif = new Map();     // cle -> { t, v }
   const enVol = new Map();   // cle -> Promise
 
@@ -858,7 +858,7 @@
      Coût : 1 appel par onglet affiché, gardé 30 s (changer d'onglet et revenir
      ne coûte rien), puis 1 / 60 s écran allumé.
      ====================================================================== */
-  const cleAmis = () => `domafquest.amis.${(App.session.get() || {}).id || "?"}`;
+  const cleAmis = () => `vimasquest.amis.${(App.session.get() || {}).id || "?"}`;
   const lireAmis = () => {
     try { return JSON.parse(localStorage.getItem(cleAmis())) || []; } catch (e) { return []; }
   };
@@ -867,7 +867,7 @@
 
   /* Place précédente du joueur, pour sa flèche (+3 places) */
   function evolutionDe(periode, place) {
-    const cle = `domafquest.place.${(App.session.get() || {}).id || "?"}.${periode}`;
+    const cle = `vimasquest.place.${(App.session.get() || {}).id || "?"}.${periode}`;
     let avant = null;
     try { avant = JSON.parse(localStorage.getItem(cle)); } catch (e) { /* rien */ }
     try { localStorage.setItem(cle, JSON.stringify(place)); } catch (e) { /* plein */ }
@@ -1273,8 +1273,8 @@
      délai des rappels, les conflits acceptés (« je fais les deux »).
      ====================================================================== */
   App.cleFavoris = () => `favoris.${(App.session.get() || {}).id || "?"}`;
-  const cleRappels = () => `domafquest.rappels.${(App.session.get() || {}).id || "?"}`;
-  const cleConflits = () => `domafquest.conflits.${(App.session.get() || {}).id || "?"}`;
+  const cleRappels = () => `vimasquest.rappels.${(App.session.get() || {}).id || "?"}`;
+  const cleConflits = () => `vimasquest.conflits.${(App.session.get() || {}).id || "?"}`;
   const lireLocal = (cle, defaut) => { try { return JSON.parse(localStorage.getItem(cle)) || defaut; } catch (e) { return defaut; } };
   const ecrireLocal = (cle, v) => { try { localStorage.setItem(cle, JSON.stringify(v)); } catch (e) { /* plein */ } };
   const lireProgramme = () => App.rpc("programme_public", {},

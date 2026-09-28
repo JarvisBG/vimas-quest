@@ -520,7 +520,7 @@ document.addEventListener("app:ready", async () => {
     try {
       const r = await api.enregistrerFiche({
         fiche: fiche.reponses, telephone: fiche.tel,
-        domaf: !!fiche.tel && $("[data-consent-domaf]").checked,
+        domaf: !!fiche.tel && $("[data-consent-orga]").checked,
         partenaires: !!fiche.tel && $("[data-consent-partenaires]").checked
       });
       quitterFiche(r);

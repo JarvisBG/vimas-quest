@@ -219,7 +219,7 @@ document.addEventListener("app:ready", () => {
   /* ======================================================================
      Mini-jeu « Garde le rythme » (96 battements par minute)
      ====================================================================== */
-  const PERIODE = 625, TOLERANCE = 110, CLE_RECORD = "domafquest.rythme.record";
+  const PERIODE = 625, TOLERANCE = 110, CLE_RECORD = "vimasquest.rythme.record";
   const cercle = $("[data-rythme-btn]");
   const jeu = { depart: null, serie: 0, record: Number(localStorage.getItem(CLE_RECORD)) || 0, dernierTemps: -1, audio: null, tic: null };
 

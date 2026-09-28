@@ -234,6 +234,12 @@ button { font: inherit; color: inherit; }
 @keyframes defile { to { transform: translateX(-50%); } }
 
 /* ---------- 10. Barre du haut ---------- */
+/* Bandeau « maquette » (App.config.maquette) : défile avec la page, au-dessus de la barre */
+.bandeau-maquette {
+  margin: 0; padding: 3px var(--s-3);
+  background: var(--sodium); color: var(--nuit);
+  font-size: .6875rem; font-weight: 800; letter-spacing: .04em; text-align: center; text-transform: uppercase;
+}
 .topbar {
   position: sticky; top: 0; z-index: 50;
   height: var(--topbar-h);

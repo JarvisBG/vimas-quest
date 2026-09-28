@@ -1,5 +1,5 @@
 // ============================================================
-// DOMAF QUEST — Coordonnées de la base Supabase (projet domaf-quest)
+// VIMAS QUEST — Coordonnées de la base Supabase (projet domaf-quest, partagé avec l'ancien DOMAF Quest)
 // La clé « publishable » (successeur de la clé « anon ») est publique
 // par conception : ce qu'elle a le droit de faire est contrôlé côté
 // serveur (RLS + fonctions). JAMAIS de clé secrète (sb_secret_…,

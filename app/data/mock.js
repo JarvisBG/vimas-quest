@@ -6,13 +6,13 @@
    ========================================================================== */
 window.MOCK = {
   festival: {
-    nom: "DOMAF",
+    nom: "VIMAS FEST",
     jeu: "Vimas Quest",
-    edition: 15,
-    slogan: "Le DOMAF se joue",
-    lieu: "Stade Annexe de Bonamoussadi",
-    dates: "26 au 29 novembre 2026",
-    ouverture: "2026-11-26T14:00:00+01:00",
+    edition: 1,
+    slogan: "Le VIMAS FEST se joue",
+    lieu: "Majestic Cinéma",
+    dates: "26 et 27 décembre 2026",
+    ouverture: "2026-12-26T10:00:00+01:00",
     contactPartenaires: null   // adresse réelle à fournir (étape 7)
   },
 
@@ -81,7 +81,7 @@ window.MOCK = {
 
   /* ---------- Infos pratiques (page 17) ---------- */
   infos: {
-    adresse: "Stade Annexe de Bonamoussadi, entrée principale côté boulevard",
+    adresse: "Majestic Cinéma, Université de Yaoundé I (Ngoa-Ekellé)",
     horaires: [
       { jour: "jeu", portes: "14:00", fin: "00:00" },
       { jour: "ven", portes: "16:00", fin: "03:00" },
@@ -108,7 +108,7 @@ window.MOCK = {
     ],
     refuge: "Point Refuge",
     contact: {
-      email: "bonjour@domafquest.example",
+      email: "bonjour@vimasquest.example",
       delai: "Réponse par e-mail sous 48 h"
     },
     faq: [
@@ -141,17 +141,17 @@ window.MOCK = {
       { id: "sexe", titre: "Tu es…", options: [
         { valeur: "garcon", libelle: "Un homme" }, { valeur: "fille", libelle: "Une femme" }] },
       { id: "quartier", titre: "Tu habites où ?", ordreFixe: true, options: [
-        { valeur: "ndokotti", libelle: "Ndokotti" }, { valeur: "bassa", libelle: "Bassa" },
-        { valeur: "logbaba", libelle: "Logbaba" }, { valeur: "village-ndogpassi", libelle: "Village / Ndogpassi" },
-        { valeur: "pk-8-14", libelle: "PK 8 à PK 14" }, { valeur: "pk-15-plus", libelle: "PK 15 et au-delà" },
-        { valeur: "nyalla", libelle: "Nyalla" }, { valeur: "yassa-japoma", libelle: "Yassa / Japoma" },
-        { valeur: "bepanda", libelle: "Bépanda" }, { valeur: "makepe", libelle: "Makepè" },
-        { valeur: "bonamoussadi", libelle: "Bonamoussadi" }, { valeur: "kotto-palmiers", libelle: "Kotto / Cité des Palmiers" },
-        { valeur: "akwa", libelle: "Akwa" }, { valeur: "deido", libelle: "Deïdo" },
-        { valeur: "new-bell", libelle: "New Bell" }, { valeur: "bali", libelle: "Bali" },
-        { valeur: "bonanjo", libelle: "Bonanjo" }, { valeur: "bonapriso", libelle: "Bonapriso" },
-        { valeur: "bonaberi", libelle: "Bonabéri" }, { valeur: "bonendale-sodiko", libelle: "Bonendale / Sodiko" },
-        { valeur: "autre-douala", libelle: "Un autre quartier de Douala" }, { valeur: "autre-ville", libelle: "Une autre ville" }] },
+        { valeur: "ngoa-ekelle-obili", libelle: "Ngoa-Ekellé / Obili" }, { valeur: "melen-mini-ferme", libelle: "Melen / Mini Ferme" },
+        { valeur: "biyem-assi", libelle: "Biyem-Assi" }, { valeur: "mendong-simbock", libelle: "Mendong / Simbock" },
+        { valeur: "etoug-ebe", libelle: "Etoug-Ébé" }, { valeur: "mvog-mbi", libelle: "Mvog-Mbi" },
+        { valeur: "mvog-ada", libelle: "Mvog-Ada" }, { valeur: "essos", libelle: "Essos" },
+        { valeur: "mimboman", libelle: "Mimboman" }, { valeur: "ekounou", libelle: "Ekounou" },
+        { valeur: "odza-nkoabang", libelle: "Odza / Nkoabang" }, { valeur: "nsam-efoulan", libelle: "Nsam / Efoulan" },
+        { valeur: "bastos", libelle: "Bastos" }, { valeur: "etoudi-olembe", libelle: "Etoudi / Olembé" },
+        { valeur: "emana", libelle: "Emana" }, { valeur: "tsinga-nlongkak", libelle: "Tsinga / Nlongkak" },
+        { valeur: "mokolo-madagascar", libelle: "Mokolo / Madagascar" }, { valeur: "nkolbisson", libelle: "Nkolbisson" },
+        { valeur: "mvan-ahala", libelle: "Mvan / Ahala" }, { valeur: "centre-ville", libelle: "Centre-ville" },
+        { valeur: "autre-yaounde", libelle: "Un autre quartier de Yaoundé" }, { valeur: "autre-ville", libelle: "Une autre ville" }] },
       { id: "genre_prefere", titre: "Ta musique, c'est surtout…", options: [
         { valeur: "afrobeats", libelle: "Afrobeats / Afro-pop" }, { valeur: "makossa", libelle: "Makossa" },
         { valeur: "bikutsi", libelle: "Bikutsi" }, { valeur: "coupe-decale", libelle: "Coupé-décalé" },
@@ -322,7 +322,7 @@ window.MOCK = {
 
   blindTest: {
     horaire: "21:30", lieu: "Écran géant, Scène Soleil", questions: 15,
-    lienJeu: "https://domafquest.example/blind",
+    lienJeu: "https://vimasquest.example/blind",
     durees: { intro: 4, question: 20, revelation: 9, classement: 10, fin: 90 }, // secondes
     classementToutesLes: 5
   },
@@ -356,7 +356,14 @@ window.MOCK = {
 
   /* Partenaires du festival : section de l'accueil masquée tant que la liste est vide
      (décision du 18/09 : les noms de démo étaient inventés). { nom, role } */
-  partenaires: [],
+  partenaires: [
+    { nom: "Canal 2 International", role: "Télévision officielle" },
+    { nom: "Sweet FM",              role: "Radio officielle" },
+    { nom: "AMZ Groupe",            role: "Partenaire officiel" },
+    { nom: "Majestic Cinéma",       role: "Lieu d'accueil" },
+    { nom: "Vimas Production",      role: "Organisateur" },
+    { nom: "Ton stand ici",         role: "Appel aux stands ouvert" }
+  ],
 
   bandeau: [
     "Blind test chaque soir à 21h30",
@@ -387,7 +394,7 @@ window.MOCK = {
     { id: "j1", pseudo: "BasseProfonde", avatar: "ondes", code: "KORA-40912", xp: 1240, jetons: 18, rang: "Fan" }
   ],
 
-  pseudosPris: ["basseprofonde", "nova", "dj", "groupie", "domafquest", "domaf", "admin", "staff"],
+  pseudosPris: ["basseprofonde", "nova", "dj", "groupie", "vimasquest", "vimas", "vimasfest", "admin", "staff"],
 
   motsPseudo: {
     debut: ["Basse", "Echo", "Riff", "Kora", "Tempo", "Larsen", "Vinyle", "Sono", "Groove", "Balafon"],
@@ -657,7 +664,7 @@ window.MOCK = {
   amisDeBase: { j1: ["KALE-4417", "MINA-2208", "TOTO-0931"] },
 
   /* ---------- Scanner (page 4) ----------
-     Contenu d'un QR imprimé : https://domafquest.example/q/<code>
+     Contenu d'un QR imprimé : https://vimasquest.example/q/<code>
      Le code court (sous le QR) permet la saisie manuelle.
      Futur : POST /api/scans { code } — la liste complète ne sera jamais envoyée au téléphone. */
   qrcodes: [

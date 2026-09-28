@@ -55,7 +55,7 @@
     const type = t.nom + (q.type === "relique" && ETOILES[q.rarete] ? ` ${ETOILES[q.rarete]}` : "");
     const qr = App.qrSvg(E.adresse(q.code), { niveau: "Q", marge: 3, encre: ENCRES.nuit, fond: "#FFFFFF", titre: q.code });
     return `<div class="etq" style="--encre:${couleur};--sur-encre:${texteBande}">
-      <div class="etq__bande"><span class="etq__marque">DOMAF QUEST</span><span class="etq__type">${esc(type)}</span></div>
+      <div class="etq__bande"><span class="etq__marque">VIMAS QUEST</span><span class="etq__type">${esc(type)}</span></div>
       <div class="etq__qr">${qr}</div>
       <div class="etq__nom">${esc(q.nom)}</div>
       <div class="etq__pied"><span>Scanne avec l'appareil photo</span><span class="etq__code">${esc(q.code)}</span></div>

@@ -243,22 +243,22 @@ document.addEventListener("app:ready", async () => {
     if (!aVenir.length) return;
     const utc = (ms) => new Date(ms).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
     const echap = (t) => String(t).replace(/\\/g, "\\\\").replace(/([,;])/g, "\\$1").replace(/\n/g, "\\n");
-    const lieu = festival.lieu || "DOMAF 2026";
+    const lieu = festival.lieu || "VIMAS FEST 2026";
     const lignes = [
       "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Vimas Quest//Mon programme//FR", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
-      "X-WR-CALNAME:DOMAF, mon programme"
+      "X-WR-CALNAME:VIMAS FEST, mon programme"
     ];
     aVenir.forEach((a) => {
       lignes.push(
         "BEGIN:VEVENT",
-        `UID:${a.id}-${session.get().id}@domafquest.example`,
+        `UID:${a.id}-${session.get().id}@vimasquest.example`,
         `DTSTAMP:${utc(Date.now())}`,
         `DTSTART:${utc(a.debutMs)}`,
         `DTEND:${utc(a.finMs)}`,
         `SUMMARY:${echap(`${a.nom} (${a.scene.nom})`)}`,
         `LOCATION:${echap(`${a.scene.nom}, ${lieu}`)}`,
         `DESCRIPTION:${echap(`${a.genre}. Scanne le QR de la scène pendant le concert pour gagner des XP.`)}`,
-        `URL:https://domafquest.example/programme.html#${a.artisteId}`
+        `URL:https://vimasquest.example/programme.html#${a.artisteId}`
       );
       if (d.rappels.actif) {
         lignes.push("BEGIN:VALARM", "ACTION:DISPLAY", `TRIGGER:-PT${d.rappels.avance}M`, `DESCRIPTION:${echap(`${a.nom} commence bientôt`)}`, "END:VALARM");
@@ -270,7 +270,7 @@ document.addEventListener("app:ready", async () => {
     const url = URL.createObjectURL(blob);
     const lien = document.createElement("a");
     lien.href = url;
-    lien.download = "domafquest-mon-programme.ics";
+    lien.download = "vimasquest-mon-programme.ics";
     document.body.append(lien);
     lien.click();
     lien.remove();

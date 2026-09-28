@@ -101,7 +101,7 @@
   /* ---------- Mode : serveur (Supabase) ou démo (mock.js) ----------
      ?mock=1 passe en démo, ?mock=0 revient au serveur ; le choix est retenu sur l'appareil.
      Sans assets/js/config.js chargé avant ce fichier, c'est toujours la démo. */
-  const CLE_MODE = "domafquest.mock";
+  const CLE_MODE = "vimasquest.mock";
   try {
     const demande = new URLSearchParams(location.search).get("mock");
     if (demande === "1") localStorage.setItem(CLE_MODE, "1");
@@ -146,7 +146,7 @@
 
   /* Partie du joueur conservée sur le téléphone en mode démo (remplacée par le serveur plus tard) */
   App.partie = {
-    cle: (id) => `domafquest.partie.${id}`,
+    cle: (id) => `vimasquest.partie.${id}`,
     get(id) {
       let p;
       try { p = JSON.parse(localStorage.getItem(this.cle(id))); } catch (e) { p = null; }
@@ -240,7 +240,7 @@
   /* Horloge de manche partagée (écran géant, téléphones, régie).
      En démo, elle vit dans le localStorage : deux onglets du même navigateur restent synchronisés.
      En production : fournie par le serveur. */
-  const CLE_BLIND = "domafquest.blind.horloge";
+  const CLE_BLIND = "vimasquest.blind.horloge";
   App.blindHorloge = {
     prevue(cfg) {
       const prevu = App.dateFestival(App.jourFestival(), cfg.horaire).getTime();
@@ -324,7 +324,7 @@
   /* Copie du coffre fermé sur le téléphone (mode serveur) : la page de scan
      la montre sans requête ; player_home et scan_qr la tiennent à jour. */
   App.coffreLocal = {
-    cle: () => `domafquest.coffre.${(App.session.get() || {}).id || "?"}`,
+    cle: () => `vimasquest.coffre.${(App.session.get() || {}).id || "?"}`,
     lire() { try { return JSON.parse(localStorage.getItem(this.cle())); } catch (e) { return null; } },
     ecrire(c) {
       try { if (c) localStorage.setItem(this.cle(), JSON.stringify(c)); else localStorage.removeItem(this.cle()); } catch (e) { /* ignore */ }
@@ -1557,7 +1557,7 @@
       if (!(await this.pseudoDisponible(pseudo))) return { ok: false, erreur: "pseudo_pris" };
       const bonus = await App.data.get("bonusBienvenue");
       window.MOCK.pseudosPris.push(normaliser(pseudo));
-      const mots = ["KORA", "BALAFO", "MAKOSA", "MVET", "SANZA", "DOMAF", "SOLEIL", "ETOILE"];
+      const mots = ["KORA", "BALAFO", "MAKOSA", "MVET", "SANZA", "VIMAS", "SOLEIL", "ETOILE"];
       const code = mots[Math.floor(Math.random() * mots.length)] +
         "-" + String(Math.floor(Math.random() * 100000)).padStart(5, "0");
       const joueur = {
@@ -1772,7 +1772,7 @@
 
   /* ---------- Éléments déjà vus par le joueur (pastilles « Nouveau ») ---------- */
   App.vus = {
-    cle: (id) => `domafquest.vus.${id}`,
+    cle: (id) => `vimasquest.vus.${id}`,
     get(id) {
       try { const v = JSON.parse(localStorage.getItem(this.cle(id))); return v ? new Set(v) : null; } catch (e) { return null; }
     },
@@ -1783,7 +1783,7 @@
 
   /* ---------- Annonces lues (valable aussi pour les visiteurs) ---------- */
   App.annoncesLues = {
-    cle: "domafquest.annonces.lues",
+    cle: "vimasquest.annonces.lues",
     get() {
       try { return new Set(JSON.parse(localStorage.getItem(this.cle)) || []); } catch (e) { return new Set(); }
     },
@@ -1806,7 +1806,7 @@
 
   /* ---------- Session (joueur connecté) ---------- */
   /* Une session par mode : une partie de démo ne se mélange jamais à une vraie */
-  const SESSION_KEY = App.mock ? "domafquest.demo.session" : "domafquest.session";
+  const SESSION_KEY = App.mock ? "vimasquest.demo.session" : "vimasquest.session";
   App.session = {
     get() {
       try { return JSON.parse(localStorage.getItem(SESSION_KEY)); } catch (e) { return null; }
@@ -2035,9 +2035,22 @@
     }
   }
 
+  /* ---------- Bandeau « maquette » ----------
+     Tant que Vimas Production n'a pas validé le jeu, chaque page du téléphone le dit.
+     Passer à false (étape 13) pour le retirer. Pas sur les écrans géants ni la console. */
+  App.config.maquette = true;
+  function initMaquette() {
+    if (!App.config.maquette || /\/(ecran|admin)\//.test(location.pathname)) return;
+    const b = document.createElement("p");
+    b.className = "bandeau-maquette";
+    b.textContent = "Maquette de démonstration · contenu fictif";
+    document.body.prepend(b);
+  }
+
   /* ---------- Démarrage ---------- */
   document.addEventListener("DOMContentLoaded", () => {
     injectSprite();
+    initMaquette();
     hydrateIcons();
     initTopbar();
     initReseau();

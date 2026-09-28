@@ -6,7 +6,7 @@
    ========================================================================== */
 (function () {
   "use strict";
-  var CLE = "domafquest.console.theme";
+  var CLE = "vimasquest.console.theme";
   var racine = document.documentElement;
   var lire = function () { try { return localStorage.getItem(CLE) === "clair" ? "clair" : "sombre"; } catch (e) { return "sombre"; } };
   var appliquer = function (t) { racine.setAttribute("data-theme", t === "clair" ? "light" : "dark"); };

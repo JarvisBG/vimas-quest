@@ -13,8 +13,8 @@
 ## ▶ Prochain prompt (en cas de coupure)
 
 > Continue le projet Vimas Quest : lis `CLAUDE.md` et `PLAN-VIMAS.md` (et `docs/NOTES-MOTEUR-DOMAF.md`
-> avant de toucher une page), puis attaque l'**étape 3** — identité et textes (DOMAF → VIMAS FEST, 2 jours,
-> Majestic Cinéma, clés `vimasquest.*`, consentement Vimas Production, bandeau « démonstration »).
+> avant de toucher une page), puis attaque l'**étape 4** — écrans géants (`app/ecran/`) : textes et marque,
+> contrôle à 1920 × 1080. Rappel : festival **de jour, 10 h → 22 h** (hypothèse), contenu à adapter en étape 6.
 
 ---
 
@@ -26,6 +26,7 @@
 | 28/09/2026 | Vérifié : le mode démo (`?mock=1`) accepte les vrais QR imprimés (`scanner.html?code=QR-…`), sans base. Limites : chaque téléphone joue seul, classement et écran géant simulés. |
 | 28/09/2026 | Décision de Jarvis : on **termine** l'application pour Vimas (festivalier + console + écrans). Plan complet réécrit (étapes 1 → 13). |
 | 28/09/2026 | Dépôt GitHub JarvisBG/vimas-quest créé et poussé. **Étape 2 terminée** : couleurs, icônes, marque, manifeste ; `VERSION` du service worker = `vimasquest-v1` ; serveur local sur le port **8767** (8766 = DOMAF). |
+| 28/09/2026 | Hypothèse de Jarvis : festival **de jour** (affiche = village de stands) → horaires provisoires **10 h – 22 h**. **Étape 3 terminée** (textes, clés, consentement, quartiers de Yaoundé, partenaires, bandeau « maquette ») ; les 2 jours passent à l'étape 6 avec le contenu. |
 
 ---
 
@@ -55,15 +56,26 @@
 - [x] Contrôle visuel dans Chrome à 390 px (accueil, inscription, tableau de bord, passeport, collection, roue, programme, plan, infos, blind test, hors ligne) + écrans géants (mur, blind test) : pas de débordement, contrastes lisibles
 - Reste pour l'étape 3 : textes « DOMAF » (ex. titre du passeport partagé), dates, lieu, édition
 
-## Étape 3 — Identité et textes (festivalier)
-- [ ] « DOMAF » → « VIMAS FEST » / « Vimas Quest » partout (≈ 188 mentions, 54 fichiers) : accueil, infos, règles, FAQ, 404, hors ligne
-- [ ] Clés du téléphone `domafquest.*` → `vimasquest.*` ; **ne pas** toucher ce que lit la base (`DQ-`, `DQ-JOUEUR:`)
-- [ ] 2 jours au lieu de 4 : dates, compte à rebours, badge « Marathonien », tirage au sort final (27/12), lots (« Pass 2 jours »)
-- [ ] Lieu : Majestic Cinéma, Université de Yaoundé I
-- [ ] Fiche fan : consentement « Vimas Production », quartiers de **Yaoundé** (page + `profil_options()` en base, étape 8)
-- [ ] Partenaires : Canal 2 International, Sweet FM, AMZ Groupe (texte ; logos seulement avec accord)
-- [ ] Bandeau discret « démonstration » tant que Vimas n'a pas signé
-- [ ] `sw.js` : nom du cache + `VERSION`
+## Étape 3 — Identité et textes (festivalier) ✅ (28/09)
+- [x] « DOMAF » → « VIMAS FEST » / « Vimas Quest » : titres, descriptions, accueil, infos, plan, programme, partage, agenda (.ics), passeport (image), console (marque, en-tête), étiquettes QR
+- [x] Clés du téléphone `domafquest.*` → `vimasquest.*` (+ canal des écrans, domaine d'exemple `vimasquest.example`) ; **gardés** : `DQ-`, `DQ-JOUEUR:`, le paramètre `p_domaf` de `fiche_enregistrer` (côté base)
+- [x] Édition 1 (« 1re édition »), dates « 26 et 27 décembre 2026 », ouverture 26/12 à 10 h, tirage au sort final le 27/12
+- [x] Lieu : Majestic Cinéma, Université de Yaoundé I (Ngoa-Ekellé)
+- [x] Fiche fan : consentement « Vimas Production », partenaires « du VIMAS FEST », 22 quartiers de **Yaoundé** (démo ; en base à l'étape 8)
+- [x] Partenaires sur l'accueil : Canal 2 International, Sweet FM, AMZ Groupe, Majestic Cinéma, Vimas Production, « Ton stand ici » (texte, pas de logos)
+- [x] Bandeau « Maquette de démonstration · contenu fictif » en haut des pages du téléphone (`App.config.maquette` dans `app.js`)
+- [x] Console : « heure du Cameroun » au lieu de « heure de Douala » (le fuseau technique reste `Africa/Douala`)
+- **Déplacé à l'étape 6** (c'est du contenu) : passage de 4 à 2 jours (`jours`, horaires, horloge de démo, grille de la console, `roue.js`), line-up, banque de questions (mentions « DOMAF », « Douala »), bandeau défilant
+
+### Festival de jour (remarque de Jarvis, 28/09 — hypothèse à confirmer avec Vimas)
+**Décision provisoire : 10 h → 22 h les deux jours** (validée par Jarvis le 28/09).
+L'affiche n'indique aucun horaire, mais montre un village de stands en plein air, en plein jour (« Appel aux stands »).
+Le moteur DOMAF est calé sur des **soirées de concerts** : à adapter (étapes 6, 8 et 9) —
+- horaires d'ouverture (`infos.horaires`, compte à rebours), grille du programme (`programmeConfig` 17 h → 2 h 30)
+- blind test « chaque soir à 21 h 30 » → créneau de l'après-midi ; questions « du soir » du coffre (`micro_config.soir_debut`, 20 h)
+- badges « Noctambule » (après minuit) et « Lève-tôt » (avant 17 h) à redéfinir ; scène « Sound System Nuit » à renommer
+- **stands au centre du jeu** : missions, coups de cœur et QR de stands mis en avant
+- la journée de jeu 6 h → 6 h reste valable
 
 ## Étape 4 — Écrans géants
 - [ ] `ecran/mur.html` et `ecran/blind-test.html` aux couleurs Vimas (projecteur : contraste fort sur fond nuit)

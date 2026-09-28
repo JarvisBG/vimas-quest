@@ -40,6 +40,7 @@ pas un discours. **Le moins de travail possible** : on change la peau et le cont
 | Lien en ligne | **Le même** : Worker Cloudflare `festival-quest` (https://festival-quest.jarvismboummeu28.workers.dev). La démo DOMAF est **débranchée** (écrasée) ; elle se redéploie à tout moment depuis `../domaf/app`. |
 | Moteur | **Inchangé**. Aucune modification SQL de structure. Tout identifiant côté base reste tel quel (préfixe de QR `DQ-`, noms de fonctions, `jour_jeu()` à l'heure de Douala = même fuseau que Yaoundé). |
 | Dossier | `vimas/vimas-quest/` = copie de `domaf/` (app, supabase, outils) sans offre ni archives. |
+| Horaires | Festival supposé **de jour** : **10 h → 22 h** les deux jours (hypothèse du 28/09, à confirmer avec Vimas). Blind test, questions « du soir », badges de nuit à adapter. |
 | Contenu | **Fictif** (line-up inventé, pas de vrais noms d'artistes) tant que Vimas n'a pas signé. |
 | Périmètre | **On termine l'app** (décision du 28/09) : y compris la console restante (animation, régie blind test, billetterie, statistiques). Plan complet : étapes 1 → 13 de `PLAN-VIMAS.md`. |
 | Dépôt | **Dépôt GitHub propre à Vimas** (privé), distinct de `JarvisBG/domaf`. Le nom `domaf-quest` du projet Supabase est accepté tel quel. |
@@ -58,6 +59,9 @@ pas un discours. **Le moins de travail possible** : on change la peau et le cont
 | `docs/PLAN-DOMAF-archive.md` | Plan et journal complets du DOMAF (référence) |
 
 ## Points de vigilance
+
+- **Bandeau « maquette »** : `App.config.maquette = true` (`app/assets/js/app.js`) affiche « Maquette de démonstration · contenu fictif » sur les pages du téléphone. À passer à `false` si Vimas signe.
+- Le mode démo est retenu sous `vimasquest.mock` : les réglages d'un navigateur qui a vu la version DOMAF (`domafquest.*`) sont ignorés.
 
 - **Base partagée** : tant que Vimas n'a pas signé, toute écriture en base écrase le contenu DOMAF.
   Avant de toucher la base : exporter une sauvegarde SQL (`supabase/ROUTINE.md`).

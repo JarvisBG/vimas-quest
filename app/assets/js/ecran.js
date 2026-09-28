@@ -53,7 +53,7 @@
        En production : remplacé par un WebSocket / SSE du serveur. */
     canal(nom, surMessage) {
       if (!("BroadcastChannel" in window)) return { envoyer() {} };
-      const c = new BroadcastChannel(`domafquest-${nom}`);
+      const c = new BroadcastChannel(`vimasquest-${nom}`);
       c.onmessage = (e) => surMessage && surMessage(e.data);
       return { envoyer: (msg) => c.postMessage(msg) };
     }

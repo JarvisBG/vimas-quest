@@ -87,7 +87,7 @@ document.addEventListener("app:ready", async () => {
   /* ======================================================================
      Son (généré, aucun fichier audio)
      ====================================================================== */
-  const CLE_SON = "domafquest.son";
+  const CLE_SON = "vimasquest.son";
   let sonActif = localStorage.getItem(CLE_SON) !== "off";
   let audio = null;
 
@@ -235,7 +235,7 @@ document.addEventListener("app:ready", async () => {
       </div>
       ${App.questionHTML(c.question)}
       <p class="coffre__etat" role="status" aria-live="polite" data-coffre-etat>${esc(note)}</p>
-      <p class="coffre__note">Un tapotement, pas de mauvaise réponse. Tes réponses aident le DOMAF à préparer la prochaine édition.</p>`;
+      <p class="coffre__note">Un tapotement, pas de mauvaise réponse. Tes réponses aident Vimas Production à préparer la prochaine édition.</p>`;
     jouer("info");
     if (navigator.vibrate) navigator.vibrate([40, 30, 40]);
   }

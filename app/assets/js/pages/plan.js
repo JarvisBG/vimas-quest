@@ -22,7 +22,7 @@ document.addEventListener("app:ready", async () => {
     bleu: ["#D90A22", "#FFF8EE"], rouge: ["#A00D25", "#FFF8EE"], papier: ["#FFF8EE", "#3B0A12"], rose: ["#F9A209", "#3B0A12"]
   };
   const ALIAS = { "stand-quest": "st-quest" };
-  const CLE_POSITION = "domafquest.plan.position";
+  const CLE_POSITION = "vimasquest.plan.position";
 
   let d;
   try {

@@ -10,7 +10,7 @@ document.addEventListener("app:ready", async () => {
   const canvas = $("[data-canvas]");
   const ctx = canvas.getContext("2d");
   const cadre = $("[data-cadre]");
-  const CLE_PREFS = "domafquest.passeport";
+  const CLE_PREFS = "vimasquest.passeport";
 
   const COULEURS = {
     bleu: "#D90A22", nuit: "#3B0A12", sodium: "#FFC72C", rose: "#F9A209",
@@ -364,8 +364,8 @@ document.addEventListener("app:ready", async () => {
     rayons(W, H, W / 2, 1180, th.rayons);
 
     // En-tête (0 → 340)
-    ajuster("DOMAF QUEST", W - M * 2, 190, 120);
-    texteDecale("DOMAF QUEST", M, 250, th.titre, th.decalage, 190);
+    ajuster("VIMAS QUEST", W - M * 2, 190, 120);
+    texteDecale("VIMAS QUEST", M, 250, th.titre, th.decalage, 190);
     ctx.font = police(38, TEXTE, 800);
     ctx.fillStyle = th.texte;
     ctx.fillText(`PASSEPORT JOUEUR, ÉDITION ${d.festival.edition}`, M, 318);
@@ -448,8 +448,8 @@ document.addEventListener("app:ready", async () => {
     ctx.fillRect(0, 0, W, H);
     rayons(W, H, W / 2, 620, th.rayons);
 
-    ajuster("DOMAF QUEST", 640, 130, 80);
-    texteDecale("DOMAF QUEST", M, 160, th.titre, th.decalage, 130);
+    ajuster("VIMAS QUEST", 640, 130, 80);
+    texteDecale("VIMAS QUEST", M, 160, th.titre, th.decalage, 130);
     ctx.font = police(30, TEXTE, 800);
     ctx.fillStyle = th.texte;
     ctx.textAlign = "right";
@@ -543,7 +543,7 @@ document.addEventListener("app:ready", async () => {
   /* ======================================================================
      Export et partage
      ====================================================================== */
-  const nomFichier = () => `passeport-domafquest-${d.joueur.pseudo.normalize("NFD").replace(/[^\w-]/g, "").toLowerCase()}-${prefs.format}.png`;
+  const nomFichier = () => `passeport-vimasquest-${d.joueur.pseudo.normalize("NFD").replace(/[^\w-]/g, "").toLowerCase()}-${prefs.format}.png`;
   const versBlob = () => new Promise((ok, ko) => canvas.toBlob((b) => (b ? ok(b) : ko(new Error("Export impossible"))), "image/png"));
 
   async function telecharger(blob) {

@@ -42,7 +42,7 @@ document.addEventListener("app:ready", async () => {
     etat = d;
     $("[data-erreur-lecture]")?.remove();
     const jour = d.jour ? new Date(`${d.jour}T12:00:00`).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" }) : "";
-    $("[data-jour]").textContent = `Journée de jeu du ${jour} · depuis 6 h, heure de Douala`;
+    $("[data-jour]").textContent = `Journée de jeu du ${jour} · depuis 6 h, heure du Cameroun`;
     rendreChiffres(d.chiffres);
     rendrePhase(d);
     rendreTop(d.top, d.roi_veille);

@@ -18,7 +18,7 @@
 
   const C = {};
   App.console = C;
-  const CLE_ACCES = "domafquest.console.acces";
+  const CLE_ACCES = "vimasquest.console.acces";
   const PAGE = location.pathname.split("/").pop() || "index.html";
 
   /* ---------- Menu : une ligne par écran, « bientôt » tant qu'il n'existe pas ---------- */
