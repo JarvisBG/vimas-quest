@@ -222,16 +222,20 @@ button { font: inherit; color: inherit; }
 }
 @keyframes eq { from { transform: scaleY(.18); } to { transform: scaleY(1); } }
 
-/* ---------- 9. Bandeau défilant ---------- */
-.bandeau { overflow: hidden; background: var(--rose); color: var(--nuit); border-block: 2px solid var(--nuit); }
-.bandeau__piste { display: flex; width: max-content; animation: defile 38s linear infinite; }
-.bandeau__piste ul { display: flex; align-items: center; }
-.bandeau__piste li {
-  display: flex; align-items: center; gap: var(--s-4);
-  padding: var(--s-3) var(--s-4);
-  font-family: var(--font-affiche); font-size: 1.25rem; text-transform: uppercase; white-space: nowrap;
+/* ---------- 9. Bandeau (fixe) ----------
+   Une bande d'affiche qui se lit d'un coup d'œil : plus de texte qui défile
+   (JS en pose deux copies, héritage du défilement : la seconde est masquée). */
+.bandeau { background: var(--rose); color: var(--nuit); border-block: 2px solid var(--nuit); }
+.bandeau__piste ul + ul { display: none; }
+.bandeau__piste ul {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: var(--s-1) var(--s-3); max-width: 60rem; margin-inline: auto; padding: var(--s-3) var(--s-4);
 }
-@keyframes defile { to { transform: translateX(-50%); } }
+.bandeau__piste li {
+  display: flex; align-items: center; gap: var(--s-3);
+  font-family: var(--font-affiche); font-size: 1rem; line-height: 1.3; text-transform: uppercase;
+}
+.bandeau__piste li:last-child .icon { display: none; }
 
 /* ---------- 10. Barre du haut ---------- */
 /* Bandeau « maquette » (App.config.maquette) : défile avec la page, au-dessus de la barre */
@@ -319,7 +323,6 @@ button { font: inherit; color: inherit; }
 .toast {
   background: var(--nuit); color: var(--papier);
   padding: var(--s-3) var(--s-4); border-radius: var(--r-net);
-  border-left: 6px solid var(--sodium);
   font-weight: 600; box-shadow: 4px 4px 0 var(--rose);
   animation: toast-in .3s var(--ease-rebond);
 }
@@ -353,7 +356,7 @@ button { font: inherit; color: inherit; }
   pointer-events: none;
 }
 .saisie-prefixe .saisie { padding-left: 5.5rem; text-align: left; }
-.champ.is-invalide .saisie { border-color: #A00D25; box-shadow: inset 4px 0 0 #A00D25; }
+.champ.is-invalide .saisie { border-color: #A00D25; background: #FFEFD0; }
 .champ__etat { display: flex; align-items: center; gap: var(--s-1); min-height: 1.5em; font-size: var(--fs-sm); font-weight: 700; }
 .champ__etat.is-ok { color: #13784A; }
 .champ__etat.is-ko { color: #A00D25; }
@@ -431,7 +434,7 @@ legend { padding: 0; }
   display: flex; gap: var(--s-3); align-items: flex-start;
   padding: var(--s-3) var(--s-4);
   background: #FFEFD0; color: var(--nuit);
-  border: 2px solid var(--nuit); border-left-width: 8px; border-left-color: #A00D25; border-radius: var(--r-net);
+  border: 2px solid #A00D25; border-radius: var(--r-net); box-shadow: 4px 4px 0 #A00D25;
   font-weight: 600;
 }
 .message .icon { color: #A00D25; margin-top: 2px; }

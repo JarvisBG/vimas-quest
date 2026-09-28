@@ -42,7 +42,7 @@
 .hero__texte { margin-top: var(--s-5); max-width: 34ch; }
 .hero__actions { display: grid; gap: var(--s-4); margin-top: var(--s-5); }
 .hero__actions .btn--contour { color: var(--papier); }
-.hero__note { font-size: var(--fs-sm); color: #FFE4CF; }
+.hero__note { font-size: var(--fs-sm); color: var(--papier); }
 
 /* Compte à rebours sous forme de billet */
 .decompte { --pos-encoche: 38%; padding: var(--s-4) var(--s-5) var(--s-5); }
@@ -56,14 +56,14 @@
 
 /* Affiche du line-up */
 .affiche-lineup { border-top: 2px solid rgba(255, 248, 238, .35); padding-top: var(--s-4); }
-.affiche-lineup__intro { font-size: var(--fs-sm); color: #FFE4CF; }
+.affiche-lineup__intro { font-size: var(--fs-sm); color: var(--papier); }
 .affiche-lineup__tetes { margin-top: var(--s-2); }
 .affiche-lineup__tetes li { font-size: clamp(2.25rem, 12vw, 3.75rem); line-height: .95; }
 .affiche-lineup__tetes li:nth-child(2) { color: var(--sodium); }
 .affiche-lineup__autres {
   margin-top: var(--s-3);
   font-family: var(--font-affiche); text-transform: uppercase;
-  font-size: 1.25rem; line-height: 1.25; color: #FFE4CF;
+  font-size: 1.25rem; line-height: 1.25; color: var(--papier);
 }
 .affiche-lineup__autres span + span::before { content: " / "; color: var(--rose); }
 

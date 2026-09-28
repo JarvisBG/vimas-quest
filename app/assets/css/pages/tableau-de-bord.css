@@ -131,8 +131,7 @@
 .concert-carte__haut { display: flex; justify-content: space-between; align-items: center; gap: var(--s-2); flex-wrap: wrap; }
 .compte { display: inline-flex; align-items: center; gap: var(--s-1); font-weight: 800; color: var(--bleu); }
 .compte--direct { color: #A00D25; }
-.compte--direct::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: currentColor; animation: pulse 1.2s ease-in-out infinite; }
-@keyframes pulse { 50% { opacity: .25; } }
+.compte--direct::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
 .concert-carte__nom { font-size: clamp(2rem, 11vw, 2.75rem); margin-top: var(--s-2); }
 .concert-carte__detail { display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: center; margin-top: var(--s-2); color: var(--texte-doux); font-weight: 600; }
 .concert-carte__actions { display: flex; gap: var(--s-4); flex-wrap: wrap; margin-top: var(--s-4); padding-top: var(--s-3); border-top: 2px dashed rgba(59, 10, 18, .3); }

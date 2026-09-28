@@ -72,6 +72,8 @@ pas un discours. **Le moins de travail possible** : on change la peau et le cont
 - Changer `VERSION` dans `app/sw.js` à chaque mise en ligne (`cd app && npx wrangler deploy`).
 - Git : dépôt **JarvisBG/vimas-quest** (privé, `main`) ; commit + push à chaque fin de tâche. `gh` n'est pas installé.
   Le dépôt `JarvisBG/domaf` n'est pas celui de ce projet.
+- **Tester une page modifiée dans Chrome** : le service worker (« cache d'abord ») resert l'ancien CSS/JS, même après `fetch(..., {cache:'reload'})`, et un `unregister()` ne libère pas la page déjà contrôlée. Désinscrire + vider `caches`, puis **naviguer vers une autre page** avant de recharger (voir `navigator.serviceWorker.controller === null`).
+- Détecteur de design : `~/.claude/skills/impeccable/scripts/impeccable detect --json <pages>` (skill impeccable). Les alertes `cream-palette`, `tight-leading` (Anton), `cramped-padding` des sections pleine largeur et les filets horizontaux sont **voulus** (univers de l'affiche).
 - Contrôle visuel sans redimensionner Chrome : réécrire la page avec des `<iframe>` de 390 px (le redimensionnement
   de fenêtre ne prend pas). Edge sans fenêtre (`--headless`) impose une largeur minimale : captures trompeuses sous ~500 px.
 - Le workflow `.github/workflows/reveil-supabase.yml` réveille la même base : inutile de le doubler.

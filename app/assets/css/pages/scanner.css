@@ -37,8 +37,8 @@
   transition: transform .25s var(--ease-rebond);
 }
 .scan__ligne {
-  position: absolute; width: min(56vw, 244px); height: 3px;
-  background: var(--rose); box-shadow: 0 0 14px 2px var(--rose);
+  position: absolute; width: min(56vw, 244px); height: 4px; border-radius: 2px;
+  background: var(--rose);
   animation: balayage 1.8s ease-in-out infinite alternate;
 }
 @keyframes balayage { from { transform: translateY(calc(min(-28vw, -122px))); } to { transform: translateY(calc(min(28vw, 122px))); } }

@@ -21,8 +21,8 @@ html { scroll-padding-top: calc(var(--topbar-h) + 80px); }
 .section-i__titre { font-size: clamp(2.25rem, 11vw, 3rem); line-height: .95; text-shadow: var(--decalage); }
 .sous-titre-i { font-size: var(--fs-lg); margin-top: var(--s-2); }
 .section-i--jeu { padding: var(--s-5) var(--s-4); background: var(--bleu); color: var(--papier); border-radius: var(--r-billet); border: 3px solid var(--nuit); box-shadow: 6px 6px 0 var(--nuit); }
-.section-i--jeu .section-i__titre { color: var(--sodium); }
-.section-i--jeu .texte-doux { color: #FFE4CF; }
+.section-i--jeu .section-i__titre { color: var(--papier); text-shadow: .05em .035em 0 var(--nuit); }
+.section-i--jeu .texte-doux { color: var(--papier); }
 
 /* L'essentiel */
 .etat-site {
@@ -30,8 +30,7 @@ html { scroll-padding-top: calc(var(--topbar-h) + 80px); }
   font-weight: 800; background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net);
 }
 .etat-site__point { width: 14px; height: 14px; border-radius: 50%; background: var(--texte-doux); flex: none; }
-.etat-site.is-ouvert .etat-site__point { background: var(--vert); box-shadow: 0 0 0 4px rgba(31, 160, 90, .25); animation: pulse-i 1.6s infinite; }
-@keyframes pulse-i { 50% { box-shadow: 0 0 0 8px rgba(31, 160, 90, 0); } }
+.etat-site.is-ouvert .etat-site__point { background: var(--vert); box-shadow: 0 0 0 4px rgba(31, 160, 90, .25); }
 .horaires { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-2); }
 .horaire {
   --pos-encoche: 58%; --encoche: 9px;
@@ -114,7 +113,7 @@ html { scroll-padding-top: calc(var(--topbar-h) + 80px); }
 @keyframes cible-i { 0%, 40% { box-shadow: 0 0 0 5px var(--rose); } }
 
 /* Contact */
-.alerte-i { display: flex; gap: var(--s-2); align-items: flex-start; padding: var(--s-3); background: #FFEFD0; border: 2px solid var(--nuit); border-left: 8px solid #A00D25; border-radius: var(--r-net); font-weight: 600; }
+.alerte-i { display: flex; gap: var(--s-2); align-items: flex-start; padding: var(--s-3); background: #FFEFD0; border: 2px solid #A00D25; box-shadow: 4px 4px 0 #A00D25; border-radius: var(--r-net); font-weight: 600; }
 .alerte-i .icon { flex: none; color: #A00D25; margin-top: 2px; }
 .coordonnees-i { display: grid; gap: var(--s-2); }
 .coordonnees-i p { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s-2); align-items: center; font-weight: 700; }

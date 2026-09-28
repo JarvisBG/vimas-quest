@@ -57,14 +57,13 @@
 .concert-p {
   display: grid; grid-template-columns: 4.2rem 1fr auto; gap: var(--s-3); align-items: center;
   padding: var(--s-2) var(--s-2) var(--s-2) 0;
-  background: var(--papier); border: 2px solid var(--nuit); border-left: 0; border-radius: var(--r-net);
-  box-shadow: inset 8px 0 0 var(--sc);
+  background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net);
   scroll-margin-top: calc(var(--topbar-h) + 190px);
 }
 .concert-p.is-termine { opacity: .55; }
-.concert-p.is-en-cours { box-shadow: inset 8px 0 0 var(--sc), 0 0 0 3px #A00D25; }
+.concert-p.is-en-cours { box-shadow: 4px 4px 0 #A00D25; }
 .concert-p.is-cible { animation: cible-p 1.6s var(--ease-sortie); }
-@keyframes cible-p { 0%, 40% { box-shadow: inset 8px 0 0 var(--sc), 0 0 0 5px var(--sodium); } }
+@keyframes cible-p { 0%, 40% { outline: 4px solid var(--sodium); } }
 .concert-p__heure { display: grid; justify-items: end; padding-left: var(--s-3); }
 .concert-p__heure strong { font-family: var(--font-affiche); font-weight: 400; font-size: 1.5rem; line-height: 1; }
 .concert-p__heure span { font-size: .6875rem; font-weight: 700; color: var(--texte-doux); }
@@ -79,8 +78,7 @@
 .pastille-sc { background: var(--sc); color: var(--sc-txt); }
 .statut-p { font-weight: 800; }
 .statut-p--en-cours { color: #A00D25; }
-.statut-p--en-cours::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 4px; border-radius: 50%; background: currentColor; animation: pulse-p 1.2s infinite; }
-@keyframes pulse-p { 50% { opacity: .2; } }
+.statut-p--en-cours::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 4px; border-radius: 50%; background: currentColor; }
 
 .etoile-p {
   display: grid; place-items: center; width: 48px; height: 48px;

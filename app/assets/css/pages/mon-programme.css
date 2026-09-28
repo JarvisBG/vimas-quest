@@ -54,9 +54,10 @@
   display: grid; grid-template-columns: 1fr auto auto; gap: var(--s-1); align-items: center;
   padding: var(--s-2) var(--s-1) var(--s-2) var(--s-3);
   background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net);
-  box-shadow: inset 6px 0 0 var(--sc);
 }
-.carte-mp.is-en-cours { box-shadow: inset 6px 0 0 var(--sc), 0 0 0 3px #A00D25; }
+/* La couleur de la scène : une pastille devant le nom (comme sur le programme) */
+.carte-mp__nom::before, .duo-mp strong::before, .sugg-mp strong::before { content: ""; display: inline-block; width: .6em; height: .6em; margin-right: .35em; border-radius: 50%; background: var(--sc); border: 2px solid var(--nuit); vertical-align: .08em; }
+.carte-mp.is-en-cours { box-shadow: 4px 4px 0 #A00D25; }
 .carte-mp__lien { display: grid; gap: 3px; min-width: 0; text-decoration: none; padding-left: var(--s-1); }
 .carte-mp__nom { font-family: var(--font-affiche); font-size: 1.375rem; line-height: 1.05; text-transform: uppercase; }
 .carte-mp__meta { display: flex; flex-wrap: wrap; gap: var(--s-1) var(--s-2); align-items: center; font-size: var(--fs-xs); font-weight: 700; color: var(--texte-doux); }
@@ -84,7 +85,7 @@
 .conflit-mp__tete { display: flex; align-items: center; gap: var(--s-2); font-weight: 800; color: #7C0A1C; }
 .conflit-mp.is-accepte .conflit-mp__tete { color: var(--nuit); }
 .conflit-mp__duo { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
-.duo-mp { display: grid; gap: 2px; padding: var(--s-2); background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net); box-shadow: inset 0 5px 0 var(--sc); }
+.duo-mp { display: grid; gap: 2px; padding: var(--s-2); background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net); }
 .duo-mp strong { font-family: var(--font-affiche); font-weight: 400; font-size: 1.125rem; line-height: 1.05; text-transform: uppercase; }
 .duo-mp span { font-size: var(--fs-xs); font-weight: 700; color: var(--texte-doux); }
 .conflit-mp__choix { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
@@ -111,7 +112,7 @@
 .agenda-mp p { font-size: var(--fs-sm); }
 
 .sugg-mp { display: grid; gap: var(--s-2); }
-.sugg-mp li { display: grid; grid-template-columns: 1fr auto; gap: var(--s-3); align-items: center; padding: var(--s-2) var(--s-2) var(--s-2) var(--s-3); border: 2px solid var(--nuit); border-radius: var(--r-net); box-shadow: inset 6px 0 0 var(--sc); }
+.sugg-mp li { display: grid; grid-template-columns: 1fr auto; gap: var(--s-3); align-items: center; padding: var(--s-2) var(--s-2) var(--s-2) var(--s-3); border: 2px solid var(--nuit); border-radius: var(--r-net); }
 .sugg-mp strong { display: block; font-family: var(--font-affiche); font-weight: 400; font-size: 1.25rem; line-height: 1.05; text-transform: uppercase; }
 .sugg-mp span { display: block; font-size: var(--fs-xs); font-weight: 700; color: var(--texte-doux); }
 .sugg-mp .raison { color: var(--bleu); }

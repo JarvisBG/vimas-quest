@@ -38,15 +38,15 @@
   transform: rotate(-2deg);
   box-shadow: 6px 6px 0 var(--rose);
 }
-.illu-carte__lib { font-size: var(--fs-sm); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #FFE4CF; }
+.illu-carte__lib { font-size: var(--fs-sm); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--papier); }
 .illu-carte__pseudo { font-size: 2rem; line-height: 1; color: var(--sodium); }
-.illu-carte__code { font-variant-numeric: tabular-nums; letter-spacing: .12em; font-weight: 700; color: #FFE4CF; }
+.illu-carte__code { font-variant-numeric: tabular-nums; letter-spacing: .12em; font-weight: 700; color: var(--papier); }
 
 /* ---------- Ticket de la billetterie (seulement si le GM l'a ouverte) ---------- */
 .note-ticket {
   display: flex; gap: var(--s-2); align-items: flex-start;
   padding: var(--s-3) var(--s-4); font-size: var(--fs-sm); font-weight: 600;
-  background: var(--papier-2); border-left: 4px solid var(--bleu); border-radius: var(--r-net);
+  background: var(--papier-2); border: 2px solid var(--nuit); border-radius: var(--r-net);
 }
 .note-ticket[hidden] { display: none; }
 .note-ticket .icon { flex: none; color: var(--bleu); }
@@ -81,7 +81,7 @@
 }
 .viseur__ligne {
   position: absolute; left: 18%; right: 18%; top: 18%; height: 3px;
-  background: var(--rose); box-shadow: 0 0 12px var(--rose);
+  background: var(--rose); box-shadow: 2px 2px 0 var(--nuit);
   animation: scan 2s ease-in-out infinite alternate;
 }
 @keyframes scan { to { top: 82%; } }

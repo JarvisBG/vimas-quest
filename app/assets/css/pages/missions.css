@@ -134,7 +134,6 @@
   background: var(--nuit); color: var(--papier); font-weight: 700;
   border-radius: var(--r-pastille);
 }
-.validation__point { width: 10px; height: 10px; border-radius: 50%; background: var(--sodium); animation: pulse-m 1.2s ease-in-out infinite; }
-@keyframes pulse-m { 50% { opacity: .2; } }
+.validation__point { width: 10px; height: 10px; border-radius: 50%; background: var(--sodium); }
 .validation__demo { display: flex; margin: var(--s-4) auto 0; background: none; border: 0; cursor: pointer; }
 .validation__demo[hidden] { display: none; }
