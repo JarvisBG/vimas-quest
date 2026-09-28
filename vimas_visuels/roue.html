@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#D90A22">
+  <title>Roue des récompenses | Vimas Fest</title>
+  <link rel="preload" href="assets/fonts/Anton-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/roue.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="icone-btn topbar__retour" href="tableau-de-bord.html" aria-label="Retour à ma carte">
+        <svg class="icon" aria-hidden="true"><use href="#i-retour"></use></svg>
+      </a>
+      <h1 class="topbar__titre affiche">Roue</h1>
+      <span class="jetons-haut" data-jetons hidden></span>
+    </div>
+  </header>
+
+  <main id="contenu" class="roue-p">
+
+    <!-- La roue -->
+    <section class="plateau-roue" aria-labelledby="t-roue">
+      <h2 class="sr-only" id="t-roue">Faire tourner la roue</h2>
+      <div class="wrap plateau-roue__cadre">
+        <div class="roue-g" data-roue-cadre>
+          <span class="roue-g__languette" data-languette aria-hidden="true"></span>
+          <div class="roue-g__disque" data-disque aria-hidden="true"></div>
+          <button class="roue-g__moyeu" type="button" data-tourner-moyeu aria-label="Faire tourner la roue">
+            <span class="affiche">Go</span>
+          </button>
+        </div>
+
+        <button class="btn btn--sodium btn--lg btn--bloc" type="button" data-tourner>
+          <i data-icon="roue"></i> <span data-tourner-txt>Tourner pour 5 jetons</span>
+        </button>
+        <p class="plateau-roue__info" aria-live="polite" data-info>&nbsp;</p>
+      </div>
+    </section>
+
+    <div class="wrap roue-p__bas">
+
+      <details class="chances">
+        <summary>Chances de gain et stocks</summary>
+        <ul class="chances__liste" data-chances></ul>
+        <p class="texte-doux chances__note">Le résultat est décidé par le serveur au moment du tirage. Un lot épuisé n'est plus tiré : sa part revient aux autres cases.</p>
+      </details>
+
+      <section class="mes-lots" aria-labelledby="t-lots">
+        <div class="mes-lots__tete">
+          <h2 class="affiche mes-lots__titre" id="t-lots">Mes lots</h2>
+          <span class="pastille" data-nb-a-retirer hidden></span>
+        </div>
+        <ul class="bons" data-bons></ul>
+        <p class="bons__vide texte-doux" data-bons-vide hidden>Pas encore de lot. Tente ta chance, ou gagne des jetons avec les <a href="missions.html">missions</a>.</p>
+      </section>
+
+      <section class="retrait" aria-labelledby="t-retrait">
+        <h2 class="retrait__titre" id="t-retrait"><i data-icon="lieu"></i> Où retirer tes lots</h2>
+        <p data-retrait-lieu></p>
+        <p class="texte-doux" data-retrait-infos></p>
+        <a class="lien-fort" href="plan.html?lieu=stand-vimas">Voir sur le plan</a>
+      </section>
+    </div>
+  </main>
+
+  <!-- Résultat du tirage -->
+  <dialog class="feuille gain" aria-labelledby="gain-titre" data-gain>
+    <div class="gain__visuel" data-gain-visuel></div>
+    <p class="gain__lib" data-gain-lib></p>
+    <h2 class="affiche gain__titre" id="gain-titre" data-gain-titre></h2>
+    <p class="gain__texte" data-gain-texte></p>
+    <div class="gain__actions" data-gain-actions></div>
+  </dialog>
+
+  <!-- Bon de retrait -->
+  <dialog class="feuille bon-d" aria-labelledby="bon-titre" data-bon>
+    <div class="feuille__entete">
+      <p class="bon-d__lib">Bon de retrait</p>
+      <button class="icone-btn" type="button" aria-label="Fermer" data-fermer-bon>
+        <svg class="icon" aria-hidden="true"><use href="#i-fermer"></use></svg>
+      </button>
+    </div>
+    <div class="billet bon-d__billet" data-bon-billet></div>
+    <button class="lien-fort bon-d__demo" type="button" data-bon-demo hidden>Démo : simuler le retrait au stand</button>
+  </dialog>
+
+  <div class="confettis-roue" data-confettis aria-hidden="true"></div>
+
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/vendor/qrcode-generator.min.js" defer></script>
+  <script src="assets/js/pages/roue.js" defer></script>
+</body>
+</html>

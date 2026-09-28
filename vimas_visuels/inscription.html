@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#D90A22">
+  <title>Scanne ton billet | Vimas Fest</title>
+  <meta name="description" content="Crée ton profil de joueur Vimas Fest en scannant le QR code de ton billet ou de ton bracelet.">
+  <link rel="preload" href="assets/fonts/Anton-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/inscription.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app" data-topbar>
+    <div class="wrap topbar__inner">
+      <button class="icone-btn topbar__retour" type="button" aria-label="Retour" data-retour>
+        <svg class="icon" aria-hidden="true"><use href="#i-retour"></use></svg>
+      </button>
+      <a class="marque" href="index.html" aria-label="Vimas Fest, accueil">
+        <span class="marque__signe eq" data-eq="5"></span>
+        <span class="marque__nom">Vimas Fest</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="contenu" class="inscription">
+    <div class="wrap inscription__cadre">
+      <div class="panneau">
+
+        <ol class="etapes" aria-label="Progression de l'inscription" data-etapes>
+          <li data-etape="1">Billet</li>
+          <li data-etape="2">Profil</li>
+          <li data-etape="3">C'est parti</li>
+        </ol>
+
+        <div class="message" role="alert" hidden data-erreur>
+          <i data-icon="alerte"></i><p data-erreur-texte></p>
+        </div>
+
+        <!-- Écran : déjà connecté -->
+        <section class="ecran" data-ecran="deja" data-etape-num="3" hidden aria-labelledby="t-deja">
+          <div class="profil-rappel" data-deja-profil></div>
+          <h1 class="affiche ecran__titre" id="t-deja" tabindex="-1">Tu es déjà dans la partie</h1>
+          <p class="texte-doux">Ce téléphone est connecté au profil ci-dessus.</p>
+          <div class="ecran__actions">
+            <a class="btn btn--sodium btn--lg btn--bloc" href="tableau-de-bord.html">Voir ma carte</a>
+            <button class="btn btn--contour btn--bloc" type="button" data-changer-compte>
+              <i data-icon="sortie"></i> Utiliser un autre billet
+            </button>
+          </div>
+        </section>
+
+        <!-- Écran : choix du mode -->
+        <section class="ecran" data-ecran="accueil" data-etape-num="1" hidden aria-labelledby="t-accueil">
+          <div class="illu-billet" aria-hidden="true">
+            <div class="illu-billet__qr" data-faux-qr></div>
+            <div class="illu-billet__texte">
+              <span class="affiche">Vimas Fest</span>
+              <span>Pass 2 jours</span>
+              <span class="illu-billet__code">VMS-••••-••••</span>
+            </div>
+          </div>
+          <h1 class="affiche ecran__titre" id="t-accueil" tabindex="-1">Scanne ton billet pour jouer</h1>
+          <p>Le QR code de ton billet ou de ton bracelet crée ton profil. Déjà inscrit&nbsp;? Scanne le même billet, on retrouve ta partie.</p>
+          <div class="ecran__actions">
+            <button class="btn btn--sodium btn--lg btn--bloc" type="button" data-aller="camera">
+              <i data-icon="camera"></i> Ouvrir la caméra
+            </button>
+            <button class="btn btn--contour btn--bloc" type="button" data-aller="code">
+              <i data-icon="clavier"></i> Saisir le code à la main
+            </button>
+          </div>
+          <div class="demo" data-demo hidden>
+            <p class="demo__titre">Mode démo, sans billet réel</p>
+            <div class="demo__boutons">
+              <button class="lien-fort" type="button" data-demo-code="VMS-7K4P-2QX9">Nouveau joueur</button>
+              <button class="lien-fort" type="button" data-demo-code="VMS-DEMO-2026">Joueur existant</button>
+              <button class="lien-fort" type="button" data-demo-code="VMS-BLOC-0000">Billet bloqué</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Écran : caméra -->
+        <section class="ecran" data-ecran="camera" data-etape-num="1" hidden aria-labelledby="t-camera">
+          <h1 class="affiche ecran__titre ecran__titre--petit" id="t-camera" tabindex="-1">Vise le QR de ton billet</h1>
+          <div class="viseur" data-viseur>
+            <video class="viseur__video" playsinline muted data-video></video>
+            <span class="viseur__cadre" aria-hidden="true"></span>
+            <span class="viseur__ligne" aria-hidden="true"></span>
+          </div>
+          <p class="viseur__etat" aria-live="polite" data-camera-etat>Démarrage de la caméra…</p>
+          <div class="ecran__actions ecran__actions--ligne">
+            <button class="btn btn--contour" type="button" data-lampe hidden aria-pressed="false">
+              <i data-icon="lampe"></i> Lampe
+            </button>
+            <button class="btn btn--contour" type="button" data-aller="code">
+              <i data-icon="clavier"></i> Saisir le code
+            </button>
+          </div>
+        </section>
+
+        <!-- Écran : saisie manuelle -->
+        <section class="ecran" data-ecran="code" data-etape-num="1" hidden aria-labelledby="t-code">
+          <h1 class="affiche ecran__titre ecran__titre--petit" id="t-code" tabindex="-1">Saisis le code de ton billet</h1>
+          <form class="formulaire" novalidate data-form-code>
+            <div class="champ" data-champ-code>
+              <label class="champ__label" for="code-billet">Code du billet</label>
+              <div class="saisie-prefixe">
+                <span class="saisie-prefixe__txt" aria-hidden="true">VMS-</span>
+                <input class="saisie saisie--code" id="code-billet" name="code" type="text"
+                  inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false"
+                  placeholder="XXXX-XXXX" maxlength="16" aria-describedby="code-aide" required>
+              </div>
+              <p class="champ__aide" id="code-aide">Il est imprimé sous le QR code : les 8 lettres et chiffres qui suivent VMS-.</p>
+            </div>
+            <button class="btn btn--sodium btn--lg btn--bloc" type="submit">Valider mon billet</button>
+          </form>
+          <button class="lien-fort" type="button" data-aller="camera">
+            <i data-icon="camera"></i> Utiliser la caméra
+          </button>
+        </section>
+
+        <!-- Écran : création du profil -->
+        <section class="ecran" data-ecran="profil" data-etape-num="2" hidden aria-labelledby="t-profil">
+          <p class="billet-ok"><i data-icon="coche"></i> <span data-billet-type>Billet validé</span></p>
+          <h1 class="affiche ecran__titre" id="t-profil" tabindex="-1">Crée ton profil</h1>
+
+          <form class="formulaire" novalidate data-form-profil>
+            <div class="apercu" aria-hidden="true">
+              <span data-apercu-avatar></span>
+              <span class="apercu__pseudo affiche" data-apercu-pseudo>Ton pseudo</span>
+            </div>
+
+            <div class="champ" data-champ-pseudo>
+              <label class="champ__label" for="pseudo">Pseudo</label>
+              <div class="champ__ligne">
+                <input class="saisie" id="pseudo" name="pseudo" type="text" autocomplete="nickname"
+                  minlength="3" maxlength="16" aria-describedby="pseudo-aide pseudo-etat" required>
+                <button class="icone-btn icone-btn--cadre" type="button" aria-label="Proposer un pseudo au hasard" data-pseudo-hasard>
+                  <i data-icon="des"></i>
+                </button>
+              </div>
+              <p class="champ__aide" id="pseudo-aide">3 à 16 caractères : lettres, chiffres, - et _. Il apparaîtra dans le classement.</p>
+              <p class="champ__etat" id="pseudo-etat" aria-live="polite" data-pseudo-etat></p>
+            </div>
+
+            <fieldset class="champ">
+              <legend class="champ__label">Ta pochette</legend>
+              <div class="avatars" data-avatars></div>
+            </fieldset>
+
+            <fieldset class="champ">
+              <legend class="champ__label">Tes styles préférés <span class="texte-doux">(facultatif, 3 maximum)</span></legend>
+              <div class="puces" data-genres></div>
+            </fieldset>
+
+            <div class="champ">
+              <label class="case">
+                <input type="checkbox" name="regles" required data-regles>
+                <span class="case__texte">J'accepte les <a href="infos.html#regles" target="_blank" rel="noopener">règles du jeu</a> et l'affichage de mon pseudo sur l'écran géant.</span>
+              </label>
+              <label class="case">
+                <input type="checkbox" name="alertes" checked>
+                <span class="case__texte">Recevoir les annonces du festival (changements d'horaire, météo, surprises).</span>
+              </label>
+            </div>
+
+            <button class="btn btn--sodium btn--lg btn--bloc" type="submit" data-creer>Créer mon profil</button>
+          </form>
+        </section>
+
+        <!-- Écran : bienvenue (nouveau joueur) -->
+        <section class="ecran ecran--fete" data-ecran="bienvenue" data-etape-num="3" hidden aria-labelledby="t-bienvenue">
+          <div class="fete__avatar" data-bienvenue-avatar></div>
+          <h1 class="affiche ecran__titre" id="t-bienvenue" tabindex="-1">Bienvenue, <span data-bienvenue-pseudo></span></h1>
+          <ul class="gains" data-gains></ul>
+          <div class="billet mission-une">
+            <p class="mission-une__lib">Ta première mission</p>
+            <p class="mission-une__titre affiche" data-premiere-mission></p>
+          </div>
+          <a class="btn btn--sodium btn--lg btn--bloc" href="tableau-de-bord.html">Voir ma carte</a>
+        </section>
+
+        <!-- Écran : retour d'un joueur existant -->
+        <section class="ecran ecran--fete" data-ecran="retour" data-etape-num="3" hidden aria-labelledby="t-retour">
+          <div class="fete__avatar" data-retour-avatar></div>
+          <h1 class="affiche ecran__titre" id="t-retour" tabindex="-1">Content de te revoir, <span data-retour-pseudo></span></h1>
+          <ul class="gains" data-retour-stats></ul>
+          <a class="btn btn--sodium btn--lg btn--bloc" href="tableau-de-bord.html">Reprendre la partie</a>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/qr-lecteur.js" defer></script>
+  <script src="assets/js/pages/inscription.js" defer></script>
+</body>
+</html>

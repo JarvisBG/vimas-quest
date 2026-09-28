@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#1F3FD1">
+  <title>Coups de cœur | DOMAF Quest</title>
+  <link rel="preload" href="assets/fonts/Anton-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/coups-de-coeur.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="icone-btn topbar__retour" href="tableau-de-bord.html" aria-label="Retour à ma carte">
+        <svg class="icon" aria-hidden="true"><use href="#i-retour"></use></svg>
+      </a>
+      <h1 class="topbar__titre affiche">Coups de cœur</h1>
+    </div>
+  </header>
+
+  <main id="contenu" class="cdc">
+    <div class="wrap cdc__cadre">
+
+      <p class="cdc__intro">Vote pour les artistes et les stands qui ont marqué ton festival. <span data-cloture></span></p>
+
+      <div class="onglets-cdc" role="tablist" aria-label="Catégorie" data-onglets>
+        <button class="onglet-cdc" type="button" role="tab" id="onglet-artistes" aria-controls="panneau-cdc" aria-selected="true" data-cat="artistes">Artistes</button>
+        <button class="onglet-cdc" type="button" role="tab" id="onglet-stands" aria-controls="panneau-cdc" aria-selected="false" tabindex="-1" data-cat="stands">Stands</button>
+      </div>
+
+      <!-- Réserve de cœurs : l'élément fort de la page -->
+      <section class="reserve" aria-live="polite" data-reserve>
+        <div class="reserve__coeurs" data-coeurs aria-hidden="true"></div>
+        <p class="reserve__texte" data-reserve-texte>&nbsp;</p>
+      </section>
+
+      <div class="mission-cdc" data-mission hidden></div>
+
+      <div class="vue-cdc" role="radiogroup" aria-label="Affichage">
+        <label class="puce"><input type="radio" name="vue" value="voter" checked><span>Voter</span></label>
+        <label class="puce"><input type="radio" name="vue" value="tendances"><span>Tendances</span></label>
+      </div>
+
+      <section id="panneau-cdc" role="tabpanel" aria-labelledby="onglet-artistes" data-panneau>
+        <div data-contenu>
+          <div class="squelette" style="height:72px;margin-bottom:8px"></div>
+          <div class="squelette" style="height:72px;margin-bottom:8px"></div>
+          <div class="squelette" style="height:72px"></div>
+        </div>
+      </section>
+
+      <p class="cdc__resultats texte-doux" data-resultats></p>
+    </div>
+  </main>
+
+  <div class="eclats" data-eclats aria-hidden="true"></div>
+
+  <script src="assets/js/config.js" defer></script>
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/serveur.js" defer></script>
+  <script src="assets/js/pages/coups-de-coeur.js" defer></script>
+</body>
+</html>

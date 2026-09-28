@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <title>QR codes | Console DOMAF Quest</title>
+  <script src="../assets/js/console-theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/console.css">
+</head>
+<body class="sans-sw">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <div class="bg-layer bg-glow"></div>
+  <div class="bg-layer bg-grid"></div>
+
+  <div class="console-grille">
+    <nav class="cnav" aria-label="Console">
+      <a class="cnav__marque" href="index.html"><i data-icon="onde"></i> DOMAF QUEST</a>
+      <p class="cnav__tag" data-console-tag>Game Master</p>
+      <div data-console-nav></div>
+      <div class="cnav__pied">
+        <p class="cnav__qui" data-console-qui></p>
+        <button class="cnav__sortir" type="button" data-console-sortir><i data-icon="sortie"></i> Déconnexion</button>
+      </div>
+    </nav>
+    <div class="console-voile" data-console-voile></div>
+    <button class="ctete__menu" type="button" aria-expanded="false" data-console-menu><i data-icon="menu"></i><span class="sr-only">Ouvrir le menu</span></button>
+
+    <div class="console-principal">
+      <div class="ccorps">
+        <header class="ctete">
+          <div class="ctete__titres">
+            <p class="ctete__sur">Le jeu</p>
+            <h1 class="ctete__titre">QR codes et reliques</h1>
+            <p class="ctete__sous" data-resume>Chargement…</p>
+          </div>
+          <div class="ctete__actions">
+            <button class="cbtn" type="button" data-imprimer><i data-icon="billet"></i> Imprimer</button>
+            <button class="cbtn cbtn--primaire" type="button" data-nouveau>Nouveau QR</button>
+            <span class="cpuce-admin"><i data-icon="cadenas"></i><span data-console-nom>GM</span></span>
+          </div>
+        </header>
+
+        <main class="ccontenu" id="contenu" data-console-contenu>
+          <p class="message message--info"><i data-icon="info"></i><span>Un QR de scène se relie à sa scène : c'est ce lien qui reconnaît le concert en cours (un scan par concert). Un stand, un food-truck, un point pratique se relient à leur lieu du plan ; une dédicace, à sa séance. Un QR déjà scanné ne se supprime plus : éteins-le.</span></p>
+
+          <form class="coutils coutils--trois" data-filtres role="search">
+            <div class="coutils__chercher">
+              <label class="sr-only" for="f-texte">Chercher un QR</label>
+              <input class="saisie" id="f-texte" name="texte" type="search" maxlength="40" autocomplete="off" placeholder="Nom, code ou lieu">
+            </div>
+            <label class="sr-only" for="f-type">Type</label>
+            <select class="saisie" id="f-type" name="type">
+              <option value="">Tous les types</option>
+            </select>
+            <label class="sr-only" for="f-etat">État</label>
+            <select class="saisie" id="f-etat" name="etat">
+              <option value="">Tous les états</option>
+              <option value="actifs">Actifs</option>
+              <option value="eteints">Éteints</option>
+              <option value="a-relier">À relier</option>
+              <option value="jamais">Jamais scannés</option>
+            </select>
+          </form>
+
+          <section class="cpanneau cpanneau--table" aria-labelledby="t-liste">
+            <h2 class="sr-only" id="t-liste">Liste des QR codes</h2>
+            <div class="ctable-defile">
+              <table class="ctable">
+                <thead>
+                  <tr>
+                    <th scope="col">QR</th>
+                    <th scope="col" class="ctable__large">Relié à</th>
+                    <th scope="col" class="ctable__nb">XP</th>
+                    <th scope="col" class="ctable__nb">Scans</th>
+                    <th scope="col">Actif</th>
+                    <th scope="col"><span class="sr-only">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody data-lignes><tr><td colspan="6" class="cvide">Chargement…</td></tr></tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- Création / modification -->
+  <dialog class="cboite cfiche" data-boite aria-labelledby="q-titre">
+    <div class="cfiche__tete">
+      <span class="cfiche__avatar"><i data-icon="qr"></i></span>
+      <div class="cfiche__titres">
+        <h2 class="cboite__titre" id="q-titre" data-b-titre>Nouveau QR</h2>
+        <p class="cfiche__sous" data-b-sous></p>
+      </div>
+      <button class="cbtn cbtn--icone" type="button" data-fermer><i data-icon="fermer"></i><span class="sr-only">Fermer</span></button>
+    </div>
+    <form class="cfiche__corps cform" data-form novalidate>
+      <div class="cqr" data-apercu hidden></div>
+      <div class="cform__ligne">
+        <label class="champ">
+          <span class="champ__label">Type</span>
+          <select class="saisie" name="type" data-types></select>
+          <span class="champ__aide" data-aide-type></span>
+        </label>
+        <label class="champ" data-champ-rarete>
+          <span class="champ__label">Rareté de la relique</span>
+          <select class="saisie" name="rarete">
+            <option value="commune">Commune</option>
+            <option value="rare">Rare</option>
+            <option value="legendaire">Légendaire</option>
+          </select>
+        </label>
+      </div>
+      <label class="champ">
+        <span class="champ__label">Nom</span>
+        <input class="saisie" name="nom" maxlength="80" required autocomplete="off" placeholder="Scène Soleil">
+        <span class="champ__aide">Ce que le joueur voit après le scan ; imprimé sur l'étiquette. Relique : son nom n'apparaît qu'une fois trouvée.</span>
+      </label>
+      <label class="champ" data-champ-indice>
+        <span class="champ__label">Indice</span>
+        <textarea class="saisie" name="indice" maxlength="200" placeholder="Là où les basses font trembler le sol…"></textarea>
+        <span class="champ__aide">Public dès que la relique est active : ne l'allume qu'une fois cachée.</span>
+      </label>
+      <label class="champ" data-champ-lieu>
+        <span class="champ__label" data-lieu-label>Lieu du plan</span>
+        <select class="saisie" name="lieu_id" data-lieux></select>
+        <span class="champ__aide" data-aide-lieu></span>
+      </label>
+      <label class="champ" data-champ-dedicace>
+        <span class="champ__label">Séance de dédicaces</span>
+        <select class="saisie" name="dedicace_id" data-dedicaces></select>
+        <span class="champ__aide" data-aide-dedicace></span>
+      </label>
+      <div class="cform__ligne">
+        <label class="champ">
+          <span class="champ__label">XP au scan</span>
+          <input class="saisie" name="xp" type="number" inputmode="numeric" min="0" max="1000" step="5">
+          <span class="champ__aide" data-aide-xp></span>
+        </label>
+        <label class="champ">
+          <span class="champ__label">Badge donné au scan</span>
+          <select class="saisie" name="badge_id" data-badges></select>
+        </label>
+      </div>
+      <label class="champ">
+        <span class="champ__label">Mission qu'il fait avancer</span>
+        <select class="saisie" name="mission_id" data-missions></select>
+        <span class="champ__aide">En plus des missions « Tout scan » ou « Scans de ce type ». Une mission « QR reliés » n'avance qu'avec les QR choisis ici.</span>
+      </label>
+      <label class="ccase"><input type="checkbox" name="actif"><span>Actif<small data-aide-actif>Éteint : le scan est refusé (« pas encore actif »).</small></span></label>
+      <p class="message" role="alert" data-erreur hidden></p>
+    </form>
+    <div class="cfiche__pied">
+      <button class="cbtn cbtn--danger" type="button" data-supprimer hidden><i data-icon="croix"></i> Supprimer</button>
+      <button class="cbtn" type="button" data-fermer>Annuler</button>
+      <button class="cbtn cbtn--primaire" type="button" data-enregistrer><i data-icon="coche"></i> Enregistrer</button>
+    </div>
+  </dialog>
+
+  <!-- Historique des scans d'un QR -->
+  <dialog class="cboite cfiche" data-historique aria-labelledby="h-titre">
+    <div class="cfiche__tete">
+      <span class="cfiche__avatar"><i data-icon="horloge"></i></span>
+      <div class="cfiche__titres">
+        <h2 class="cboite__titre" id="h-titre" data-h-titre>Historique</h2>
+        <p class="cfiche__sous" data-h-sous></p>
+      </div>
+      <button class="cbtn cbtn--icone" type="button" data-fermer><i data-icon="fermer"></i><span class="sr-only">Fermer</span></button>
+    </div>
+    <div class="cfiche__corps" data-h-corps><p class="cvide">Chargement…</p></div>
+  </dialog>
+
+  <!-- Impression des étiquettes -->
+  <dialog class="cboite cfiche cimpression" data-impression aria-labelledby="i-titre">
+    <div class="cfiche__tete">
+      <span class="cfiche__avatar"><i data-icon="billet"></i></span>
+      <div class="cfiche__titres">
+        <h2 class="cboite__titre" id="i-titre">Imprimer des étiquettes</h2>
+        <p class="cfiche__sous" data-i-sous></p>
+      </div>
+      <button class="cbtn cbtn--icone" type="button" data-fermer><i data-icon="fermer"></i><span class="sr-only">Fermer</span></button>
+    </div>
+    <form class="cfiche__corps cform" data-i-form>
+      <p class="message" role="alert" data-i-essai hidden></p>
+      <fieldset class="champ">
+        <legend class="champ__label">Ce qu'on imprime</legend>
+        <div class="cchoix">
+          <label><input type="radio" name="portee" value="filtre" checked><span>La liste affichée</span></label>
+          <label><input type="radio" name="portee" value="actifs"><span>Tous les QR actifs</span></label>
+          <label><input type="radio" name="portee" value="tous"><span>Tous les QR</span></label>
+          <label data-i-un hidden><input type="radio" name="portee" value="un"><span data-i-un-nom>Ce QR</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="champ">
+        <legend class="champ__label">Format (A4)</legend>
+        <div class="cchoix">
+          <label><input type="radio" name="format" value="6" checked><span>6 par page (9 cm)</span></label>
+          <label><input type="radio" name="format" value="12"><span>12 par page (6 cm)</span></label>
+          <label><input type="radio" name="format" value="1"><span>Affiche, 1 par page</span></label>
+        </div>
+      </fieldset>
+      <iframe class="cimpression__apercu" data-i-apercu title="Aperçu des étiquettes"></iframe>
+      <p class="champ__aide">Aperçu du papier. Dans la fenêtre d'impression : échelle 100 %, sans marges ajoutées ; « Enregistrer au format PDF » donne un seul fichier pour l'imprimerie.</p>
+    </form>
+    <div class="cfiche__pied">
+      <button class="cbtn" type="button" data-fermer>Fermer</button>
+      <button class="cbtn cbtn--primaire" type="button" data-i-lancer><i data-icon="billet"></i> Imprimer</button>
+    </div>
+  </dialog>
+
+  <script src="../assets/js/config.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/vendor/supabase.min.js" defer></script>
+  <script src="../assets/js/vendor/qrcode-generator.min.js" defer></script>
+  <script src="../assets/js/serveur.js" defer></script>
+  <script src="../assets/js/console.js" defer></script>
+  <script src="../assets/js/console-etiquettes.js" defer></script>
+  <script src="../assets/js/pages/console-qr.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#1F3FD1">
+  <title>Ma carte | DOMAF Quest</title>
+  <link rel="preload" href="assets/fonts/Anton-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/tableau-de-bord.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="marque" href="tableau-de-bord.html" aria-label="DOMAF Quest, ma carte">
+        <span class="marque__signe eq" data-eq="5"></span>
+        <span class="marque__nom">DOMAF Quest</span>
+      </a>
+      <span class="jetons-haut" data-jetons-haut hidden></span>
+      <a class="icone-btn icone-compteur" href="annonces.html" aria-label="Annonces du festival">
+        <svg class="icon" aria-hidden="true"><use href="#i-cloche"></use></svg>
+        <span class="icone-compteur__nb" data-cloche-compteur hidden></span>
+      </a>
+    </div>
+  </header>
+
+  <main id="contenu" class="tdb">
+    <h1 class="sr-only">Ma carte de festivalier</h1>
+
+    <div class="wrap tdb__grille">
+
+      <!-- Colonne carte -->
+      <div class="tdb__carte-col">
+        <a class="alerte-urgente" href="annonces.html" data-alerte hidden>
+          <i data-icon="alerte"></i>
+          <span><strong data-alerte-titre></strong><span data-alerte-texte></span></span>
+        </a>
+
+        <div class="lanyard" aria-hidden="true"></div>
+        <a class="pass" href="passeport.html" data-pass aria-label="Ouvrir mon passeport">
+          <div class="pass__bandeau" data-pass-bandeau>
+            <span class="pass__trou" aria-hidden="true"></span>
+            <span>Pass joueur</span>
+            <span data-pass-edition>Édition 4</span>
+          </div>
+          <div class="pass__corps">
+            <div class="pass__identite">
+              <span class="squelette pass__avatar-sq" data-pass-avatar></span>
+              <div>
+                <p class="pass__pseudo affiche" data-pass-pseudo>&nbsp;</p>
+                <p class="tampon pass__rang" data-pass-rang>…</p>
+              </div>
+            </div>
+
+            <div class="pass__niveau">
+              <div class="vumetre" data-vumetre role="img"></div>
+              <p class="pass__niveau-txt" data-niveau-txt>&nbsp;</p>
+            </div>
+
+            <dl class="pass__stats">
+              <div><dt>XP</dt><dd class="chiffres" data-stat-xp>–</dd></div>
+              <div><dt>Jetons</dt><dd class="chiffres" data-stat-jetons>–</dd></div>
+              <div><dt>Badges</dt><dd class="chiffres" data-stat-badges>–</dd></div>
+              <div><dt>Classement</dt><dd class="chiffres" data-stat-classement>–</dd></div>
+            </dl>
+          </div>
+          <div class="pass__pied">
+            <span class="pass__code" data-pass-code></span>
+            <span class="pass__voir">Mon passeport <i data-icon="fleche"></i></span>
+          </div>
+        </a>
+
+        <a class="pass-manquant" href="scanner.html" data-pass-manquant hidden>
+          <i data-icon="alerte"></i>
+          <span><strong>Ta journée de jeu n'est pas ouverte</strong>
+          <span data-pass-manquant-txt>Prends un ticket auprès de l'équipe, puis scanne son QR code.</span></span>
+        </a>
+        <!-- Collecte (6.3 bis) : coffre resté fermé, fiche incomplète, tirage final -->
+        <a class="rappel rappel--coffre" href="scanner.html" data-rappel-coffre hidden>
+          <i data-icon="cadenas"></i>
+          <span><strong data-rappel-coffre-titre>Un coffre t'attend</strong>
+          <span>Réponds à une question pour récupérer tes XP.</span></span>
+        </a>
+        <a class="rappel" href="inscription.html?fiche=1" data-rappel-fiche hidden>
+          <i data-icon="carte"></i>
+          <span><strong data-rappel-fiche-titre>Complète ta carte</strong>
+          <span data-rappel-fiche-txt></span></span>
+        </a>
+        <a class="btn btn--sodium btn--lg btn--bloc tdb__scan" href="scanner.html">
+          <i data-icon="qr"></i> Scanner un QR code
+        </a>
+      </div>
+
+      <!-- Colonne activité -->
+      <div class="tdb__flux">
+
+        <section class="bloc" aria-labelledby="t-concert">
+          <div class="bloc__tete">
+            <h2 class="bloc__titre affiche" id="t-concert" data-concert-titre>Prochain concert</h2>
+            <a class="lien-fort" href="mon-programme.html">Mon programme</a>
+          </div>
+          <div class="billet concert-carte" data-concert>
+            <div class="squelette" style="height:120px"></div>
+          </div>
+        </section>
+
+        <section class="bloc" aria-labelledby="t-mission">
+          <div class="bloc__tete">
+            <h2 class="bloc__titre affiche" id="t-mission">Mission à finir</h2>
+            <a class="lien-fort" href="missions.html" data-missions-lien>Toutes</a>
+          </div>
+          <div data-mission-principale><div class="squelette" style="height:140px"></div></div>
+          <ul class="missions-mini" data-missions-autres></ul>
+        </section>
+
+        <section class="bloc" aria-labelledby="t-soir">
+          <h2 class="bloc__titre affiche" id="t-soir">Ce soir</h2>
+          <div class="soir">
+            <a class="soir__case soir__case--blind" href="blind-test.html">
+              <i data-icon="micro"></i>
+              <span class="soir__titre">Blind test</span>
+              <span class="soir__info" data-blind></span>
+            </a>
+            <a class="soir__case soir__case--roue" href="roue.html">
+              <i data-icon="roue"></i>
+              <span class="soir__titre">Roue</span>
+              <span class="soir__info" data-roue></span>
+            </a>
+          </div>
+        </section>
+
+        <section class="bloc" aria-labelledby="t-journee">
+          <div class="bloc__tete">
+            <h2 class="bloc__titre affiche" id="t-journee">Ta journée</h2>
+            <a class="lien-fort" href="classement.html">Classement</a>
+          </div>
+          <p class="journee" data-journee></p>
+          <p class="roi" data-roi hidden></p>
+          <ol class="activite" data-activite></ol>
+        </section>
+
+        <p class="maj texte-doux" aria-live="polite" data-maj></p>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/config.js" defer></script>
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/serveur.js" defer></script>
+  <script src="assets/js/pages/tableau-de-bord.js" defer></script>
+</body>
+</html>

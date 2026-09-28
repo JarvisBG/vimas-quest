@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <title>Missions | Console DOMAF Quest</title>
+  <script src="../assets/js/console-theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/console.css">
+</head>
+<body class="sans-sw">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <div class="bg-layer bg-glow"></div>
+  <div class="bg-layer bg-grid"></div>
+
+  <div class="console-grille">
+    <nav class="cnav" aria-label="Console">
+      <a class="cnav__marque" href="index.html"><i data-icon="onde"></i> DOMAF QUEST</a>
+      <p class="cnav__tag" data-console-tag>Game Master</p>
+      <div data-console-nav></div>
+      <div class="cnav__pied">
+        <p class="cnav__qui" data-console-qui></p>
+        <button class="cnav__sortir" type="button" data-console-sortir><i data-icon="sortie"></i> Déconnexion</button>
+      </div>
+    </nav>
+    <div class="console-voile" data-console-voile></div>
+    <button class="ctete__menu" type="button" aria-expanded="false" data-console-menu><i data-icon="menu"></i><span class="sr-only">Ouvrir le menu</span></button>
+
+    <div class="console-principal">
+      <div class="ccorps">
+        <header class="ctete">
+          <div class="ctete__titres">
+            <p class="ctete__sur">Le jeu</p>
+            <h1 class="ctete__titre">Missions</h1>
+            <p class="ctete__sous" data-resume>Chargement…</p>
+          </div>
+          <div class="ctete__actions">
+            <button class="cbtn cbtn--primaire" type="button" data-nouvelle>Nouvelle mission</button>
+            <span class="cpuce-admin"><i data-icon="cadenas"></i><span data-console-nom>GM</span></span>
+          </div>
+        </header>
+
+        <main class="ccontenu" id="contenu" data-console-contenu>
+          <p class="message message--info"><i data-icon="info"></i><span>Chaque mission se rejoue à chaque journée de jeu (6 h → 6 h). Le téléphone montre les missions actives, les plus prioritaires en tête ; une mission secrète n'apparaît qu'une fois terminée.</span></p>
+
+          <form class="coutils coutils--trois" data-filtres role="search">
+            <div class="coutils__chercher">
+              <label class="sr-only" for="f-texte">Chercher une mission</label>
+              <input class="saisie" id="f-texte" name="texte" type="search" maxlength="40" autocomplete="off" placeholder="Chercher dans les titres">
+            </div>
+            <label class="sr-only" for="f-etat">État</label>
+            <select class="saisie" id="f-etat" name="etat">
+              <option value="">Toutes les missions</option>
+              <option value="actives">Actives</option>
+              <option value="eteintes">Éteintes</option>
+              <option value="staff">Validées au stand</option>
+              <option value="secretes">Secrètes</option>
+            </select>
+            <label class="sr-only" for="f-categorie">Catégorie</label>
+            <select class="saisie" id="f-categorie" name="categorie">
+              <option value="">Toutes les catégories</option>
+            </select>
+          </form>
+
+          <section class="cpanneau cpanneau--table" aria-labelledby="t-liste">
+            <h2 class="sr-only" id="t-liste">Liste des missions</h2>
+            <div class="ctable-defile">
+              <table class="ctable">
+                <thead>
+                  <tr>
+                    <th scope="col">Mission</th>
+                    <th scope="col" class="ctable__large">Avance avec</th>
+                    <th scope="col" class="ctable__nb">XP</th>
+                    <th scope="col" class="ctable__nb">Terminée</th>
+                    <th scope="col">Active</th>
+                    <th scope="col"><span class="sr-only">Modifier</span></th>
+                  </tr>
+                </thead>
+                <tbody data-lignes><tr><td colspan="6" class="cvide">Chargement…</td></tr></tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- Création / modification -->
+  <dialog class="cboite cfiche" data-boite aria-labelledby="m-titre">
+    <div class="cfiche__tete">
+      <span class="cfiche__avatar"><i data-icon="cible"></i></span>
+      <div class="cfiche__titres">
+        <h2 class="cboite__titre" id="m-titre" data-b-titre>Nouvelle mission</h2>
+        <p class="cfiche__sous" data-b-sous></p>
+      </div>
+      <button class="cbtn cbtn--icone" type="button" data-fermer><i data-icon="fermer"></i><span class="sr-only">Fermer</span></button>
+    </div>
+    <form class="cfiche__corps cform" data-form novalidate>
+      <label class="champ">
+        <span class="champ__label">Titre</span>
+        <input class="saisie" name="titre" maxlength="80" required autocomplete="off" placeholder="Tournée des scènes">
+      </label>
+      <label class="champ">
+        <span class="champ__label">Consigne</span>
+        <textarea class="saisie" name="consigne" maxlength="400" placeholder="Scanne le QR de trois scènes différentes."></textarea>
+        <span class="champ__aide" data-aide-consigne>Ce que le joueur lit sur son téléphone.</span>
+      </label>
+      <div class="cform__ligne">
+        <label class="champ">
+          <span class="champ__label">Avance avec</span>
+          <select class="saisie" name="compteur" data-compteurs></select>
+        </label>
+        <label class="champ" data-champ-objectif>
+          <span class="champ__label">Objectif (fois dans la journée)</span>
+          <input class="saisie" name="objectif" type="number" inputmode="numeric" min="1" max="1000" step="1" value="1">
+        </label>
+      </div>
+      <p class="champ__aide" data-aide-compteur></p>
+      <div class="cform__trois">
+        <label class="champ">
+          <span class="champ__label">XP gagnés</span>
+          <input class="saisie" name="xp" type="number" inputmode="numeric" min="0" max="5000" step="5" value="50">
+        </label>
+        <label class="champ">
+          <span class="champ__label">Catégorie</span>
+          <select class="saisie" name="categorie" data-categories><option value="">Aucune</option></select>
+        </label>
+        <label class="champ">
+          <span class="champ__label">Priorité</span>
+          <input class="saisie" name="priorite" type="number" inputmode="numeric" min="-9" max="9" step="1" value="0">
+        </label>
+      </div>
+      <p class="champ__aide">Priorité : de −9 à 9, les plus hautes en tête de liste sur le téléphone (à égalité, l'ordre change d'un joueur à l'autre).</p>
+      <label class="champ">
+        <span class="champ__label">Badge gagné en la terminant</span>
+        <select class="saisie" name="badge_id" data-badges><option value="">Aucun</option></select>
+      </label>
+      <label class="ccase"><input type="checkbox" name="secrete"><span>Mission secrète<small>Invisible sur le téléphone tant qu'elle n'est pas terminée.</small></span></label>
+      <label class="ccase"><input type="checkbox" name="active" checked><span>Active<small>Éteinte : le téléphone ne la montre plus, les avancées sont gardées.</small></span></label>
+      <p class="message" role="alert" data-erreur hidden></p>
+    </form>
+    <div class="cfiche__pied">
+      <button class="cbtn cbtn--danger" type="button" data-supprimer hidden><i data-icon="croix"></i> Supprimer</button>
+      <button class="cbtn" type="button" data-fermer>Annuler</button>
+      <button class="cbtn cbtn--primaire" type="button" data-enregistrer><i data-icon="coche"></i> Enregistrer</button>
+    </div>
+  </dialog>
+
+  <script src="../assets/js/config.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/vendor/supabase.min.js" defer></script>
+  <script src="../assets/js/serveur.js" defer></script>
+  <script src="../assets/js/console.js" defer></script>
+  <script src="../assets/js/pages/console-missions.js" defer></script>
+</body>
+</html>

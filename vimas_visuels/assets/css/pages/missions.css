@@ -1,0 +1,147 @@
+/* ==========================================================================
+   Page 8 — Missions
+   ========================================================================== */
+
+.missions { background: var(--papier-2); min-height: calc(100svh - var(--topbar-h)); }
+.missions__cadre { display: grid; gap: var(--s-5); padding-block: var(--s-5) var(--s-6); max-width: 44rem; }
+
+/* ---------- Bilan ---------- */
+.bilan-m { display: grid; gap: var(--s-3); }
+.bilan-m__phrase { font-size: var(--fs-lg); font-weight: 600; max-width: 34ch; }
+.bilan-m__phrase strong { font-family: var(--font-affiche); font-weight: 400; font-size: 1.625rem; color: var(--bleu); }
+.crans--global i { height: 14px; }
+
+/* ---------- Défi éclair (élément fort de la page) ---------- */
+.eclair {
+  position: relative; display: grid; gap: var(--s-2);
+  padding: var(--s-4);
+  background: var(--rose); color: var(--nuit);
+  border: 3px solid var(--nuit); border-radius: var(--r-net);
+  box-shadow: 6px 6px 0 var(--nuit);
+  background-image: repeating-linear-gradient(-45deg, rgba(59, 10, 18, .08) 0 12px, transparent 12px 24px);
+}
+.eclair[hidden] { display: none; }
+.eclair__haut { display: flex; justify-content: space-between; align-items: center; gap: var(--s-2); }
+.eclair__lib { display: inline-flex; align-items: center; gap: var(--s-1); font-weight: 800; }
+.eclair__chrono {
+  font-family: var(--font-affiche); font-size: 1.75rem; line-height: 1;
+  padding: var(--s-1) var(--s-3); background: var(--nuit); color: var(--sodium); border-radius: var(--r-net);
+}
+.eclair__chrono.is-urgent { animation: clignote 1s steps(2) infinite; }
+@keyframes clignote { 50% { color: var(--rose); } }
+.eclair__titre { font-size: clamp(2rem, 10vw, 2.75rem); line-height: .95; }
+.eclair__bas { display: flex; justify-content: space-between; align-items: center; gap: var(--s-3); flex-wrap: wrap; margin-top: var(--s-2); }
+
+/* ---------- Onglets ---------- */
+.onglets-m { display: grid; grid-template-columns: repeat(3, 1fr); border: 2px solid var(--nuit); border-radius: var(--r-net); overflow: hidden; background: #fff; }
+.onglet-m {
+  min-height: var(--tap); padding: 0 var(--s-2);
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s-1);
+  background: transparent; border: 0; cursor: pointer; white-space: nowrap;
+  font-weight: 800; font-size: var(--fs-sm); color: var(--nuit);
+}
+@media (max-width: 380px) { .onglet-m { font-size: var(--fs-xs); padding: 0 var(--s-1); } }
+.onglet-m + .onglet-m { border-left: 2px solid var(--nuit); }
+.onglet-m[aria-selected="true"] { background: var(--nuit); color: var(--sodium); }
+.onglet-m__nb { min-width: 22px; height: 22px; padding: 0 6px; display: inline-grid; place-items: center; font-size: .75rem; border-radius: var(--r-pastille); background: var(--papier-2); color: var(--nuit); }
+.onglet-m[aria-selected="true"] .onglet-m__nb { background: var(--sodium); }
+
+.puces--defilant { flex-wrap: nowrap; overflow-x: auto; padding-bottom: var(--s-1); scrollbar-width: none; margin-inline: calc(-1 * var(--s-4)); padding-inline: var(--s-4); }
+.puces--defilant::-webkit-scrollbar { display: none; }
+.puces--defilant .puce { flex: none; }
+.puces--defilant .puce span { min-height: 40px; }
+.puce .icon { width: 1.1em; height: 1.1em; }
+
+/* ---------- Liste ---------- */
+.liste-m { display: grid; gap: var(--s-4); }
+.mcarte {
+  position: relative; display: grid; gap: var(--s-3);
+  padding: var(--s-4);
+  background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net);
+  scroll-margin-top: calc(var(--topbar-h) + var(--s-4));
+}
+.mcarte[data-statut="en-cours"] { box-shadow: 4px 4px 0 var(--bleu); }
+.mcarte[data-statut="verrouillee"], .mcarte[data-statut="a-venir"] { background: repeating-linear-gradient(-45deg, var(--papier) 0 10px, var(--papier-2) 10px 20px); }
+.mcarte[data-statut="verrouillee"] .mcarte__titre, .mcarte[data-statut="a-venir"] .mcarte__titre { color: var(--texte-doux); }
+.mcarte[data-statut="expiree"] { opacity: .75; }
+.mcarte.is-cible { animation: cible 1.6s var(--ease-sortie); }
+@keyframes cible { 0%, 40% { box-shadow: 0 0 0 5px var(--rose); } }
+
+.mcarte__tete { display: flex; justify-content: space-between; align-items: center; gap: var(--s-2); flex-wrap: wrap; }
+.mcarte__cat { display: inline-flex; align-items: center; gap: var(--s-1); font-size: var(--fs-xs); font-weight: 800; color: var(--texte-doux); }
+.mcarte__cat .icon { color: var(--bleu); }
+.mcarte__titre { font-size: 1.75rem; line-height: 1; }
+.mcarte__texte { color: var(--texte-doux); }
+.mcarte__progres { display: grid; grid-template-columns: 1fr auto; gap: var(--s-3); align-items: center; }
+.mcarte__progres strong { font-variant-numeric: tabular-nums; }
+.mcarte__bas { display: flex; justify-content: space-between; align-items: center; gap: var(--s-2); flex-wrap: wrap; }
+.mcarte__toggle {
+  display: inline-flex; align-items: center; gap: var(--s-1);
+  min-height: var(--tap); padding: 0 var(--s-2); margin-right: calc(-1 * var(--s-2));
+  background: none; border: 0; cursor: pointer; font-weight: 800; color: var(--bleu);
+}
+.mcarte__toggle .icon { transform: rotate(90deg); transition: transform var(--duree); }
+.mcarte__toggle[aria-expanded="true"] .icon { transform: rotate(-90deg); }
+
+.mcarte__details { display: grid; gap: var(--s-3); padding-top: var(--s-3); border-top: 2px dashed rgba(59, 10, 18, .3); }
+.mcarte__details[hidden] { display: none; }
+.mcarte__actions { display: grid; gap: var(--s-2); }
+
+.indice {
+  display: flex; gap: var(--s-3); align-items: flex-start;
+  padding: var(--s-3); background: #FFF6D1; border: 2px solid var(--nuit); border-radius: var(--r-net);
+}
+.indice .icon { color: #8A6400; margin-top: 2px; }
+.indice--cache { background: #fff; }
+.indice button { background: none; border: 0; padding: 0; cursor: pointer; }
+
+.mention-staff {
+  display: flex; gap: var(--s-2); align-items: flex-start;
+  font-size: var(--fs-sm); font-weight: 600;
+}
+.mention-staff .icon { color: var(--rose); flex: none; margin-top: 2px; }
+
+/* Tampon « Validée » */
+.valide {
+  display: flex; align-items: center; gap: var(--s-3); flex-wrap: wrap;
+}
+.valide .tampon { color: #13784A; background: var(--papier); font-size: 1.25rem; }
+.valide__par { font-size: var(--fs-sm); color: var(--texte-doux); font-weight: 600; }
+.mcarte.is-nouvelle .valide .tampon { animation: pose-tampon .6s var(--ease-rebond) both; }
+@keyframes pose-tampon { from { transform: scale(2.4) rotate(-12deg); opacity: 0; } }
+
+.verrou { display: flex; gap: var(--s-2); align-items: center; font-weight: 700; }
+.verrou .icon { flex: none; }
+
+/* ---------- Vide ---------- */
+.vide-m { display: grid; justify-items: start; gap: var(--s-3); padding: var(--s-5); background: var(--papier); border: 2px dashed var(--nuit); border-radius: var(--r-net); }
+.vide-m[hidden] { display: none; }
+.vide-m__titre { font-size: 1.75rem; }
+
+/* ---------- Validation staff ---------- */
+.feuille--validation { text-align: center; }
+.feuille--validation .feuille__entete { text-align: left; }
+.validation__consigne { margin-bottom: var(--s-4); }
+.validation__qr {
+  width: min(72vw, 280px); margin-inline: auto;
+  padding: var(--s-2); background: #fff;
+  border: 4px solid var(--nuit); border-radius: var(--r-net);
+  box-shadow: 6px 6px 0 var(--sodium);
+}
+.validation__qr .qr { width: 100%; height: auto; }
+.validation__code {
+  margin-top: var(--s-4);
+  font-family: var(--font-affiche); font-size: 3rem; line-height: 1; letter-spacing: .25em;
+  padding-left: .25em; color: var(--bleu);
+}
+.validation__info { margin-top: var(--s-2); font-size: var(--fs-sm); }
+.validation__attente {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  margin-top: var(--s-4); padding: var(--s-2) var(--s-4);
+  background: var(--nuit); color: var(--papier); font-weight: 700;
+  border-radius: var(--r-pastille);
+}
+.validation__point { width: 10px; height: 10px; border-radius: 50%; background: var(--sodium); animation: pulse-m 1.2s ease-in-out infinite; }
+@keyframes pulse-m { 50% { opacity: .2; } }
+.validation__demo { display: flex; margin: var(--s-4) auto 0; background: none; border: 0; cursor: pointer; }
+.validation__demo[hidden] { display: none; }

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <title>Badges | Console DOMAF Quest</title>
+  <script src="../assets/js/console-theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/console.css">
+</head>
+<body class="sans-sw">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <div class="bg-layer bg-glow"></div>
+  <div class="bg-layer bg-grid"></div>
+
+  <div class="console-grille">
+    <nav class="cnav" aria-label="Console">
+      <a class="cnav__marque" href="index.html"><i data-icon="onde"></i> DOMAF QUEST</a>
+      <p class="cnav__tag" data-console-tag>Game Master</p>
+      <div data-console-nav></div>
+      <div class="cnav__pied">
+        <p class="cnav__qui" data-console-qui></p>
+        <button class="cnav__sortir" type="button" data-console-sortir><i data-icon="sortie"></i> Déconnexion</button>
+      </div>
+    </nav>
+    <div class="console-voile" data-console-voile></div>
+    <button class="ctete__menu" type="button" aria-expanded="false" data-console-menu><i data-icon="menu"></i><span class="sr-only">Ouvrir le menu</span></button>
+
+    <div class="console-principal">
+      <div class="ccorps">
+        <header class="ctete">
+          <div class="ctete__titres">
+            <p class="ctete__sur">Le jeu</p>
+            <h1 class="ctete__titre">Badges</h1>
+            <p class="ctete__sous" data-resume>Chargement…</p>
+          </div>
+          <div class="ctete__actions">
+            <button class="cbtn cbtn--primaire" type="button" data-nouveau>Nouveau badge</button>
+            <span class="cpuce-admin"><i data-icon="cadenas"></i><span data-console-nom>GM</span></span>
+          </div>
+        </header>
+
+        <main class="ccontenu" id="contenu" data-console-contenu>
+          <p class="message message--info"><i data-icon="info"></i><span>Un badge se gagne automatiquement (badges « système », donnés par le jeu), en terminant une mission ou en scannant un QR qui le donne, ou de la main de l'équipe (fiche du joueur, écran Joueurs). Les badges système gardent leur nom : c'est par lui que le jeu les donne.</span></p>
+
+          <form class="coutils coutils--trois" data-filtres role="search">
+            <div class="coutils__chercher">
+              <label class="sr-only" for="f-texte">Chercher un badge</label>
+              <input class="saisie" id="f-texte" name="texte" type="search" maxlength="40" autocomplete="off" placeholder="Chercher un badge">
+            </div>
+            <label class="sr-only" for="f-origine">Obtention</label>
+            <select class="saisie" id="f-origine" name="origine">
+              <option value="">Tous les badges</option>
+              <option value="systeme">Automatiques (système)</option>
+              <option value="lie">Liés à une mission ou un QR</option>
+              <option value="main">Remis par l'équipe seulement</option>
+              <option value="secret">Secrets</option>
+            </select>
+            <label class="sr-only" for="f-rarete">Rareté</label>
+            <select class="saisie" id="f-rarete" name="rarete">
+              <option value="">Toutes les raretés</option>
+              <option value="commun">Commun</option>
+              <option value="rare">Rare</option>
+              <option value="epique">Épique</option>
+              <option value="legendaire">Légendaire</option>
+            </select>
+          </form>
+
+          <section class="cpanneau cpanneau--table" aria-labelledby="t-liste">
+            <h2 class="sr-only" id="t-liste">Liste des badges</h2>
+            <div class="ctable-defile">
+              <table class="ctable">
+                <thead>
+                  <tr>
+                    <th scope="col">Badge</th>
+                    <th scope="col" class="ctable__large">Comment on l'obtient</th>
+                    <th scope="col" class="ctable__nb">Gagné par</th>
+                    <th scope="col"><span class="sr-only">Modifier</span></th>
+                  </tr>
+                </thead>
+                <tbody data-lignes><tr><td colspan="4" class="cvide">Chargement…</td></tr></tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- Création / modification -->
+  <dialog class="cboite cfiche" data-boite aria-labelledby="b-titre">
+    <div class="cfiche__tete">
+      <span class="cfiche__avatar"><i data-icon="etoile"></i></span>
+      <div class="cfiche__titres">
+        <h2 class="cboite__titre" id="b-titre" data-b-titre>Nouveau badge</h2>
+        <p class="cfiche__sous" data-b-sous></p>
+      </div>
+      <button class="cbtn cbtn--icone" type="button" data-fermer><i data-icon="fermer"></i><span class="sr-only">Fermer</span></button>
+    </div>
+    <form class="cfiche__corps cform" data-form novalidate>
+      <div class="capercu" aria-hidden="true">
+        <span class="cmedaille cmedaille--grand" data-apercu></span>
+        <span class="capercu__texte"><strong data-apercu-nom>Nom du badge</strong><small data-apercu-texte>Comme dans la collection du joueur</small></span>
+      </div>
+      <label class="champ">
+        <span class="champ__label">Nom</span>
+        <input class="saisie" name="nom" maxlength="40" required autocomplete="off" placeholder="Pilier de bar à jus">
+        <span class="champ__aide" data-aide-nom hidden>Badge système : son nom ne change pas (le jeu le donne par son nom).</span>
+      </label>
+      <label class="champ">
+        <span class="champ__label">Comment l'obtenir</span>
+        <textarea class="saisie" name="description" maxlength="200" placeholder="Goûter les trois jus du stand Maison Kora."></textarea>
+        <span class="champ__aide">Affiché dans la collection du joueur. Badge secret : visible seulement une fois gagné.</span>
+      </label>
+      <fieldset class="champ">
+        <legend class="champ__label">Icône</legend>
+        <div class="cicones" data-icones></div>
+      </fieldset>
+      <div class="cform__trois">
+        <label class="champ">
+          <span class="champ__label">Rareté</span>
+          <select class="saisie" name="rarete">
+            <option value="commun">Commun</option>
+            <option value="rare">Rare</option>
+            <option value="epique">Épique</option>
+            <option value="legendaire">Légendaire</option>
+          </select>
+        </label>
+        <label class="champ">
+          <span class="champ__label">Forme</span>
+          <select class="saisie" name="forme">
+            <option value="rond">Rond</option>
+            <option value="etoile">Étoile</option>
+            <option value="hexa">Hexagone</option>
+            <option value="ecusson">Écusson</option>
+          </select>
+        </label>
+        <label class="champ">
+          <span class="champ__label">Page « où l'obtenir »</span>
+          <select class="saisie" name="lien" data-liens></select>
+        </label>
+      </div>
+      <label class="ccase"><input type="checkbox" name="secret"><span>Badge secret<small>Nom et icône cachés dans la collection tant qu'il n'est pas gagné (effet d'écran : la liste des badges reste lisible par tous).</small></span></label>
+      <p class="message" role="alert" data-erreur hidden></p>
+    </form>
+    <div class="cfiche__pied">
+      <button class="cbtn cbtn--danger" type="button" data-supprimer hidden><i data-icon="croix"></i> Supprimer</button>
+      <button class="cbtn" type="button" data-fermer>Annuler</button>
+      <button class="cbtn cbtn--primaire" type="button" data-enregistrer><i data-icon="coche"></i> Enregistrer</button>
+    </div>
+  </dialog>
+
+  <script src="../assets/js/config.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/vendor/supabase.min.js" defer></script>
+  <script src="../assets/js/serveur.js" defer></script>
+  <script src="../assets/js/console.js" defer></script>
+  <script src="../assets/js/pages/console-badges.js" defer></script>
+</body>
+</html>

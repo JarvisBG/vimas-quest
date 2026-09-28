@@ -1,0 +1,157 @@
+/* ==========================================================================
+   Page 12 — Blind test côté joueur
+   Pensé pour une main, en plein air, les yeux souvent sur l'écran géant.
+   ========================================================================== */
+
+.page-bt { background: var(--nuit); color: var(--papier); }
+.topbar--bt { background: var(--nuit); border-bottom: 3px solid var(--rose); }
+.topbar--bt .topbar__titre { color: var(--rose); }
+.score-bt {
+  display: inline-flex; align-items: baseline; gap: 4px;
+  padding: 4px 14px; font-weight: 800; font-size: var(--fs-sm);
+  background: var(--sodium); color: var(--nuit); border-radius: var(--r-pastille);
+}
+.score-bt[hidden] { display: none; }
+.score-bt strong { font-family: var(--font-affiche); font-weight: 400; font-size: 1.375rem; }
+.score-bt.is-gagne { animation: gonfle .5s var(--ease-rebond); }
+
+/* Pendant la manche, la barre du bas disparaît : pas de sortie accidentelle */
+body.is-en-jeu .tabbar { display: none; }
+body.is-en-jeu { padding-bottom: env(safe-area-inset-bottom); }
+
+.bt-j { min-height: calc(100svh - var(--topbar-h) - var(--tabbar-h)); }
+body.is-en-jeu .bt-j { min-height: calc(100svh - var(--topbar-h)); }
+.bt-j__cadre { display: grid; grid-template-rows: auto 1fr auto; gap: var(--s-4); min-height: inherit; padding-block: var(--s-4); max-width: 34rem; }
+.bt-j__progres { display: grid; gap: var(--s-2); font-weight: 800; }
+.bt-j__progres[hidden] { display: none; }
+.bt-j__pastilles { display: flex; gap: 3px; }
+.bt-j__pastilles i { flex: 1; height: 6px; border-radius: 3px; background: rgba(250, 250, 247, .2); }
+.bt-j__pastilles i.is-fait { background: var(--sodium); }
+.bt-j__pastilles i.is-actuel { background: var(--rose); }
+.bt-j__vue { display: grid; align-content: start; }
+.bt-j__etat { display: flex; align-items: center; justify-content: center; gap: var(--s-2); font-size: var(--fs-xs); font-weight: 700; color: #AEB6DC; }
+.bt-j__point { width: 8px; height: 8px; border-radius: 50%; background: var(--vert); }
+.bt-j__etat.is-ko .bt-j__point { background: var(--rose); animation: pulse-bt 1s infinite; }
+@keyframes pulse-bt { 50% { opacity: .2; } }
+
+.vue-j { display: grid; gap: var(--s-4); animation: vue-j .35s var(--ease-sortie); }
+@keyframes vue-j { from { opacity: 0; transform: translateY(12px); } }
+.vue-j__titre { font-size: clamp(2.5rem, 13vw, 3.5rem); line-height: .95; }
+.texte-clair { color: #C9D1F5; }
+
+/* ---------- Attente ---------- */
+.rdv {
+  display: grid; gap: var(--s-2); padding: var(--s-5);
+  background: var(--rose); color: var(--nuit); border-radius: var(--r-billet);
+  box-shadow: 6px 6px 0 var(--sodium);
+}
+.rdv__lib { font-weight: 800; }
+.rdv__compte { font-family: var(--font-affiche); font-size: clamp(3.5rem, 20vw, 5.5rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.regles-bt { display: grid; gap: var(--s-3); counter-reset: r; }
+.regles-bt li { counter-increment: r; display: grid; grid-template-columns: 40px 1fr; gap: var(--s-3); align-items: start; }
+.regles-bt li::before {
+  content: counter(r); display: grid; place-items: center; width: 40px; height: 40px;
+  font-family: var(--font-affiche); font-size: 1.25rem; color: var(--nuit); background: var(--sodium); border-radius: 50%;
+}
+.gains-bt { display: grid; gap: var(--s-2); padding: var(--s-4); border: 2px dashed rgba(250, 250, 247, .35); border-radius: var(--r-net); }
+.gains-bt p { display: flex; justify-content: space-between; gap: var(--s-3); }
+.gains-bt strong { color: var(--sodium); text-align: right; }
+.demo-bt { display: grid; gap: var(--s-2); font-size: var(--fs-sm); color: #C9D1F5; }
+.demo-bt .btn { color: var(--papier); }
+
+/* ---------- Intro ---------- */
+.vue-j--intro { justify-items: center; text-align: center; padding-top: var(--s-6); }
+.intro-num { font-family: var(--font-affiche); font-size: 7rem; line-height: .9; text-shadow: .05em .04em 0 var(--rose); animation: slam-j .5s var(--ease-rebond); }
+.intro-num small { display: block; font-size: .3em; color: var(--sodium); text-shadow: none; }
+@keyframes slam-j { from { transform: scale(2); opacity: 0; } }
+.intro-eq { width: 70%; height: 60px; color: var(--rose); }
+
+/* ---------- Question ---------- */
+.q-tete { display: grid; gap: var(--s-2); }
+.q-cat { font-size: var(--fs-sm); font-weight: 800; color: var(--sodium); }
+.q-texte { font-size: var(--fs-lg); font-weight: 800; line-height: 1.2; }
+.q-chrono { display: grid; grid-template-columns: 1fr auto; gap: var(--s-3); align-items: center; }
+.q-chrono__barre { height: 12px; background: rgba(250, 250, 247, .15); border-radius: 6px; overflow: hidden; }
+.q-chrono__barre i { display: block; height: 100%; background: var(--sodium); transform-origin: left; transition: transform .25s linear; }
+.q-chrono.is-urgent .q-chrono__barre i { background: var(--rose); }
+.q-chrono__s { font-family: var(--font-affiche); font-size: 2rem; line-height: 1; min-width: 2ch; text-align: right; font-variant-numeric: tabular-nums; }
+.q-chrono.is-urgent .q-chrono__s { color: var(--rose); }
+
+.touches { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); }
+.touche {
+  --c: var(--sodium);
+  position: relative; display: grid; justify-items: center; align-content: center; gap: var(--s-2);
+  min-height: clamp(128px, 24svh, 200px); padding: var(--s-3);
+  background: var(--c); color: var(--nuit);
+  border: 3px solid var(--nuit); border-radius: var(--r-billet);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, .45);
+  font: inherit; font-weight: 800; font-size: 1.125rem; line-height: 1.15; text-align: center;
+  cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  transition: transform .12s, box-shadow .12s, opacity .3s, filter .3s;
+}
+.touche:nth-child(1) { --c: var(--sodium); }
+.touche:nth-child(2) { --c: var(--rose); }
+.touche:nth-child(3) { --c: var(--vert); }
+.touche:nth-child(4) { --c: #8FA6FF; }
+.touche:active { transform: translateY(5px); box-shadow: 0 1px 0 rgba(0, 0, 0, .45); }
+.touche__forme { width: 42px; height: 42px; background: var(--nuit); display: grid; place-items: center; color: var(--c); font-family: var(--font-affiche); font-size: 1.5rem; }
+.forme-0 { border-radius: 50%; }
+.forme-1 { border-radius: 6px; }
+.forme-2 { clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.forme-3 { clip-path: polygon(50% 0, 100% 100%, 0 100%); padding-top: 12px; }
+.touches.is-verrouille .touche { cursor: default; opacity: .3; filter: saturate(.4); box-shadow: none; transform: none; }
+.touches.is-verrouille .touche.is-choisie { opacity: 1; filter: none; outline: 5px solid var(--papier); outline-offset: 3px; }
+.touches.is-revele .touche.is-bonne { opacity: 1; filter: none; outline: 5px solid var(--vert); outline-offset: 3px; }
+
+.envoi {
+  display: flex; align-items: center; gap: var(--s-2); justify-content: center;
+  padding: var(--s-3); font-weight: 800; background: rgba(250, 250, 247, .1); border-radius: var(--r-net);
+}
+.envoi[hidden] { display: none; }
+.envoi .icon { color: var(--vert); }
+.envoi.is-attente .icon { color: var(--sodium); }
+
+/* ---------- Résultat ---------- */
+.resultat-j {
+  display: grid; justify-items: center; gap: var(--s-2); padding: var(--s-5) var(--s-4);
+  text-align: center; border-radius: var(--r-billet); border: 3px solid var(--nuit);
+  animation: slam-j .45s var(--ease-rebond);
+}
+.resultat-j--juste { background: var(--vert); color: var(--nuit); }
+.resultat-j--faux { background: var(--rose); color: var(--nuit); }
+.resultat-j--absent { background: rgba(250, 250, 247, .1); color: var(--papier); border-color: rgba(250, 250, 247, .3); }
+.resultat-j__titre { font-size: 2.5rem; line-height: 1; }
+.resultat-j__points { font-family: var(--font-affiche); font-size: 5rem; line-height: .9; }
+.resultat-j__serie { padding: 4px 14px; font-weight: 800; background: var(--nuit); color: var(--sodium); border-radius: var(--r-pastille); }
+.bonne-rep { display: flex; align-items: center; gap: var(--s-3); padding: var(--s-3) var(--s-4); background: rgba(250, 250, 247, .08); border-radius: var(--r-net); }
+.bonne-rep .touche__forme { flex: none; }
+.bonne-rep strong { display: block; }
+.position-j { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-3); padding: var(--s-3) var(--s-4); border: 2px solid rgba(250, 250, 247, .25); border-radius: var(--r-net); }
+.position-j__rang { font-family: var(--font-affiche); font-size: 2.5rem; line-height: 1; color: var(--sodium); }
+.position-j__rang small { font-size: .5em; }
+
+/* ---------- Classement / fin ---------- */
+.mini-top { display: grid; gap: var(--s-2); }
+.mini-top li { display: grid; grid-template-columns: 2rem auto 1fr auto; gap: var(--s-3); align-items: center; padding: var(--s-2) var(--s-3); background: rgba(250, 250, 247, .08); border-radius: var(--r-net); }
+.mini-top li b { font-family: var(--font-affiche); font-weight: 400; font-size: 1.5rem; color: var(--sodium); }
+.mini-top span:nth-child(3) { font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.recap-j { display: grid; justify-items: center; gap: var(--s-2); padding: var(--s-5); text-align: center; background: var(--sodium); color: var(--nuit); border-radius: var(--r-billet); box-shadow: 6px 6px 0 var(--rose); }
+.recap-j__rang { font-family: var(--font-affiche); font-size: 6rem; line-height: .9; }
+.recap-j__rang small { font-size: .4em; }
+.recompenses-j { display: grid; gap: var(--s-2); }
+.recompenses-j li { display: flex; align-items: center; gap: var(--s-3); padding: var(--s-3) var(--s-4); background: var(--papier); color: var(--nuit); border-radius: var(--r-net); font-weight: 700; animation: vue-j .4s both; }
+.recompenses-j li:nth-child(2) { animation-delay: .15s; }
+.recompenses-j li:nth-child(3) { animation-delay: .3s; }
+.recompenses-j li:nth-child(4) { animation-delay: .45s; }
+.recompenses-j .icon { color: var(--bleu); flex: none; }
+.actions-j { display: grid; gap: var(--s-2); }
+.actions-j .btn--contour { color: var(--papier); }
+
+/* Boss du blind test (mode serveur) : barre de PV collective, à la révélation */
+.boss-j { display: grid; gap: var(--s-2); padding: var(--s-3) var(--s-4); border: 2px solid rgba(250, 250, 247, .25); border-radius: var(--r-net); }
+.boss-j__tete strong { font-family: var(--font-affiche); font-weight: 400; font-size: 1.5rem; }
+.boss-j__barre { height: 10px; border-radius: 5px; background: rgba(250, 250, 247, .15); overflow: hidden; }
+.boss-j__barre i { display: block; height: 100%; background: var(--rose); transform-origin: left; transition: transform .6s var(--ease-sortie); }
+.boss-j.is-vaincu .boss-j__barre i { background: var(--vert); }
+.boss-j__txt { font-size: var(--fs-sm); font-weight: 700; }

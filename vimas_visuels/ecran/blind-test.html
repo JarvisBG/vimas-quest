@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+  <meta name="robots" content="noindex">
+  <title>Plateau blind test | Vimas Fest</title>
+  <link rel="preload" href="../assets/fonts/Anton-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/ecran.css">
+  <link rel="stylesheet" href="../assets/css/pages/ecran-blind.css">
+</head>
+<body class="ecran">
+  <div class="scene-ecran scene-ecran--blind" data-scene data-phase="attente">
+
+    <header class="bt-tete">
+      <p class="bt-tete__logo affiche">Blind test</p>
+      <div class="bt-tete__progres" data-progres hidden>
+        <p class="bt-tete__num affiche" data-num></p>
+        <div class="bt-pastilles" data-pastilles></div>
+      </div>
+      <div class="bt-tete__droite">
+        <span class="etat-direct" data-etat><span class="etat-direct__point"></span><span data-etat-texte>En direct</span></span>
+        <span class="bt-connectes"><strong class="chiffres" data-connectes>–</strong> joueurs</span>
+        <span class="bt-mini-qr" data-mini-qr aria-hidden="true"></span>
+      </div>
+    </header>
+
+    <main class="bt-plateau" data-plateau aria-live="polite"></main>
+
+    <div class="bt-pluie" data-pluie aria-hidden="true"></div>
+
+    <div class="aide-regie" data-aide hidden>
+      <p class="affiche">Commandes régie</p>
+      <ul>
+        <li><kbd>D</kbd> démarrer la manche dans 5 s</li>
+        <li><kbd>Espace</kbd> pause / reprise</li>
+        <li><kbd>→</kbd> passer à l'étape suivante</li>
+        <li><kbd>R</kbd> revenir à l'attente</li>
+        <li><kbd>M</kbd> couper / remettre le son</li>
+        <li><kbd>F</kbd> plein écran, <kbd>H</kbd> cette aide</li>
+      </ul>
+      <p>URL : <code>?demo=1</code> lance une manche 20 s après l'ouverture.</p>
+    </div>
+
+    <p class="bt-pause affiche" data-pause hidden>Pause</p>
+  </div>
+
+  <button class="bouton-demarrer" type="button" data-demarrer>
+    <span class="affiche">Lancer le plateau</span>
+    <span>Active le son et le plein écran</span>
+  </button>
+
+  <script src="../data/mock.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/vendor/qrcode-generator.min.js" defer></script>
+  <script src="../assets/js/ecran.js" defer></script>
+  <script src="../assets/js/pages/ecran-blind.js" defer></script>
+</body>
+</html>

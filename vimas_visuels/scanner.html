@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#3B0A12">
+  <title>Scanner | Vimas Fest</title>
+  <link rel="preload" href="assets/fonts/Anton-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/scanner.css">
+</head>
+<body class="page-scanner">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app topbar--nuit" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="icone-btn topbar__retour" href="tableau-de-bord.html" aria-label="Retour à ma carte">
+        <svg class="icon" aria-hidden="true"><use href="#i-retour"></use></svg>
+      </a>
+      <h1 class="topbar__titre affiche">Scanner</h1>
+      <span class="jetons-scan" data-jetons></span>
+    </div>
+  </header>
+
+  <main id="contenu" class="scan">
+    <div class="scan__camera" data-camera>
+      <video class="scan__video" playsinline muted data-video></video>
+      <div class="scan__viseur" aria-hidden="true">
+        <span class="scan__cadre"></span>
+        <span class="scan__ligne"></span>
+      </div>
+
+      <!-- État de la caméra (démarrage, refus, erreur) -->
+      <div class="scan__etat" data-etat>
+        <p class="scan__etat-titre affiche" data-etat-titre>Ouverture de la caméra</p>
+        <p class="scan__etat-texte" data-etat-texte>Autorise l'accès si ton téléphone le demande.</p>
+        <div class="scan__etat-actions" data-etat-actions hidden>
+          <button class="btn btn--sodium" type="button" data-relancer>
+            <i data-icon="camera"></i> Réessayer
+          </button>
+        </div>
+      </div>
+
+      <p class="scan__lecture" data-lecture hidden>
+        <span class="scan__lecture-point" aria-hidden="true"></span> Vérification du QR…
+      </p>
+    </div>
+
+    <div class="scan__panneau">
+      <p class="scan__consigne" aria-live="polite" data-consigne>Vise un QR Vimas Fest : scènes, stands, food-trucks, dédicaces… et ceux qui sont bien cachés.</p>
+
+      <div class="scan__outils">
+        <button class="outil" type="button" data-lampe hidden aria-pressed="false">
+          <span class="outil__rond"><i data-icon="lampe"></i></span><span>Lampe</span>
+        </button>
+        <button class="outil" type="button" data-son aria-pressed="true">
+          <span class="outil__rond"><i data-icon="onde"></i></span><span data-son-lib>Son activé</span>
+        </button>
+        <button class="outil" type="button" data-ouvrir-code aria-haspopup="dialog" aria-controls="saisie-code">
+          <span class="outil__rond"><i data-icon="clavier"></i></span><span>Saisir un code</span>
+        </button>
+      </div>
+
+      <details class="demo-scan" data-demo hidden>
+        <summary>Mode démo : simuler un scan</summary>
+        <div class="demo-scan__liste">
+          <button type="button" data-simuler="https://vimas-festival.example/q/QR-SOLEIL">Grande Scène</button>
+          <button type="button" data-simuler="https://vimas-festival.example/q/QR-DOCK">La Salle Majestic</button>
+          <button type="button" data-simuler="https://vimas-festival.example/q/QR-KORA">Stand Maison Kora</button>
+          <button type="button" data-simuler="https://vimas-festival.example/q/QR-FT-YASSA">Food-truck</button>
+          <button type="button" data-simuler="https://vimas-festival.example/q/QR-CACHE-07">QR caché</button>
+          <button type="button" data-simuler="https://vimas-festival.example/q/QR-DEDI-AMA">Dédicace</button>
+          <button type="button" data-simuler="https://vimas-festival.example/q/QR-FEU">Pas encore actif</button>
+          <button type="button" data-simuler="https://exemple.com/menu">QR étranger</button>
+          <button type="button" data-simuler="VMS-DEMO-2026">Un billet</button>
+          <button type="button" data-simuler="VMS-AMI:SARA-7703">QR d'un ami</button>
+        </div>
+        <button class="lien-fort" type="button" data-reinitialiser>Effacer mes scans de démo</button>
+      </details>
+    </div>
+  </main>
+
+  <!-- Résultat du scan -->
+  <section class="resultat" role="dialog" aria-modal="true" aria-labelledby="resultat-titre" hidden data-resultat>
+    <div class="resultat__fond" aria-hidden="true"></div>
+    <div class="resultat__pluie" aria-hidden="true" data-pluie></div>
+    <div class="resultat__contenu" data-resultat-contenu></div>
+  </section>
+
+  <!-- Saisie manuelle -->
+  <dialog class="feuille" id="saisie-code" aria-labelledby="saisie-titre" data-feuille-code>
+    <div class="feuille__entete">
+      <h2 class="affiche feuille__titre" id="saisie-titre">Saisir un code</h2>
+      <button class="icone-btn" type="button" aria-label="Fermer" data-fermer-code>
+        <svg class="icon" aria-hidden="true"><use href="#i-fermer"></use></svg>
+      </button>
+    </div>
+    <form class="formulaire" novalidate data-form-code>
+      <div class="champ" data-champ-code>
+        <label class="champ__label" for="code-qr">Code imprimé sous le QR</label>
+        <input class="saisie saisie--code" id="code-qr" type="text" autocomplete="off" autocapitalize="characters"
+          spellcheck="false" placeholder="ABC-1234" maxlength="8" aria-describedby="code-qr-aide" required>
+        <p class="champ__aide" id="code-qr-aide">3 lettres, un tiret, 4 chiffres. Pratique si le QR est abîmé ou mal éclairé.</p>
+      </div>
+      <button class="btn btn--sodium btn--lg btn--bloc" type="submit">Valider le code</button>
+    </form>
+  </dialog>
+
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/qr-lecteur.js" defer></script>
+  <script src="assets/js/pages/scanner.js" defer></script>
+</body>
+</html>

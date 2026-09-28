@@ -1,0 +1,5962 @@
+-- ================================================================
+-- Structure RÉELLE de la base Otaku Quest (prod krkzahdbcnutxoyxproj)
+-- Extraite le 17/09/2026 via l'éditeur SQL (lecture seule, aucune donnée).
+-- PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit
+-- Document de RÉFÉRENCE : ne pas exécuter tel quel (voir étape 2.2).
+-- ================================================================
+
+
+-- ----------------------------------------------------------------
+-- Extensions
+-- ----------------------------------------------------------------
+create extension if not exists plpgsql with schema pg_catalog; -- 1.0
+create extension if not exists pg_stat_statements with schema extensions; -- 1.11
+create extension if not exists "uuid-ossp" with schema extensions; -- 1.1
+create extension if not exists pgcrypto with schema extensions; -- 1.3
+create extension if not exists supabase_vault with schema vault; -- 0.3.1
+
+-- ----------------------------------------------------------------
+-- Séquences
+-- ----------------------------------------------------------------
+null
+
+-- ----------------------------------------------------------------
+-- Types énumérés
+-- ----------------------------------------------------------------
+null
+-- autres types : aucun(e)
+
+-- ----------------------------------------------------------------
+-- Tables (35) — lignes estimées en commentaire
+-- ----------------------------------------------------------------
+-- announcements : ~3 lignes
+create table public.announcements (
+  id uuid default gen_random_uuid() not null,
+  message text not null,
+  type text default 'info'::text not null,
+  created_at timestamp with time zone default now() not null
+);
+
+-- badges : ~-1 lignes
+create table public.badges (
+  id uuid default gen_random_uuid() not null,
+  name text not null,
+  icon text default 'fa-medal'::text not null,
+  description text,
+  created_at timestamp with time zone default now() not null
+);
+
+-- billetterie_config : ~-1 lignes
+create table public.billetterie_config (
+  id integer default 1 not null,
+  prix_journee integer default 500 not null,
+  actif boolean default true not null,
+  message text default 'Le jeu se joue avec un ticket. Cherche un membre de l''équipe, il en a sur lui.'::text not null
+);
+
+-- carnets : ~-1 lignes
+create table public.carnets (
+  id uuid default gen_random_uuid() not null,
+  numero integer not null,
+  vendeur_nom text not null,
+  vendeur_user uuid,
+  nb_tickets integer not null,
+  rendus integer default 0 not null,
+  actif boolean default true not null,
+  note text,
+  cree_le timestamp with time zone default now() not null,
+  cree_par uuid
+);
+
+-- coeur_config : ~-1 lignes
+create table public.coeur_config (
+  id integer default 1 not null,
+  xp_par_coeur integer default 10 not null,
+  max_coeurs integer default 3 not null,
+  actif boolean default true not null
+);
+
+-- contact_config : ~-1 lignes
+create table public.contact_config (
+  id integer default 1 not null,
+  actif boolean default true not null,
+  jetons_bonus integer default 0 not null
+);
+
+-- coups_de_coeur : ~74 lignes
+create table public.coups_de_coeur (
+  player_id uuid not null,
+  qr_code_id uuid not null,
+  created_at timestamp with time zone default now() not null
+);
+
+-- duels : ~-1 lignes
+create table public.duels (
+  id uuid default gen_random_uuid() not null,
+  player1_id uuid not null,
+  player2_id uuid not null,
+  winner_id uuid,
+  created_at timestamp with time zone default now() not null,
+  xp integer default 200 not null
+);
+
+-- events : ~6377 lignes
+create table public.events (
+  id uuid default gen_random_uuid() not null,
+  type text not null,
+  player_id uuid,
+  payload jsonb default '{}'::jsonb not null,
+  created_at timestamp with time zone default now() not null
+);
+
+-- game_state : ~1 lignes
+create table public.game_state (
+  id integer default 1 not null,
+  phase text default 'EXPLORATION'::text not null,
+  updated_at timestamp with time zone default now() not null,
+  roulette_cost integer default 30 not null
+);
+
+-- micro_config : ~-1 lignes
+create table public.micro_config (
+  id integer default 1 not null,
+  xp_par_reponse integer default 10 not null,
+  xp_bonus_complet integer default 30 not null,
+  scans_avant_premier integer default 2 not null,
+  scans_entre_deux integer default 3 not null,
+  max_par_jour integer default 3 not null,
+  actif boolean default true not null
+);
+
+-- micro_questions : ~-1 lignes
+create table public.micro_questions (
+  id integer not null,
+  ordre integer not null,
+  question text not null,
+  options jsonb not null,
+  active boolean default true not null
+);
+
+-- micro_votes : ~409 lignes
+create table public.micro_votes (
+  player_id uuid not null,
+  question_id integer not null,
+  valeur text not null,
+  jour date default CURRENT_DATE not null,
+  created_at timestamp with time zone default now() not null
+);
+
+-- player_badges : ~571 lignes
+create table public.player_badges (
+  player_id uuid not null,
+  badge_id uuid not null,
+  earned_at timestamp with time zone default now() not null
+);
+
+-- player_contact : ~-1 lignes
+create table public.player_contact (
+  player_id uuid not null,
+  telephone text not null,
+  consent boolean default false not null,
+  created_at timestamp with time zone default now() not null
+);
+
+-- player_profile : ~224 lignes
+create table public.player_profile (
+  player_id uuid not null,
+  tranche_age text,
+  sexe text,
+  quartier text,
+  anime_prefere text,
+  bonus_verse boolean default false not null,
+  updated_at timestamp with time zone default now() not null,
+  coeurs_payes integer default 0 not null
+);
+
+-- player_secrets : ~222 lignes
+create table public.player_secrets (
+  player_id uuid not null,
+  secret_code text not null
+);
+
+-- players : ~239 lignes
+create table public.players (
+  id uuid default gen_random_uuid() not null,
+  pseudo text not null,
+  archetype text not null,
+  xp integer default 0 not null,
+  jetons integer default 0 not null,
+  level integer default 1 not null,
+  rank text default 'E'::text not null,
+  status text default 'actif'::text not null,
+  created_at timestamp with time zone default now() not null,
+  xp_jour integer default 0 not null,
+  jour date default CURRENT_DATE not null
+);
+
+-- profil_config : ~-1 lignes
+create table public.profil_config (
+  id integer default 1 not null,
+  xp_par_reponse integer default 20 not null,
+  xp_bonus_complet integer default 50 not null,
+  actif boolean default true not null
+);
+
+-- qr_codes : ~91 lignes
+create table public.qr_codes (
+  id uuid default gen_random_uuid() not null,
+  code text not null,
+  label text not null,
+  type text not null,
+  rarity text,
+  xp_reward integer default 50 not null,
+  badge_id uuid,
+  hint text,
+  character_name text,
+  anime text,
+  active boolean default true not null,
+  created_at timestamp with time zone default now() not null,
+  quest_id uuid
+);
+
+-- quest_progress : ~2411 lignes
+create table public.quest_progress (
+  player_id uuid not null,
+  quest_id uuid not null,
+  progress integer default 0 not null,
+  completed_at timestamp with time zone,
+  jour date default CURRENT_DATE not null
+);
+
+-- quests : ~121 lignes
+create table public.quests (
+  id uuid default gen_random_uuid() not null,
+  title text not null,
+  description text,
+  type text default 'standard'::text not null,
+  goal_count integer default 1 not null,
+  xp_reward integer default 100 not null,
+  badge_id uuid,
+  requires_staff boolean default false not null,
+  active boolean default true not null,
+  created_at timestamp with time zone default now() not null,
+  counter text default 'manuel'::text not null,
+  vague smallint default 0 not null,
+  priorite smallint default 0 not null
+);
+
+-- quiz_answers : ~6155 lignes
+create table public.quiz_answers (
+  id uuid default gen_random_uuid() not null,
+  question_id uuid not null,
+  player_id uuid not null,
+  answer_index integer not null,
+  is_correct boolean,
+  response_ms integer,
+  answered_at timestamp with time zone default now() not null,
+  points integer default 0 not null
+);
+
+-- quiz_questions : ~912 lignes
+create table public.quiz_questions (
+  id uuid default gen_random_uuid() not null,
+  session_id uuid not null,
+  question text not null,
+  choices jsonb not null,
+  correct_index integer not null,
+  question_order integer default 1 not null,
+  duration_seconds integer default 20 not null
+);
+
+-- quiz_sessions : ~67 lignes
+create table public.quiz_sessions (
+  id uuid default gen_random_uuid() not null,
+  title text not null,
+  status text default 'preparee'::text not null,
+  current_question integer default 0 not null,
+  created_at timestamp with time zone default now() not null,
+  question_started_at timestamp with time zone,
+  kind text default 'quiz'::text not null,
+  boss_name text,
+  boss_image text,
+  boss_hp_max integer default 0 not null,
+  raid_bonus_xp integer default 0 not null
+);
+
+-- roulette_prizes : ~4 lignes
+create table public.roulette_prizes (
+  id uuid default gen_random_uuid() not null,
+  name text not null,
+  icon text default 'fa-gift'::text not null,
+  weight integer default 10 not null,
+  stock integer,
+  active boolean default true not null,
+  created_at timestamp with time zone default now() not null,
+  kind text default 'objet'::text not null,
+  value integer default 0 not null,
+  badge_id uuid
+);
+
+-- roulette_spins : ~186 lignes
+create table public.roulette_spins (
+  id uuid default gen_random_uuid() not null,
+  player_id uuid not null,
+  prize_id uuid,
+  cost integer default 30 not null,
+  redeem_code text,
+  redeemed_at timestamp with time zone,
+  created_at timestamp with time zone default now() not null
+);
+
+-- scans : ~3064 lignes
+create table public.scans (
+  id uuid default gen_random_uuid() not null,
+  player_id uuid not null,
+  qr_code_id uuid not null,
+  day date default CURRENT_DATE not null,
+  scanned_at timestamp with time zone default now() not null
+);
+
+-- sortie_reponses : ~41 lignes
+create table public.sortie_reponses (
+  player_id uuid not null,
+  journee text,
+  revenir text,
+  depense text,
+  ameliorer text,
+  tampon boolean default false not null,
+  updated_at timestamp with time zone default now() not null,
+  jour date default CURRENT_DATE not null
+);
+
+-- staff : ~-1 lignes
+create table public.staff (
+  user_id uuid not null,
+  display_name text default 'Staff'::text not null,
+  role text default 'gm'::text not null,
+  created_at timestamp with time zone default now() not null
+);
+
+-- tickets : ~500 lignes
+create table public.tickets (
+  id uuid default gen_random_uuid() not null,
+  carnet_id uuid not null,
+  code text not null,
+  rang integer not null,
+  utilise_par uuid,
+  utilise_le timestamp with time zone,
+  jour date,
+  rendu_le timestamp with time zone
+);
+
+-- tournament_kings : ~-1 lignes
+create table public.tournament_kings (
+  jour date not null,
+  pseudo text not null,
+  points integer not null,
+  decided_at timestamp with time zone default now() not null
+);
+
+-- treasure_hunts : ~4 lignes
+create table public.treasure_hunts (
+  id uuid default gen_random_uuid() not null,
+  title text not null,
+  active boolean default false not null,
+  created_at timestamp with time zone default now() not null,
+  first_bonus integer default 0 not null
+);
+
+-- treasure_progress : ~-1 lignes
+create table public.treasure_progress (
+  player_id uuid not null,
+  hunt_id uuid not null,
+  current_step integer default 1 not null,
+  completed_at timestamp with time zone,
+  xp_earned integer default 0 not null,
+  last_try_at timestamp with time zone
+);
+
+-- treasure_steps : ~20 lignes
+create table public.treasure_steps (
+  id uuid default gen_random_uuid() not null,
+  hunt_id uuid not null,
+  step_order integer not null,
+  riddle text not null,
+  answer text not null,
+  xp_reward integer default 100 not null
+);
+
+
+-- ----------------------------------------------------------------
+-- Clés primaires (35)
+-- ----------------------------------------------------------------
+alter table public.announcements add constraint announcements_pkey PRIMARY KEY (id);
+alter table public.badges add constraint badges_pkey PRIMARY KEY (id);
+alter table public.billetterie_config add constraint billetterie_config_pkey PRIMARY KEY (id);
+alter table public.carnets add constraint carnets_pkey PRIMARY KEY (id);
+alter table public.coeur_config add constraint coeur_config_pkey PRIMARY KEY (id);
+alter table public.contact_config add constraint contact_config_pkey PRIMARY KEY (id);
+alter table public.coups_de_coeur add constraint coups_de_coeur_pkey PRIMARY KEY (player_id, qr_code_id);
+alter table public.duels add constraint duels_pkey PRIMARY KEY (id);
+alter table public.events add constraint events_pkey PRIMARY KEY (id);
+alter table public.game_state add constraint game_state_pkey PRIMARY KEY (id);
+alter table public.micro_config add constraint micro_config_pkey PRIMARY KEY (id);
+alter table public.micro_questions add constraint micro_questions_pkey PRIMARY KEY (id);
+alter table public.micro_votes add constraint micro_votes_pkey PRIMARY KEY (player_id, question_id);
+alter table public.player_badges add constraint player_badges_pkey PRIMARY KEY (player_id, badge_id);
+alter table public.player_contact add constraint player_contact_pkey PRIMARY KEY (player_id);
+alter table public.player_profile add constraint player_profile_pkey PRIMARY KEY (player_id);
+alter table public.player_secrets add constraint player_secrets_pkey PRIMARY KEY (player_id);
+alter table public.players add constraint players_pkey PRIMARY KEY (id);
+alter table public.profil_config add constraint profil_config_pkey PRIMARY KEY (id);
+alter table public.qr_codes add constraint qr_codes_pkey PRIMARY KEY (id);
+alter table public.quest_progress add constraint quest_progress_pkey PRIMARY KEY (player_id, quest_id, jour);
+alter table public.quests add constraint quests_pkey PRIMARY KEY (id);
+alter table public.quiz_answers add constraint quiz_answers_pkey PRIMARY KEY (id);
+alter table public.quiz_questions add constraint quiz_questions_pkey PRIMARY KEY (id);
+alter table public.quiz_sessions add constraint quiz_sessions_pkey PRIMARY KEY (id);
+alter table public.roulette_prizes add constraint roulette_prizes_pkey PRIMARY KEY (id);
+alter table public.roulette_spins add constraint roulette_spins_pkey PRIMARY KEY (id);
+alter table public.scans add constraint scans_pkey PRIMARY KEY (id);
+alter table public.sortie_reponses add constraint sortie_reponses_pkey PRIMARY KEY (player_id, jour);
+alter table public.staff add constraint staff_pkey PRIMARY KEY (user_id);
+alter table public.tickets add constraint tickets_pkey PRIMARY KEY (id);
+alter table public.tournament_kings add constraint tournament_kings_pkey PRIMARY KEY (jour);
+alter table public.treasure_hunts add constraint treasure_hunts_pkey PRIMARY KEY (id);
+alter table public.treasure_progress add constraint treasure_progress_pkey PRIMARY KEY (player_id, hunt_id);
+alter table public.treasure_steps add constraint treasure_steps_pkey PRIMARY KEY (id);
+
+-- ----------------------------------------------------------------
+-- Contraintes UNIQUE (8)
+-- ----------------------------------------------------------------
+alter table public.badges add constraint badges_name_key UNIQUE (name);
+alter table public.carnets add constraint carnets_numero_key UNIQUE (numero);
+alter table public.player_secrets add constraint player_secrets_secret_code_key UNIQUE (secret_code);
+alter table public.players add constraint players_pseudo_key UNIQUE (pseudo);
+alter table public.qr_codes add constraint qr_codes_code_key UNIQUE (code);
+alter table public.quiz_answers add constraint quiz_answers_question_id_player_id_key UNIQUE (question_id, player_id);
+alter table public.roulette_spins add constraint roulette_spins_redeem_code_key UNIQUE (redeem_code);
+alter table public.tickets add constraint tickets_code_key UNIQUE (code);
+
+-- ----------------------------------------------------------------
+-- Contraintes CHECK (21)
+-- ----------------------------------------------------------------
+alter table public.announcements add constraint announcements_type_check CHECK ((type = ANY (ARRAY['info'::text, 'alerte'::text, 'succes'::text, 'danger'::text])));
+alter table public.billetterie_config add constraint billetterie_config_id_check CHECK ((id = 1));
+alter table public.billetterie_config add constraint billetterie_config_prix_journee_check CHECK ((prix_journee >= 0));
+alter table public.carnets add constraint carnets_nb_tickets_check CHECK (((nb_tickets >= 1) AND (nb_tickets <= 500)));
+alter table public.carnets add constraint carnets_rendus_check CHECK ((rendus >= 0));
+alter table public.coeur_config add constraint coeur_config_id_check CHECK ((id = 1));
+alter table public.contact_config add constraint contact_config_id_check CHECK ((id = 1));
+alter table public.game_state add constraint game_state_id_check CHECK ((id = 1));
+alter table public.game_state add constraint game_state_phase_check CHECK ((phase = ANY (ARRAY['EXPLORATION'::text, 'QUIZ'::text, 'RAID'::text, 'CLOTURE'::text])));
+alter table public.micro_config add constraint micro_config_id_check CHECK ((id = 1));
+alter table public.players add constraint players_pseudo_check CHECK (((char_length(pseudo) >= 2) AND (char_length(pseudo) <= 16)));
+alter table public.players add constraint players_status_check CHECK ((status = ANY (ARRAY['actif'::text, 'exclu'::text])));
+alter table public.profil_config add constraint profil_config_id_check CHECK ((id = 1));
+alter table public.qr_codes add constraint qr_codes_rarity_check CHECK ((rarity = ANY (ARRAY['commune'::text, 'rare'::text, 'legendaire'::text])));
+alter table public.qr_codes add constraint qr_codes_type_check CHECK ((type = ANY (ARRAY['stand'::text, 'boss'::text, 'cosplayer'::text, 'relique'::text])));
+alter table public.quests add constraint quests_type_check CHECK ((type = ANY (ARRAY['standard'::text, 'secrete'::text, 'boss'::text, 'collection'::text])));
+alter table public.quiz_sessions add constraint quiz_sessions_kind_check CHECK ((kind = ANY (ARRAY['quiz'::text, 'raid'::text])));
+alter table public.quiz_sessions add constraint quiz_sessions_status_check CHECK ((status = ANY (ARRAY['preparee'::text, 'en_cours'::text, 'terminee'::text])));
+alter table public.roulette_prizes add constraint roulette_prizes_badge_ck CHECK (((kind <> 'badge'::text) OR (badge_id IS NOT NULL)));
+alter table public.roulette_prizes add constraint roulette_prizes_kind_ck CHECK ((kind = ANY (ARRAY['objet'::text, 'xp'::text, 'jetons'::text, 'badge'::text, 'rien'::text])));
+alter table public.staff add constraint staff_role_check CHECK ((role = ANY (ARRAY['gm'::text, 'staff'::text, 'vendeur'::text])));
+
+-- ----------------------------------------------------------------
+-- Fonctions (126)
+-- ----------------------------------------------------------------
+-- lot 0 : _award_badge, _code_secret_tirage, _gen_qr_code, _is_system_badge, _maj_xp_jour, _norm_answer, _norm_ticket, _points_jour, _raid_damage, _ticket_code
+create OR REPLACE FUNCTION public._award_badge(p_player_id uuid, p_pseudo text, p_badge_name text)
+ RETURNS text
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_badge public.badges%rowtype;
+begin
+  if p_badge_name is null then return null; end if;
+  select * into v_badge from public.badges where name = p_badge_name;
+  if v_badge.id is null then return null; end if;
+
+  insert into public.player_badges (player_id, badge_id)
+  values (p_player_id, v_badge.id)
+  on conflict do nothing;
+  if not found then return null; end if;   -- déjà possédé
+
+  insert into public.events (type, player_id, payload)
+  values ('badge', p_player_id, jsonb_build_object(
+    'message', p_pseudo || ' a débloqué le badge « ' || v_badge.name || ' »',
+    'badge',   v_badge.name,
+    'icon',    v_badge.icon));
+  return v_badge.name;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public._code_secret_tirage()
+ RETURNS text
+ LANGUAGE sql
+ SET search_path TO 'public'
+AS $function$
+  -- 100 mots, tous de 6 lettres au maximum (contrainte des 12
+  -- caractères, PARTIE 0). Sans accents et sans lettre ambiguë : le
+  -- code se lit à voix haute au stand d'aide, et se retape à une main
+  -- sur un téléphone. Les chiffres et les lettres ne se mélangent
+  -- jamais — pas de confusion possible entre O et 0, ni entre I et 1.
+  select w.mot || '-' || lpad(floor(random() * 100000)::text, 5, '0')
+  from (
+    select unnest(array[
+      'ONI','NEKO','KAIJU','YOKAI','RONIN','MECHA','NINJA','MANGA','OTAKU','TOKYO',
+      'KYOTO','OSAKA','KENDO','SUMO','JUDO','AIKIDO','KARATE','KATANA','SAKURA','SENSEI',
+      'SEMPAI','KOHAI','SHOGUN','DAIMYO','GEISHA','YUKATA','KIMONO','TATAMI','FUTON','BENTO',
+      'RAMEN','MOCHI','MATCHA','WASABI','SOBA','UDON','MISO','SAKE','TOFU','SUSHI',
+      'KAMI','TORII','ZEN','DOJO','KATA','KUNAI','TANTO','YARI','TESSEN','TANUKI',
+      'KAPPA','TENGU','KIRIN','KOI','TSURU','HOTARU','YUKI','HANA','TSUKI','HOSHI',
+      'SORA','UMI','YAMA','KAZE','HIKARI','KAGE','KUMO','AME','TAIYO','AKA',
+      'AOI','MIDORI','KURO','SHIRO','KIN','GIN','ICHI','SAN','YON','ROKU',
+      'NANA','HACHI','KYU','JUU','YUME','KOKORO','GENKI','KAWAII','SUGOI','NAKAMA',
+      'TOMO','YUUKI','MAMORU','ANIME','SHONEN','SHOJO','SEINEN','ISEKAI','CHIBI','TIGRE'
+    ]) as mot
+    order by random()
+    limit 1
+  ) w;
+$function$
+;
+
+create OR REPLACE FUNCTION public._gen_qr_code()
+ RETURNS text
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_alpha text := 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  v_code  text;
+  v_i     int;
+  v_tries int := 0;
+begin
+  loop
+    v_code := 'OQ-';
+    for v_i in 1..6 loop
+      v_code := v_code || substr(v_alpha, 1 + floor(random() * length(v_alpha))::int, 1);
+    end loop;
+    exit when not exists (select 1 from public.qr_codes where code = v_code);
+    v_tries := v_tries + 1;
+    if v_tries > 50 then raise exception 'CODE_GENERATION'; end if;
+  end loop;
+  return v_code;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public._is_system_badge(p_name text)
+ RETURNS boolean
+ LANGUAGE sql
+ IMMUTABLE
+AS $function$
+  select p_name in ('Premier Scan', 'Chasseur Assidu', 'Boss Vaincu',
+                    'Grand Explorateur', 'Maître Pokédex');
+$function$
+;
+
+create OR REPLACE FUNCTION public._maj_xp_jour()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+declare
+  v_hausse integer := greatest(new.xp - old.xp, 0);
+begin
+  if old.jour <> current_date then
+
+    -- ⬇️ LE SEUL AJOUT (2026-08-13). On est au dernier instant où les
+    -- points de `old.jour` existent encore. `on conflict do nothing`
+    -- fait deux choses d'un coup : il laisse la main au GM (s'il a
+    -- appuyé sur CLOTURE, sa ligne est déjà là et fait foi), et il
+    -- rend l'écriture insensible à deux joueurs qui gagneraient de
+    -- l'XP dans la même milliseconde.
+    begin
+      insert into public.tournament_kings (jour, pseudo, points)
+      select old.jour, p.pseudo, p.xp_jour
+        from public.players p
+       where p.status = 'actif'
+         and p.jour    = old.jour
+         and p.xp_jour > 0            -- personne n'est sacré à 0 point
+       order by p.xp_jour desc, p.created_at asc
+       limit 1
+      on conflict (jour) do nothing;
+    exception when others then
+      null;   -- graver le roi ne vaut JAMAIS de faire échouer un scan
+    end;
+
+    new.xp_jour := v_hausse;
+  else
+    new.xp_jour := old.xp_jour + v_hausse;
+  end if;
+  new.jour := current_date;
+  return new;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public._norm_answer(p text)
+ RETURNS text
+ LANGUAGE sql
+ IMMUTABLE
+AS $function$
+  select regexp_replace(
+    translate(lower(coalesce(p, '')),
+      'àâäáãåéèêëíìîïóòôöõúùûüýÿçñ',
+      'aaaaaaeeeeiiiiooooouuuuyycn'),
+    '[^a-z0-9]', '', 'g');
+$function$
+;
+
+create OR REPLACE FUNCTION public._norm_ticket(p_code text)
+ RETURNS text
+ LANGUAGE sql
+ IMMUTABLE
+AS $function$
+  select upper(regexp_replace(coalesce(p_code, ''), '[^a-zA-Z0-9]', '', 'g'));
+$function$
+;
+
+create OR REPLACE FUNCTION public._points_jour(p_xp_jour integer, p_jour date)
+ RETURNS integer
+ LANGUAGE sql
+ STABLE
+AS $function$
+  select case when p_jour = current_date then p_xp_jour else 0 end;
+$function$
+;
+
+create OR REPLACE FUNCTION public._raid_damage(p_session_id uuid)
+ RETURNS integer
+ LANGUAGE sql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+  select coalesce(sum(a.points), 0)::int
+  from public.quiz_answers a
+  join public.quiz_questions q on q.id = a.question_id
+  where q.session_id = p_session_id;
+$function$
+;
+
+create OR REPLACE FUNCTION public._ticket_code()
+ RETURNS text
+ LANGUAGE sql
+AS $function$
+  select string_agg(
+    substr('ABCDEFGHJKMNPQRSTUVWXYZ23456789', 1 + floor(random() * 31)::int, 1), '')
+  from generate_series(1, 8);
+$function$
+;
+
+-- lot 1 : admin_award_badge, admin_award_bonus, admin_create_announcement, admin_create_badge, admin_create_hunt, admin_create_prize, admin_create_qr, admin_create_quest, admin_create_quiz_question, admin_create_quiz_session
+create OR REPLACE FUNCTION public.admin_award_badge(p_player_id uuid, p_badge_id uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player public.players%rowtype;
+  v_badge  public.badges%rowtype;
+  v_result text;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+
+  select * into v_player from public.players where id = p_player_id;
+  if v_player.id is null then raise exception 'JOUEUR_INCONNU'; end if;
+  if v_player.status <> 'actif' then raise exception 'JOUEUR_EXCLU'; end if;
+
+  select * into v_badge from public.badges where id = p_badge_id;
+  if v_badge.id is null then raise exception 'BADGE_INCONNU'; end if;
+  if exists (select 1 from public.player_badges
+             where player_id = p_player_id and badge_id = p_badge_id) then
+    raise exception 'BADGE_DEJA_POSSEDE';
+  end if;
+
+  v_result := public._award_badge(p_player_id, v_player.pseudo, v_badge.name);
+  return json_build_object('player', v_player.pseudo, 'badge', v_result);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_award_bonus(p_player_id uuid, p_xp integer, p_reason text DEFAULT NULL::text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player    public.players%rowtype;
+  v_old_level int;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  if p_xp is null or p_xp = 0 or abs(p_xp) > 100000 then raise exception 'BONUS_INVALIDE'; end if;
+
+  select * into v_player from public.players where id = p_player_id;
+  if v_player.id is null then raise exception 'JOUEUR_INCONNU'; end if;
+
+  v_old_level := public.level_for_xp(v_player.xp);
+
+  -- ⬇️ LA SEULE LIGNE AJOUTÉE (REGLES.md §15.4, porte de secours).
+  -- Le « true » limite le drapeau à cette transaction.
+  perform set_config('oq.pass_bypass', '1', true);
+
+  update public.players set
+    xp     = greatest(0, xp + p_xp),
+    jetons = greatest(0, jetons + p_xp / 10),
+    level  = public.level_for_xp(greatest(0, xp + p_xp)),
+    rank   = public.rank_for_level(public.level_for_xp(greatest(0, xp + p_xp)))
+  where id = p_player_id
+  returning * into v_player;
+
+  insert into public.events (type, player_id, payload)
+  values ('bonus', p_player_id, jsonb_build_object(
+    'message', 'Le Game Master accorde ' || (case when p_xp > 0 then '+' else '' end) || p_xp
+               || ' XP à ' || v_player.pseudo || coalesce(' — ' || nullif(trim(p_reason), ''), ''),
+    'xp', p_xp, 'reason', p_reason));
+
+  if v_player.level > v_old_level then
+    insert into public.events (type, player_id, payload)
+    values ('level_up', p_player_id, jsonb_build_object(
+      'message', v_player.pseudo || ' passe au niveau ' || v_player.level || ' !',
+      'level', v_player.level, 'old_level', v_old_level));
+  end if;
+
+  return row_to_json(v_player);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_create_announcement(p_message text, p_type text DEFAULT 'info'::text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_row public.announcements%rowtype;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  if p_message is null or char_length(trim(p_message)) = 0 then raise exception 'MESSAGE_VIDE'; end if;
+  if p_type not in ('info','alerte','succes','danger') then raise exception 'TYPE_INVALIDE'; end if;
+
+  insert into public.announcements (message, type)
+  values (trim(p_message), p_type)
+  returning * into v_row;
+  return row_to_json(v_row);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_create_badge(p_name text, p_icon text DEFAULT 'fa-medal'::text, p_description text DEFAULT NULL::text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_badge public.badges%rowtype;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  if coalesce(trim(p_name), '') = '' then raise exception 'NOM_BADGE_MANQUANT'; end if;
+
+  insert into public.badges (name, icon, description)
+  values (trim(p_name), coalesce(nullif(trim(p_icon), ''), 'fa-medal'),
+          nullif(trim(coalesce(p_description, '')), ''))
+  returning * into v_badge;
+  return row_to_json(v_badge);
+exception when unique_violation then
+  raise exception 'BADGE_NOM_PRIS';
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_create_hunt(p_title text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_hunt public.treasure_hunts%rowtype;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if coalesce(trim(p_title), '') = '' then raise exception 'TITRE_MANQUANT'; end if;
+  insert into public.treasure_hunts (title, active)
+  values (trim(p_title), false)          -- créée inactive : on la remplit d'abord
+  returning * into v_hunt;
+  return row_to_json(v_hunt);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_create_prize(p_name text, p_icon text, p_weight integer, p_stock integer, p_active boolean DEFAULT true, p_kind text DEFAULT 'objet'::text, p_value integer DEFAULT 0, p_badge_id uuid DEFAULT NULL::uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_p public.roulette_prizes%rowtype; v_kind text;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if p_name is null or char_length(trim(p_name)) = 0 then raise exception 'NOM_MANQUANT'; end if;
+  v_kind := coalesce(nullif(trim(coalesce(p_kind,'')),''), 'objet');
+  if v_kind not in ('objet','xp','jetons','badge','rien') then raise exception 'GENRE_INCONNU'; end if;
+  if v_kind = 'badge' and p_badge_id is null then raise exception 'BADGE_MANQUANT'; end if;
+
+  insert into public.roulette_prizes (name, icon, weight, stock, active, kind, value, badge_id)
+  values (trim(p_name), coalesce(nullif(trim(coalesce(p_icon,'')),''),'fa-gift'),
+          greatest(0, coalesce(p_weight,10)), p_stock, coalesce(p_active,true),
+          v_kind, greatest(0, coalesce(p_value,0)),
+          case when v_kind = 'badge' then p_badge_id else null end)
+  returning * into v_p;
+  return row_to_json(v_p);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_create_qr(p_label text, p_type text, p_rarity text DEFAULT NULL::text, p_xp integer DEFAULT NULL::integer, p_hint text DEFAULT NULL::text, p_character text DEFAULT NULL::text, p_anime text DEFAULT NULL::text, p_badge_id uuid DEFAULT NULL::uuid, p_quest_id uuid DEFAULT NULL::uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_code text; v_xp integer; v_qr public.qr_codes%rowtype;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  if p_label is null or char_length(trim(p_label)) = 0 then raise exception 'LABEL_MANQUANT'; end if;
+  if p_type not in ('stand','boss','cosplayer','relique') then raise exception 'TYPE_INVALIDE'; end if;
+  if p_type = 'relique' and coalesce(p_rarity,'') not in ('commune','rare','legendaire') then
+    raise exception 'RARETE_MANQUANTE';
+  end if;
+
+  v_xp := coalesce(p_xp, case
+    when p_type = 'stand' then 50 when p_type = 'boss' then 250 when p_type = 'cosplayer' then 100
+    when p_type = 'relique' and p_rarity = 'commune' then 75
+    when p_type = 'relique' and p_rarity = 'rare' then 150
+    when p_type = 'relique' and p_rarity = 'legendaire' then 300 else 50 end);
+
+  v_code := public._gen_qr_code();
+  insert into public.qr_codes (code, label, type, rarity, xp_reward, hint, character_name, anime, badge_id, quest_id, active)
+  values (v_code, trim(p_label), p_type,
+          case when p_type = 'relique' then p_rarity else null end,
+          v_xp, nullif(trim(coalesce(p_hint,'')),''), nullif(trim(coalesce(p_character,'')),''),
+          nullif(trim(coalesce(p_anime,'')),''), p_badge_id, p_quest_id, true)
+  returning * into v_qr;
+  return row_to_json(v_qr);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_create_quest(p_title text, p_description text, p_type text, p_counter text, p_goal integer, p_xp integer, p_active boolean DEFAULT true, p_badge_id uuid DEFAULT NULL::uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_q public.quests%rowtype;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  if p_title is null or char_length(trim(p_title)) = 0 then raise exception 'TITRE_MANQUANT'; end if;
+  if p_type not in ('standard','secrete','boss','collection') then raise exception 'TYPE_INVALIDE'; end if;
+  if p_badge_id is not null and not exists (select 1 from public.badges where id = p_badge_id) then
+    raise exception 'BADGE_INCONNU';
+  end if;
+
+  insert into public.quests (title, description, type, counter, goal_count, xp_reward, badge_id, active, requires_staff)
+  values (trim(p_title), nullif(trim(coalesce(p_description,'')),''), p_type, coalesce(p_counter,'manuel'),
+          greatest(1, coalesce(p_goal,1)), coalesce(p_xp,100), p_badge_id, coalesce(p_active,true),
+          (coalesce(p_counter,'manuel') = 'manuel'))
+  returning * into v_q;
+  return row_to_json(v_q);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_create_quiz_question(p_session_id uuid, p_question text, p_choices jsonb, p_correct integer, p_duration integer DEFAULT 20)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_q public.quiz_questions%rowtype;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not exists (select 1 from public.quiz_sessions where id = p_session_id) then
+    raise exception 'QUIZ_INCONNU';
+  end if;
+  if coalesce(trim(p_question), '') = '' then raise exception 'QUESTION_MANQUANTE'; end if;
+  if jsonb_typeof(p_choices) <> 'array'
+     or jsonb_array_length(p_choices) < 2
+     or jsonb_array_length(p_choices) > 4 then
+    raise exception 'CHOIX_INVALIDES';
+  end if;
+  if p_correct is null or p_correct < 0 or p_correct >= jsonb_array_length(p_choices) then
+    raise exception 'BONNE_REPONSE_INVALIDE';
+  end if;
+  if p_duration is null or p_duration < 5 or p_duration > 120 then
+    raise exception 'DUREE_INVALIDE';
+  end if;
+
+  insert into public.quiz_questions
+    (session_id, question, choices, correct_index, question_order, duration_seconds)
+  values (p_session_id, trim(p_question), p_choices, p_correct,
+    coalesce((select max(question_order) from public.quiz_questions
+              where session_id = p_session_id), 0) + 1,
+    p_duration)
+  returning * into v_q;
+  return row_to_json(v_q);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_create_quiz_session(p_title text, p_kind text DEFAULT 'quiz'::text, p_boss_name text DEFAULT NULL::text, p_boss_image text DEFAULT NULL::text, p_boss_hp integer DEFAULT 0, p_bonus_xp integer DEFAULT 0)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_session public.quiz_sessions%rowtype;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if coalesce(trim(p_title), '') = '' then raise exception 'TITRE_MANQUANT'; end if;
+  if p_kind not in ('quiz', 'raid') then raise exception 'TYPE_INVALIDE'; end if;
+
+  if p_kind = 'raid' then
+    if coalesce(trim(p_boss_name), '') = '' then raise exception 'BOSS_MANQUANT'; end if;
+    if p_boss_hp is null or p_boss_hp < 1 or p_boss_hp > 1000000 then
+      raise exception 'PV_INVALIDES';
+    end if;
+    if p_bonus_xp is null or p_bonus_xp < 0 or p_bonus_xp > 10000 then
+      raise exception 'BONUS_INVALIDE';
+    end if;
+  end if;
+
+  insert into public.quiz_sessions (title, kind, boss_name, boss_image, boss_hp_max, raid_bonus_xp)
+  values (trim(p_title), p_kind,
+    case when p_kind = 'raid' then trim(p_boss_name) end,
+    case when p_kind = 'raid' then nullif(trim(p_boss_image), '') end,
+    case when p_kind = 'raid' then p_boss_hp else 0 end,
+    case when p_kind = 'raid' then p_bonus_xp else 0 end)
+  returning * into v_session;
+  return row_to_json(v_session);
+end;
+$function$
+;
+
+-- lot 2 : admin_create_step, admin_delete_announcement, admin_delete_badge, admin_delete_hunt, admin_delete_prize, admin_delete_qr, admin_delete_quest, admin_delete_quiz_question, admin_delete_quiz_session, admin_delete_step
+create OR REPLACE FUNCTION public.admin_create_step(p_hunt_id uuid, p_riddle text, p_answer text, p_xp integer DEFAULT 100)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_step public.treasure_steps%rowtype;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not exists (select 1 from public.treasure_hunts where id = p_hunt_id) then
+    raise exception 'CHASSE_INCONNUE';
+  end if;
+  if coalesce(trim(p_riddle), '') = '' then raise exception 'ENIGME_MANQUANTE'; end if;
+  if public._norm_answer(p_answer) = ''  then raise exception 'REPONSE_MANQUANTE'; end if;
+  if p_xp is null or p_xp < 1 or p_xp > 100000 then raise exception 'BONUS_INVALIDE'; end if;
+
+  insert into public.treasure_steps (hunt_id, step_order, riddle, answer, xp_reward)
+  values (p_hunt_id,
+    coalesce((select max(step_order) from public.treasure_steps where hunt_id = p_hunt_id), 0) + 1,
+    trim(p_riddle), trim(p_answer), p_xp)
+  returning * into v_step;
+  return row_to_json(v_step);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_delete_announcement(p_id uuid)
+ RETURNS void
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  delete from public.announcements where id = p_id;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_delete_badge(p_id uuid)
+ RETURNS void
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_badge public.badges%rowtype;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  select * into v_badge from public.badges where id = p_id;
+  if v_badge.id is null then raise exception 'BADGE_INCONNU'; end if;
+  if public._is_system_badge(v_badge.name) then raise exception 'BADGE_SYSTEME_SUPPRESSION'; end if;
+  if exists (select 1 from public.player_badges where badge_id = p_id) then
+    raise exception 'BADGE_DEJA_GAGNE';
+  end if;
+  if exists (select 1 from public.quests where badge_id = p_id)
+     or exists (select 1 from public.qr_codes where badge_id = p_id) then
+    raise exception 'BADGE_UTILISE';
+  end if;
+  delete from public.badges where id = p_id;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_delete_hunt(p_id uuid)
+ RETURNS void
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if exists (select 1 from public.treasure_progress where hunt_id = p_id) then
+    raise exception 'CHASSE_VERROUILLEE';
+  end if;
+  delete from public.treasure_hunts where id = p_id;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_delete_prize(p_id uuid)
+ RETURNS void
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  delete from public.roulette_prizes where id = p_id;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_delete_qr(p_id uuid)
+ RETURNS void
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  delete from public.qr_codes where id = p_id;  -- scans liés supprimés en cascade
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_delete_quest(p_id uuid)
+ RETURNS void
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  delete from public.quests where id = p_id;   -- quest_progress supprimé en cascade
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_delete_quiz_question(p_id uuid)
+ RETURNS void
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_q public.quiz_questions%rowtype;
+  v_status text;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  select * into v_q from public.quiz_questions where id = p_id;
+  if v_q.id is null then raise exception 'QUESTION_INCONNUE'; end if;
+  select status into v_status from public.quiz_sessions where id = v_q.session_id;
+  if v_status <> 'preparee' then raise exception 'QUESTION_VERROUILLEE'; end if;
+
+  delete from public.quiz_questions where id = p_id;
+  update public.quiz_questions
+     set question_order = question_order - 1
+   where session_id = v_q.session_id and question_order > v_q.question_order;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_delete_quiz_session(p_id uuid)
+ RETURNS void
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if exists (select 1 from public.quiz_answers a
+             join public.quiz_questions q on q.id = a.question_id
+             where q.session_id = p_id) then
+    raise exception 'QUIZ_VERROUILLE';
+  end if;
+  delete from public.quiz_sessions where id = p_id;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_delete_step(p_id uuid)
+ RETURNS void
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_step public.treasure_steps%rowtype;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  select * into v_step from public.treasure_steps where id = p_id;
+  if v_step.id is null then raise exception 'ETAPE_INCONNUE'; end if;
+  if exists (select 1 from public.treasure_progress where hunt_id = v_step.hunt_id) then
+    raise exception 'ETAPE_VERROUILLEE';
+  end if;
+  delete from public.treasure_steps where id = p_id;
+  update public.treasure_steps
+     set step_order = step_order - 1
+   where hunt_id = v_step.hunt_id and step_order > v_step.step_order;
+end;
+$function$
+;
+
+-- lot 3 : admin_duplicate_hunt, admin_duplicate_quiz_session, admin_edit_qr, admin_get_reconnect_code, admin_journal_bonus, admin_list_badges, admin_list_duels, admin_list_hunts, admin_list_qr, admin_list_quests
+create OR REPLACE FUNCTION public.admin_duplicate_hunt(p_id uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_src public.treasure_hunts%rowtype;
+  v_new public.treasure_hunts%rowtype;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+
+  select * into v_src from public.treasure_hunts where id = p_id;
+  if v_src.id is null then raise exception 'CHASSE_INCONNUE'; end if;
+
+  -- La copie : INACTIVE (on l'active quand on veut), sans aucune
+  -- progression → tous les joueurs la commenceront de zéro.
+  insert into public.treasure_hunts (title, active, first_bonus)
+  values (v_src.title || ' (copie)', false, v_src.first_bonus)
+  returning * into v_new;
+
+  -- Les énigmes recopiées à l'identique (ordre, énoncé, réponse, XP),
+  -- reliées à la nouvelle chasse.
+  insert into public.treasure_steps (hunt_id, step_order, riddle, answer, xp_reward)
+  select v_new.id, step_order, riddle, answer, xp_reward
+  from public.treasure_steps
+  where hunt_id = v_src.id;
+
+  return row_to_json(v_new);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_duplicate_quiz_session(p_session_id uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_src public.quiz_sessions%rowtype;
+  v_new public.quiz_sessions%rowtype;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+
+  select * into v_src from public.quiz_sessions where id = p_session_id;
+  if v_src.id is null then raise exception 'QUIZ_INCONNU'; end if;
+
+  -- La copie : neuve, en préparation, jamais lancée. On ne copie
+  -- QUE le contenu (titre, boss) — pas le statut, ni les réponses.
+  insert into public.quiz_sessions
+    (title, kind, boss_name, boss_image, boss_hp_max, raid_bonus_xp)
+  values
+    (v_src.title || ' (copie)', v_src.kind,
+     v_src.boss_name, v_src.boss_image, v_src.boss_hp_max, v_src.raid_bonus_xp)
+  returning * into v_new;
+
+  -- Les questions recopiées à l'identique (énoncé, choix, bonne
+  -- réponse, ordre, durée), reliées à la nouvelle session.
+  insert into public.quiz_questions
+    (session_id, question, choices, correct_index, question_order, duration_seconds)
+  select v_new.id, question, choices, correct_index, question_order, duration_seconds
+  from public.quiz_questions
+  where session_id = v_src.id;
+
+  return row_to_json(v_new);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_edit_qr(p_id uuid, p_label text, p_hint text DEFAULT NULL::text, p_character text DEFAULT NULL::text, p_anime text DEFAULT NULL::text, p_xp integer DEFAULT NULL::integer, p_quest_id uuid DEFAULT NULL::uuid, p_touche_quest boolean DEFAULT false)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_qr public.qr_codes%rowtype;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  if p_label is null or char_length(trim(p_label)) = 0 then raise exception 'LABEL_MANQUANT'; end if;
+
+  update public.qr_codes set
+    label          = trim(p_label),
+    hint           = nullif(trim(coalesce(p_hint, '')), ''),
+    character_name = nullif(trim(coalesce(p_character, '')), ''),
+    anime          = nullif(trim(coalesce(p_anime, '')), ''),
+    xp_reward      = coalesce(p_xp, xp_reward),
+    -- 🔴 SANS `p_touche_quest`, CETTE LIGNE EFFACERAIT LE LIEN À CHAQUE
+    --    CORRECTION DE LIBELLÉ. Voir l'en-tête : « null par défaut » ne
+    --    veut pas dire « ne change rien ».
+    quest_id       = case when p_touche_quest then p_quest_id else quest_id end
+  where id = p_id
+  returning * into v_qr;
+  if v_qr.id is null then raise exception 'QR_INCONNU'; end if;
+  return row_to_json(v_qr);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_get_reconnect_code(p_player_id uuid)
+ RETURNS text
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_code text;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  select secret_code into v_code from public.player_secrets where player_id = p_player_id;
+  if v_code is null then raise exception 'JOUEUR_INCONNU'; end if;
+  return v_code;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_journal_bonus(p_jour date DEFAULT NULL::date)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_jour date := coalesce(p_jour, (now() at time zone 'Africa/Douala')::date);
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+
+  return coalesce((
+    select json_agg(row_to_json(t)) from (
+      select e.created_at                                   as quand,
+             coalesce(e.payload->>'par', 'Game Master')     as par,
+             coalesce(e.payload->>'par_role', 'gm')         as role,
+             p.pseudo                                       as joueur,
+             coalesce((e.payload->>'xp')::int, 0)           as xp,
+             e.payload->>'reason'                           as motif
+        from public.events e
+        left join public.players p on p.id = e.player_id
+       where e.type = 'bonus'
+         and (e.created_at at time zone 'Africa/Douala')::date = v_jour
+       order by e.created_at desc
+       limit 300
+    ) t), '[]'::json);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_list_badges()
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  return coalesce((
+    select json_agg(row_to_json(t)) from (
+      select b.id, b.name, b.icon, b.description, b.created_at,
+             public._is_system_badge(b.name) as is_system,
+             (select count(*) from public.player_badges pb where pb.badge_id = b.id) as earned_count,
+             (select count(*) from public.quests q where q.badge_id = b.id)          as linked_quests,
+             (select count(*) from public.qr_codes c where c.badge_id = b.id)        as linked_qr
+      from public.badges b order by b.created_at
+    ) t
+  ), '[]'::json);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_list_duels(p_limit integer DEFAULT 30)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  return coalesce((select json_agg(row_to_json(d)) from (
+    select du.id, du.created_at, du.xp,
+           p1.pseudo    as player1, p2.pseudo    as player2,
+           p1.archetype as archetype1, p2.archetype as archetype2,
+           w.pseudo     as winner
+    from public.duels du
+    join public.players p1 on p1.id = du.player1_id
+    join public.players p2 on p2.id = du.player2_id
+    left join public.players w on w.id = du.winner_id
+    order by du.created_at desc
+    limit least(coalesce(p_limit, 30), 200)
+  ) d), '[]'::json);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_list_hunts()
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  return coalesce((select json_agg(row_to_json(h) order by h.created_at) from (
+    select th.id, th.title, th.active, th.first_bonus, th.created_at,
+      (select count(*) from public.treasure_steps    where hunt_id = th.id) as steps,
+      (select count(*) from public.treasure_progress where hunt_id = th.id) as started,
+      (select count(*) from public.treasure_progress
+        where hunt_id = th.id and completed_at is not null) as finished
+    from public.treasure_hunts th
+  ) h), '[]'::json);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_list_qr()
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  return coalesce((
+    select json_agg(row_to_json(t)) from (
+      select q.*,
+             (select count(*) from public.scans s where s.qr_code_id = q.id) as scan_count,
+             -- ⬇️ AJOUT DU FICHIER 85 : le titre plutôt que l'identifiant.
+             --    Un uuid affiché à l'écran n'apprend rien à personne.
+             (select w.title  from public.quests w where w.id = q.quest_id) as quete_titre,
+             (select w.active from public.quests w where w.id = q.quest_id) as quete_active
+      from public.qr_codes q
+      order by q.created_at desc
+    ) t
+  ), '[]'::json);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_list_quests()
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  return coalesce((
+    select json_agg(row_to_json(t)) from (
+      select q.*,
+             (select count(*) from public.quest_progress p
+               where p.quest_id = q.id and p.completed_at is not null) as completed_count,
+             (select count(*) from public.qr_codes c where c.quest_id = q.id) as linked_qr
+      from public.quests q order by q.created_at
+    ) t
+  ), '[]'::json);
+end;
+$function$
+;
+
+-- lot 4 : admin_list_quiz_questions, admin_list_quiz_sessions, admin_list_steps, admin_liste_joueurs, admin_manual_quests, admin_move_quiz_question, admin_quiz_end, admin_quiz_live, admin_quiz_next, admin_quiz_start
+create OR REPLACE FUNCTION public.admin_list_quiz_questions(p_session_id uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  -- ⬇️ LA SEULE LIGNE MODIFIÉE : is_staff() devient is_equipe(),
+  --    donc un vendeur passe (secours du 2026-08-16).
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  return coalesce((select json_agg(row_to_json(q) order by q.question_order) from (
+    select qq.id, qq.question_order, qq.question, qq.choices,
+           qq.correct_index, qq.duration_seconds,
+      (select count(*) from public.quiz_answers where question_id = qq.id) as answers
+    from public.quiz_questions qq
+    where qq.session_id = p_session_id
+  ) q), '[]'::json);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_list_quiz_sessions()
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  -- ⬇️ LA SEULE LIGNE MODIFIÉE : is_staff() devient is_equipe(),
+  --    donc un vendeur passe (secours du 2026-08-16).
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  return coalesce((select json_agg(row_to_json(s) order by s.created_at desc) from (
+    select qs.id, qs.title, qs.status, qs.current_question, qs.created_at,
+      qs.kind, qs.boss_name, qs.boss_image, qs.boss_hp_max, qs.raid_bonus_xp,
+      (select count(*) from public.quiz_questions where session_id = qs.id) as questions,
+      (select count(distinct a.player_id)
+        from public.quiz_answers a
+        join public.quiz_questions q on q.id = a.question_id
+        where q.session_id = qs.id) as participants,
+      case when qs.kind = 'raid' then public._raid_damage(qs.id) end as damage
+    from public.quiz_sessions qs
+  ) s), '[]'::json);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_list_steps(p_hunt_id uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  return coalesce((select json_agg(row_to_json(s) order by s.step_order) from (
+    select t.id, t.step_order, t.riddle, t.answer, t.xp_reward,
+      -- combien de joueurs sont bloqués sur CETTE étape en ce moment
+      (select count(*) from public.treasure_progress pr
+        where pr.hunt_id = t.hunt_id
+          and pr.current_step = t.step_order
+          and pr.completed_at is null) as players_here
+    from public.treasure_steps t
+    where t.hunt_id = p_hunt_id
+  ) s), '[]'::json);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_liste_joueurs()
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_mur boolean;
+  v_out json;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+
+  v_mur := coalesce((select actif from public.billetterie_config where id = 1), false);
+
+  select json_build_object(
+    'jour',        current_date,
+    'billetterie', v_mur,
+    'joueurs', coalesce((
+      select json_agg(t order by t.xp desc, t.created_at) from (
+        select p.id, p.pseudo, p.archetype, p.xp, p.jetons, p.level, p.rank,
+               p.status, p.created_at,
+
+               -- A-t-il PAYÉ aujourd'hui ? (inchangé — c'est le ticket)
+               (not v_mur or exists (
+                  select 1 from public.tickets k
+                   where k.utilise_par = p.id and k.jour = current_date))    as pass_aujourdhui,
+
+               (select count(distinct k.jour) from public.tickets k
+                 where k.utilise_par = p.id and k.jour is not null)           as jours_payes,
+
+               -- ⬇️ A-t-il JOUÉ aujourd'hui ? Désormais TOUT compte :
+               -- raid, quiz, quête validée par le staff, trésor, duel,
+               -- roulette — et les scans, qui écrivent aussi ici.
+               exists (select 1 from public.events e
+                        where e.player_id = p.id
+                          and e.created_at::date = current_date)              as joue_aujourdhui,
+
+               -- Sur combien de journées différentes il s'est manifesté.
+               -- 2 ou plus = il est revenu.
+               (select count(distinct e.created_at::date) from public.events e
+                 where e.player_id = p.id)                                    as jours_joues,
+
+               -- Le nombre d'actions du jour (l'écran dit « actions »,
+               -- plus « scans » : ce ne sont plus les mêmes).
+               (select count(*) from public.events e
+                 where e.player_id = p.id
+                   and e.created_at::date = current_date)                     as actions_aujourdhui,
+
+               -- Gardé à part : combien de QR il a scannés aujourd'hui.
+               -- Utile pour distinguer « il court le festival » de
+               -- « il n'a fait que le raid ».
+               (select count(*) from public.scans s
+                 where s.player_id = p.id and s.day = current_date)           as scans_aujourdhui
+
+        from public.players p
+      ) t), '[]'::json)
+  ) into v_out;
+
+  return v_out;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_manual_quests(p_player_id uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  -- Inchangé : is_equipe() laisse passer un vendeur (§15.5, fichier 26).
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  return coalesce((
+    select json_agg(row_to_json(t)) from (
+      -- ⬇️ CHANGEMENT 1/2 : `q.description`, la consigne à faire respecter.
+      select q.id, q.title, q.description, q.xp_reward,
+             (select b.name from public.badges b where b.id = q.badge_id) as badge,
+             p.completed_at
+      from public.quests q
+      left join public.quest_progress p
+        on p.quest_id = q.id and p.player_id = p_player_id and p.jour = current_date
+      where q.counter = 'manuel' and q.active = true
+      -- ⬇️ CHANGEMENT 2/2 : le même ordre que sur le téléphone du joueur
+      --    (player_home, fichier 48). Avant : order by q.created_at
+      order by q.priorite desc, q.created_at
+    ) t
+  ), '[]'::json);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_move_quiz_question(p_id uuid, p_direction text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_q       public.quiz_questions%rowtype;
+  v_voisine public.quiz_questions%rowtype;
+  v_status  text;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if p_direction not in ('haut', 'bas') then raise exception 'DIRECTION_INVALIDE'; end if;
+
+  select * into v_q from public.quiz_questions where id = p_id;
+  if v_q.id is null then raise exception 'QUESTION_INCONNUE'; end if;
+
+  select status into v_status from public.quiz_sessions where id = v_q.session_id;
+  if v_status <> 'preparee' then raise exception 'QUIZ_DEJA_LANCE'; end if;
+
+  -- Ceinture ET bretelles : un quiz « preparee » où des réponses
+  -- existent ne devrait pas exister, mais si ça arrivait, déplacer
+  -- les questions décalerait des points déjà versés.
+  if exists (select 1 from public.quiz_answers a
+             join public.quiz_questions q on q.id = a.question_id
+             where q.session_id = v_q.session_id) then
+    raise exception 'QUIZ_VERROUILLE';
+  end if;
+
+  -- La voisine immédiate dans la direction demandée
+  if p_direction = 'haut' then
+    select * into v_voisine from public.quiz_questions
+    where session_id = v_q.session_id and question_order < v_q.question_order
+    order by question_order desc limit 1;
+  else
+    select * into v_voisine from public.quiz_questions
+    where session_id = v_q.session_id and question_order > v_q.question_order
+    order by question_order asc limit 1;
+  end if;
+
+  -- Déjà tout en haut / tout en bas : ce n'est pas une erreur,
+  -- la console ne montre simplement pas le bouton. On ne fait rien.
+  if v_voisine.id is null then return row_to_json(v_q); end if;
+
+  update public.quiz_questions set question_order = v_q.question_order
+  where id = v_voisine.id;
+  update public.quiz_questions set question_order = v_voisine.question_order
+  where id = v_q.id
+  returning * into v_q;
+
+  return row_to_json(v_q);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_quiz_end(p_session_id uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_session      public.quiz_sessions%rowtype;
+  v_top          record;
+  v_damage       int;
+  v_defeated     boolean := false;
+  v_participants int := 0;
+begin
+  -- ⬇️ LA SEULE LIGNE MODIFIÉE : is_staff() devient is_equipe(),
+  --    donc un vendeur passe (secours du 2026-08-16).
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  update public.quiz_sessions set status = 'terminee'
+  where id = p_session_id
+  returning * into v_session;
+  if v_session.id is null then raise exception 'QUIZ_INCONNU'; end if;
+
+  -- Le meilleur score de la session (vainqueur du quiz / MVP du raid)
+  select p.id, p.pseudo, sum(a.points)::int as points into v_top
+  from public.quiz_answers a
+  join public.quiz_questions q on q.id = a.question_id
+  join public.players p on p.id = a.player_id
+  where q.session_id = p_session_id
+  group by p.id, p.pseudo
+  order by sum(a.points) desc, max(a.answered_at) asc
+  limit 1;
+
+  if v_session.kind = 'raid' then
+    v_damage   := public._raid_damage(p_session_id);
+    v_defeated := v_session.boss_hp_max > 0 and v_damage >= v_session.boss_hp_max;
+    select count(distinct a.player_id) into v_participants
+    from public.quiz_answers a
+    join public.quiz_questions q on q.id = a.question_id
+    where q.session_id = p_session_id;
+
+    -- Victoire collective : le bonus part à tous les combattants.
+    -- (Pas d'événement level_up individuel ici : 200 overlays d'un
+    -- coup noieraient l'écran géant ; niveaux et rangs sont quand
+    -- même recalculés.)
+    if v_defeated and v_session.raid_bonus_xp > 0 and v_participants > 0 then
+      update public.players p set
+        xp     = p.xp + v_session.raid_bonus_xp,
+        jetons = p.jetons + v_session.raid_bonus_xp / 10,
+        level  = public.level_for_xp(p.xp + v_session.raid_bonus_xp),
+        rank   = public.rank_for_level(public.level_for_xp(p.xp + v_session.raid_bonus_xp))
+      from (select distinct a.player_id
+            from public.quiz_answers a
+            join public.quiz_questions q on q.id = a.question_id
+            where q.session_id = p_session_id) part
+      where p.id = part.player_id
+        -- ⬇️ LA SEULE LIGNE AJOUTÉE (2026-08-08). Sans elle, UN SEUL
+        -- combattant sans ticket du jour annulait toute la fin du raid.
+        and public.pass_actif(part.player_id);
+    end if;
+
+    -- Le moment fort du raid sur l'écran géant
+    insert into public.events (type, payload)
+    values ('raid', jsonb_build_object(
+      'message', case when v_defeated then
+          'LE BOSS « ' || v_session.boss_name || ' » EST VAINCU !'
+          || case when v_session.raid_bonus_xp > 0
+             then ' +' || v_session.raid_bonus_xp || ' XP pour les '
+               || v_participants || ' héros du raid !'
+             else ' Bravo aux ' || v_participants || ' héros du raid !' end
+        else
+          'Le boss « ' || v_session.boss_name || ' » a survécu avec '
+          || (v_session.boss_hp_max - v_damage) || ' PV… Il reviendra !'
+        end,
+      'boss', v_session.boss_name, 'defeated', v_defeated,
+      'damage', v_damage, 'hp_max', v_session.boss_hp_max,
+      'bonus_xp', case when v_defeated then v_session.raid_bonus_xp else 0 end,
+      'participants', v_participants));
+
+    -- Le MVP (meilleur cogneur) entre dans les derniers gagnants
+    if v_top.id is not null then
+      insert into public.events (type, player_id, payload)
+      values ('quiz', v_top.id, jsonb_build_object(
+        'message', v_top.pseudo || ' est le meilleur combattant du raid avec '
+          || v_top.points || ' dégâts !',
+        'quiz', v_session.title, 'points', v_top.points));
+    end if;
+
+  else
+    -- Quiz normal : le vainqueur entre dans les moments forts
+    if v_top.id is not null then
+      insert into public.events (type, player_id, payload)
+      values ('quiz', v_top.id, jsonb_build_object(
+        'message', v_top.pseudo || ' remporte le quiz « ' || v_session.title
+          || ' » avec ' || v_top.points || ' points !',
+        'quiz', v_session.title, 'points', v_top.points));
+    end if;
+  end if;
+
+  return row_to_json(v_session);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_quiz_live(p_session_id uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_session public.quiz_sessions%rowtype;
+  v_q       public.quiz_questions%rowtype;
+  v_elapsed numeric;
+  v_damage  int;
+begin
+  -- ⬇️ LA SEULE LIGNE MODIFIÉE : is_staff() devient is_equipe(),
+  --    donc un vendeur passe (secours du 2026-08-16).
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  select * into v_session from public.quiz_sessions where id = p_session_id;
+  if v_session.id is null then raise exception 'QUIZ_INCONNU'; end if;
+
+  if v_session.current_question >= 1 then
+    select * into v_q from public.quiz_questions
+    where session_id = v_session.id and question_order = v_session.current_question;
+    if v_q.id is not null and v_session.question_started_at is not null then
+      v_elapsed := extract(epoch from (now() - v_session.question_started_at));
+    end if;
+  end if;
+
+  if v_session.kind = 'raid' then
+    v_damage := public._raid_damage(v_session.id);
+  end if;
+
+  return json_build_object(
+    'session', row_to_json(v_session),
+    'total_questions', (select count(*) from public.quiz_questions
+                        where session_id = v_session.id),
+
+    'raid', case when v_session.kind <> 'raid' then null else json_build_object(
+      'damage', v_damage,
+      'hp_left', greatest(0, v_session.boss_hp_max - v_damage),
+      'defeated', v_damage >= v_session.boss_hp_max) end,
+
+    'question', case when v_q.id is null then null else json_build_object(
+      'id', v_q.id, 'question', v_q.question, 'choices', v_q.choices,
+      'correct_index', v_q.correct_index,
+      'duration_seconds', v_q.duration_seconds,
+      'elapsed_ms', round(v_elapsed * 1000),
+      'answers_count', (select count(*) from public.quiz_answers
+                        where question_id = v_q.id),
+      'correct_count', (select count(*) from public.quiz_answers
+                        where question_id = v_q.id and is_correct),
+      'distribution', (select coalesce(json_agg(n order by idx), '[]'::json) from (
+        select gs.idx, count(a.id)::int as n
+        from generate_series(0, jsonb_array_length(v_q.choices) - 1) gs(idx)
+        left join public.quiz_answers a
+          on a.question_id = v_q.id and a.answer_index = gs.idx
+        group by gs.idx) d)) end,
+
+    'top', coalesce((select json_agg(row_to_json(t)) from (
+      select p.pseudo, sum(a.points)::int as points
+      from public.quiz_answers a
+      join public.quiz_questions q on q.id = a.question_id
+      join public.players p on p.id = a.player_id
+      where q.session_id = v_session.id
+      group by p.id, p.pseudo
+      order by sum(a.points) desc, max(a.answered_at) asc
+      limit 5) t), '[]'::json));
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_quiz_next(p_session_id uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_session public.quiz_sessions%rowtype;
+  v_total   int;
+begin
+  -- ⬇️ LA SEULE LIGNE MODIFIÉE : is_staff() devient is_equipe(),
+  --    donc un vendeur passe (secours du 2026-08-16).
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  select * into v_session from public.quiz_sessions where id = p_session_id;
+  if v_session.id is null then raise exception 'QUIZ_INCONNU'; end if;
+  if v_session.status <> 'en_cours' then raise exception 'QUIZ_INACTIF'; end if;
+
+  select count(*) into v_total from public.quiz_questions where session_id = p_session_id;
+  if v_session.current_question >= v_total then raise exception 'PLUS_DE_QUESTIONS'; end if;
+
+  update public.quiz_sessions
+     set current_question = current_question + 1, question_started_at = now()
+   where id = p_session_id
+  returning * into v_session;
+  return row_to_json(v_session);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_quiz_start(p_session_id uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_session public.quiz_sessions%rowtype;
+  v_phase   text;
+begin
+  -- ⬇️ LA SEULE LIGNE MODIFIÉE : is_staff() devient is_equipe(),
+  --    donc un vendeur passe (secours du 2026-08-16).
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  select * into v_session from public.quiz_sessions where id = p_session_id;
+  if v_session.id is null then raise exception 'QUIZ_INCONNU'; end if;
+  if not exists (select 1 from public.quiz_questions where session_id = p_session_id) then
+    raise exception 'QUIZ_VIDE';
+  end if;
+
+  -- Une seule session en cours à la fois
+  update public.quiz_sessions set status = 'terminee'
+  where status = 'en_cours' and id <> p_session_id;
+
+  update public.quiz_sessions
+     set status = 'en_cours', current_question = 0, question_started_at = null
+   where id = p_session_id
+  returning * into v_session;
+
+  -- Quiz → phase QUIZ ; raid → phase RAID (quêtes verrouillées)
+  v_phase := case when v_session.kind = 'raid' then 'RAID' else 'QUIZ' end;
+  update public.game_state set phase = v_phase, updated_at = now() where id = 1;
+  insert into public.events (type, payload)
+  values ('phase', jsonb_build_object(
+    'message', case when v_session.kind = 'raid'
+      then 'RAID FINAL — le boss « ' || v_session.boss_name
+        || ' » attaque le festival ! Tous sur vos téléphones !'
+      else 'Le grand quiz commence — tous sur vos téléphones !' end,
+    'phase', v_phase));
+
+  return row_to_json(v_session);
+end;
+$function$
+;
+
+-- lot 5 : admin_recent_spins, admin_record_duel, admin_redeem, admin_rename_player, admin_rename_quiz_session, admin_set_hunt_active, admin_set_phase, admin_set_qr_active, admin_set_roulette_cost, admin_set_status
+create OR REPLACE FUNCTION public.admin_recent_spins(p_limit integer DEFAULT 30)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  return coalesce((
+    select json_agg(row_to_json(t)) from (
+      select s.id, s.redeem_code, s.created_at, s.redeemed_at,
+             p.pseudo, pr.name as prize_name, pr.icon as prize_icon
+      from public.roulette_spins s
+      join public.players p on p.id = s.player_id
+      left join public.roulette_prizes pr on pr.id = s.prize_id
+      where s.redeem_code is not null
+      order by s.created_at desc limit greatest(1, coalesce(p_limit,30))
+    ) t
+  ), '[]'::json);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_record_duel(p_player1 uuid, p_player2 uuid, p_winner uuid, p_xp integer DEFAULT 200)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_winner    public.players%rowtype;
+  v_loser     public.players%rowtype;
+  v_old_level int;
+  v_duel_id   uuid;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if p_player1 is null or p_player2 is null or p_player1 = p_player2 then
+    raise exception 'DUEL_JOUEURS_IDENTIQUES';
+  end if;
+  if p_winner is null or (p_winner <> p_player1 and p_winner <> p_player2) then
+    raise exception 'VAINQUEUR_INVALIDE';
+  end if;
+  -- Récompense toujours positive (REGLES.md §3 : pas de malus)
+  if p_xp is null or p_xp < 1 or p_xp > 100000 then raise exception 'BONUS_INVALIDE'; end if;
+
+  select * into v_winner from public.players where id = p_winner;
+  if v_winner.id is null then raise exception 'JOUEUR_INCONNU'; end if;
+  select * into v_loser from public.players
+   where id = case when p_winner = p_player1 then p_player2 else p_player1 end;
+  if v_loser.id is null then raise exception 'JOUEUR_INCONNU'; end if;
+
+  insert into public.duels (player1_id, player2_id, winner_id, xp)
+  values (p_player1, p_player2, p_winner, p_xp)
+  returning id into v_duel_id;
+
+  -- Récompense du vainqueur (même mécanique que le bonus GM)
+  v_old_level := public.level_for_xp(v_winner.xp);
+  update public.players set
+    xp     = xp + p_xp,
+    jetons = jetons + p_xp / 10,
+    level  = public.level_for_xp(xp + p_xp),
+    rank   = public.rank_for_level(public.level_for_xp(xp + p_xp))
+  where id = p_winner
+  returning * into v_winner;
+
+  -- Le moment fort pour l'écran géant
+  insert into public.events (type, player_id, payload)
+  values ('duel', p_winner, jsonb_build_object(
+    'message', v_winner.pseudo || ' remporte le duel contre ' || v_loser.pseudo || ' !',
+    'winner', v_winner.pseudo, 'loser', v_loser.pseudo, 'xp', p_xp));
+
+  if v_winner.level > v_old_level then
+    insert into public.events (type, player_id, payload)
+    values ('level_up', p_winner, jsonb_build_object(
+      'message', v_winner.pseudo || ' passe au niveau ' || v_winner.level || ' !',
+      'level', v_winner.level, 'old_level', v_old_level));
+  end if;
+
+  return json_build_object('duel_id', v_duel_id, 'winner', row_to_json(v_winner));
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_redeem(p_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_spin public.roulette_spins%rowtype; v_prize public.roulette_prizes%rowtype; v_player public.players%rowtype;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  select * into v_spin from public.roulette_spins where redeem_code = upper(trim(p_code));
+  if v_spin.id is null then raise exception 'BON_INCONNU'; end if;
+  if v_spin.redeemed_at is not null then raise exception 'DEJA_RETIRE'; end if;
+
+  update public.roulette_spins set redeemed_at = now() where id = v_spin.id;
+  select * into v_prize from public.roulette_prizes where id = v_spin.prize_id;
+  select * into v_player from public.players where id = v_spin.player_id;
+  return json_build_object('prize', v_prize.name, 'player', v_player.pseudo);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_rename_player(p_player_id uuid, p_pseudo text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_player public.players%rowtype;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  p_pseudo := trim(p_pseudo);
+  if p_pseudo is null or char_length(p_pseudo) < 2 or char_length(p_pseudo) > 16 then
+    raise exception 'PSEUDO_INVALIDE';
+  end if;
+  if exists (select 1 from public.players
+             where lower(pseudo) = lower(p_pseudo) and id <> p_player_id) then
+    raise exception 'PSEUDO_DEJA_PRIS';
+  end if;
+
+  update public.players set pseudo = p_pseudo
+  where id = p_player_id returning * into v_player;
+  if v_player.id is null then raise exception 'JOUEUR_INCONNU'; end if;
+  return row_to_json(v_player);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_rename_quiz_session(p_id uuid, p_title text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_session public.quiz_sessions%rowtype;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+
+  select * into v_session from public.quiz_sessions where id = p_id;
+  if v_session.id is null then raise exception 'QUIZ_INCONNU'; end if;
+
+  -- Le titre s'affiche sur l'écran géant ET sur tous les téléphones.
+  -- Le changer en pleine partie ferait clignoter le nom de l'épreuve
+  -- sous les yeux de tout le jardin : on l'interdit.
+  if v_session.status <> 'preparee' then raise exception 'QUIZ_DEJA_LANCE'; end if;
+
+  -- Volontairement TITRE_VIDE et non TITRE_MANQUANT : ce dernier est
+  -- déjà traduit par « Donne un titre à la quête » côté console.
+  if coalesce(trim(p_title), '') = '' then raise exception 'TITRE_VIDE'; end if;
+  if char_length(trim(p_title)) > 80 then raise exception 'TITRE_TROP_LONG'; end if;
+
+  update public.quiz_sessions set title = trim(p_title)
+  where id = p_id
+  returning * into v_session;
+  return row_to_json(v_session);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_set_hunt_active(p_id uuid, p_active boolean)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_hunt public.treasure_hunts%rowtype;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if p_active then
+    update public.treasure_hunts set active = false where id <> p_id;
+  end if;
+  update public.treasure_hunts set active = coalesce(p_active, false)
+  where id = p_id
+  returning * into v_hunt;
+  if v_hunt.id is null then raise exception 'CHASSE_INCONNUE'; end if;
+  return row_to_json(v_hunt);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_set_phase(p_phase text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_state public.game_state%rowtype;
+  v_roi   record;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if p_phase not in ('EXPLORATION','QUIZ','RAID','CLOTURE') then
+    raise exception 'PHASE_INVALIDE';
+  end if;
+
+  if p_phase = 'CLOTURE' then
+    select p.pseudo, public._points_jour(p.xp_jour, p.jour) as points
+      into v_roi
+      from public.players p
+      where p.status = 'actif'
+      order by public._points_jour(p.xp_jour, p.jour) desc, p.created_at asc
+      limit 1;
+    if v_roi.points is not null and v_roi.points > 0 then
+      insert into public.tournament_kings (jour, pseudo, points)
+      values (current_date, v_roi.pseudo, v_roi.points)
+      on conflict (jour) do update
+        set pseudo = excluded.pseudo, points = excluded.points, decided_at = now();
+    end if;
+  end if;
+
+  update public.game_state
+     set phase = p_phase, updated_at = now()
+   where id = 1
+  returning * into v_state;
+
+  -- Trace pour l'écran géant et le journal
+  insert into public.events (type, payload)
+  values ('phase', jsonb_build_object(
+    'message', case p_phase
+      when 'EXPLORATION' then 'Retour à l''exploration libre — toutes les quêtes sont ouvertes !'
+      when 'QUIZ'        then 'Le grand quiz commence — tous sur vos téléphones !'
+      when 'RAID'        then 'RAID FINAL — les quêtes sont verrouillées, épreuve collective !'
+      else                    'Le jeu est terminé — place au podium !'
+    end,
+    'phase', p_phase));
+
+  return row_to_json(v_state);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_set_qr_active(p_id uuid, p_active boolean)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_qr public.qr_codes%rowtype;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  update public.qr_codes set active = p_active where id = p_id returning * into v_qr;
+  if v_qr.id is null then raise exception 'QR_INCONNU'; end if;
+  return row_to_json(v_qr);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_set_roulette_cost(p_cost integer)
+ RETURNS void
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if p_cost is null or p_cost < 1 or p_cost > 100000 then raise exception 'COUT_INVALIDE'; end if;
+  update public.game_state set roulette_cost = p_cost where id = 1;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_set_status(p_player_id uuid, p_status text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player public.players%rowtype;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  if p_status not in ('actif', 'exclu') then raise exception 'STATUT_INVALIDE'; end if;
+
+  update public.players set status = p_status
+  where id = p_player_id
+  returning * into v_player;
+  if v_player.id is null then raise exception 'JOUEUR_INCONNU'; end if;
+
+  insert into public.events (type, player_id, payload)
+  values ('kill_switch', p_player_id, jsonb_build_object(
+    'message', case when p_status = 'exclu'
+                    then v_player.pseudo || ' a été exclu du jeu par le Game Master'
+                    else v_player.pseudo || ' a été réintégré dans le jeu' end,
+    'status', p_status));
+
+  return row_to_json(v_player);
+end;
+$function$
+;
+
+-- lot 6 : admin_stats, admin_update_badge, admin_update_hunt, admin_update_prize, admin_update_quest, admin_update_quiz_question, admin_update_raid_params, admin_update_step, admin_validate_quest, archive_lire
+create OR REPLACE FUNCTION public.admin_stats()
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v json;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  select json_build_object(
+    'players_total',    (select count(*) from public.players),
+    'players_active',   (select count(*) from public.players where status = 'actif'),
+    'players_engaged',  (select count(distinct player_id) from public.scans),
+    'players_excluded', (select count(*) from public.players where status = 'exclu'),
+    'xp_total',         (select coalesce(sum(xp), 0) from public.players),
+    'scans_total',      (select count(*) from public.scans),
+    'qr_total',         (select count(*) from public.qr_codes),
+    'qr_active',        (select count(*) from public.qr_codes where active),
+    'quests_active',    (select count(*) from public.quests where active),
+    'badges_awarded',   (select count(*) from public.player_badges),
+    'announcements_total', (select count(*) from public.announcements),
+    'quests_by_type',   (select json_object_agg(type, n) from (
+                           select type, count(*) as n from public.quests group by type
+                         ) q)
+  ) into v;
+  return v;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_update_badge(p_id uuid, p_name text, p_icon text, p_description text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_badge public.badges%rowtype;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  select * into v_badge from public.badges where id = p_id;
+  if v_badge.id is null then raise exception 'BADGE_INCONNU'; end if;
+  if coalesce(trim(p_name), '') = '' then raise exception 'NOM_BADGE_MANQUANT'; end if;
+  if public._is_system_badge(v_badge.name) and trim(p_name) <> v_badge.name then
+    raise exception 'BADGE_SYSTEME_RENOMMAGE';
+  end if;
+
+  update public.badges set
+    name        = trim(p_name),
+    icon        = coalesce(nullif(trim(p_icon), ''), 'fa-medal'),
+    description = nullif(trim(coalesce(p_description, '')), '')
+  where id = p_id returning * into v_badge;
+  return row_to_json(v_badge);
+exception when unique_violation then
+  raise exception 'BADGE_NOM_PRIS';
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_update_hunt(p_id uuid, p_title text, p_first_bonus integer)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_hunt public.treasure_hunts%rowtype;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if coalesce(trim(p_title), '') = '' then raise exception 'TITRE_MANQUANT'; end if;
+  if p_first_bonus is null or p_first_bonus < 0 or p_first_bonus > 100000 then
+    raise exception 'BONUS_INVALIDE';
+  end if;
+  update public.treasure_hunts
+     set title = trim(p_title), first_bonus = p_first_bonus
+   where id = p_id
+  returning * into v_hunt;
+  if v_hunt.id is null then raise exception 'CHASSE_INCONNUE'; end if;
+  return row_to_json(v_hunt);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_update_prize(p_id uuid, p_name text, p_icon text, p_weight integer, p_stock integer, p_active boolean, p_kind text DEFAULT 'objet'::text, p_value integer DEFAULT 0, p_badge_id uuid DEFAULT NULL::uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_p public.roulette_prizes%rowtype; v_kind text;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  v_kind := coalesce(nullif(trim(coalesce(p_kind,'')),''), 'objet');
+  if v_kind not in ('objet','xp','jetons','badge','rien') then raise exception 'GENRE_INCONNU'; end if;
+  if v_kind = 'badge' and p_badge_id is null then raise exception 'BADGE_MANQUANT'; end if;
+
+  update public.roulette_prizes set
+    name = trim(p_name), icon = coalesce(nullif(trim(coalesce(p_icon,'')),''),'fa-gift'),
+    weight = greatest(0, coalesce(p_weight,10)), stock = p_stock, active = coalesce(p_active,true),
+    kind = v_kind, value = greatest(0, coalesce(p_value,0)),
+    badge_id = case when v_kind = 'badge' then p_badge_id else null end
+  where id = p_id returning * into v_p;
+  if v_p.id is null then raise exception 'LOT_INCONNU'; end if;
+  return row_to_json(v_p);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_update_quest(p_id uuid, p_title text, p_description text, p_type text, p_counter text, p_goal integer, p_xp integer, p_active boolean, p_badge_id uuid DEFAULT NULL::uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_q public.quests%rowtype;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+  if p_type not in ('standard','secrete','boss','collection') then raise exception 'TYPE_INVALIDE'; end if;
+  if p_badge_id is not null and not exists (select 1 from public.badges where id = p_badge_id) then
+    raise exception 'BADGE_INCONNU';
+  end if;
+  update public.quests set
+    title = trim(p_title), description = nullif(trim(coalesce(p_description,'')),''),
+    type = p_type, counter = coalesce(p_counter,'manuel'),
+    goal_count = greatest(1, coalesce(p_goal,1)), xp_reward = coalesce(p_xp,100),
+    badge_id = p_badge_id,
+    active = coalesce(p_active,true), requires_staff = (coalesce(p_counter,'manuel') = 'manuel')
+  where id = p_id returning * into v_q;
+  if v_q.id is null then raise exception 'QUETE_INCONNUE'; end if;
+  return row_to_json(v_q);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_update_quiz_question(p_id uuid, p_question text, p_choices jsonb, p_correct integer, p_duration integer)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_q public.quiz_questions%rowtype;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if exists (select 1 from public.quiz_answers where question_id = p_id) then
+    raise exception 'QUESTION_VERROUILLEE';
+  end if;
+  if coalesce(trim(p_question), '') = '' then raise exception 'QUESTION_MANQUANTE'; end if;
+  if jsonb_typeof(p_choices) <> 'array'
+     or jsonb_array_length(p_choices) < 2
+     or jsonb_array_length(p_choices) > 4 then
+    raise exception 'CHOIX_INVALIDES';
+  end if;
+  if p_correct is null or p_correct < 0 or p_correct >= jsonb_array_length(p_choices) then
+    raise exception 'BONNE_REPONSE_INVALIDE';
+  end if;
+  if p_duration is null or p_duration < 5 or p_duration > 120 then
+    raise exception 'DUREE_INVALIDE';
+  end if;
+
+  update public.quiz_questions set
+    question = trim(p_question), choices = p_choices,
+    correct_index = p_correct, duration_seconds = p_duration
+  where id = p_id
+  returning * into v_q;
+  if v_q.id is null then raise exception 'QUESTION_INCONNUE'; end if;
+  return row_to_json(v_q);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_update_raid_params(p_session_id uuid, p_boss_name text, p_boss_image text, p_boss_hp integer, p_bonus_xp integer)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_session public.quiz_sessions%rowtype;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  select * into v_session from public.quiz_sessions where id = p_session_id;
+  if v_session.id is null then raise exception 'QUIZ_INCONNU'; end if;
+  if v_session.kind <> 'raid' then raise exception 'PAS_UN_RAID'; end if;
+  if v_session.status = 'terminee' then raise exception 'RAID_TERMINE'; end if;
+
+  if coalesce(trim(p_boss_name), '') = '' then raise exception 'BOSS_MANQUANT'; end if;
+  if p_boss_hp is null or p_boss_hp < 1 or p_boss_hp > 1000000 then
+    raise exception 'PV_INVALIDES';
+  end if;
+  if p_bonus_xp is null or p_bonus_xp < 0 or p_bonus_xp > 10000 then
+    raise exception 'BONUS_INVALIDE';
+  end if;
+
+  update public.quiz_sessions set
+    boss_name = trim(p_boss_name),
+    boss_image = nullif(trim(p_boss_image), ''),
+    boss_hp_max = p_boss_hp,
+    raid_bonus_xp = p_bonus_xp
+  where id = p_session_id
+  returning * into v_session;
+  return row_to_json(v_session);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_update_step(p_id uuid, p_riddle text, p_answer text, p_xp integer)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_step public.treasure_steps%rowtype;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if coalesce(trim(p_riddle), '') = '' then raise exception 'ENIGME_MANQUANTE'; end if;
+  if public._norm_answer(p_answer) = ''  then raise exception 'REPONSE_MANQUANTE'; end if;
+  if p_xp is null or p_xp < 1 or p_xp > 100000 then raise exception 'BONUS_INVALIDE'; end if;
+
+  update public.treasure_steps
+     set riddle = trim(p_riddle), answer = trim(p_answer), xp_reward = p_xp
+   where id = p_id
+  returning * into v_step;
+  if v_step.id is null then raise exception 'ETAPE_INCONNUE'; end if;
+  return row_to_json(v_step);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.admin_validate_quest(p_player_id uuid, p_quest_id uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player    public.players%rowtype;
+  v_quest     public.quests%rowtype;
+  v_prog      public.quest_progress%rowtype;
+  v_old_level int;
+  v_badge     text;
+begin
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+
+  select * into v_quest from public.quests where id = p_quest_id;
+  if v_quest.id is null then raise exception 'QUETE_INCONNUE'; end if;
+  if v_quest.counter <> 'manuel' then raise exception 'QUETE_NON_MANUELLE'; end if;
+  if not v_quest.active then raise exception 'QUETE_INACTIVE'; end if;
+
+  select * into v_player from public.players where id = p_player_id;
+  if v_player.id is null then raise exception 'JOUEUR_INCONNU'; end if;
+  if v_player.status <> 'actif' then raise exception 'JOUEUR_EXCLU'; end if;
+
+  -- Anti-double : une quête staff ne se valide qu'UNE fois par jour.
+  select * into v_prog from public.quest_progress
+   where player_id = p_player_id and quest_id = p_quest_id and jour = current_date
+   for update;
+  if v_prog.completed_at is not null then raise exception 'QUETE_DEJA_VALIDEE'; end if;
+
+  insert into public.quest_progress (player_id, quest_id, progress, completed_at, jour)
+  values (p_player_id, p_quest_id, v_quest.goal_count, now(), current_date)
+  on conflict (player_id, quest_id, jour) do update
+    set progress = excluded.progress, completed_at = excluded.completed_at;
+
+  -- Récompense (même mécanique que le Bonus GM : l'XP ne baisse jamais)
+  v_old_level := public.level_for_xp(v_player.xp);
+  update public.players set
+    xp     = xp + v_quest.xp_reward,
+    jetons = jetons + v_quest.xp_reward / 10,
+    level  = public.level_for_xp(xp + v_quest.xp_reward),
+    rank   = public.rank_for_level(public.level_for_xp(xp + v_quest.xp_reward))
+  where id = p_player_id
+  returning * into v_player;
+
+  if v_quest.badge_id is not null then
+    v_badge := public._award_badge(p_player_id, v_player.pseudo,
+                 (select name from public.badges where id = v_quest.badge_id));
+  end if;
+
+  insert into public.events (type, player_id, payload)
+  values ('quete', p_player_id, jsonb_build_object(
+    'message', v_player.pseudo || ' a terminé la mission « ' || v_quest.title || ' » (+' || v_quest.xp_reward || ' XP)',
+    'quest', v_quest.title, 'xp', v_quest.xp_reward));
+
+  if v_player.level > v_old_level then
+    insert into public.events (type, player_id, payload)
+    values ('level_up', p_player_id, jsonb_build_object(
+      'message', v_player.pseudo || ' passe au niveau ' || v_player.level || ' !',
+      'level', v_player.level, 'old_level', v_old_level));
+  end if;
+
+  return json_build_object(
+    'player', row_to_json(v_player),
+    'quest',  v_quest.title,
+    'xp',     v_quest.xp_reward,
+    'badge',  v_badge);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.archive_lire(p_table text)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_out json;
+begin
+  -- Réservé au Game Master. Un vendeur n'a rien à faire ici :
+  -- `is_staff()` et non `is_equipe()`, volontairement.
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+
+  if p_table not in (
+    'manifeste',
+    'players','scans','events','player_badges','quest_progress',
+    'roulette_spins','player_profile','player_contact','micro_votes',
+    'coups_de_coeur','sortie_reponses','quiz_answers','treasure_progress',
+    'duels','tournament_kings','carnets','tickets',
+    'qr_codes','quests','badges','quiz_sessions','quiz_questions',
+    'treasure_hunts','treasure_steps','roulette_prizes','micro_questions',
+    'announcements'
+  ) then
+    raise exception 'TABLE_INCONNUE: %', p_table;
+  end if;
+
+  execute format(
+    'select coalesce(json_agg(t), ''[]''::json) from archive_yaounde.%I t', p_table)
+    into v_out;
+  return v_out;
+end $function$
+;
+
+-- lot 7 : billetterie_stats, carnet_attribuer, carnet_creer, carnet_etat, carnet_liste, carnet_pointer, carnet_rendre, carnet_reprendre, coeur_donner, coeur_liste
+create OR REPLACE FUNCTION public.billetterie_stats()
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_prix integer;
+  v_out  json;
+begin
+  if not public.is_gm() then raise exception 'ACCES_REFUSE'; end if;
+
+  select prix_journee into v_prix from public.billetterie_config where id = 1;
+
+  select json_build_object(
+    'prix',    v_prix,
+    'jour',    current_date,
+    'total',   json_build_object(
+      'carnets',  (select count(*) from public.carnets),
+      'remis',    (select coalesce(sum(nb_tickets), 0) from public.carnets),
+      'rendus',   (select coalesce(sum(rendus), 0) from public.carnets),
+      'rendus_reels',
+                  (select count(*) from public.tickets where rendu_le is not null),
+      'libres',   (select count(*) from public.tickets k
+                    join public.carnets c on c.id = k.carnet_id
+                   where k.utilise_par is null and k.rendu_le is null and c.actif),
+      'actives',  (select count(*) from public.tickets where utilise_par is not null),
+      'actives_aujourdhui',
+                  (select count(*) from public.tickets where jour = current_date),
+      'du',       (select coalesce(sum(nb_tickets - rendus), 0) * v_prix from public.carnets),
+      -- ⬇️ l'argent déjà rentré, prouvé par des tickets activés
+      'encaisse', (select count(*) from public.tickets where utilise_par is not null) * v_prix,
+      'encaisse_jour',
+                  (select count(*) from public.tickets where jour = current_date) * v_prix,
+      -- ⬇️ le papier encore dans les mains des vendeurs
+      'en_main',  greatest(
+                    (select coalesce(sum(nb_tickets - rendus), 0) from public.carnets)
+                  - (select count(*) from public.tickets where utilise_par is not null), 0)
+    ),
+    'vendeurs', coalesce((
+      select json_agg(t order by t.vendeur_nom) from (
+        select c.vendeur_nom,
+               count(*)                                          as carnets,
+               coalesce(sum(c.nb_tickets), 0)                    as remis,
+               coalesce(sum(c.rendus), 0)                        as rendus,
+               coalesce(sum(k.actives), 0)                       as actives,
+               coalesce(sum(c.nb_tickets - c.rendus), 0) * v_prix as du,
+               -- ⬇️ les trois nouveaux
+               coalesce(sum(k.actives_jour), 0)                  as actives_aujourdhui,
+               greatest(coalesce(sum(c.nb_tickets - c.rendus), 0)
+                      - coalesce(sum(k.actives), 0), 0)          as en_main,
+               coalesce(sum(k.actives), 0) * v_prix              as encaisse,
+               coalesce(sum(k.actives_jour), 0) * v_prix         as encaisse_jour
+        from public.carnets c
+        left join lateral (
+          select count(*) filter (where t2.utilise_par is not null)   as actives,
+                 count(*) filter (where t2.jour = current_date)       as actives_jour
+          from public.tickets t2 where t2.carnet_id = c.id
+        ) k on true
+        group by c.vendeur_nom
+      ) t), '[]'::json),
+    'carnets', coalesce((
+      select json_agg(t order by t.numero) from (
+        select c.numero, c.vendeur_nom, c.nb_tickets, c.rendus, c.actif,
+               (c.nb_tickets - c.rendus) * v_prix as du,
+               (select count(*) from public.tickets k
+                 where k.carnet_id = c.id and k.utilise_par is not null) as actives
+        from public.carnets c
+      ) t), '[]'::json)
+  ) into v_out;
+
+  return v_out;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.carnet_attribuer(p_carnet_id uuid, p_email text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_user   uuid;
+  v_carnet public.carnets%rowtype;
+begin
+  if not public.is_gm() then raise exception 'ACCES_REFUSE'; end if;
+
+  select id into v_user from auth.users where lower(email) = lower(trim(coalesce(p_email, '')));
+  if v_user is null then raise exception 'COMPTE_INCONNU'; end if;
+  if not exists (select 1 from public.staff where user_id = v_user) then
+    raise exception 'PAS_DANS_LE_STAFF';
+  end if;
+
+  update public.carnets set vendeur_user = v_user where id = p_carnet_id
+  returning * into v_carnet;
+  if v_carnet.id is null then raise exception 'CARNET_INCONNU'; end if;
+
+  return row_to_json(v_carnet);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.carnet_creer(p_vendeur_nom text, p_nb_tickets integer, p_note text DEFAULT NULL::text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_carnet public.carnets%rowtype;
+  v_numero integer;
+  v_code   text;
+  v_tries  integer;
+  i        integer;
+begin
+  if not public.is_gm() then raise exception 'ACCES_REFUSE'; end if;
+
+  p_vendeur_nom := trim(coalesce(p_vendeur_nom, ''));
+  if char_length(p_vendeur_nom) < 2 then raise exception 'VENDEUR_MANQUANT'; end if;
+  if p_nb_tickets is null or p_nb_tickets < 1 or p_nb_tickets > 500 then
+    raise exception 'NOMBRE_INVALIDE';
+  end if;
+
+  select coalesce(max(numero), 0) + 1 into v_numero from public.carnets;
+
+  insert into public.carnets (numero, vendeur_nom, nb_tickets, note, cree_par)
+  values (v_numero, p_vendeur_nom, p_nb_tickets, nullif(trim(coalesce(p_note, '')), ''), auth.uid())
+  returning * into v_carnet;
+
+  for i in 1..p_nb_tickets loop
+    v_tries := 0;
+    loop
+      v_code := public._ticket_code();
+      exit when not exists (select 1 from public.tickets where code = v_code);
+      v_tries := v_tries + 1;
+      if v_tries > 50 then raise exception 'CODE_GENERATION'; end if;
+    end loop;
+    insert into public.tickets (carnet_id, code, rang) values (v_carnet.id, v_code, i);
+  end loop;
+
+  return json_build_object(
+    'carnet', row_to_json(v_carnet),
+    'tickets', (select coalesce(json_agg(json_build_object('rang', rang, 'code', code)
+                                         order by rang), '[]'::json)
+                from public.tickets where carnet_id = v_carnet.id)
+  );
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.carnet_etat(p_carnet_id uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_role   text;
+  v_carnet public.carnets%rowtype;
+  v_prix   integer;
+begin
+  v_role := public.staff_role();
+  if v_role is null or v_role not in ('gm','vendeur') then raise exception 'ACCES_REFUSE'; end if;
+
+  select * into v_carnet from public.carnets where id = p_carnet_id;
+  if v_carnet.id is null then raise exception 'CARNET_INCONNU'; end if;
+  if v_role = 'vendeur' and v_carnet.vendeur_user is distinct from auth.uid() then
+    raise exception 'ACCES_REFUSE';
+  end if;
+
+  select prix_journee into v_prix from public.billetterie_config where id = 1;
+
+  return json_build_object(
+    'carnet',  row_to_json(v_carnet),
+    'prix',    v_prix,
+    'du',      (v_carnet.nb_tickets - v_carnet.rendus) * v_prix,
+    'tickets', (select coalesce(json_agg(json_build_object(
+                          'rang',     k.rang,
+                          'code',     k.code,
+                          'utilise',  k.utilise_par is not null,
+                          'jour',     k.jour,
+                          'rendu_le', k.rendu_le,
+                          -- L'ordre des tests EST la règle : « utilisé »
+                          -- l'emporte sur tout, « annulé » ne vient qu'en
+                          -- dernier (un carnet désactivé n'efface pas les
+                          -- journées déjà payées).
+                          'etat', case
+                                    when k.utilise_par is not null then 'utilise'
+                                    when k.rendu_le    is not null then 'rendu'
+                                    when not v_carnet.actif        then 'annule'
+                                    else 'libre'
+                                  end
+                        ) order by k.rang), '[]'::json)
+                from public.tickets k where k.carnet_id = v_carnet.id)
+  );
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.carnet_liste()
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_role text;
+  v_prix integer;
+  v_out  json;
+begin
+  v_role := public.staff_role();
+  if v_role is null or v_role not in ('gm','vendeur') then raise exception 'ACCES_REFUSE'; end if;
+
+  select prix_journee into v_prix from public.billetterie_config where id = 1;
+
+  select json_build_object(
+    'role',    v_role,
+    'prix',    v_prix,
+    'carnets', coalesce((
+      select json_agg(t order by t.numero) from (
+        select c.id, c.numero, c.vendeur_nom, c.nb_tickets, c.rendus, c.actif,
+               c.note, c.cree_le,
+               (select count(*) from public.tickets k
+                 where k.carnet_id = c.id and k.utilise_par is not null)          as actives,
+               (select count(*) from public.tickets k
+                 where k.carnet_id = c.id and k.jour = current_date)              as actives_aujourdhui,
+               -- ⬇️ les deux nouveaux
+               (select count(*) from public.tickets k
+                 where k.carnet_id = c.id and k.rendu_le is not null)             as rendus_reels,
+               (select count(*) from public.tickets k
+                 where k.carnet_id = c.id
+                   and k.utilise_par is null and k.rendu_le is null)              as libres,
+               (c.nb_tickets - c.rendus) * v_prix                                 as du
+        from public.carnets c
+        where v_role = 'gm' or c.vendeur_user = auth.uid()
+      ) t), '[]'::json)
+  ) into v_out;
+
+  return v_out;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.carnet_pointer(p_carnet_id uuid, p_rendus integer DEFAULT NULL::integer, p_actif boolean DEFAULT NULL::boolean, p_note text DEFAULT NULL::text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_carnet     public.carnets%rowtype;
+  v_neutralises integer;
+begin
+  if not public.is_gm() then raise exception 'ACCES_REFUSE'; end if;
+
+  select * into v_carnet from public.carnets where id = p_carnet_id;
+  if v_carnet.id is null then raise exception 'CARNET_INCONNU'; end if;
+
+  if p_rendus is not null then
+    if p_rendus < 0 or p_rendus > v_carnet.nb_tickets then raise exception 'RENDUS_INVALIDE'; end if;
+
+    if p_rendus > v_carnet.nb_tickets - (select count(*) from public.tickets
+                                         where carnet_id = v_carnet.id and utilise_par is not null) then
+      raise exception 'RENDUS_SUPERIEUR_AUX_INVENDUS';
+    end if;
+
+    select count(*) into v_neutralises from public.tickets
+     where carnet_id = v_carnet.id and rendu_le is not null;
+    if p_rendus < v_neutralises then
+      raise exception 'RENDUS_INFERIEUR_AUX_IDENTIFIES';
+    end if;
+  end if;
+
+  update public.carnets set
+    rendus = coalesce(p_rendus, rendus),
+    actif  = coalesce(p_actif,  actif),
+    note   = coalesce(nullif(trim(coalesce(p_note, '')), ''), note)
+  where id = p_carnet_id
+  returning * into v_carnet;
+
+  return row_to_json(v_carnet);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.carnet_rendre(p_carnet_id uuid, p_codes text[] DEFAULT NULL::text[])
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_carnet public.carnets%rowtype;
+  v_n      integer;      -- rendus par CET appel
+  v_total  integer;      -- rendus en tout sur le carnet
+begin
+  if not public.is_gm() then raise exception 'ACCES_REFUSE'; end if;
+
+  select * into v_carnet from public.carnets where id = p_carnet_id;
+  if v_carnet.id is null then raise exception 'CARNET_INCONNU'; end if;
+
+  update public.tickets
+     set rendu_le = now()
+   where carnet_id   = p_carnet_id
+     and utilise_par is null          -- déjà activé = payé, on n'y touche pas
+     and rendu_le    is null          -- déjà rendu = on ne redate pas
+     and (p_codes is null
+          or code in (select public._norm_ticket(saisi.brut)
+                        from unnest(p_codes) as saisi(brut)));
+  get diagnostics v_n = row_count;
+
+  -- La colonne « rendus » du carnet reste LA RÉFÉRENCE DE L'ARGENT
+  -- (elle sert au calcul du dû). On la recale sur ce qui est
+  -- réellement neutralisé : les deux chiffres ne doivent jamais
+  -- pouvoir se contredire dans le dos du Game Master.
+  select count(*) into v_total
+    from public.tickets where carnet_id = p_carnet_id and rendu_le is not null;
+
+  update public.carnets set rendus = v_total where id = p_carnet_id
+  returning * into v_carnet;
+
+  return json_build_object(
+    'rendus_maintenant', v_n,
+    'rendus_total',      v_total,
+    'carnet',            row_to_json(v_carnet)
+  );
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.carnet_reprendre(p_carnet_id uuid, p_codes text[] DEFAULT NULL::text[])
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_carnet public.carnets%rowtype;
+  v_n      integer;
+  v_total  integer;
+begin
+  if not public.is_gm() then raise exception 'ACCES_REFUSE'; end if;
+
+  select * into v_carnet from public.carnets where id = p_carnet_id;
+  if v_carnet.id is null then raise exception 'CARNET_INCONNU'; end if;
+
+  update public.tickets
+     set rendu_le = null
+   where carnet_id = p_carnet_id
+     and rendu_le is not null
+     and (p_codes is null
+          or code in (select public._norm_ticket(saisi.brut)
+                        from unnest(p_codes) as saisi(brut)));
+  get diagnostics v_n = row_count;
+
+  select count(*) into v_total
+    from public.tickets where carnet_id = p_carnet_id and rendu_le is not null;
+
+  update public.carnets set rendus = v_total where id = p_carnet_id
+  returning * into v_carnet;
+
+  return json_build_object(
+    'reprises',     v_n,
+    'rendus_total', v_total,
+    'carnet',       row_to_json(v_carnet)
+  );
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.coeur_donner(p_secret_code text, p_qr_code_id uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player   public.players%rowtype;
+  v_cfg      public.coeur_config%rowtype;
+  v_phase    text;
+  v_donnes   integer;
+  v_payes    integer;
+  v_gain     integer := 0;
+  v_quete_xp integer := 0;              -- NOUVEAU
+  v_completed text[] := '{}';           -- NOUVEAU
+  v_badges    text[] := '{}';           -- NOUVEAU
+  v_old_level integer;                  -- NOUVEAU
+  v_prog     integer;                   -- NOUVEAU
+  r          record;                    -- NOUVEAU
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+  if v_player.status = 'exclu' then raise exception 'JOUEUR_EXCLU'; end if;
+
+  select * into v_cfg from public.coeur_config where id = 1;
+  if not coalesce(v_cfg.actif, true) then raise exception 'COEUR_DESACTIVE'; end if;
+
+  select phase into v_phase from public.game_state where id = 1;
+  if coalesce(v_phase,'EXPLORATION') = 'CLOTURE' then raise exception 'PHASE_CLOTURE'; end if;
+
+  -- §12.2 : on ne vote que ce qu'on a scanné, et seulement un stand
+  -- ou un cosplayer. Impossible de voter depuis chez soi.
+  if not exists (
+    select 1 from public.scans s
+    join public.qr_codes q on q.id = s.qr_code_id
+    where s.player_id = v_player.id and s.qr_code_id = p_qr_code_id
+      and q.type in ('stand','cosplayer')
+  ) then
+    raise exception 'PAS_SCANNE';
+  end if;
+
+  select count(*) into v_donnes from public.coups_de_coeur where player_id = v_player.id;
+  if v_donnes >= coalesce(v_cfg.max_coeurs, 3) then raise exception 'PLUS_DE_COEURS'; end if;
+
+  insert into public.coups_de_coeur (player_id, qr_code_id)
+  values (v_player.id, p_qr_code_id)
+  on conflict (player_id, qr_code_id) do nothing;
+  if not found then raise exception 'DEJA_VOTE'; end if;
+
+  -- L'XP est versée au plus max_coeurs fois sur toute la partie.
+  insert into public.player_profile (player_id) values (v_player.id)
+  on conflict (player_id) do nothing;
+  select coeurs_payes into v_payes from public.player_profile where player_id = v_player.id;
+
+  if v_payes < coalesce(v_cfg.max_coeurs, 3) then
+    v_gain := coalesce(v_cfg.xp_par_coeur, 10);
+    update public.player_profile set coeurs_payes = coeurs_payes + 1
+    where player_id = v_player.id;
+  end if;
+
+  -- ---------------------------------------------------------
+  -- NOUVEAU — progression des missions de compteur `coeur`
+  -- ---------------------------------------------------------
+  -- Recopié de `scan_qr` (28_tournoi_quotidien.sql). `counter = 'coeur'`
+  -- et rien d'autre : ni `scan_any`, ni `qr`. Un vote ne fait donc jamais
+  -- avancer une mission de scan, et une carte votée ne compte pas deux fois.
+  for r in
+    select * from public.quests where active = true and counter = 'coeur'
+  loop
+    v_prog := null;
+    insert into public.quest_progress (player_id, quest_id, progress, jour)
+    values (v_player.id, r.id, 1, current_date)
+    on conflict (player_id, quest_id, jour) do update
+      set progress = quest_progress.progress + 1
+      where quest_progress.completed_at is null
+    returning progress into v_prog;
+
+    if v_prog is not null and v_prog >= r.goal_count then
+      update public.quest_progress set completed_at = now()
+      where player_id = v_player.id and quest_id = r.id
+        and jour = current_date and completed_at is null;
+      if found then
+        v_quete_xp  := v_quete_xp + r.xp_reward;
+        v_completed := array_append(v_completed, r.title);
+        insert into public.events (type, player_id, payload)
+        values ('quete', v_player.id, jsonb_build_object(
+          'message', v_player.pseudo || ' a terminé la mission « ' || r.title || ' » (+' || r.xp_reward || ' XP)',
+          'quest', r.title, 'xp', r.xp_reward));
+        if r.badge_id is not null then
+          v_badges := array_append(v_badges,
+            public._award_badge(v_player.id, v_player.pseudo,
+              (select name from public.badges where id = r.badge_id)));
+        end if;
+      end if;
+    end if;
+  end loop;
+
+  -- ---------------------------------------------------------
+  -- UNE SEULE écriture sur `players`, XP du cœur + XP des missions
+  -- ---------------------------------------------------------
+  -- ⚠️ L'ancienne version ne mettait à jour le joueur que si l'XP du cœur
+  --    était due. Avec les missions, il faut aussi écrire quand seule une
+  --    mission tombe (4e vote impossible ici, mais un plafond relevé dans
+  --    la console rendrait le cas réel). D'où le `if ... > 0` sur la somme.
+  v_old_level := public.level_for_xp(v_player.xp);
+  if (v_gain + v_quete_xp) > 0 then
+    update public.players set
+      xp     = xp + v_gain + v_quete_xp,
+      jetons = jetons + ((v_gain + v_quete_xp) / 10),
+      level  = public.level_for_xp(xp + v_gain + v_quete_xp),
+      rank   = public.rank_for_level(public.level_for_xp(xp + v_gain + v_quete_xp))
+    where id = v_player.id
+    returning * into v_player;
+
+    if v_player.level > v_old_level then
+      insert into public.events (type, player_id, payload)
+      values ('level_up', v_player.id, jsonb_build_object(
+        'message', v_player.pseudo || ' passe au niveau ' || v_player.level || ' !',
+        'level', v_player.level, 'old_level', v_old_level));
+    end if;
+  end if;
+
+  return json_build_object(
+    'player',    row_to_json(v_player),
+    'gain',      v_gain + v_quete_xp,
+    'quetes',    to_jsonb(array_remove(v_completed, null)),   -- NOUVEAU
+    'badges',    to_jsonb(array_remove(v_badges, null)),      -- NOUVEAU
+    'donnes',    v_donnes + 1,
+    'restants',  greatest(coalesce(v_cfg.max_coeurs, 3) - (v_donnes + 1), 0));
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.coeur_liste(p_secret_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player public.players%rowtype;
+  v_cfg    public.coeur_config%rowtype;
+  v_phase  text;
+  v_donnes integer;
+  v_out    json;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+
+  select * into v_cfg from public.coeur_config where id = 1;
+  select phase into v_phase from public.game_state where id = 1;
+  select count(*) into v_donnes from public.coups_de_coeur where player_id = v_player.id;
+
+  select coalesce(json_agg(t order by t.label), '[]'::json) into v_out
+  from (
+    select distinct
+      q.id,
+      q.label,
+      q.type,
+      exists (select 1 from public.coups_de_coeur c
+              where c.player_id = v_player.id and c.qr_code_id = q.id) as vote,
+      (select count(*) from public.coups_de_coeur c2 where c2.qr_code_id = q.id) as coeurs
+    from public.scans s
+    join public.qr_codes q on q.id = s.qr_code_id
+    where s.player_id = v_player.id
+      and q.type in ('stand','cosplayer')
+  ) t;
+
+  return json_build_object(
+    'actif',      coalesce(v_cfg.actif, true) and coalesce(v_phase,'EXPLORATION') <> 'CLOTURE',
+    'gele',       coalesce(v_phase,'EXPLORATION') = 'CLOTURE',
+    'max',        coalesce(v_cfg.max_coeurs, 3),
+    'donnes',     v_donnes,
+    'restants',   greatest(coalesce(v_cfg.max_coeurs, 3) - v_donnes, 0),
+    'xp',         coalesce(v_cfg.xp_par_coeur, 10),
+    'candidats',  v_out);
+end;
+$function$
+;
+
+-- lot 8 : coeur_palmares, coeur_retirer, contact_enregistrer, contact_etat, create_player, is_equipe, is_gm, is_staff, is_vendeur, jour_festival_label
+create OR REPLACE FUNCTION public.coeur_palmares(p_limite integer DEFAULT 10)
+ RETURNS json
+ LANGUAGE sql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+  select coalesce(json_agg(t), '[]'::json) from (
+    select q.label, q.type, count(c.player_id) as coeurs
+    from public.coups_de_coeur c
+    join public.qr_codes q on q.id = c.qr_code_id
+    group by q.id, q.label, q.type
+    order by count(c.player_id) desc, q.label
+    limit greatest(coalesce(p_limite, 10), 1)
+  ) t;
+$function$
+;
+
+create OR REPLACE FUNCTION public.coeur_retirer(p_secret_code text, p_qr_code_id uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player public.players%rowtype;
+  v_cfg    public.coeur_config%rowtype;
+  v_phase  text;
+  v_donnes integer;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+
+  select phase into v_phase from public.game_state where id = 1;
+  if coalesce(v_phase,'EXPLORATION') = 'CLOTURE' then raise exception 'PHASE_CLOTURE'; end if;
+
+  delete from public.coups_de_coeur
+  where player_id = v_player.id and qr_code_id = p_qr_code_id;
+
+  select * into v_cfg from public.coeur_config where id = 1;
+  select count(*) into v_donnes from public.coups_de_coeur where player_id = v_player.id;
+
+  return json_build_object(
+    'donnes',   v_donnes,
+    'restants', greatest(coalesce(v_cfg.max_coeurs, 3) - v_donnes, 0));
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.contact_enregistrer(p_secret_code text, p_telephone text, p_consent boolean DEFAULT false)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player  public.players%rowtype;
+  v_cfg     public.contact_config%rowtype;
+  v_age     text;
+  v_tel     text;
+  v_cout    integer;
+  v_bonus   integer := 0;
+  v_connu   boolean;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+  if v_player.status = 'exclu' then raise exception 'JOUEUR_EXCLU'; end if;
+
+  select * into v_cfg from public.contact_config where id = 1;
+  if not coalesce(v_cfg.actif, true) then raise exception 'CONTACT_DESACTIVE'; end if;
+
+  -- §14.2 : jamais à un mineur, jamais si l'âge n'est pas connu.
+  -- Contrôlé ICI aussi, pas seulement à l'affichage : le téléphone
+  -- pourrait appeler la fonction directement.
+  select tranche_age into v_age from public.player_profile where player_id = v_player.id;
+  if coalesce(v_age,'') not in ('19-24','25-30','31+') then
+    raise exception 'RESERVE_MAJEURS';
+  end if;
+
+  -- Le consentement est explicite, jamais pré-coché côté page (§14.2)
+  if not coalesce(p_consent, false) then raise exception 'CONSENTEMENT_REQUIS'; end if;
+
+  -- Normalisation : on ne garde que les chiffres, on retire l'indicatif
+  -- 237 s'il est présent. « +237 6 99 12 34 56 » → « 699123456 ».
+  v_tel := regexp_replace(coalesce(p_telephone,''), '[^0-9]', '', 'g');
+  if left(v_tel, 3) = '237' then v_tel := substr(v_tel, 4); end if;
+  -- Format camerounais mobile : 9 chiffres commençant par 6
+  if v_tel !~ '^6[0-9]{8}$' then raise exception 'NUMERO_INVALIDE'; end if;
+
+  -- Ce numéro a-t-il DÉJÀ servi ? (§14.4 : un numéro = un seul bonus,
+  -- sinon on se fabrique des tours gratuits avec le même téléphone)
+  select exists (select 1 from public.player_contact where telephone = v_tel) into v_connu;
+
+  insert into public.player_contact (player_id, telephone, consent)
+  values (v_player.id, v_tel, true)
+  on conflict (player_id) do nothing;
+  if not found then raise exception 'DEJA_ENREGISTRE'; end if;
+
+  if not v_connu then
+    select coalesce(roulette_cost, 30) into v_cout from public.game_state where id = 1;
+    v_bonus := case when coalesce(v_cfg.jetons_bonus,0) > 0
+                    then v_cfg.jetons_bonus else v_cout end;
+
+    -- Le « tour gratuit » = la valeur exacte d'un tour, en jetons.
+    -- Les jetons ne se dépensent QU'À la roulette (vérifié) : c'est
+    -- équivalent, et spin_roulette n'est pas modifiée.
+    update public.players set jetons = jetons + v_bonus
+    where id = v_player.id
+    returning * into v_player;
+  end if;
+
+  -- Le journal ne contient JAMAIS le numéro (§14.5)
+  return json_build_object(
+    'player',       row_to_json(v_player),
+    'tour_gratuit', v_bonus > 0,
+    'jetons_verses', v_bonus,
+    'deja_utilise', v_connu);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.contact_etat(p_secret_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player public.players%rowtype;
+  v_age    text;
+  v_deja   boolean;
+  v_cfg    public.contact_config%rowtype;
+  v_cout   integer;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+
+  select tranche_age into v_age from public.player_profile where player_id = v_player.id;
+  select exists (select 1 from public.player_contact where player_id = v_player.id) into v_deja;
+  select * into v_cfg from public.contact_config where id = 1;
+  select coalesce(roulette_cost, 30) into v_cout from public.game_state where id = 1;
+
+  return json_build_object(
+    -- §14.2 : jamais aux mineurs, jamais si l'âge est inconnu
+    'proposer', coalesce(v_cfg.actif, true)
+                and not v_deja
+                and coalesce(v_age,'') in ('19-24','25-30','31+'),
+    'deja',     v_deja,
+    'bonus',    case when coalesce(v_cfg.jetons_bonus,0) > 0
+                     then v_cfg.jetons_bonus else v_cout end,
+    -- La raison affichée est la vraie, pas un prétexte (§14.2)
+    'raison',   'Ton numéro sert à te retrouver si tu gagnes un lot que tu dois récupérer plus tard. Il ne sert à rien d''autre.');
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.create_player(p_pseudo text, p_archetype text, p_ticket text DEFAULT NULL::text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player public.players;
+  v_code   text;
+  -- ⬇️ CHANGEMENT 1 : le tableau `v_words` a disparu, il vit
+  -- maintenant dans _code_secret_tirage() (PARTIE 1).
+  v_tries  int := 0;
+  v_mur    boolean;
+  v_tcode  text;
+  v_ticket public.tickets%rowtype;
+  v_etat   text;
+begin
+  p_pseudo := trim(p_pseudo);
+
+  if p_pseudo is null or char_length(p_pseudo) < 2 or char_length(p_pseudo) > 16 then
+    raise exception 'PSEUDO_INVALIDE';
+  end if;
+  if p_archetype is null or char_length(p_archetype) = 0 then
+    raise exception 'ARCHETYPE_MANQUANT';
+  end if;
+
+  v_mur := coalesce((select actif from public.billetterie_config where id = 1), false);
+  if v_mur then
+    v_tcode := public._norm_ticket(p_ticket);
+    if v_tcode is null or v_tcode = '' then
+      raise exception 'TICKET_REQUIS';
+    end if;
+  end if;
+
+  if exists (select 1 from public.players where lower(pseudo) = lower(p_pseudo)) then
+    raise exception 'PSEUDO_DEJA_PRIS';
+  end if;
+
+  -- Rattrapage de la ruée d'inscription (fichier 54) : deux personnes
+  -- qui tapent le même pseudo dans la même seconde passent toutes les
+  -- deux la vérification ci-dessus. La seconde doit lire la vraie
+  -- raison, pas « Une erreur est survenue ».
+  begin
+    insert into public.players (pseudo, archetype)
+    values (p_pseudo, p_archetype)
+    returning * into v_player;
+  exception when unique_violation then
+    raise exception 'PSEUDO_DEJA_PRIS';
+  end;
+
+  loop
+    -- ⬇️ CHANGEMENT 2 : le tirage passe par la fonction dédiée.
+    v_code := public._code_secret_tirage();
+    exit when not exists (select 1 from public.player_secrets where secret_code = v_code);
+    v_tries := v_tries + 1;
+    if v_tries > 50 then raise exception 'CODE_GENERATION'; end if;
+  end loop;
+
+  insert into public.player_secrets (player_id, secret_code)
+  values (v_player.id, v_code);
+
+  if v_mur then
+    update public.tickets t
+       set utilise_par = v_player.id,
+           utilise_le  = now(),
+           jour        = current_date
+      from public.carnets c
+     where c.id = t.carnet_id
+       and t.code = v_tcode
+       and t.utilise_par is null
+       and t.rendu_le is null
+       and c.actif
+    returning t.* into v_ticket;
+
+    if v_ticket.id is null then
+      select * into v_ticket from public.tickets where code = v_tcode;
+      if v_ticket.id is null then
+        v_etat := 'INCONNU';
+      elsif v_ticket.utilise_par is not null then
+        v_etat := 'UTILISE';
+      elsif v_ticket.rendu_le is not null then
+        v_etat := 'RENDU';
+      else
+        v_etat := 'ANNULE';
+      end if;
+      raise exception 'TICKET_%', v_etat;
+    end if;
+  end if;
+
+  return json_build_object(
+    'player',      row_to_json(v_player),
+    'secret_code', v_code
+  );
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.is_equipe()
+ RETURNS boolean
+ LANGUAGE sql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+  select exists (select 1 from public.staff where user_id = auth.uid());
+$function$
+;
+
+create OR REPLACE FUNCTION public.is_gm()
+ RETURNS boolean
+ LANGUAGE sql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+  select exists (select 1 from public.staff where user_id = auth.uid() and role = 'gm');
+$function$
+;
+
+create OR REPLACE FUNCTION public.is_staff()
+ RETURNS boolean
+ LANGUAGE sql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+  select exists (select 1 from public.staff
+                  where user_id = auth.uid() and role in ('gm','staff'));
+$function$
+;
+
+create OR REPLACE FUNCTION public.is_vendeur()
+ RETURNS boolean
+ LANGUAGE sql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+  select exists (select 1 from public.staff where user_id = auth.uid() and role = 'vendeur');
+$function$
+;
+
+create OR REPLACE FUNCTION public.jour_festival_label(p_jour date DEFAULT CURRENT_DATE)
+ RETURNS text
+ LANGUAGE sql
+ STABLE
+AS $function$
+  select case p_jour
+    when date '2026-08-15' then 'samedi'
+    when date '2026-08-16' then 'dimanche'
+    else to_char(p_jour, 'DD/MM')
+  end;
+$function$
+;
+
+-- lot 9 : leaderboard_view, level_for_xp, live_board, live_stats, login_with_code, micro_prochaine, micro_repondre, mon_acces, pass_actif, pass_etat
+create OR REPLACE FUNCTION public.leaderboard_view(p_player_id uuid DEFAULT NULL::uuid)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_me json := null;
+begin
+  if p_player_id is not null then
+    select json_build_object(
+      'position', (select count(*) + 1 from public.players x
+                   where public._points_jour(x.xp_jour, x.jour) > public._points_jour(p.xp_jour, p.jour)),
+      'points_jour', public._points_jour(p.xp_jour, p.jour),
+      'player',   row_to_json(p))
+    into v_me
+    from public.players p where p.id = p_player_id;
+  end if;
+
+  return json_build_object(
+    'jour', current_date,
+    'jour_label', public.jour_festival_label(),
+    'roi_veille', public.roi_veille(),
+    'players', coalesce((select json_agg(row_to_json(t)) from (
+      select id, pseudo, archetype, xp, level,
+             public._points_jour(xp_jour, jour) as points_jour
+      from public.players
+      where status = 'actif'
+      order by public._points_jour(xp_jour, jour) desc, created_at asc
+      limit 50) t), '[]'::json),
+    'me', v_me,
+    'total', (select count(*) from public.players where status = 'actif'));
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.level_for_xp(p_xp integer)
+ RETURNS integer
+ LANGUAGE plpgsql
+ IMMUTABLE
+AS $function$
+declare
+  v_level int := 1;
+  v_rest  int := coalesce(p_xp, 0);
+begin
+  while v_rest >= (200 + v_level * 50) loop
+    v_rest  := v_rest - (200 + v_level * 50);
+    v_level := v_level + 1;
+  end loop;
+  return v_level;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.live_board()
+ RETURNS json
+ LANGUAGE sql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+  select json_build_object(
+    'jour', current_date,
+    'jour_label', public.jour_festival_label(),
+    'roi_veille', public.roi_veille(),
+    'players', coalesce((select json_agg(row_to_json(t)) from (
+      select id, pseudo, archetype, xp, level,
+             public._points_jour(xp_jour, jour) as points_jour
+      from public.players
+      where status = 'actif'
+      order by public._points_jour(xp_jour, jour) desc, created_at asc limit 10) t), '[]'::json),
+
+    'stats', json_build_object(
+      'players_total', (select count(*) from public.players where status = 'actif'),
+      'xp_total',      (select coalesce(sum(xp), 0) from public.players where status = 'actif'),
+      'scans_total',   (select count(*) from public.scans)),
+
+    'winners', coalesce((select json_agg(row_to_json(w)) from (
+      select e.type, e.payload, e.created_at,
+             (select json_build_object('pseudo', p.pseudo, 'archetype', p.archetype)
+              from public.players p where p.id = e.player_id) as players
+      from public.events e
+      -- 'roulette' ← AJOUT DU 37. La roulette n'écrit un événement que
+      -- pour un objet ou un badge (fichier 36) : le journal ne risque
+      -- donc pas d'être noyé par les gains d'XP et de jetons.
+      where e.type in ('badge','level_up','quete','bonus','duel','tresor','roulette')
+         or (e.type = 'scan' and coalesce(e.payload->>'qr_type','') <> 'stand')
+      order by e.created_at desc limit 8) w), '[]'::json),
+
+    'announcements', coalesce((select json_agg(row_to_json(a)) from (
+      select message, type, created_at
+      from public.announcements
+      order by created_at desc limit 6) a), '[]'::json));
+$function$
+;
+
+create OR REPLACE FUNCTION public.live_stats()
+ RETURNS json
+ LANGUAGE sql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+  select json_build_object(
+    'players_total', (select count(*) from public.players where status = 'actif'),
+    'xp_total',      (select coalesce(sum(xp), 0) from public.players where status = 'actif'),
+    'scans_total',   (select count(*) from public.scans)
+  );
+$function$
+;
+
+create OR REPLACE FUNCTION public.login_with_code(p_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player public.players;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_code));
+
+  if v_player.id is null then
+    raise exception 'CODE_INCONNU';
+  end if;
+  if v_player.status = 'exclu' then
+    raise exception 'JOUEUR_EXCLU';
+  end if;
+
+  return row_to_json(v_player);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.micro_prochaine(p_secret_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player      public.players%rowtype;
+  v_cfg         public.micro_config%rowtype;
+  v_scans       integer;
+  v_votes       integer;
+  v_votes_jour  integer;
+  v_droits      integer;
+  v_entre       integer;
+  v_q           public.micro_questions%rowtype;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+
+  select * into v_cfg from public.micro_config where id = 1;
+  if not coalesce(v_cfg.actif, true) then
+    return json_build_object('question', null, 'raison', 'desactive');
+  end if;
+
+  select count(*) into v_scans from public.scans where player_id = v_player.id;
+  select count(*) into v_votes from public.micro_votes where player_id = v_player.id;
+  select count(*) into v_votes_jour
+    from public.micro_votes where player_id = v_player.id and jour = current_date;
+
+  -- §11.2 règle 2 : on laisse d'abord le joueur entrer dans le jeu.
+  -- Avec `scans_avant_premier = 0` (réglage du `90`), un joueur qui
+  -- n'a encore RIEN scanné est quand même écarté : 0 <= 0 est vrai.
+  -- La première question tombe donc au premier scan, jamais avant.
+  if v_scans <= coalesce(v_cfg.scans_avant_premier, 2) then
+    return json_build_object('question', null, 'raison', 'trop-tot');
+  end if;
+
+  -- §11.2 règle 4 : plafond quotidien. C'est LUI qui borne la
+  -- chaîne quand la cadence est coupée — le mettre à 6 laisse
+  -- passer la banque entière, le baisser rend la main au compteur.
+  if v_votes_jour >= coalesce(v_cfg.max_par_jour, 3) then
+    return json_build_object('question', null, 'raison', 'plafond-jour');
+  end if;
+
+  -- §11.2 règle 3 : au plus 1 micro-vote tous les N scans.
+  -- 🔴 NOUVEAU : **N = 0 signifie « pas de cadence du tout »**, et
+  --    les questions s'enchaînent jusqu'au plafond du jour. C'est
+  --    le seul changement de cette fonction.
+  --    Remettre 3 dans la colonne restaure l'ancien comportement à
+  --    la seconde, sans recoller quoi que ce soit : c'est la marche
+  --    arrière, et elle est à portée de main un jour de festival.
+  v_entre := coalesce(v_cfg.scans_entre_deux, 3);
+  if v_entre > 0 then
+    v_droits := v_scans / v_entre;
+    if v_votes >= v_droits then
+      return json_build_object('question', null, 'raison', 'cadence');
+    end if;
+  end if;
+
+  -- La première question non répondue, dans l'ordre
+  select q.* into v_q
+  from public.micro_questions q
+  where q.active
+    and not exists (select 1 from public.micro_votes v
+                    where v.player_id = v_player.id and v.question_id = q.id)
+  order by q.ordre
+  limit 1;
+
+  if v_q.id is null then
+    return json_build_object('question', null, 'raison', 'terminees');
+  end if;
+
+  return json_build_object(
+    'question', json_build_object(
+      'id', v_q.id, 'texte', v_q.question, 'options', v_q.options),
+    'xp',    coalesce(v_cfg.xp_par_reponse, 10),
+    'faits', v_votes,
+    'total', (select count(*) from public.micro_questions where active),
+    'raison', null);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.micro_repondre(p_secret_code text, p_question_id integer, p_valeur text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player public.players%rowtype;
+  v_cfg    public.micro_config%rowtype;
+  v_q      public.micro_questions%rowtype;
+  v_val    text;
+  v_gain   integer := 0;
+  v_bonus  integer := 0;
+  v_votes  integer;
+  v_total  integer;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+  if v_player.status = 'exclu' then raise exception 'JOUEUR_EXCLU'; end if;
+
+  select * into v_cfg from public.micro_config where id = 1;
+  if not coalesce(v_cfg.actif, true) then raise exception 'MICRO_DESACTIVE'; end if;
+
+  select * into v_q from public.micro_questions where id = p_question_id and active;
+  if v_q.id is null then raise exception 'QUESTION_INCONNUE'; end if;
+
+  -- Zéro clavier : la valeur doit venir de la liste de CETTE question
+  v_val := lower(trim(coalesce(p_valeur, '')));
+  if v_val = '' then raise exception 'VALEUR_VIDE'; end if;
+  if not exists (
+    select 1 from jsonb_array_elements(v_q.options) o
+    where o ->> 'valeur' = v_val
+  ) then
+    raise exception 'VALEUR_INVALIDE';
+  end if;
+
+  -- Une seule réponse par question, définitive (§11.5).
+  -- « on conflict do nothing » : re-répondre ne repaie pas.
+  insert into public.micro_votes (player_id, question_id, valeur)
+  values (v_player.id, p_question_id, v_val)
+  on conflict (player_id, question_id) do nothing;
+
+  if found then
+    v_gain := coalesce(v_cfg.xp_par_reponse, 10);
+  end if;
+
+  select count(*) into v_votes from public.micro_votes where player_id = v_player.id;
+  select count(*) into v_total from public.micro_questions where active;
+
+  -- Bonus de complétion, versé une seule fois : au moment précis où
+  -- la dernière question vient d'être répondue.
+  if v_gain > 0 and v_votes >= v_total then
+    v_bonus := coalesce(v_cfg.xp_bonus_complet, 30);
+  end if;
+
+  if (v_gain + v_bonus) > 0 then
+    update public.players set
+      xp     = xp + (v_gain + v_bonus),
+      jetons = jetons + ((v_gain + v_bonus) / 10),
+      level  = public.level_for_xp(xp + (v_gain + v_bonus)),
+      rank   = public.rank_for_level(public.level_for_xp(xp + (v_gain + v_bonus)))
+    where id = v_player.id
+    returning * into v_player;
+  end if;
+
+  -- Le journal ne dit jamais la réponse (§10.5)
+  return json_build_object(
+    'player',   row_to_json(v_player),
+    'gain',     v_gain,
+    'bonus',    v_bonus,
+    'faits',    v_votes,
+    'total',    v_total,
+    'suivante', public.micro_prochaine(p_secret_code));
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.mon_acces()
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_staff public.staff%rowtype;
+begin
+  select * into v_staff from public.staff where user_id = auth.uid();
+  if v_staff.user_id is null then
+    return json_build_object('membre', false);
+  end if;
+
+  return json_build_object(
+    'membre',   true,
+    'nom',      v_staff.display_name,
+    'role',     v_staff.role,
+    'console',  v_staff.role in ('gm','staff'),   -- la console actuelle
+    'gm',       v_staff.role = 'gm',              -- carnets, recette, tarif
+    'vendeur',  v_staff.role = 'vendeur',         -- la page allégée
+    'accueil',  case when v_staff.role = 'vendeur'
+                     then 'vendeur.html' else 'index.html' end
+  );
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.pass_actif(p_player_id uuid)
+ RETURNS boolean
+ LANGUAGE sql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+  select case
+    when not coalesce((select actif from public.billetterie_config where id = 1), false)
+      then true
+    else exists (select 1 from public.tickets
+                 where utilise_par = p_player_id and jour = current_date)
+  end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.pass_etat(p_secret_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player public.players%rowtype;
+  v_cfg    public.billetterie_config%rowtype;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+
+  select * into v_cfg from public.billetterie_config where id = 1;
+
+  return json_build_object(
+    'actif',       public.pass_actif(v_player.id),
+    'jour',        current_date,
+    'billetterie', coalesce(v_cfg.actif, false),
+    'prix',        coalesce(v_cfg.prix_journee, 500),
+    'message',     coalesce(v_cfg.message, ''),
+    -- Les journées déjà payées : de quoi écrire « tu as joué samedi ».
+    'jours',       (select coalesce(json_agg(distinct jour order by jour), '[]'::json)
+                    from public.tickets where utilise_par = v_player.id and jour is not null)
+  );
+end;
+$function$
+;
+
+-- lot 10 : pass_garde, player_collection, player_home, profil_etat, profil_options, profil_public_stats, profil_repondre, profil_stats, profil_valeurs, quiz_answer
+create OR REPLACE FUNCTION public.pass_garde()
+ RETURNS trigger
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+begin
+  -- On ne s'intéresse QU'À l'augmentation d'XP. Un joueur sans ticket
+  -- peut toujours être renommé, exclu, réintégré, dépenser ses jetons,
+  -- voir sa carte : §15.4 ne ferme que le gain.
+  if new.xp is null or old.xp is null or new.xp <= old.xp then
+    return new;
+  end if;
+
+  -- La porte de secours du GM (partie 2). Le drapeau est posé pour la
+  -- durée d'UNE transaction seulement : impossible de le laisser
+  -- ouvert par mégarde.
+  if coalesce(current_setting('oq.pass_bypass', true), '') = '1' then
+    return new;
+  end if;
+
+  -- pass_actif() répond « oui » à tout le monde quand la billetterie
+  -- est coupée : l'interrupteur du fichier 25 rouvre donc aussi cette
+  -- garde, sans rien avoir à défaire ici.
+  if not public.pass_actif(new.id) then
+    raise exception 'PASS_REQUIS';
+  end if;
+
+  return new;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.player_collection(p_secret_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player public.players%rowtype;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+
+  return json_build_object(
+    'player', row_to_json(v_player),
+
+    'badges', coalesce((select json_agg(json_build_object(
+        'id', b.id, 'name', b.name, 'icon', b.icon, 'description', b.description,
+        'owned', (pb.player_id is not null)) order by b.created_at)
+      from public.badges b
+      left join public.player_badges pb
+        on pb.badge_id = b.id and pb.player_id = v_player.id), '[]'::json),
+
+    'captures', coalesce((select json_agg(json_build_object(
+        'qr_type', q.type, 'label', q.label, 'character', q.character_name,
+        'anime', q.anime, 'rarity', q.rarity, 'scanned_at', s.scanned_at)
+        order by s.scanned_at desc)
+      from public.scans s
+      join public.qr_codes q on q.id = s.qr_code_id
+      where s.player_id = v_player.id
+        and q.type in ('boss','cosplayer','relique')), '[]'::json),
+
+    -- Le catalogue complet, version "indices seulement" :
+    -- une entrée par QR de collection actif, avec owned = déjà scanné.
+    -- Volontairement SANS code, label, personnage ni anime.
+    'catalogue', coalesce((select json_agg(json_build_object(
+        'qr_type', q.type, 'rarity', q.rarity, 'hint', q.hint,
+        'owned', exists(select 1 from public.scans s
+                        where s.qr_code_id = q.id and s.player_id = v_player.id))
+        order by q.type, q.created_at)
+      from public.qr_codes q
+      where q.active = true
+        and q.type in ('boss','cosplayer','relique')), '[]'::json));
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.player_home(p_secret_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player public.players%rowtype;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+
+  return json_build_object(
+    'player', row_to_json(v_player),
+
+    'phase', (select phase from public.game_state where id = 1),
+
+    'jour', current_date,
+    'jour_label', public.jour_festival_label(),
+    'roi_veille', public.roi_veille(),
+    'points_jour', public._points_jour(v_player.xp_jour, v_player.jour),
+    'nouveau_jour', (v_player.jour <> current_date),
+
+    'pass_actif', public.pass_actif(v_player.id),
+    'pass_prix', (select prix_journee from public.billetterie_config where id = 1),
+
+    'position', (select count(*) + 1 from public.players x
+                 where public._points_jour(x.xp_jour, x.jour)
+                     > public._points_jour(v_player.xp_jour, v_player.jour)),
+
+    -- ⬇️ CLÉ DU FICHIER 84 — les coups de cœur remontent avec le reste.
+    'coeurs', json_build_object(
+      'donnes', (select count(*) from public.coups_de_coeur
+                  where player_id = v_player.id),
+      'max',    coalesce((select max_coeurs from public.coeur_config where id = 1), 3),
+      'actif',  coalesce((select actif      from public.coeur_config where id = 1), true)
+    ),
+
+    -- ⬇️ AJOUT DU FICHIER 87 — la chasse au trésor en cours, ou `null`.
+    --    `null` est la réponse normale : il n'y a pas de chasse ouverte
+    --    la plupart du temps. C'est justement ce `null` qui fait
+    --    disparaître le bandeau du dashboard et le coupon de
+    --    `missions.html` — une annonce qui reste affichée quand il n'y
+    --    a rien à faire n'est plus une annonce, c'est du décor.
+    'tresor', (select json_build_object(
+        'titre',  h.title,
+        'etape',  coalesce(tp.current_step, 1),
+        'total',  (select count(*) from public.treasure_steps where hunt_id = h.id),
+        'finie',  (tp.completed_at is not null),
+        'bonus',  h.first_bonus,
+        -- quelqu'un a-t-il déjà ouvert le coffre ? (le bandeau cesse
+        -- alors de promettre un bonus que plus personne ne peut avoir)
+        'bonus_pris', exists (select 1 from public.treasure_progress
+                               where hunt_id = h.id and completed_at is not null))
+      from public.treasure_hunts h
+      left join public.treasure_progress tp
+        on tp.hunt_id = h.id and tp.player_id = v_player.id
+      where h.active
+      order by h.created_at
+      limit 1),
+
+    'badges', coalesce((
+      select json_agg(json_build_object(
+        'id', b.id, 'name', b.name, 'icon', b.icon, 'description', b.description,
+        'owned', (pb.player_id is not null)) order by b.created_at)
+      from public.badges b
+      left join public.player_badges pb
+        on pb.badge_id = b.id and pb.player_id = v_player.id
+    ), '[]'::json),
+
+    'quests', coalesce((
+      select json_agg(json_build_object(
+        'id', q.id, 'title', q.title, 'description', q.description,
+        'type', q.type, 'counter', q.counter, 'goal_count', q.goal_count,
+        'xp_reward', q.xp_reward,
+        'progress', coalesce(qp.progress, 0),
+        'completed', (qp.completed_at is not null))
+        -- ⬇️ LE TRI PAR JOUEUR DU FICHIER 76 — ne pas le perdre.
+        order by q.priorite desc, md5(v_player.id::text || q.id::text))
+      from public.quests q
+      left join public.quest_progress qp
+        on qp.quest_id = q.id and qp.player_id = v_player.id and qp.jour = current_date
+      where q.active = true
+    ), '[]'::json),
+
+    'events', coalesce((
+      select json_agg(row_to_json(e)) from (
+        select type, payload, created_at from public.events
+        where player_id = v_player.id
+        order by created_at desc limit 5
+      ) e
+    ), '[]'::json)
+  );
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.profil_etat(p_secret_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player  public.players%rowtype;
+  v_prof    public.player_profile%rowtype;
+  v_cfg     public.profil_config%rowtype;
+  v_faits   integer;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+
+  select * into v_cfg  from public.profil_config where id = 1;
+  select * into v_prof from public.player_profile where player_id = v_player.id;
+
+  v_faits := (case when v_prof.tranche_age   is null then 0 else 1 end)
+           + (case when v_prof.sexe          is null then 0 else 1 end)
+           + (case when v_prof.quartier      is null then 0 else 1 end)
+           + (case when v_prof.anime_prefere is null then 0 else 1 end);
+
+  return json_build_object(
+    'actif',            coalesce(v_cfg.actif, true),
+    'xp_par_reponse',   coalesce(v_cfg.xp_par_reponse, 20),
+    'xp_bonus_complet', coalesce(v_cfg.xp_bonus_complet, 50),
+    'repondu',          json_build_object(
+        'tranche_age',   v_prof.tranche_age   is not null,
+        'sexe',          v_prof.sexe          is not null,
+        'quartier',      v_prof.quartier      is not null,
+        'anime_prefere', v_prof.anime_prefere is not null),
+    'faits',            v_faits,
+    'total',            4,
+    'options',          public.profil_options()
+  );
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.profil_options()
+ RETURNS json
+ LANGUAGE sql
+ STABLE
+AS $function$
+  select json_build_object(
+    'tranche_age', json_build_array(
+      json_build_object('valeur','13-15','libelle','13 - 15 ans'),
+      json_build_object('valeur','16-18','libelle','16 - 18 ans'),
+      json_build_object('valeur','19-24','libelle','19 - 24 ans'),
+      json_build_object('valeur','25-30','libelle','25 - 30 ans'),
+      json_build_object('valeur','31+','libelle','31 ans et plus')
+    ),
+    'sexe', json_build_array(
+      json_build_object('valeur','garcon','libelle','Garçon'),
+      json_build_object('valeur','fille','libelle','Fille')
+    ),
+    -- ------------------------------------------------------------
+    -- QUARTIER — 20 quartiers réels + 2 portes de sortie.
+    -- L'ORDRE EST LA MOITIÉ DU TRAVAIL : les axes les plus peuplés
+    -- d'abord, le centre ensuite, les sorties en dernier.
+    -- 🔁 C'est une DÉCISION, pas une vérité : pour l'ajuster, ne
+    --    modifier que ce bloc et recoller le fichier. Ajouter une
+    --    entrée est gratuit ; en RETIRER une casse l'affichage des
+    --    réponses déjà enregistrées.
+    -- ------------------------------------------------------------
+    'quartier', json_build_array(
+      -- Axe Ndokotti – Bassa – PK : le plus peuplé, et il n'était
+      -- pas couvert du tout. C'est la correction principale.
+      json_build_object('valeur','ndokotti','libelle','Ndokotti'),
+      json_build_object('valeur','bassa','libelle','Bassa'),
+      json_build_object('valeur','logbaba','libelle','Logbaba'),
+      json_build_object('valeur','village-ndogpassi','libelle','Village / Ndogpassi'),
+      json_build_object('valeur','pk-8-14','libelle','PK 8 à PK 14'),
+      json_build_object('valeur','pk-15-plus','libelle','PK 15 et au-delà'),
+      json_build_object('valeur','nyalla','libelle','Nyalla'),
+      json_build_object('valeur','yassa-japoma','libelle','Yassa / Japoma'),
+      -- Axe Bépanda – Makepè – Bonamoussadi
+      json_build_object('valeur','bepanda','libelle','Bépanda'),
+      json_build_object('valeur','makepe','libelle','Makepè'),
+      json_build_object('valeur','bonamoussadi','libelle','Bonamoussadi'),
+      json_build_object('valeur','kotto-palmiers','libelle','Kotto / Cité des Palmiers'),
+      -- Centre-ville : peu d'habitants, beaucoup de bureaux. Gardés
+      -- pour ne casser aucune réponse déjà donnée, mais descendus.
+      json_build_object('valeur','akwa','libelle','Akwa'),
+      json_build_object('valeur','deido','libelle','Deïdo'),
+      json_build_object('valeur','new-bell','libelle','New Bell'),
+      json_build_object('valeur','bali','libelle','Bali'),
+      json_build_object('valeur','bonanjo','libelle','Bonanjo'),
+      json_build_object('valeur','bonapriso','libelle','Bonapriso'),
+      -- Rive gauche du Wouri
+      json_build_object('valeur','bonaberi','libelle','Bonabéri'),
+      json_build_object('valeur','bonendale-sodiko','libelle','Bonendale / Sodiko'),
+      -- Les deux portes de sortie, toujours en dernier : on ne doit
+      -- y arriver qu'après avoir cherché.
+      json_build_object('valeur','autre-douala','libelle','Un autre quartier de Douala'),
+      json_build_object('valeur','autre-ville','libelle','Une autre ville')
+    ),
+    'anime_prefere', json_build_array(
+      json_build_object('valeur','naruto','libelle','Naruto'),
+      json_build_object('valeur','one-piece','libelle','One Piece'),
+      json_build_object('valeur','dragon-ball','libelle','Dragon Ball'),
+      json_build_object('valeur','demon-slayer','libelle','Demon Slayer'),
+      json_build_object('valeur','attack-on-titan','libelle','Attack on Titan'),
+      json_build_object('valeur','jujutsu-kaisen','libelle','Jujutsu Kaisen'),
+      json_build_object('valeur','my-hero-academia','libelle','My Hero Academia'),
+      json_build_object('valeur','death-note','libelle','Death Note'),
+      json_build_object('valeur','bleach','libelle','Bleach'),
+      json_build_object('valeur','hunter-x-hunter','libelle','Hunter x Hunter'),
+      json_build_object('valeur','black-clover','libelle','Black Clover'),
+      json_build_object('valeur','fairy-tail','libelle','Fairy Tail'),
+      json_build_object('valeur','autre','libelle','Un autre')
+    )
+  );
+$function$
+;
+
+create OR REPLACE FUNCTION public.profil_public_stats()
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_n     integer;
+  v_seuil constant integer := 10;
+begin
+  select count(*) into v_n from public.player_profile
+  where tranche_age is not null or quartier is not null or anime_prefere is not null;
+
+  if v_n < v_seuil then
+    return json_build_object('pret', false, 'repondants', v_n, 'seuil', v_seuil);
+  end if;
+
+  return json_build_object(
+    'pret',       true,
+    'repondants', v_n,
+    'quartier', (select coalesce(json_agg(t), '[]'::json) from (
+        select quartier as valeur, count(*) as n,
+               round(100.0 * count(*) / nullif(sum(count(*)) over (), 0)) as pct
+        from public.player_profile where quartier is not null
+        group by 1 order by 2 desc limit 5) t),
+    'anime', (select coalesce(json_agg(t), '[]'::json) from (
+        select anime_prefere as valeur, count(*) as n,
+               round(100.0 * count(*) / nullif(sum(count(*)) over (), 0)) as pct
+        from public.player_profile where anime_prefere is not null
+        group by 1 order by 2 desc limit 5) t),
+    'age', (select coalesce(json_agg(t), '[]'::json) from (
+        select tranche_age as valeur, count(*) as n,
+               round(100.0 * count(*) / nullif(sum(count(*)) over (), 0)) as pct
+        from public.player_profile where tranche_age is not null
+        group by 1 order by 1) t)
+  );
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.profil_repondre(p_secret_code text, p_champ text, p_valeur text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player  public.players%rowtype;
+  v_prof    public.player_profile%rowtype;
+  v_cfg     public.profil_config%rowtype;
+  v_val     text;
+  v_deja    boolean := false;
+  v_gain    integer := 0;
+  v_bonus   integer := 0;
+  v_faits   integer;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+  if v_player.status = 'exclu' then raise exception 'JOUEUR_EXCLU'; end if;
+
+  select * into v_cfg from public.profil_config where id = 1;
+  if not coalesce(v_cfg.actif, true) then raise exception 'PROFIL_DESACTIVE'; end if;
+
+  if p_champ not in ('tranche_age','sexe','quartier','anime_prefere') then
+    raise exception 'CHAMP_INCONNU';
+  end if;
+
+  v_val := lower(trim(coalesce(p_valeur, '')));
+  if v_val = '' then raise exception 'VALEUR_VIDE'; end if;
+
+  -- Zéro clavier : les QUATRE champs sont désormais des listes fermées,
+  -- donc les quatre sont vérifiés. Plus aucune valeur libre n'entre en base.
+  if not (v_val = any (public.profil_valeurs(p_champ))) then
+    raise exception 'VALEUR_INVALIDE';
+  end if;
+
+  insert into public.player_profile (player_id) values (v_player.id)
+  on conflict (player_id) do nothing;
+  select * into v_prof from public.player_profile where player_id = v_player.id;
+
+  v_deja := case p_champ
+              when 'tranche_age'   then v_prof.tranche_age   is not null
+              when 'sexe'          then v_prof.sexe          is not null
+              when 'quartier'      then v_prof.quartier      is not null
+              when 'anime_prefere' then v_prof.anime_prefere is not null
+            end;
+
+  if not v_deja then
+    update public.player_profile set
+      tranche_age   = case when p_champ = 'tranche_age'   then v_val else tranche_age   end,
+      sexe          = case when p_champ = 'sexe'          then v_val else sexe          end,
+      quartier      = case when p_champ = 'quartier'      then v_val else quartier      end,
+      anime_prefere = case when p_champ = 'anime_prefere' then v_val else anime_prefere end,
+      updated_at    = now()
+    where player_id = v_player.id
+    returning * into v_prof;
+
+    v_gain := coalesce(v_cfg.xp_par_reponse, 20);
+  end if;
+
+  v_faits := (case when v_prof.tranche_age   is null then 0 else 1 end)
+           + (case when v_prof.sexe          is null then 0 else 1 end)
+           + (case when v_prof.quartier      is null then 0 else 1 end)
+           + (case when v_prof.anime_prefere is null then 0 else 1 end);
+
+  if v_faits = 4 and not v_prof.bonus_verse then
+    v_bonus := coalesce(v_cfg.xp_bonus_complet, 50);
+    update public.player_profile set bonus_verse = true where player_id = v_player.id;
+  end if;
+
+  if (v_gain + v_bonus) > 0 then
+    update public.players set
+      xp     = xp + (v_gain + v_bonus),
+      jetons = jetons + ((v_gain + v_bonus) / 10),
+      level  = public.level_for_xp(xp + (v_gain + v_bonus)),
+      rank   = public.rank_for_level(public.level_for_xp(xp + (v_gain + v_bonus)))
+    where id = v_player.id
+    returning * into v_player;
+
+    -- Le journal ne dit JAMAIS la réponse donnée (§10.5)
+    if v_bonus > 0 then
+      insert into public.events (type, player_id, payload)
+      values ('profil', v_player.id, jsonb_build_object(
+        'message', v_player.pseudo || ' a complété son profil de chasseur (+'
+                   || (v_gain + v_bonus) || ' XP)',
+        'xp', v_gain + v_bonus));
+    end if;
+  end if;
+
+  return json_build_object(
+    'player',  row_to_json(v_player),
+    'deja',    v_deja,
+    'gain',    v_gain,
+    'bonus',   v_bonus,
+    'faits',   v_faits,
+    'total',   4,
+    'complet', v_faits = 4
+  );
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.profil_stats()
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare v_out json;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+
+  select json_build_object(
+    'joueurs',    (select count(*) from public.players),
+    'repondants', (select count(*) from public.player_profile),
+    'contacts',   (select count(*) from public.player_contact),
+    'age',        (select coalesce(json_agg(t), '[]'::json) from (
+                     select tranche_age as valeur, count(*) as n
+                     from public.player_profile where tranche_age is not null
+                     group by 1 order by 1) t),
+    'sexe',       (select coalesce(json_agg(t), '[]'::json) from (
+                     select sexe as valeur, count(*) as n
+                     from public.player_profile where sexe is not null
+                     group by 1 order by 2 desc) t),
+    'quartier',   (select coalesce(json_agg(t), '[]'::json) from (
+                     select quartier as valeur, count(*) as n
+                     from public.player_profile where quartier is not null
+                     group by 1 order by 2 desc limit 20) t),
+    'anime',      (select coalesce(json_agg(t), '[]'::json) from (
+                     select anime_prefere as valeur, count(*) as n
+                     from public.player_profile where anime_prefere is not null
+                     group by 1 order by 2 desc limit 20) t),
+    'micro',      (select coalesce(json_agg(t), '[]'::json) from (
+                     select q.ordre, q.question, v.valeur, count(*) as n
+                     from public.micro_votes v
+                     join public.micro_questions q on q.id = v.question_id
+                     group by q.ordre, q.question, v.valeur
+                     order by q.ordre, count(*) desc) t),
+    'coeurs',     public.coeur_palmares(20),
+    'sortie',     (select coalesce(json_agg(t), '[]'::json) from (
+                     select 'journee' as champ, journee as valeur, count(*) as n
+                       from public.sortie_reponses where journee is not null group by 2
+                     union all
+                     select 'revenir', revenir, count(*)
+                       from public.sortie_reponses where revenir is not null group by 2
+                     union all
+                     select 'depense', depense, count(*)
+                       from public.sortie_reponses where depense is not null group by 2
+                     union all
+                     select 'ameliorer', ameliorer, count(*)
+                       from public.sortie_reponses where ameliorer is not null group by 2) t)
+  ) into v_out;
+
+  return v_out;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.profil_valeurs(p_champ text)
+ RETURNS text[]
+ LANGUAGE sql
+ STABLE
+AS $function$
+  select array(
+    select jsonb_array_elements(
+             (public.profil_options()::jsonb) -> p_champ
+           ) ->> 'valeur'
+  );
+$function$
+;
+
+create OR REPLACE FUNCTION public.quiz_answer(p_secret_code text, p_question_id uuid, p_answer_index integer)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player    public.players%rowtype;
+  v_session   public.quiz_sessions%rowtype;
+  v_q         public.quiz_questions%rowtype;
+  v_elapsed   numeric;
+  v_correct   boolean;
+  v_points    int := 0;
+  v_old_level int;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+  if v_player.status = 'exclu' then raise exception 'JOUEUR_EXCLU'; end if;
+
+  -- ⬇️ LES DEUX SEULES LIGNES AJOUTÉES (REGLES.md §15.4).
+  -- Le message que le joueur lira est déjà écrit dans api.js
+  -- (`PASS_REQUIS` → « Ta journée de jeu n'est pas ouverte… »).
+  if not public.pass_actif(v_player.id) then raise exception 'PASS_REQUIS'; end if;
+
+  select * into v_session from public.quiz_sessions
+  where status = 'en_cours' order by created_at desc limit 1;
+  if v_session.id is null then raise exception 'QUIZ_INACTIF'; end if;
+
+  -- La réponse doit viser LA question en cours (pas une ancienne)
+  select * into v_q from public.quiz_questions
+  where session_id = v_session.id and question_order = v_session.current_question;
+  if v_q.id is null or v_q.id <> p_question_id
+     or v_session.question_started_at is null then
+    raise exception 'QUESTION_FERMEE';
+  end if;
+
+  -- Chrono côté serveur (+2 s de grâce pour le réseau de festival)
+  v_elapsed := extract(epoch from (now() - v_session.question_started_at));
+  if v_elapsed > v_q.duration_seconds + 2 then raise exception 'TROP_TARD'; end if;
+
+  if p_answer_index is null or p_answer_index < 0
+     or p_answer_index >= jsonb_array_length(v_q.choices) then
+    raise exception 'REPONSE_INVALIDE';
+  end if;
+
+  -- Une seule réponse par joueur et par question (contrainte unique)
+  insert into public.quiz_answers (question_id, player_id, answer_index)
+  values (v_q.id, v_player.id, p_answer_index)
+  on conflict (question_id, player_id) do nothing;
+  if not found then raise exception 'DEJA_REPONDU'; end if;
+
+  -- Justesse + points : 50 fixes + bonus rapidité (plafonné à la durée)
+  v_correct := (p_answer_index = v_q.correct_index);
+  if v_correct then
+    v_points := 50 + greatest(0, least(50,
+      round(50 * (1 - v_elapsed / v_q.duration_seconds))))::int;
+  end if;
+
+  update public.quiz_answers set
+    is_correct  = v_correct,
+    response_ms = round(v_elapsed * 1000),
+    points      = v_points
+  where question_id = v_q.id and player_id = v_player.id;
+
+  -- Récompense immédiate en base (le joueur ne la VOIT qu'au chrono fini)
+  if v_points > 0 then
+    v_old_level := public.level_for_xp(v_player.xp);
+    update public.players set
+      xp     = xp + v_points,
+      jetons = jetons + v_points / 10,
+      level  = public.level_for_xp(xp + v_points),
+      rank   = public.rank_for_level(public.level_for_xp(xp + v_points))
+    where id = v_player.id
+    returning * into v_player;
+
+    if v_player.level > v_old_level then
+      insert into public.events (type, player_id, payload)
+      values ('level_up', v_player.id, jsonb_build_object(
+        'message', v_player.pseudo || ' passe au niveau ' || v_player.level || ' !',
+        'level', v_player.level, 'old_level', v_old_level));
+    end if;
+  end if;
+
+  -- Surtout PAS de verdict dans la réponse : juste « verrouillée »
+  return json_build_object('locked', true);
+end;
+$function$
+;
+
+-- lot 11 : quiz_board, quiz_state, rank_for_level, roi_veille, scan_qr, sortie_etat, sortie_options, sortie_repondre, spin_roulette, staff_role
+create OR REPLACE FUNCTION public.quiz_board()
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_session public.quiz_sessions%rowtype;
+  v_q       public.quiz_questions%rowtype;
+  v_elapsed numeric;
+  v_closed  boolean := false;
+  v_damage  int;
+begin
+  select * into v_session from public.quiz_sessions
+  where status in ('en_cours', 'terminee')
+  -- ⬇️ LA SEULE LIGNE MODIFIÉE (2026-08-13).
+  order by (status = 'en_cours') desc,
+           coalesce(question_started_at, created_at) desc
+  limit 1;
+  if v_session.id is null then return json_build_object('session', null); end if;
+
+  if v_session.current_question >= 1 then
+    select * into v_q from public.quiz_questions
+    where session_id = v_session.id and question_order = v_session.current_question;
+    if v_q.id is not null and v_session.question_started_at is not null then
+      v_elapsed := extract(epoch from (now() - v_session.question_started_at));
+      v_closed  := v_elapsed > v_q.duration_seconds + 2;
+    end if;
+  end if;
+
+  if v_session.kind = 'raid' then
+    v_damage := public._raid_damage(v_session.id);
+  end if;
+
+  return json_build_object(
+    'session', json_build_object(
+      'id', v_session.id, 'title', v_session.title, 'status', v_session.status,
+      'kind', v_session.kind,
+      'current_question', v_session.current_question,
+      'total_questions', (select count(*) from public.quiz_questions
+                          where session_id = v_session.id)),
+
+    'raid', case when v_session.kind <> 'raid' then null else json_build_object(
+      'boss_name', v_session.boss_name,
+      'boss_image', v_session.boss_image,
+      'hp_max', v_session.boss_hp_max,
+      'damage', v_damage,
+      'hp_left', greatest(0, v_session.boss_hp_max - v_damage),
+      'defeated', v_damage >= v_session.boss_hp_max,
+      'bonus_xp', v_session.raid_bonus_xp,
+      'participants', (select count(distinct a.player_id)
+        from public.quiz_answers a
+        join public.quiz_questions q on q.id = a.question_id
+        where q.session_id = v_session.id)) end,
+
+    'question', case when v_q.id is null then null else json_build_object(
+      'question', v_q.question,
+      'choices', v_q.choices,
+      'duration_seconds', v_q.duration_seconds,
+      'elapsed_ms', round(v_elapsed * 1000),
+      'closed', v_closed,
+      'correct_index', case when v_closed then v_q.correct_index else null end,
+      'answers_count', (select count(*) from public.quiz_answers
+                        where question_id = v_q.id),
+      -- Répartition par choix : seulement quand le chrono est fini
+      'distribution', case when not v_closed then null else
+        (select coalesce(json_agg(n order by idx), '[]'::json) from (
+          select gs.idx, count(a.id)::int as n
+          from generate_series(0, jsonb_array_length(v_q.choices) - 1) gs(idx)
+          left join public.quiz_answers a
+            on a.question_id = v_q.id and a.answer_index = gs.idx
+          group by gs.idx) d) end) end,
+
+    'podium', case when v_session.status <> 'terminee' then null else
+      coalesce((select json_agg(row_to_json(t)) from (
+        select p.pseudo, p.archetype, sum(a.points)::int as points
+        from public.quiz_answers a
+        join public.quiz_questions q on q.id = a.question_id
+        join public.players p on p.id = a.player_id
+        where q.session_id = v_session.id
+        group by p.id, p.pseudo, p.archetype
+        order by sum(a.points) desc, max(a.answered_at) asc
+        limit 5) t), '[]'::json) end);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.quiz_state(p_secret_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player  public.players%rowtype;
+  v_session public.quiz_sessions%rowtype;
+  v_q       public.quiz_questions%rowtype;
+  v_elapsed numeric;      -- secondes écoulées depuis le lancement
+  v_closed  boolean := false;
+  v_damage  int;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+
+  -- La session en cours en priorité, sinon la dernière JOUÉE (podium).
+  select * into v_session from public.quiz_sessions
+  where status in ('en_cours', 'terminee')
+  -- ⬇️ LA SEULE LIGNE MODIFIÉE (2026-08-13). `created_at` seul faisait
+  -- gagner un raid dupliqué sur un quiz qui venait de se terminer.
+  order by (status = 'en_cours') desc,
+           coalesce(question_started_at, created_at) desc
+  limit 1;
+  if v_session.id is null then
+    return json_build_object('session', null);
+  end if;
+
+  -- La question en cours (0 = salle d'attente, personne n'a encore joué)
+  if v_session.current_question >= 1 then
+    select * into v_q from public.quiz_questions
+    where session_id = v_session.id and question_order = v_session.current_question;
+    if v_q.id is not null and v_session.question_started_at is not null then
+      v_elapsed := extract(epoch from (now() - v_session.question_started_at));
+      -- Le « + 2 » du fichier 55 : on ne révèle jamais avant d'avoir
+      -- cessé d'accepter les réponses.
+      v_closed  := v_elapsed > v_q.duration_seconds + 2;
+    end if;
+  end if;
+
+  if v_session.kind = 'raid' then
+    v_damage := public._raid_damage(v_session.id);
+  end if;
+
+  return json_build_object(
+    'session', json_build_object(
+      'id', v_session.id, 'title', v_session.title, 'status', v_session.status,
+      'kind', v_session.kind,
+      'current_question', v_session.current_question,
+      'total_questions', (select count(*) from public.quiz_questions
+                          where session_id = v_session.id)),
+
+    -- Le boss (raid uniquement) : la barre de vie de tout le monde
+    'raid', case when v_session.kind <> 'raid' then null else json_build_object(
+      'boss_name', v_session.boss_name,
+      'boss_image', v_session.boss_image,
+      'hp_max', v_session.boss_hp_max,
+      'damage', v_damage,
+      'hp_left', greatest(0, v_session.boss_hp_max - v_damage),
+      'defeated', v_damage >= v_session.boss_hp_max,
+      'bonus_xp', v_session.raid_bonus_xp) end,
+
+    -- La question : choix toujours, la bonne réponse SEULEMENT chrono fini
+    'question', case when v_q.id is null then null else json_build_object(
+      'id', v_q.id,
+      'question', v_q.question,
+      'choices', v_q.choices,
+      'duration_seconds', v_q.duration_seconds,
+      'elapsed_ms', round(v_elapsed * 1000),
+      'closed', v_closed,
+      'correct_index', case when v_closed then v_q.correct_index else null end) end,
+
+    -- Ma réponse : l'index tout de suite (pour griser le bouton),
+    -- le verdict et les points seulement quand le chrono est fini
+    'my_answer', (select case when a.id is null then null else json_build_object(
+        'answer_index', a.answer_index,
+        'is_correct',   case when v_closed then a.is_correct else null end,
+        'points',       case when v_closed then a.points else null end) end
+      from public.quiz_answers a
+      where a.question_id = v_q.id and a.player_id = v_player.id),
+
+    -- Mon score cumulé sur cette session (= mes dégâts, en raid)
+    'my_score', coalesce((select sum(a.points)
+      from public.quiz_answers a
+      join public.quiz_questions q on q.id = a.question_id
+      where q.session_id = v_session.id and a.player_id = v_player.id), 0),
+
+    -- Le podium (uniquement quand la session est terminée)
+    'podium', case when v_session.status <> 'terminee' then null else
+      coalesce((select json_agg(row_to_json(t)) from (
+        select p.pseudo, p.archetype, sum(a.points)::int as points
+        from public.quiz_answers a
+        join public.quiz_questions q on q.id = a.question_id
+        join public.players p on p.id = a.player_id
+        where q.session_id = v_session.id
+        group by p.id, p.pseudo, p.archetype
+        order by sum(a.points) desc, max(a.answered_at) asc
+        limit 3) t), '[]'::json) end);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.rank_for_level(p_level integer)
+ RETURNS text
+ LANGUAGE sql
+ IMMUTABLE
+AS $function$
+  select case
+    when p_level >= 25 then 'S'
+    when p_level >= 20 then 'A'
+    when p_level >= 15 then 'B'
+    when p_level >= 10 then 'C'
+    when p_level >= 5  then 'D'
+    else 'E'
+  end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.roi_veille()
+ RETURNS json
+ LANGUAGE sql
+ STABLE
+AS $function$
+  select coalesce((
+    select json_build_object('jour', jour, 'jour_label', public.jour_festival_label(jour),
+                              'pseudo', pseudo, 'points', points)
+    from public.tournament_kings
+    where jour < current_date
+    order by jour desc limit 1
+  ), 'null'::json);
+$function$
+;
+
+create OR REPLACE FUNCTION public.scan_qr(p_secret_code text, p_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player   public.players%rowtype;
+  v_qr       public.qr_codes%rowtype;
+  v_phase    text;
+  v_total_xp int := 0;
+  v_badge    text;
+  v_new_badges text[] := '{}';
+  v_completed  text[] := '{}';
+  v_old_level int;
+  v_count    int;
+  v_prog     int;
+  v_deja_collection boolean;
+  r          record;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+  if v_player.status = 'exclu' then raise exception 'JOUEUR_EXCLU'; end if;
+
+  -- REGLES.md §6 : en RAID les quêtes standard sont verrouillées,
+  -- en CLOTURE le jeu est figé. La bannière du téléphone prévient,
+  -- ICI on refuse vraiment (anti-triche).
+  select phase into v_phase from public.game_state where id = 1;
+  if v_phase = 'RAID'    then raise exception 'PHASE_RAID';    end if;
+  if v_phase = 'CLOTURE' then raise exception 'PHASE_CLOTURE'; end if;
+
+  select * into v_qr from public.qr_codes where code = upper(trim(p_code));
+  if v_qr.id is null then raise exception 'QR_INCONNU'; end if;
+  if not v_qr.active then raise exception 'QR_INACTIF'; end if;
+
+  -- (a) G2 : plus d'exception de type, tout se rejoue chaque jour.
+  perform 1 from public.scans
+    where player_id = v_player.id and qr_code_id = v_qr.id and day = current_date;
+  if found then raise exception 'DEJA_SCANNE'; end if;
+
+  -- (b) G6 : ce QR avait-il déjà été trouvé un jour précédent ?
+  select exists(
+    select 1 from public.scans
+    where player_id = v_player.id and qr_code_id = v_qr.id
+  ) into v_deja_collection;
+
+  insert into public.scans (player_id, qr_code_id) values (v_player.id, v_qr.id);
+  v_total_xp := v_qr.xp_reward;
+
+  if v_qr.badge_id is not null then
+    v_badge := public._award_badge(v_player.id, v_player.pseudo,
+                 (select name from public.badges where id = v_qr.badge_id));
+    v_new_badges := array_append(v_new_badges, v_badge);
+  end if;
+
+  select count(*) into v_count from public.scans where player_id = v_player.id;
+  if v_count = 1 then
+    v_new_badges := array_append(v_new_badges,
+      public._award_badge(v_player.id, v_player.pseudo, 'Premier Scan'));
+  end if;
+  if v_count = 10 then
+    v_new_badges := array_append(v_new_badges,
+      public._award_badge(v_player.id, v_player.pseudo, 'Chasseur Assidu'));
+  end if;
+
+  if v_qr.type = 'boss' then
+    select count(distinct s.qr_code_id) into v_count
+    from public.scans s join public.qr_codes q on q.id = s.qr_code_id
+    where s.player_id = v_player.id and q.type = 'boss';
+    if v_count = 1 then
+      v_new_badges := array_append(v_new_badges,
+        public._award_badge(v_player.id, v_player.pseudo, 'Boss Vaincu'));
+    end if;
+  elsif v_qr.type = 'stand' then
+    select count(distinct s.qr_code_id) into v_count
+    from public.scans s join public.qr_codes q on q.id = s.qr_code_id
+    where s.player_id = v_player.id and q.type = 'stand';
+    if v_count = 10 then
+      v_new_badges := array_append(v_new_badges,
+        public._award_badge(v_player.id, v_player.pseudo, 'Grand Explorateur'));
+    end if;
+  elsif v_qr.type = 'cosplayer' then
+    select count(distinct s.qr_code_id) into v_count
+    from public.scans s join public.qr_codes q on q.id = s.qr_code_id
+    where s.player_id = v_player.id and q.type = 'cosplayer';
+    if v_count = 10 then
+      v_new_badges := array_append(v_new_badges,
+        public._award_badge(v_player.id, v_player.pseudo, 'Maître Pokédex'));
+    end if;
+  end if;
+
+  -- (c) G3 : progression du jour, par type de scan OU quête précise.
+  for r in
+    select * from public.quests
+    where active = true
+      and (counter in ('scan_any', 'scan_' || v_qr.type) or id = v_qr.quest_id)
+  loop
+    v_prog := null;
+    insert into public.quest_progress (player_id, quest_id, progress, jour)
+    values (v_player.id, r.id, 1, current_date)
+    on conflict (player_id, quest_id, jour) do update
+      set progress = quest_progress.progress + 1
+      where quest_progress.completed_at is null
+    returning progress into v_prog;
+
+    if v_prog is not null and v_prog >= r.goal_count then
+      update public.quest_progress set completed_at = now()
+      where player_id = v_player.id and quest_id = r.id and jour = current_date and completed_at is null;
+      if found then
+        v_total_xp  := v_total_xp + r.xp_reward;
+        v_completed := array_append(v_completed, r.title);
+        insert into public.events (type, player_id, payload)
+        values ('quete', v_player.id, jsonb_build_object(
+          'message', v_player.pseudo || ' a terminé la mission « ' || r.title || ' » (+' || r.xp_reward || ' XP)',
+          'quest', r.title, 'xp', r.xp_reward));
+        if r.badge_id is not null then
+          v_new_badges := array_append(v_new_badges,
+            public._award_badge(v_player.id, v_player.pseudo,
+              (select name from public.badges where id = r.badge_id)));
+        end if;
+      end if;
+    end if;
+  end loop;
+
+  v_old_level := public.level_for_xp(v_player.xp);
+  update public.players
+  set xp     = xp + v_total_xp,
+      jetons = jetons + (v_total_xp / 10),
+      level  = public.level_for_xp(xp + v_total_xp),
+      rank   = public.rank_for_level(public.level_for_xp(xp + v_total_xp))
+  where id = v_player.id
+  returning * into v_player;
+
+  insert into public.events (type, player_id, payload)
+  values ('scan', v_player.id, jsonb_build_object(
+    'message',  v_player.pseudo || ' a trouvé « ' || v_qr.label || ' » (+' || v_qr.xp_reward || ' XP)',
+    'label',    v_qr.label, 'qr_type', v_qr.type, 'xp', v_qr.xp_reward,
+    'character', v_qr.character_name, 'anime', v_qr.anime, 'rarity', v_qr.rarity));
+
+  if v_player.level > v_old_level then
+    insert into public.events (type, player_id, payload)
+    values ('level_up', v_player.id, jsonb_build_object(
+      'message', v_player.pseudo || ' passe au niveau ' || v_player.level || ' !',
+      'level',   v_player.level, 'old_level', v_old_level));
+  end if;
+
+  return json_build_object(
+    'qr', json_build_object(
+      'label', v_qr.label, 'type', v_qr.type, 'rarity', v_qr.rarity,
+      'character_name', v_qr.character_name, 'anime', v_qr.anime, 'hint', v_qr.hint),
+    'xp_gagne', v_total_xp, 'jetons_gagnes', v_total_xp / 10,
+    'deja_collection', v_deja_collection, 'jour_label', public.jour_festival_label(),
+    'nouveaux_badges', to_json(array_remove(v_new_badges, null)),
+    'quetes_terminees', to_json(v_completed),
+    'niveau_precedent', v_old_level, 'nouveau_niveau', v_player.level,
+    'player', row_to_json(v_player));
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.sortie_etat(p_secret_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player public.players%rowtype;
+  v_rep    public.sortie_reponses%rowtype;
+  v_phase  text;
+  v_faits  integer;
+  v_deja_tampon boolean;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+
+  select phase into v_phase from public.game_state where id = 1;
+  select * into v_rep from public.sortie_reponses
+    where player_id = v_player.id and jour = current_date;
+
+  select coalesce(bool_or(tampon), false) into v_deja_tampon
+    from public.sortie_reponses where player_id = v_player.id;
+
+  v_faits := (case when v_rep.journee   is null then 0 else 1 end)
+           + (case when v_rep.revenir   is null then 0 else 1 end)
+           + (case when v_rep.depense   is null then 0 else 1 end)
+           + (case when v_rep.ameliorer is null then 0 else 1 end);
+
+  return json_build_object(
+    'ouvert',  coalesce(v_phase,'EXPLORATION') = 'CLOTURE',
+    'jour',    current_date,
+    'repondu', json_build_object(
+       'journee',   v_rep.journee   is not null,
+       'revenir',   v_rep.revenir   is not null,
+       'depense',   v_rep.depense   is not null,
+       'ameliorer', v_rep.ameliorer is not null),
+    'faits',   v_faits,
+    'total',   4,
+    'tampon',  v_deja_tampon,
+    'options', public.sortie_options());
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.sortie_options()
+ RETURNS json
+ LANGUAGE sql
+ STABLE
+AS $function$
+  select json_build_object(
+    'journee', json_build_array(
+      json_build_object('valeur','bof',    'libelle','Bof'),
+      json_build_object('valeur','moyen',  'libelle','Moyen'),
+      json_build_object('valeur','bien',   'libelle','Bien'),
+      json_build_object('valeur','tres-bien','libelle','Très bien'),
+      json_build_object('valeur','enorme', 'libelle','Énorme !')),
+    'revenir', json_build_array(
+      json_build_object('valeur','oui',    'libelle','Oui, sûr'),
+      json_build_object('valeur','peut-etre','libelle','Peut-être'),
+      json_build_object('valeur','non',    'libelle','Non')),
+    'depense', json_build_array(
+      json_build_object('valeur','rien',    'libelle','Rien du tout'),
+      json_build_object('valeur','moins-2k','libelle','Moins de 2 000 FCFA'),
+      json_build_object('valeur','2k-5k',   'libelle','2 000 à 5 000 FCFA'),
+      json_build_object('valeur','5k-10k',  'libelle','5 000 à 10 000 FCFA'),
+      json_build_object('valeur','plus-10k','libelle','Plus de 10 000 FCFA')),
+    'ameliorer', json_build_array(
+      json_build_object('valeur','stands',   'libelle','Plus de stands'),
+      json_build_object('valeur','attente',  'libelle','Moins d''attente'),
+      json_build_object('valeur','activites','libelle','Plus d''activités'),
+      json_build_object('valeur','place',    'libelle','Plus de place'),
+      json_build_object('valeur','nourriture','libelle','La nourriture'),
+      json_build_object('valeur','rien',     'libelle','Rien, c''était bien'))
+  );
+$function$
+;
+
+create OR REPLACE FUNCTION public.sortie_repondre(p_secret_code text, p_champ text, p_valeur text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player public.players%rowtype;
+  v_rep    public.sortie_reponses%rowtype;
+  v_phase  text;
+  v_val    text;
+  v_faits  integer;
+  v_deja   boolean;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+
+  select phase into v_phase from public.game_state where id = 1;
+  if coalesce(v_phase,'EXPLORATION') <> 'CLOTURE' then raise exception 'SONDAGE_FERME'; end if;
+
+  if p_champ not in ('journee','revenir','depense','ameliorer') then
+    raise exception 'CHAMP_INCONNU';
+  end if;
+
+  v_val := lower(trim(coalesce(p_valeur, '')));
+  if v_val = '' then raise exception 'VALEUR_VIDE'; end if;
+  if not exists (
+    select 1 from jsonb_array_elements((public.sortie_options()::jsonb) -> p_champ) o
+    where o ->> 'valeur' = v_val
+  ) then
+    raise exception 'VALEUR_INVALIDE';
+  end if;
+
+  insert into public.sortie_reponses (player_id, jour) values (v_player.id, current_date)
+  on conflict (player_id, jour) do nothing;
+  select * into v_rep from public.sortie_reponses
+    where player_id = v_player.id and jour = current_date;
+
+  v_deja := case p_champ
+              when 'journee'   then v_rep.journee   is not null
+              when 'revenir'   then v_rep.revenir   is not null
+              when 'depense'   then v_rep.depense   is not null
+              when 'ameliorer' then v_rep.ameliorer is not null
+            end;
+
+  if not v_deja then
+    update public.sortie_reponses set
+      journee    = case when p_champ = 'journee'   then v_val else journee   end,
+      revenir    = case when p_champ = 'revenir'   then v_val else revenir   end,
+      depense    = case when p_champ = 'depense'   then v_val else depense   end,
+      ameliorer  = case when p_champ = 'ameliorer' then v_val else ameliorer end,
+      updated_at = now()
+    where player_id = v_player.id and jour = current_date
+    returning * into v_rep;
+  end if;
+
+  v_faits := (case when v_rep.journee   is null then 0 else 1 end)
+           + (case when v_rep.revenir   is null then 0 else 1 end)
+           + (case when v_rep.depense   is null then 0 else 1 end)
+           + (case when v_rep.ameliorer is null then 0 else 1 end);
+
+  if v_faits = 4 and not v_rep.tampon then
+    update public.sortie_reponses set tampon = true
+      where player_id = v_player.id and jour = current_date;
+    v_rep.tampon := true;
+  end if;
+
+  return json_build_object(
+    'deja',    v_deja,
+    'faits',   v_faits,
+    'total',   4,
+    'tampon',  coalesce(v_rep.tampon, false));
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.spin_roulette(p_secret_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player  public.players%rowtype;
+  v_cost    integer := 30;
+  v_total   integer;
+  v_pick    integer;
+  v_acc     integer := 0;
+  v_prize   public.roulette_prizes%rowtype;
+  v_redeem  text := null;
+  v_updated integer;
+  v_kind    text;
+  v_gain_xp integer := 0;
+  v_gain_je integer := 0;
+  v_badge   public.badges%rowtype;
+  v_deja    boolean := false;
+  v_old_lvl integer;
+  r         record;
+begin
+  -- Qui joue ?
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+  if v_player.status = 'exclu' then raise exception 'JOUEUR_EXCLU'; end if;
+
+  -- Mur payant (§15.4). C'est aussi ce qui rend légitime l'écriture
+  -- d'XP plus bas : sans pass actif, on ne serait jamais arrivé ici.
+  if not public.pass_actif(v_player.id) then raise exception 'PASS_REQUIS'; end if;
+
+  -- Coût configurable par l'admin
+  select coalesce(roulette_cost, 30) into v_cost from public.game_state where id = 1;
+
+  -- Débit ATOMIQUE : la condition "jetons >= coût" est DANS le update.
+  update public.players set jetons = jetons - v_cost
+  where id = v_player.id and jetons >= v_cost
+  returning * into v_player;
+  if v_player.id is null then raise exception 'JETONS_INSUFFISANTS'; end if;
+
+  -- Tirage pondéré parmi les lots actifs encore en stock
+  select coalesce(sum(weight), 0) into v_total
+  from public.roulette_prizes where active and (stock is null or stock > 0);
+
+  if v_total = 0 then
+    insert into public.roulette_spins (player_id, prize_id, cost) values (v_player.id, null, v_cost);
+    return json_build_object('prize', null, 'jetons_restants', v_player.jetons, 'cost', v_cost);
+  end if;
+
+  v_pick := floor(random() * v_total);
+  for r in
+    select * from public.roulette_prizes
+    where active and (stock is null or stock > 0) order by created_at
+  loop
+    v_acc := v_acc + r.weight;
+    if v_pick < v_acc then v_prize := r; exit; end if;
+  end loop;
+
+  -- Stock limité : décrément CONDITIONNEL. Si un tirage simultané a
+  -- raflé la dernière unité, v_updated = 0 → "rien", jamais un lot
+  -- fantôme. (Un lot en XP ou en jetons se laisse en stock vide :
+  -- il n'y a rien à épuiser.)
+  if v_prize.stock is not null then
+    update public.roulette_prizes set stock = stock - 1
+    where id = v_prize.id and stock > 0;
+    get diagnostics v_updated = row_count;
+    if v_updated = 0 then
+      insert into public.roulette_spins (player_id, prize_id, cost) values (v_player.id, null, v_cost);
+      return json_build_object('prize', null, 'jetons_restants', v_player.jetons, 'cost', v_cost);
+    end if;
+  end if;
+
+  -- Le genre du lot. Le `ilike 'rien%'` reste en filet : si un lot est
+  -- créé à la main en base sans passer par la console, un nom qui
+  -- commence par "rien" vaut toujours case vide.
+  v_kind := coalesce(v_prize.kind, 'objet');
+  if v_prize.name ilike 'rien%' then v_kind := 'rien'; end if;
+
+  -- ---------- La case vide : rien à verser, rien à retirer ----------
+  if v_kind = 'rien' then
+    insert into public.roulette_spins (player_id, prize_id, cost) values (v_player.id, v_prize.id, v_cost);
+    return json_build_object(
+      'prize', json_build_object('name', v_prize.name, 'icon', v_prize.icon,
+                                 'kind', 'rien', 'value', 0, 'redeem', null),
+      'jetons_restants', v_player.jetons, 'cost', v_cost);
+  end if;
+
+  -- ---------- Les gains qui ne coûtent rien ----------
+  if v_kind = 'xp'     then v_gain_xp := greatest(0, coalesce(v_prize.value, 0)); end if;
+  if v_kind = 'jetons' then v_gain_je := greatest(0, coalesce(v_prize.value, 0)); end if;
+
+  if v_kind = 'badge' then
+    -- Le badge d'abord. `on conflict do nothing` : un badge ne se gagne
+    -- qu'une fois (clé primaire player_id+badge_id), et retomber dessus
+    -- ne doit pas faire échouer le tour.
+    insert into public.player_badges (player_id, badge_id)
+    values (v_player.id, v_prize.badge_id)
+    on conflict do nothing;
+    get diagnostics v_updated = row_count;
+    v_deja := (v_updated = 0);
+    select * into v_badge from public.badges where id = v_prize.badge_id;
+    -- Le bonus d'XP tombe dans tous les cas : c'est lui qui garantit
+    -- qu'un joueur déjà titulaire du badge ne repart pas bredouille.
+    v_gain_xp := greatest(0, coalesce(v_prize.value, 0));
+  end if;
+
+  -- Versement. L'XP recalcule niveau ET rang, exactement comme un scan
+  -- (03_scan.sql) — sinon un joueur pourrait dépasser un palier sans
+  -- que son rang bouge. En revanche, PAS de jetons automatiques au
+  -- dixième de l'XP : ici les jetons sont une dépense qu'on ne
+  -- rembourse pas en douce.
+  if v_gain_xp > 0 or v_gain_je > 0 then
+    v_old_lvl := public.level_for_xp(v_player.xp);
+    update public.players
+    set xp     = xp + v_gain_xp,
+        jetons = jetons + v_gain_je,
+        level  = public.level_for_xp(xp + v_gain_xp),
+        rank   = public.rank_for_level(public.level_for_xp(xp + v_gain_xp))
+    where id = v_player.id
+    returning * into v_player;
+
+    if v_player.level > v_old_lvl then
+      insert into public.events (type, player_id, payload)
+      values ('level_up', v_player.id, jsonb_build_object(
+        'message', v_player.pseudo || ' passe au niveau ' || v_player.level || ' !',
+        'level', v_player.level));
+    end if;
+  end if;
+
+  -- ---------- L'objet physique : le seul à donner un bon ----------
+  if v_kind = 'objet' then
+    v_redeem := upper(substr(md5(random()::text || clock_timestamp()::text), 1, 6));
+  end if;
+
+  insert into public.roulette_spins (player_id, prize_id, cost, redeem_code)
+  values (v_player.id, v_prize.id, v_cost, v_redeem);
+
+  -- Écran géant : on n'y annonce que le remarquable. Un objet et un
+  -- badge, oui. Les XP et les jetons, non : ils vont tomber toutes les
+  -- trente secondes et noieraient le mur sous la roulette.
+  if v_kind in ('objet','badge') then
+    insert into public.events (type, player_id, payload)
+    values ('roulette', v_player.id, jsonb_build_object(
+      'message', v_player.pseudo || ' a gagné « ' || v_prize.name || ' » à la roulette',
+      'prize', v_prize.name, 'icon', v_prize.icon,
+      -- 'kind' ← AJOUT DU 37. C'est lui qui dit à l'écran géant s'il
+      -- doit sortir la grande carte et la fanfare (objet, à retirer au
+      -- stand) ou se contenter du journal et d'un son bref (badge).
+      'kind', v_kind));
+  end if;
+
+  return json_build_object(
+    'prize', json_build_object(
+      'name',   v_prize.name,
+      'icon',   v_prize.icon,
+      'kind',   v_kind,
+      'value',  greatest(v_gain_xp, v_gain_je),
+      'xp',     v_gain_xp,
+      'jetons', v_gain_je,
+      'badge',  case when v_badge.id is null then null
+                     else json_build_object('name', v_badge.name, 'icon', v_badge.icon) end,
+      'deja',   v_deja,
+      'redeem', v_redeem),
+    'jetons_restants', v_player.jetons,
+    'xp', v_player.xp, 'level', v_player.level, 'rank', v_player.rank,
+    'cost', v_cost);
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.staff_role()
+ RETURNS text
+ LANGUAGE sql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+  select role from public.staff where user_id = auth.uid();
+$function$
+;
+
+-- lot 12 : stats_parcours, ticket_utiliser, ticket_verifier, treasure_answer, treasure_view, vendeur_award_bonus
+create OR REPLACE FUNCTION public.stats_parcours()
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_out json;
+begin
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
+
+  with
+  -- LE JOURNAL D'ACTIVITÉ. Une ligne par geste de jeu, quel qu'il
+  -- soit. `player_id is not null` écarte les événements collectifs
+  -- (phases, ouverture du raid) : ils n'appartiennent à personne.
+  actions as (
+    select e.player_id, e.created_at, e.created_at::date as jour
+    from public.events e
+    where e.player_id is not null
+  ),
+
+  jours_joues_l as (select distinct jour from actions),
+  jours_num as (select jour, row_number() over (order by jour) as n from jours_joues_l),
+
+  -- Un « passage » = un joueur, un jour.
+  passages as (
+    select player_id, jour,
+           count(*)                                                      as actions,
+           extract(epoch from (max(created_at) - min(created_at))) / 60.0 as minutes
+    from actions
+    group by player_id, jour
+  ),
+  passages_mesures as (select * from passages where actions >= 2),
+
+  -- Reste sur `scans` : ce panneau compte des QR, pas des gestes.
+  scans_par_joueur as (
+    select p.id as player_id,
+           coalesce((select count(*) from public.scans s where s.player_id = p.id), 0) as n
+    from public.players p
+  )
+
+  select json_build_object(
+
+    'jours', coalesce((
+      select json_agg(t order by t.jour) from (
+        select j.jour,
+               (select count(distinct a.player_id) from actions a where a.jour = j.jour) as joueurs,
+               -- « scans » garde son sens de toujours : des QR scannés.
+               (select count(*) from public.scans s where s.day = j.jour)                as scans,
+               (select count(*) from actions a where a.jour = j.jour)                    as actions,
+               (select count(*) from public.tickets k where k.jour = j.jour)             as journees_vendues
+        from jours_joues_l j
+      ) t), '[]'::json),
+
+    -- LE RETOUR AU LENDEMAIN — corrigé. Le joueur revenu pour le seul
+    -- raid du dimanche compte enfin.
+    'retours', coalesce((
+      select json_agg(t order by t.rang) from (
+        select a.n as rang, a.jour as jour1, b.jour as jour2,
+               (select count(distinct x.player_id) from actions x where x.jour = a.jour) as presents,
+               (select count(*) from (
+                  select x1.player_id from actions x1 where x1.jour = a.jour
+                  intersect
+                  select x2.player_id from actions x2 where x2.jour = b.jour
+                ) y) as revenus
+        from jours_num a
+        join jours_num b on b.n = a.n + 1
+      ) t), '[]'::json),
+
+    -- LES HEURES D'ATTENTION — du premier au dernier GESTE, pas du
+    -- premier au dernier scan. Un joueur qui finit sa soirée au raid
+    -- voit enfin sa soirée comptée jusqu'au bout.
+    'attention', (
+      select json_build_object(
+        'passages',        (select count(*) from passages),
+        'passages_simples',(select count(*) from passages where actions = 1),
+        'passages_mesures',(select count(*) from passages_mesures),
+        'minutes_totales', coalesce((select round(sum(minutes))  from passages_mesures), 0),
+        'minutes_moyennes',coalesce((select round(avg(minutes))  from passages_mesures), 0),
+        'minutes_medianes',coalesce((select round(
+                              percentile_cont(0.5) within group (order by minutes)::numeric)
+                            from passages_mesures), 0),
+        'par_jour', coalesce((
+          select json_agg(t order by t.jour) from (
+            select jour, count(*) as passages,
+                   round(sum(minutes)) as minutes_totales,
+                   round(avg(minutes)) as minutes_moyennes
+            from passages_mesures group by jour
+          ) t), '[]'::json)
+      )),
+
+    -- LA COURBE DES HEURES — en actions, donc le pic du raid s'y voit.
+    -- « at time zone 'Africa/Douala' » : la base stocke en UTC, le
+    -- festival se vit à UTC+1.
+    'heures', coalesce((
+      select json_agg(t order by t.heure) from (
+        select extract(hour from (a.created_at at time zone 'Africa/Douala'))::int as heure,
+               count(*)                       as scans,   -- nom gardé : l'écran le lit
+               count(distinct a.player_id)    as joueurs
+        from actions a
+        group by 1
+      ) t), '[]'::json),
+
+    -- RESTE SUR LES SCANS : ce panneau compte des QR.
+    'profondeur', coalesce((
+      select json_agg(t order by t.rang) from (
+        select 0 as rang, 'Aucun scan' as tranche, count(*) as n from scans_par_joueur where n = 0
+        union all
+        select 1, '1 scan',            count(*) from scans_par_joueur where n = 1
+        union all
+        select 2, '2 à 4 scans',       count(*) from scans_par_joueur where n between 2 and 4
+        union all
+        select 3, '5 à 9 scans',       count(*) from scans_par_joueur where n between 5 and 9
+        union all
+        select 4, '10 scans ou plus',  count(*) from scans_par_joueur where n >= 10
+      ) t), '[]'::json),
+
+    -- RESTE SUR LES SCANS : c'est le trafic par QR.
+    'qr', coalesce((
+      select json_agg(t order by t.scans desc) from (
+        select q.label, q.type,
+               count(*)                    as scans,
+               count(distinct s.player_id) as joueurs
+        from public.scans s
+        join public.qr_codes q on q.id = s.qr_code_id
+        group by q.id, q.label, q.type
+        order by count(*) desc
+        limit 25
+      ) t), '[]'::json)
+
+  ) into v_out;
+
+  return v_out;
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.ticket_utiliser(p_secret_code text, p_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player public.players%rowtype;
+  v_cfg    public.billetterie_config%rowtype;
+  v_ticket public.tickets%rowtype;
+  v_code   text;
+  v_etat   text;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+  if v_player.status = 'exclu' then raise exception 'JOUEUR_EXCLU'; end if;
+
+  select * into v_cfg from public.billetterie_config where id = 1;
+
+  if not coalesce(v_cfg.actif, false) then
+    return json_build_object('ok', true, 'gratuit', true, 'jour', current_date);
+  end if;
+
+  if exists (select 1 from public.tickets
+             where utilise_par = v_player.id and jour = current_date) then
+    return json_build_object('ok', true, 'deja', true, 'jour', current_date);
+  end if;
+
+  v_code := public._norm_ticket(p_code);
+
+  update public.tickets t
+     set utilise_par = v_player.id,
+         utilise_le  = now(),
+         jour        = current_date
+    from public.carnets c
+   where c.id = t.carnet_id
+     and t.code = v_code
+     and t.utilise_par is null
+     and t.rendu_le is null                       -- ⬅️ AJOUT
+     and c.actif
+  returning t.* into v_ticket;
+
+  if v_ticket.id is null then
+    select * into v_ticket from public.tickets where code = v_code;
+    if v_ticket.id is null then
+      v_etat := 'INCONNU';
+    elsif v_ticket.utilise_par is not null then
+      v_etat := 'UTILISE';
+    elsif v_ticket.rendu_le is not null then      -- ⬅️ AJOUT
+      v_etat := 'RENDU';
+    else
+      v_etat := 'ANNULE';
+    end if;
+    raise exception 'TICKET_%', v_etat;
+  end if;
+
+  return json_build_object(
+    'ok',   true,
+    'jour', v_ticket.jour,
+    'prix', coalesce(v_cfg.prix_journee, 500)
+  );
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.ticket_verifier(p_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_cfg    public.billetterie_config%rowtype;
+  v_ticket public.tickets%rowtype;
+  v_actif  boolean;
+  v_etat   text;
+begin
+  select * into v_cfg from public.billetterie_config where id = 1;
+
+  select * into v_ticket from public.tickets where code = public._norm_ticket(p_code);
+  if v_ticket.id is null then
+    v_etat := 'inconnu';
+  elsif v_ticket.utilise_par is not null then
+    v_etat := 'utilise';
+  elsif v_ticket.rendu_le is not null then          -- ⬅️ AJOUT
+    v_etat := 'rendu';
+  else
+    select c.actif into v_actif from public.carnets c where c.id = v_ticket.carnet_id;
+    v_etat := case when v_actif then 'libre' else 'annule' end;
+  end if;
+
+  return json_build_object(
+    'etat',        v_etat,                       -- libre | utilise | rendu | annule | inconnu
+    'valide',      v_etat = 'libre',
+    'jour',        v_ticket.jour,
+    'prix',        coalesce(v_cfg.prix_journee, 500),
+    'billetterie', coalesce(v_cfg.actif, false),
+    'message',     coalesce(v_cfg.message, '')
+  );
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.treasure_answer(p_secret_code text, p_answer text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player    public.players%rowtype;
+  v_hunt      public.treasure_hunts%rowtype;
+  v_prog      public.treasure_progress%rowtype;
+  v_step      public.treasure_steps%rowtype;
+  v_phase     text;
+  v_total     int;
+  v_gain      int;
+  v_bonus     int := 0;
+  v_finished  boolean := false;
+  v_first     boolean := false;
+  v_old_level int;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+  if v_player.status = 'exclu' then raise exception 'JOUEUR_EXCLU'; end if;
+
+  -- ⬇️ LES DEUX SEULES LIGNES AJOUTÉES (2026-08-11, REGLES.md §15.4).
+  -- `pass_actif` répond « oui » à tout le monde quand la billetterie
+  -- est coupée : couper la billetterie rouvre donc la chasse à tous,
+  -- sans rien avoir à défaire ici.
+  if not public.pass_actif(v_player.id) then raise exception 'PASS_REQUIS'; end if;
+
+  -- REGLES.md §6 : quêtes standard verrouillées en RAID / CLOTURE
+  select phase into v_phase from public.game_state where id = 1;
+  if v_phase = 'RAID'    then raise exception 'PHASE_RAID';    end if;
+  if v_phase = 'CLOTURE' then raise exception 'PHASE_CLOTURE'; end if;
+
+  if public._norm_answer(p_answer) = '' then raise exception 'REPONSE_VIDE'; end if;
+
+  select * into v_hunt from public.treasure_hunts
+  where active order by created_at limit 1;
+  if v_hunt.id is null then raise exception 'CHASSE_INACTIVE'; end if;
+
+  select count(*) into v_total from public.treasure_steps where hunt_id = v_hunt.id;
+  if v_total = 0 then raise exception 'CHASSE_INACTIVE'; end if;
+
+  -- La ligne de progression, verrouillée le temps de la transaction
+  -- (empêche le double-envoi simultané du même téléphone)
+  insert into public.treasure_progress (player_id, hunt_id)
+  values (v_player.id, v_hunt.id)
+  on conflict (player_id, hunt_id) do nothing;
+  select * into v_prog from public.treasure_progress
+  where player_id = v_player.id and hunt_id = v_hunt.id
+  for update;
+
+  if v_prog.completed_at is not null then raise exception 'CHASSE_TERMINEE'; end if;
+
+  -- Anti-mitraillage : 5 secondes minimum entre deux tentatives
+  if v_prog.last_try_at is not null
+     and v_prog.last_try_at > now() - interval '5 seconds' then
+    raise exception 'TROP_RAPIDE';
+  end if;
+
+  select * into v_step from public.treasure_steps
+  where hunt_id = v_hunt.id and step_order = v_prog.current_step;
+  if v_step.id is null then raise exception 'ETAPE_INTROUVABLE'; end if;
+
+  update public.treasure_progress set last_try_at = now()
+  where player_id = v_player.id and hunt_id = v_hunt.id;
+
+  -- Mauvaise réponse : pas une erreur, juste « ce n'est pas ça »
+  if public._norm_answer(p_answer) <> public._norm_answer(v_step.answer) then
+    return json_build_object('correct', false);
+  end if;
+
+  -- ---- Bonne réponse ! ----
+  v_gain     := v_step.xp_reward;
+  v_finished := (v_prog.current_step >= v_total);
+
+  if v_finished then
+    -- On sérialise la fin de chasse pour que le bonus « premier au
+    -- coffre » ne soit jamais versé deux fois (deux joueurs qui
+    -- finissent dans la même seconde).
+    perform 1 from public.treasure_hunts where id = v_hunt.id for update;
+    if v_hunt.first_bonus > 0 and not exists (
+      select 1 from public.treasure_progress
+      where hunt_id = v_hunt.id and completed_at is not null
+    ) then
+      v_first := true;
+      v_bonus := v_hunt.first_bonus;
+    end if;
+
+    update public.treasure_progress
+       set completed_at = now(), xp_earned = xp_earned + v_gain + v_bonus
+     where player_id = v_player.id and hunt_id = v_hunt.id;
+  else
+    update public.treasure_progress
+       set current_step = current_step + 1, xp_earned = xp_earned + v_gain
+     where player_id = v_player.id and hunt_id = v_hunt.id;
+  end if;
+
+  -- Récompense (même mécanique que scan_qr : jetons = XP / 10)
+  v_old_level := public.level_for_xp(v_player.xp);
+  update public.players set
+    xp     = xp + v_gain + v_bonus,
+    jetons = jetons + (v_gain + v_bonus) / 10,
+    level  = public.level_for_xp(xp + v_gain + v_bonus),
+    rank   = public.rank_for_level(public.level_for_xp(xp + v_gain + v_bonus))
+  where id = v_player.id
+  returning * into v_player;
+
+  -- Le coffre final est un moment fort de l'écran géant
+  if v_finished then
+    insert into public.events (type, player_id, payload)
+    values ('tresor', v_player.id, jsonb_build_object(
+      'message', v_player.pseudo || ' a ouvert le coffre de « ' || v_hunt.title || ' » !'
+        || case when v_first then ' Premier au trésor !' else '' end,
+      'hunt', v_hunt.title, 'xp', v_gain + v_bonus, 'first', v_first));
+  end if;
+
+  if v_player.level > v_old_level then
+    insert into public.events (type, player_id, payload)
+    values ('level_up', v_player.id, jsonb_build_object(
+      'message', v_player.pseudo || ' passe au niveau ' || v_player.level || ' !',
+      'level', v_player.level, 'old_level', v_old_level));
+  end if;
+
+  return json_build_object(
+    'correct',  true,
+    'finished', v_finished,
+    'first',    v_first,
+    'xp',       v_gain + v_bonus,
+    'bonus',    v_bonus,
+    'total_steps', v_total,
+    -- L'énigme suivante (null si le coffre est ouvert)
+    'next', (select json_build_object(
+        'step_order', t.step_order, 'riddle', t.riddle, 'xp_reward', t.xp_reward)
+      from public.treasure_steps t
+      where t.hunt_id = v_hunt.id and t.step_order = v_prog.current_step + 1
+        and not v_finished),
+    'player', row_to_json(v_player));
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.treasure_view(p_secret_code text)
+ RETURNS json
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player public.players%rowtype;
+  v_hunt   public.treasure_hunts%rowtype;
+  v_prog   public.treasure_progress%rowtype;
+begin
+  select p.* into v_player
+  from public.players p
+  join public.player_secrets s on s.player_id = p.id
+  where s.secret_code = upper(trim(p_secret_code));
+  if v_player.id is null then raise exception 'SESSION_INVALIDE'; end if;
+
+  -- La chasse active (une seule à la fois, voir admin_set_hunt_active)
+  select * into v_hunt from public.treasure_hunts
+  where active order by created_at limit 1;
+  if v_hunt.id is null then
+    return json_build_object('player', row_to_json(v_player), 'hunt', null);
+  end if;
+
+  -- La progression du joueur (défauts si pas encore commencé)
+  select * into v_prog from public.treasure_progress
+  where player_id = v_player.id and hunt_id = v_hunt.id;
+  if v_prog.player_id is null then
+    v_prog.current_step := 1;
+    v_prog.xp_earned    := 0;
+    v_prog.completed_at := null;
+  end if;
+
+  return json_build_object(
+    'player', row_to_json(v_player),
+
+    'hunt', json_build_object(
+      'id', v_hunt.id, 'title', v_hunt.title,
+      'first_bonus', v_hunt.first_bonus,
+      'total_steps', (select count(*) from public.treasure_steps
+                      where hunt_id = v_hunt.id),
+      -- quelqu'un a-t-il déjà ouvert le coffre ? (affichage du bonus)
+      'first_taken', exists (select 1 from public.treasure_progress
+                             where hunt_id = v_hunt.id and completed_at is not null)),
+
+    'progress', json_build_object(
+      'current_step', v_prog.current_step,
+      'xp_earned',    v_prog.xp_earned,
+      'completed_at', v_prog.completed_at),
+
+    -- L'énigme en cours (sans la réponse !) — null si chasse terminée
+    'current', (select json_build_object(
+        'step_order', t.step_order, 'riddle', t.riddle, 'xp_reward', t.xp_reward)
+      from public.treasure_steps t
+      where t.hunt_id = v_hunt.id and t.step_order = v_prog.current_step
+        and v_prog.completed_at is null),
+
+    -- Les énigmes déjà résolues (pour la frise de la carte au trésor)
+    'solved', coalesce((select json_agg(json_build_object(
+        'step_order', t.step_order, 'riddle', t.riddle, 'xp_reward', t.xp_reward)
+        order by t.step_order)
+      from public.treasure_steps t
+      where t.hunt_id = v_hunt.id
+        and (t.step_order < v_prog.current_step or v_prog.completed_at is not null)
+    ), '[]'::json));
+end;
+$function$
+;
+
+create OR REPLACE FUNCTION public.vendeur_award_bonus(p_player_id uuid, p_xp integer, p_reason text DEFAULT NULL::text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  v_player    public.players%rowtype;
+  v_old_level int;
+  v_qui       text;
+  v_role      text;
+begin
+  -- ⬇️ DIFFÉRENCE 1 : is_equipe() et non is_staff(). Un vendeur passe,
+  --    le staff et le GM aussi (fichier 26). Un compte inconnu, non.
+  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+
+  -- Qui donne. On le lit MAINTENANT pour l'écrire dans le journal :
+  -- si ce compte est supprimé après le festival, la trace reste
+  -- lisible (un nom, pas un identifiant technique).
+  select s.display_name, s.role into v_qui, v_role
+    from public.staff s where s.user_id = auth.uid();
+  v_qui := coalesce(nullif(trim(v_qui), ''), 'Un membre de l''équipe');
+
+  -- ⬇️ DIFFÉRENCE 2 : aucun malus. Le GM peut retirer de l'XP, pas le
+  --    vendeur. Le plafond de 100 000 est le même que celui du GM :
+  --    ce n'est pas une limite de jeu, c'est un garde-fou contre la
+  --    faute de frappe monumentale.
+  if p_xp is null or p_xp <= 0 or p_xp > 100000 then
+    raise exception 'BONUS_INVALIDE';
+  end if;
+
+  select * into v_player from public.players where id = p_player_id;
+  if v_player.id is null     then raise exception 'JOUEUR_INCONNU'; end if;
+  -- ⬇️ DIFFÉRENCE 3 : un joueur exclu ne se récompense pas.
+  if v_player.status = 'exclu' then raise exception 'JOUEUR_EXCLU'; end if;
+
+  v_old_level := public.level_for_xp(v_player.xp);
+
+  -- ⬇️ DIFFÉRENCE 4 : PAS de `set_config('oq.pass_bypass', …)`.
+  --    Le déclencheur `pass_garde` va donc parler si le joueur n'a pas
+  --    ouvert sa journée, et lever PASS_REQUIS. C'est le comportement
+  --    voulu (voir l'en-tête).
+
+  update public.players set
+    xp     = xp + p_xp,
+    -- Les jetons au dixième, exactement comme le bonus du GM : un
+    -- bonus de 50 XP offre 5 jetons, donc un tour de roulette n'est
+    -- jamais loin. C'est de l'animation, pas un cadeau supplémentaire.
+    jetons = jetons + p_xp / 10,
+    level  = public.level_for_xp(xp + p_xp),
+    rank   = public.rank_for_level(public.level_for_xp(xp + p_xp))
+  where id = p_player_id
+  returning * into v_player;
+
+  -- LE JOURNAL. Le type reste 'bonus' : il est déjà dans le filtre de
+  -- `live_board()` (fichier 37) et dans `evenementRemarquable()` côté
+  -- écran géant — rien d'autre à brancher, l'annonce part toute seule.
+  -- Les clés `par` et `par_role` sont neuves : c'est elles qui rendent
+  -- le geste nominatif.
+  insert into public.events (type, player_id, payload)
+  values ('bonus', p_player_id, jsonb_build_object(
+    'message',  v_qui || ' récompense ' || v_player.pseudo || ' : +' || p_xp || ' XP'
+                || coalesce(' — ' || nullif(trim(p_reason), ''), ''),
+    'xp',       p_xp,
+    'reason',   nullif(trim(p_reason), ''),
+    'par',      v_qui,
+    'par_role', coalesce(v_role, 'inconnu')));
+
+  if v_player.level > v_old_level then
+    insert into public.events (type, player_id, payload)
+    values ('level_up', p_player_id, jsonb_build_object(
+      'message',   v_player.pseudo || ' passe au niveau ' || v_player.level || ' !',
+      'level',     v_player.level,
+      'old_level', v_old_level));
+  end if;
+
+  return row_to_json(v_player);
+end;
+$function$
+;
+
+
+-- ----------------------------------------------------------------
+-- Clés étrangères (35)
+-- ----------------------------------------------------------------
+alter table public.carnets add constraint carnets_cree_par_fkey FOREIGN KEY (cree_par) REFERENCES auth.users(id) ON DELETE SET NULL;
+alter table public.carnets add constraint carnets_vendeur_user_fkey FOREIGN KEY (vendeur_user) REFERENCES auth.users(id) ON DELETE SET NULL;
+alter table public.coups_de_coeur add constraint coups_de_coeur_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE;
+alter table public.coups_de_coeur add constraint coups_de_coeur_qr_code_id_fkey FOREIGN KEY (qr_code_id) REFERENCES qr_codes(id) ON DELETE CASCADE;
+alter table public.duels add constraint duels_player1_id_fkey FOREIGN KEY (player1_id) REFERENCES players(id) ON DELETE CASCADE;
+alter table public.duels add constraint duels_player2_id_fkey FOREIGN KEY (player2_id) REFERENCES players(id) ON DELETE CASCADE;
+alter table public.duels add constraint duels_winner_id_fkey FOREIGN KEY (winner_id) REFERENCES players(id);
+alter table public.events add constraint events_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE SET NULL;
+alter table public.micro_votes add constraint micro_votes_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE;
+alter table public.micro_votes add constraint micro_votes_question_id_fkey FOREIGN KEY (question_id) REFERENCES micro_questions(id);
+alter table public.player_badges add constraint player_badges_badge_id_fkey FOREIGN KEY (badge_id) REFERENCES badges(id) ON DELETE CASCADE;
+alter table public.player_badges add constraint player_badges_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE;
+alter table public.player_contact add constraint player_contact_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE;
+alter table public.player_profile add constraint player_profile_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE;
+alter table public.player_secrets add constraint player_secrets_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE;
+alter table public.qr_codes add constraint qr_codes_badge_id_fkey FOREIGN KEY (badge_id) REFERENCES badges(id);
+alter table public.qr_codes add constraint qr_codes_quest_id_fkey FOREIGN KEY (quest_id) REFERENCES quests(id) ON DELETE SET NULL;
+alter table public.quest_progress add constraint quest_progress_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE;
+alter table public.quest_progress add constraint quest_progress_quest_id_fkey FOREIGN KEY (quest_id) REFERENCES quests(id) ON DELETE CASCADE;
+alter table public.quests add constraint quests_badge_id_fkey FOREIGN KEY (badge_id) REFERENCES badges(id);
+alter table public.quiz_answers add constraint quiz_answers_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE;
+alter table public.quiz_answers add constraint quiz_answers_question_id_fkey FOREIGN KEY (question_id) REFERENCES quiz_questions(id) ON DELETE CASCADE;
+alter table public.quiz_questions add constraint quiz_questions_session_id_fkey FOREIGN KEY (session_id) REFERENCES quiz_sessions(id) ON DELETE CASCADE;
+alter table public.roulette_prizes add constraint roulette_prizes_badge_id_fkey FOREIGN KEY (badge_id) REFERENCES badges(id) ON DELETE SET NULL;
+alter table public.roulette_spins add constraint roulette_spins_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE;
+alter table public.roulette_spins add constraint roulette_spins_prize_id_fkey FOREIGN KEY (prize_id) REFERENCES roulette_prizes(id);
+alter table public.scans add constraint scans_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE;
+alter table public.scans add constraint scans_qr_code_id_fkey FOREIGN KEY (qr_code_id) REFERENCES qr_codes(id) ON DELETE CASCADE;
+alter table public.sortie_reponses add constraint sortie_reponses_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE;
+alter table public.staff add constraint staff_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE;
+alter table public.tickets add constraint tickets_carnet_id_fkey FOREIGN KEY (carnet_id) REFERENCES carnets(id) ON DELETE CASCADE;
+alter table public.tickets add constraint tickets_utilise_par_fkey FOREIGN KEY (utilise_par) REFERENCES players(id) ON DELETE SET NULL;
+alter table public.treasure_progress add constraint treasure_progress_hunt_id_fkey FOREIGN KEY (hunt_id) REFERENCES treasure_hunts(id) ON DELETE CASCADE;
+alter table public.treasure_progress add constraint treasure_progress_player_id_fkey FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE;
+alter table public.treasure_steps add constraint treasure_steps_hunt_id_fkey FOREIGN KEY (hunt_id) REFERENCES treasure_hunts(id) ON DELETE CASCADE;
+
+-- ----------------------------------------------------------------
+-- Index (hors contraintes)
+-- ----------------------------------------------------------------
+create INDEX coeur_par_cible ON public.coups_de_coeur USING btree (qr_code_id);
+create INDEX events_created_idx ON public.events USING btree (created_at DESC);
+create INDEX events_player_created_idx ON public.events USING btree (player_id, created_at DESC);
+create INDEX micro_votes_jour ON public.micro_votes USING btree (player_id, jour);
+create INDEX contact_par_numero ON public.player_contact USING btree (telephone);
+create INDEX players_xp_idx ON public.players USING btree (xp DESC);
+create UNIQUE INDEX scans_once_per_day ON public.scans USING btree (player_id, qr_code_id, day);
+create INDEX tickets_pass ON public.tickets USING btree (utilise_par, jour);
+create INDEX tickets_rendus ON public.tickets USING btree (carnet_id) WHERE (rendu_le IS NOT NULL);
+create INDEX tickets_carnet ON public.tickets USING btree (carnet_id, rang);
+
+-- ----------------------------------------------------------------
+-- Row Level Security
+-- ----------------------------------------------------------------
+alter table public.announcements enable row level security;
+alter table public.badges enable row level security;
+alter table public.billetterie_config enable row level security;
+alter table public.carnets enable row level security;
+alter table public.coeur_config enable row level security;
+alter table public.contact_config enable row level security;
+alter table public.coups_de_coeur enable row level security;
+alter table public.duels enable row level security;
+alter table public.events enable row level security;
+alter table public.game_state enable row level security;
+alter table public.micro_config enable row level security;
+alter table public.micro_questions enable row level security;
+alter table public.micro_votes enable row level security;
+alter table public.player_badges enable row level security;
+alter table public.player_contact enable row level security;
+alter table public.player_profile enable row level security;
+alter table public.player_secrets enable row level security;
+alter table public.players enable row level security;
+alter table public.profil_config enable row level security;
+alter table public.qr_codes enable row level security;
+alter table public.quest_progress enable row level security;
+alter table public.quests enable row level security;
+alter table public.quiz_answers enable row level security;
+alter table public.quiz_questions enable row level security;
+alter table public.quiz_sessions enable row level security;
+alter table public.roulette_prizes enable row level security;
+alter table public.roulette_spins enable row level security;
+alter table public.scans enable row level security;
+alter table public.sortie_reponses enable row level security;
+alter table public.staff enable row level security;
+alter table public.tickets enable row level security;
+alter table public.tournament_kings enable row level security;
+alter table public.treasure_hunts enable row level security;
+alter table public.treasure_progress enable row level security;
+alter table public.treasure_steps enable row level security;
+-- tables SANS RLS : aucun(e)
+
+-- ----------------------------------------------------------------
+-- Politiques RLS (public + storage)
+-- ----------------------------------------------------------------
+create policy "lecture publique" on public.announcements as PERMISSIVE for SELECT to public using (true);
+create policy "lecture publique" on public.badges as PERMISSIVE for SELECT to public using (true);
+create policy "ecriture gm" on public.billetterie_config as PERMISSIVE for UPDATE to authenticated using (is_gm());
+create policy "lecture publique" on public.billetterie_config as PERMISSIVE for SELECT to public using (true);
+create policy "ecriture staff" on public.coeur_config as PERMISSIVE for UPDATE to authenticated using (is_staff());
+create policy "lecture publique" on public.coeur_config as PERMISSIVE for SELECT to public using (true);
+create policy "ecriture staff" on public.contact_config as PERMISSIVE for UPDATE to authenticated using (is_staff());
+create policy "lecture publique" on public.contact_config as PERMISSIVE for SELECT to public using (true);
+create policy "lecture staff" on public.coups_de_coeur as PERMISSIVE for SELECT to authenticated using (is_staff());
+create policy "lecture staff" on public.duels as PERMISSIVE for SELECT to authenticated using (is_staff());
+create policy "lecture publique" on public.events as PERMISSIVE for SELECT to public using (true);
+create policy "lecture publique" on public.game_state as PERMISSIVE for SELECT to public using (true);
+create policy "ecriture staff" on public.micro_config as PERMISSIVE for UPDATE to authenticated using (is_staff());
+create policy "lecture publique" on public.micro_config as PERMISSIVE for SELECT to public using (true);
+create policy "ecriture staff" on public.micro_questions as PERMISSIVE for ALL to authenticated using (is_staff()) with check (is_staff());
+create policy "lecture publique" on public.micro_questions as PERMISSIVE for SELECT to public using (true);
+create policy "lecture staff" on public.micro_votes as PERMISSIVE for SELECT to authenticated using (is_staff());
+create policy "lecture publique" on public.player_badges as PERMISSIVE for SELECT to public using (true);
+create policy "lecture staff" on public.player_contact as PERMISSIVE for SELECT to authenticated using (is_staff());
+create policy "lecture staff" on public.player_profile as PERMISSIVE for SELECT to authenticated using (is_staff());
+create policy "lecture publique" on public.players as PERMISSIVE for SELECT to public using (true);
+create policy "ecriture staff" on public.profil_config as PERMISSIVE for UPDATE to authenticated using (is_staff());
+create policy "lecture publique" on public.profil_config as PERMISSIVE for SELECT to public using (true);
+create policy "lecture staff" on public.qr_codes as PERMISSIVE for SELECT to authenticated using (is_staff());
+create policy "lecture publique" on public.quest_progress as PERMISSIVE for SELECT to public using (true);
+create policy "lecture publique" on public.quests as PERMISSIVE for SELECT to public using (true);
+create policy "lecture publique" on public.roulette_prizes as PERMISSIVE for SELECT to public using (true);
+create policy "lecture staff" on public.roulette_spins as PERMISSIVE for SELECT to authenticated using (is_staff());
+create policy "lecture staff" on public.scans as PERMISSIVE for SELECT to authenticated using (is_staff());
+create policy "lecture staff" on public.sortie_reponses as PERMISSIVE for SELECT to authenticated using (is_staff());
+create policy "staff se voit lui-meme" on public.staff as PERMISSIVE for SELECT to authenticated using ((user_id = auth.uid()));
+create policy "lecture staff" on public.tournament_kings as PERMISSIVE for SELECT to authenticated using (is_staff());
+
+-- ----------------------------------------------------------------
+-- Triggers
+-- ----------------------------------------------------------------
+create TRIGGER pass_garde_players BEFORE UPDATE OF xp ON public.players FOR EACH ROW EXECUTE FUNCTION pass_garde();
+create TRIGGER maj_xp_jour BEFORE UPDATE OF xp ON public.players FOR EACH ROW EXECUTE FUNCTION _maj_xp_jour();
+
+-- ----------------------------------------------------------------
+-- Realtime
+-- ----------------------------------------------------------------
+alter publication supabase_realtime add table public.players;
+alter publication supabase_realtime add table public.announcements;
+alter publication supabase_realtime add table public.events;
+alter publication supabase_realtime add table public.game_state;
+-- replica identity non défaut : aucun(e)
+
+-- ----------------------------------------------------------------
+-- Droits (ACL brutes) — tables
+-- ----------------------------------------------------------------
+-- announcements (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- badges (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- billetterie_config (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- carnets (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- coeur_config (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- contact_config (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- coups_de_coeur (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- duels (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- events (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- game_state (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- micro_config (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- micro_questions (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- micro_votes (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- player_badges (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- player_contact (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- player_profile (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- player_secrets (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- players (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- profil_config (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- qr_codes (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- quest_progress (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- quests (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- quiz_answers (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- quiz_questions (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- quiz_sessions (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- roulette_prizes (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- roulette_spins (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- scans (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- sortie_reponses (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- staff (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- tickets (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- tournament_kings (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- treasure_hunts (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- treasure_progress (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- treasure_steps (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+
+-- ----------------------------------------------------------------
+-- Droits (ACL brutes) — fonctions (DEFAULT = droits par défaut)
+-- ----------------------------------------------------------------
+-- _award_badge(p_player_id uuid, p_pseudo text, p_badge_name text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- _code_secret_tirage() {postgres=X/postgres,service_role=X/postgres}
+-- _gen_qr_code() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- _is_system_badge(p_name text) {postgres=X/postgres,service_role=X/postgres}
+-- _maj_xp_jour() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- _norm_answer(p text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- _norm_ticket(p_code text) {postgres=X/postgres,service_role=X/postgres}
+-- _points_jour(p_xp_jour integer, p_jour date) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- _raid_damage(p_session_id uuid) {postgres=X/postgres,service_role=X/postgres}
+-- _ticket_code() {postgres=X/postgres,service_role=X/postgres}
+-- admin_award_badge(p_player_id uuid, p_badge_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_award_bonus(p_player_id uuid, p_xp integer, p_reason text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_create_announcement(p_message text, p_type text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_create_badge(p_name text, p_icon text, p_description text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_create_hunt(p_title text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_create_prize(p_name text, p_icon text, p_weight integer, p_stock integer, p_active boolean, p_kind text, p_value integer, p_badge_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_create_qr(p_label text, p_type text, p_rarity text, p_xp integer, p_hint text, p_character text, p_anime text, p_badge_id uuid, p_quest_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_create_quest(p_title text, p_description text, p_type text, p_counter text, p_goal integer, p_xp integer, p_active boolean, p_badge_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_create_quiz_question(p_session_id uuid, p_question text, p_choices jsonb, p_correct integer, p_duration integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_create_quiz_session(p_title text, p_kind text, p_boss_name text, p_boss_image text, p_boss_hp integer, p_bonus_xp integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_create_step(p_hunt_id uuid, p_riddle text, p_answer text, p_xp integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_delete_announcement(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_delete_badge(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_delete_hunt(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_delete_prize(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_delete_qr(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_delete_quest(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_delete_quiz_question(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_delete_quiz_session(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_delete_step(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_duplicate_hunt(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_duplicate_quiz_session(p_session_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_edit_qr(p_id uuid, p_label text, p_hint text, p_character text, p_anime text, p_xp integer, p_quest_id uuid, p_touche_quest boolean) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_get_reconnect_code(p_player_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_journal_bonus(p_jour date) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_list_badges() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_list_duels(p_limit integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_list_hunts() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_list_qr() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_list_quests() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_list_quiz_questions(p_session_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_list_quiz_sessions() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_list_steps(p_hunt_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_liste_joueurs() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_manual_quests(p_player_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_move_quiz_question(p_id uuid, p_direction text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_quiz_end(p_session_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_quiz_live(p_session_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_quiz_next(p_session_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_quiz_start(p_session_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_recent_spins(p_limit integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_record_duel(p_player1 uuid, p_player2 uuid, p_winner uuid, p_xp integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_redeem(p_code text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_rename_player(p_player_id uuid, p_pseudo text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_rename_quiz_session(p_id uuid, p_title text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_set_hunt_active(p_id uuid, p_active boolean) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_set_phase(p_phase text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_set_qr_active(p_id uuid, p_active boolean) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_set_roulette_cost(p_cost integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_set_status(p_player_id uuid, p_status text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_stats() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_update_badge(p_id uuid, p_name text, p_icon text, p_description text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_update_hunt(p_id uuid, p_title text, p_first_bonus integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_update_prize(p_id uuid, p_name text, p_icon text, p_weight integer, p_stock integer, p_active boolean, p_kind text, p_value integer, p_badge_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_update_quest(p_id uuid, p_title text, p_description text, p_type text, p_counter text, p_goal integer, p_xp integer, p_active boolean, p_badge_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_update_quiz_question(p_id uuid, p_question text, p_choices jsonb, p_correct integer, p_duration integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_update_raid_params(p_session_id uuid, p_boss_name text, p_boss_image text, p_boss_hp integer, p_bonus_xp integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_update_step(p_id uuid, p_riddle text, p_answer text, p_xp integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- admin_validate_quest(p_player_id uuid, p_quest_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- archive_lire(p_table text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- billetterie_stats() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- carnet_attribuer(p_carnet_id uuid, p_email text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- carnet_creer(p_vendeur_nom text, p_nb_tickets integer, p_note text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- carnet_etat(p_carnet_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- carnet_liste() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- carnet_pointer(p_carnet_id uuid, p_rendus integer, p_actif boolean, p_note text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- carnet_rendre(p_carnet_id uuid, p_codes text[]) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- carnet_reprendre(p_carnet_id uuid, p_codes text[]) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- coeur_donner(p_secret_code text, p_qr_code_id uuid) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- coeur_liste(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- coeur_palmares(p_limite integer) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- coeur_retirer(p_secret_code text, p_qr_code_id uuid) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- contact_enregistrer(p_secret_code text, p_telephone text, p_consent boolean) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- contact_etat(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- create_player(p_pseudo text, p_archetype text, p_ticket text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- is_equipe() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- is_gm() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- is_staff() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- is_vendeur() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- jour_festival_label(p_jour date) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- leaderboard_view(p_player_id uuid) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- level_for_xp(p_xp integer) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- live_board() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- live_stats() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- login_with_code(p_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- micro_prochaine(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- micro_repondre(p_secret_code text, p_question_id integer, p_valeur text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- mon_acces() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- pass_actif(p_player_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- pass_etat(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- pass_garde() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- player_collection(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- player_home(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- profil_etat(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- profil_options() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- profil_public_stats() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- profil_repondre(p_secret_code text, p_champ text, p_valeur text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- profil_stats() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- profil_valeurs(p_champ text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- quiz_answer(p_secret_code text, p_question_id uuid, p_answer_index integer) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- quiz_board() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- quiz_state(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- rank_for_level(p_level integer) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- roi_veille() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- scan_qr(p_secret_code text, p_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- sortie_etat(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- sortie_options() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- sortie_repondre(p_secret_code text, p_champ text, p_valeur text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- spin_roulette(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- staff_role() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- stats_parcours() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- ticket_utiliser(p_secret_code text, p_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- ticket_verifier(p_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- treasure_answer(p_secret_code text, p_answer text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- treasure_view(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- vendeur_award_bonus(p_player_id uuid, p_xp integer, p_reason text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+
+-- ----------------------------------------------------------------
+-- Droits par défaut
+-- ----------------------------------------------------------------
+-- postgres public r {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- postgres public f {postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- postgres public S {postgres=rwU/postgres,anon=rwU/postgres,authenticated=rwU/postgres,service_role=rwU/postgres}
+-- supabase_admin public S {postgres=rwU/supabase_admin,anon=rwU/supabase_admin,authenticated=rwU/supabase_admin,service_role=rwU/supabase_admin}
+-- supabase_admin public r {postgres=arwdDxtm/supabase_admin,anon=arwdDxtm/supabase_admin,authenticated=arwdDxtm/supabase_admin,service_role=arwdDxtm/supabase_admin}
+-- supabase_admin public f {postgres=X/supabase_admin,anon=X/supabase_admin,authenticated=X/supabase_admin,service_role=X/supabase_admin}
+-- postgres storage r {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+-- postgres storage f {postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+-- postgres storage S {postgres=rwU/postgres,anon=rwU/postgres,authenticated=rwU/postgres,service_role=rwU/postgres}
+-- supabase_auth_admin auth r {postgres=arwdDxtm/supabase_auth_admin,dashboard_user=arwdDxtm/supabase_auth_admin}
+-- supabase_auth_admin auth S {postgres=rwU/supabase_auth_admin,dashboard_user=rwU/supabase_auth_admin}
+-- supabase_auth_admin auth f {postgres=X/supabase_auth_admin,dashboard_user=X/supabase_auth_admin}
+-- supabase_admin realtime r {postgres=arwdDxtm/supabase_admin,dashboard_user=arwdDxtm/supabase_admin}
+-- supabase_admin realtime S {postgres=rwU/supabase_admin,dashboard_user=rwU/supabase_admin}
+-- supabase_admin realtime f {postgres=X/supabase_admin,dashboard_user=X/supabase_admin}
+-- supabase_admin graphql_public S {postgres=rwU/supabase_admin,anon=rwU/supabase_admin,authenticated=rwU/supabase_admin,service_role=rwU/supabase_admin}
+-- supabase_admin graphql_public r {postgres=arwdDxtm/supabase_admin,anon=arwdDxtm/supabase_admin,authenticated=arwdDxtm/supabase_admin,service_role=arwdDxtm/supabase_admin}
+-- supabase_admin graphql_public f {postgres=X/supabase_admin,anon=X/supabase_admin,authenticated=X/supabase_admin,service_role=X/supabase_admin}
+-- supabase_admin extensions r {postgres=a*r*w*d*D*x*t*m*/supabase_admin}
+-- supabase_admin extensions f {postgres=X*/supabase_admin}
+-- supabase_admin extensions S {postgres=r*w*U*/supabase_admin}
+-- supabase_admin graphql r {postgres=arwdDxtm/supabase_admin,anon=arwdDxtm/supabase_admin,authenticated=arwdDxtm/supabase_admin,service_role=arwdDxtm/supabase_admin}
+-- supabase_admin graphql f {postgres=X/supabase_admin,anon=X/supabase_admin,authenticated=X/supabase_admin,service_role=X/supabase_admin}
+-- supabase_admin graphql S {postgres=rwU/supabase_admin,anon=rwU/supabase_admin,authenticated=rwU/supabase_admin,service_role=rwU/supabase_admin}
+
+-- ----------------------------------------------------------------
+-- Divers
+-- ----------------------------------------------------------------
+-- fonctions hors extension : 126
+-- agrégats : aucun(e)
+-- schéma archive_yaounde (NON repris) : players, scans, player_badges, events, quest_progress, roulette_spins, player_profile, player_contact, sortie_reponses, quiz_answers, micro_votes, coups_de_coeur, treasure_progress, duels, tournament_kings, tickets, carnets, qr_codes, quests, badges, quiz_sessions, quiz_questions, treasure_hunts, roulette_prizes, treasure_steps, micro_questions, announcements, manifeste
+-- schémas cron/net : aucun(e)
+-- buckets storage : aucun(e)

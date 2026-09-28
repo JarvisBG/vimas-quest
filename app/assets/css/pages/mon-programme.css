@@ -1,0 +1,117 @@
+/* ==========================================================================
+   Page 6 — Mon programme
+   ========================================================================== */
+
+.mp { background: var(--papier-2); min-height: calc(100svh - var(--topbar-h)); }
+.mp__cadre { display: grid; gap: var(--s-5); padding-block: var(--s-4) var(--s-6); max-width: 40rem; }
+
+.sc-sodium { --sc: var(--sodium); --sc-txt: var(--nuit); }
+.sc-vert   { --sc: var(--vert);   --sc-txt: var(--nuit); }
+.sc-rose   { --sc: var(--rose);   --sc-txt: var(--nuit); }
+.sc-bleu   { --sc: var(--bleu);   --sc-txt: var(--papier); }
+.sc-nuit   { --sc: var(--nuit);   --sc-txt: var(--papier); }
+.sc-rouge  { --sc: var(--rose);   --sc-txt: var(--nuit); }   /* pas de rouge dans la palette */
+.sc-papier { --sc: var(--papier-2); --sc-txt: var(--nuit); }
+.pastille-sc { background: var(--sc); color: var(--sc-txt); }
+
+/* ---------- Annuler ---------- */
+.annuler-mp {
+  position: sticky; top: calc(var(--topbar-h) + var(--s-2)); z-index: 10;
+  display: flex; justify-content: space-between; align-items: center; gap: var(--s-3);
+  padding: var(--s-2) var(--s-4); background: var(--nuit); color: var(--papier); border-radius: var(--r-net);
+  box-shadow: 4px 4px 0 var(--sodium); font-weight: 700;
+}
+.annuler-mp .lien-fort { background: none; border: 0; cursor: pointer; color: var(--sodium); }
+
+/* ---------- Résumé ---------- */
+.resume-mp {
+  display: grid; gap: var(--s-3); padding: var(--s-4);
+  background: var(--bleu); color: var(--papier); border: 3px solid var(--nuit); border-radius: var(--r-billet);
+  box-shadow: 6px 6px 0 var(--nuit);
+}
+.resume-mp__lib { font-weight: 800; color: #DDE3FF; }
+.resume-mp__nom { font-size: clamp(2rem, 11vw, 2.75rem); line-height: .95; color: var(--sodium); }
+.resume-mp__detail { font-weight: 700; }
+.resume-mp__compte { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.resume-mp__compte span { padding: 4px 12px; font-size: var(--fs-sm); font-weight: 800; background: rgba(250, 250, 247, .15); border-radius: var(--r-pastille); }
+.resume-mp__compte .is-alerte { background: var(--rose); color: var(--nuit); }
+.resume-mp a { color: var(--sodium); }
+
+/* ---------- Jours et frise ---------- */
+.jour-mp { display: grid; gap: var(--s-3); margin-bottom: var(--s-5); }
+.jour-mp__titre { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-3); font-size: 1.75rem; }
+.jour-mp__titre small { font-family: var(--font-texte); font-size: var(--fs-sm); font-weight: 700; color: var(--texte-doux); text-transform: none; }
+.frise { display: grid; gap: 0; position: relative; }
+.frise::before { content: ""; position: absolute; left: 3.6rem; top: 12px; bottom: 12px; width: 3px; background: var(--nuit); border-radius: 2px; }
+
+.etape-mp { position: relative; display: grid; grid-template-columns: 3.2rem 1fr; gap: var(--s-4); align-items: start; padding-block: var(--s-2); }
+.etape-mp__heure { text-align: right; padding-top: var(--s-3); }
+.etape-mp__heure strong { display: block; font-family: var(--font-affiche); font-weight: 400; font-size: 1.375rem; line-height: 1; }
+.etape-mp__heure span { font-size: .6875rem; font-weight: 700; color: var(--texte-doux); }
+.etape-mp::after { content: ""; position: absolute; left: calc(3.6rem - 6px); top: calc(var(--s-2) + 16px); width: 15px; height: 15px; border-radius: 50%; background: var(--sc, var(--papier)); border: 3px solid var(--nuit); }
+
+.carte-mp {
+  display: grid; grid-template-columns: 1fr auto auto; gap: var(--s-1); align-items: center;
+  padding: var(--s-2) var(--s-1) var(--s-2) var(--s-3);
+  background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net);
+  box-shadow: inset 6px 0 0 var(--sc);
+}
+.carte-mp.is-en-cours { box-shadow: inset 6px 0 0 var(--sc), 0 0 0 3px #C4123F; }
+.carte-mp__lien { display: grid; gap: 3px; min-width: 0; text-decoration: none; padding-left: var(--s-1); }
+.carte-mp__nom { font-family: var(--font-affiche); font-size: 1.375rem; line-height: 1.05; text-transform: uppercase; }
+.carte-mp__meta { display: flex; flex-wrap: wrap; gap: var(--s-1) var(--s-2); align-items: center; font-size: var(--fs-xs); font-weight: 700; color: var(--texte-doux); }
+.statut-mp--en-cours { color: #C4123F; font-weight: 800; }
+.icone-mp { width: 44px; height: 44px; display: grid; place-items: center; background: none; border: 0; border-radius: 50%; cursor: pointer; color: var(--nuit); }
+.icone-mp .icon { width: 22px; height: 22px; }
+.icone-mp[aria-pressed="true"] { background: var(--sodium); }
+.icone-mp[aria-pressed="false"] .icon { opacity: .45; }
+.icone-mp--retirer:hover { background: #FFE3EE; }
+
+/* Trajet entre deux concerts */
+.trajet-mp { position: relative; display: grid; grid-template-columns: 3.2rem 1fr; gap: var(--s-4); padding-block: var(--s-1); }
+.trajet-mp__txt { display: flex; align-items: center; gap: var(--s-2); font-size: var(--fs-xs); font-weight: 700; color: var(--texte-doux); }
+.trajet-mp__txt .icon { width: 16px; height: 16px; flex: none; }
+.trajet-mp.is-serre .trajet-mp__txt { color: #A3102F; }
+.trajet-mp.is-serre .trajet-mp__txt::before { content: ""; }
+
+/* Conflit */
+.conflit-mp {
+  display: grid; gap: var(--s-3); margin-block: var(--s-2);
+  padding: var(--s-3); margin-left: calc(3.2rem + var(--s-4));
+  background: #FFE3EE; border: 3px solid var(--rose); border-radius: var(--r-net);
+}
+.conflit-mp.is-accepte { background: var(--papier); border-color: var(--nuit); border-style: dashed; }
+.conflit-mp__tete { display: flex; align-items: center; gap: var(--s-2); font-weight: 800; color: #A3102F; }
+.conflit-mp.is-accepte .conflit-mp__tete { color: var(--nuit); }
+.conflit-mp__duo { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
+.duo-mp { display: grid; gap: 2px; padding: var(--s-2); background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net); box-shadow: inset 0 5px 0 var(--sc); }
+.duo-mp strong { font-family: var(--font-affiche); font-weight: 400; font-size: 1.125rem; line-height: 1.05; text-transform: uppercase; }
+.duo-mp span { font-size: var(--fs-xs); font-weight: 700; color: var(--texte-doux); }
+.conflit-mp__choix { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
+.conflit-mp__choix .btn { font-size: .9375rem; padding: 0 var(--s-2); white-space: normal; line-height: 1.1; min-height: 48px; }
+.conflit-mp__deux { grid-column: 1 / -1; }
+.conflit-mp__plan { font-weight: 700; }
+.conflit-mp .lien-fort { background: none; border: 0; padding: 0; cursor: pointer; justify-self: start; font-size: var(--fs-sm); }
+
+.passes-mp { padding: var(--s-3) var(--s-4); background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net); }
+.passes-mp summary { min-height: 36px; display: flex; align-items: center; font-weight: 800; cursor: pointer; }
+.passes-mp ul { display: grid; gap: var(--s-1); margin-top: var(--s-2); }
+.passes-mp li { display: flex; justify-content: space-between; gap: var(--s-3); padding-block: var(--s-1); border-bottom: 1px dashed rgba(10, 20, 64, .2); font-size: var(--fs-sm); }
+
+.vide-mp { display: grid; justify-items: start; gap: var(--s-3); padding: var(--s-5); background: var(--papier); border: 2px dashed var(--nuit); border-radius: var(--r-net); }
+.vide-mp__titre { font-size: 1.75rem; }
+
+/* ---------- Blocs rappels et suggestions ---------- */
+.bloc-mp { display: grid; gap: var(--s-3); padding: var(--s-4); background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net); }
+.bloc-mp__titre { font-size: 1.75rem; }
+.notif-mp { display: flex; align-items: center; gap: var(--s-2); flex-wrap: wrap; font-size: var(--fs-sm); font-weight: 700; }
+.notif-mp:empty { display: none; }
+.notif-mp .btn { font-size: .9375rem; }
+.agenda-mp { display: grid; gap: var(--s-2); padding-top: var(--s-3); border-top: 2px dashed rgba(10, 20, 64, .25); }
+.agenda-mp p { font-size: var(--fs-sm); }
+
+.sugg-mp { display: grid; gap: var(--s-2); }
+.sugg-mp li { display: grid; grid-template-columns: 1fr auto; gap: var(--s-3); align-items: center; padding: var(--s-2) var(--s-2) var(--s-2) var(--s-3); border: 2px solid var(--nuit); border-radius: var(--r-net); box-shadow: inset 6px 0 0 var(--sc); }
+.sugg-mp strong { display: block; font-family: var(--font-affiche); font-weight: 400; font-size: 1.25rem; line-height: 1.05; text-transform: uppercase; }
+.sugg-mp span { display: block; font-size: var(--fs-xs); font-weight: 700; color: var(--texte-doux); }
+.sugg-mp .raison { color: var(--bleu); }

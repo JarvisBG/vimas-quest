@@ -1,0 +1,137 @@
+/* ==========================================================================
+   Page 7 — Plan du festival
+   ========================================================================== */
+
+.plan { background: var(--papier-2); min-height: calc(100svh - var(--topbar-h)); }
+.plan__cadre { display: grid; gap: var(--s-3); padding-block: var(--s-3) var(--s-6); max-width: 60rem; }
+
+.btn-urgence { --btn-bg: #C4123F; --btn-fg: var(--papier); --btn-bord: var(--nuit); }
+.btn-urgence .icon { width: 1em; height: 1em; fill: currentColor; stroke: none; }
+
+.alerte-abri {
+  display: flex; gap: var(--s-3); align-items: flex-start; padding: var(--s-3) var(--s-4);
+  background: var(--rose); color: var(--nuit); text-decoration: none;
+  border: 2px solid var(--nuit); border-radius: var(--r-net); box-shadow: var(--ombre-tampon);
+}
+.alerte-abri strong, .alerte-abri span span { display: block; }
+.alerte-abri span span { font-size: var(--fs-sm); }
+
+/* ---------- Outils ---------- */
+.outils-plan { display: flex; flex-wrap: wrap; gap: var(--s-2); justify-content: space-between; }
+.segments-plan { display: flex; border: 2px solid var(--nuit); border-radius: var(--r-net); overflow: hidden; }
+.segments-plan label { position: relative; }
+.segments-plan input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.segments-plan span { display: flex; align-items: center; gap: var(--s-1); height: 44px; padding: 0 var(--s-3); font-weight: 800; font-size: var(--fs-sm); background: #fff; }
+.segments-plan label + label span { border-left: 2px solid var(--nuit); }
+.segments-plan input:checked + span { background: var(--nuit); color: var(--sodium); }
+.segments-plan input:focus-visible + span { outline: 3px solid var(--rose); outline-offset: -4px; }
+.segments-plan .icon { width: 1.1em; height: 1.1em; }
+.proches { display: flex; gap: var(--s-2); }
+.proche {
+  display: grid; justify-items: center; gap: 1px; min-width: 52px; height: 48px; padding: 2px 6px;
+  font-size: .6875rem; font-weight: 800; cursor: pointer;
+  background: #fff; color: var(--nuit); border: 2px solid var(--nuit); border-radius: var(--r-net);
+}
+.proche .icon { width: 20px; height: 20px; }
+.proche:active { background: var(--sodium); }
+
+.filtres-plan__liste { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: calc(-1 * var(--s-4)); padding: 2px var(--s-4); }
+.filtres-plan__liste::-webkit-scrollbar { display: none; }
+.filtres-plan__liste .puce { flex: none; }
+.filtres-plan__liste .puce span { min-height: 38px; font-size: var(--fs-sm); }
+.filtres-plan__liste .puce .icon { width: 1.1em; height: 1.1em; }
+.filtres-plan__liste .puce input:checked + span::before { display: none; }
+
+/* ---------- Carte (élément fort) ---------- */
+.carte-p {
+  position: relative; overflow: hidden;
+  height: min(62svh, 560px);
+  background: #E9EFD8;
+  border: 3px solid var(--nuit); border-radius: var(--r-billet);
+  box-shadow: 6px 6px 0 var(--nuit);
+  touch-action: none; user-select: none; -webkit-user-select: none;
+  cursor: grab;
+}
+.carte-p.is-glisse { cursor: grabbing; }
+.carte-p:focus-visible { outline: 3px solid var(--rose); outline-offset: 3px; }
+.carte-p__svg { display: block; width: 100%; height: 100%; }
+.carte-p__zoom { position: absolute; right: var(--s-2); top: var(--s-2); display: grid; gap: var(--s-1); }
+.carte-p__zoom .icone-btn, .carte-p__moi {
+  background: var(--papier); color: var(--nuit); border: 2px solid var(--nuit); border-radius: var(--r-net);
+  box-shadow: 2px 2px 0 var(--nuit);
+}
+.carte-p__moi {
+  position: absolute; left: var(--s-2); bottom: var(--s-2);
+  display: flex; align-items: center; gap: var(--s-1); min-height: 44px; padding: 0 var(--s-3);
+  font-weight: 800; cursor: pointer;
+}
+.aide-carte, .etat-position { font-size: var(--fs-sm); }
+.etat-position:empty { display: none; }
+.etat-position { font-weight: 700; }
+
+/* Dessin du site */
+.carte-p text { font-family: var(--font-affiche); text-transform: uppercase; pointer-events: none; }
+.zone-lib { font-size: 15px; fill: rgba(10, 20, 64, .45); letter-spacing: .08em; }
+.lac-lib { font-size: 22px; fill: rgba(250, 250, 247, .85); letter-spacing: .15em; }
+
+.marqueur { cursor: pointer; }
+.marqueur:focus { outline: none; }
+.marqueur:focus-visible .marqueur__pastille { stroke: var(--rose); stroke-width: 5; }
+.marqueur__pastille { stroke: var(--nuit); stroke-width: 2.5; }
+.marqueur__icone { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+.marqueur__nom {
+  font-family: var(--font-texte) !important; text-transform: none !important;
+  font-size: 12px; font-weight: 800; fill: var(--nuit);
+  paint-order: stroke; stroke: #F4F6EA; stroke-width: 4px; stroke-linejoin: round;
+  opacity: 0; transition: opacity .2s;
+}
+.carte-p[data-zoom="proche"] .marqueur__nom,
+.marqueur.is-actif .marqueur__nom { opacity: 1; }
+.marqueur--scene .marqueur__nom { opacity: 1; font-family: var(--font-affiche) !important; text-transform: uppercase !important; font-size: 17px; font-weight: 400; }
+.marqueur.is-cache { display: none; }
+.marqueur.is-attenue { opacity: .3; }
+.marqueur.is-actif .marqueur__pastille { stroke: var(--rose); stroke-width: 5; }
+.marqueur.is-actif .marqueur__halo { opacity: 1; }
+.marqueur__halo { opacity: 0; fill: none; stroke: var(--rose); stroke-width: 3; transform-box: fill-box; transform-origin: center; }
+.marqueur.is-actif .marqueur__halo { animation: halo 1.4s ease-out infinite; }
+@keyframes halo { from { transform: scale(.8); opacity: 1; } to { transform: scale(1.9); opacity: 0; } }
+.marqueur__tampon { fill: var(--vert); stroke: var(--nuit); stroke-width: 1.5; }
+
+.moi__point { fill: #1F7AFF; stroke: #fff; stroke-width: 4; }
+.moi__halo { fill: rgba(31, 122, 255, .2); transform-box: fill-box; transform-origin: center; animation: moi 2s ease-out infinite; }
+@keyframes moi { from { transform: scale(.6); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+
+/* ---------- Liste ---------- */
+.vue-liste { display: grid; gap: var(--s-3); }
+.groupe-lieux { display: grid; gap: var(--s-2); margin-top: var(--s-3); }
+.groupe-lieux__titre { display: flex; align-items: center; gap: var(--s-2); font-size: 1.375rem; }
+.lieu-l {
+  display: grid; grid-template-columns: auto 1fr auto; gap: var(--s-3); align-items: center; width: 100%;
+  min-height: 60px; padding: var(--s-2) var(--s-3);
+  text-align: left; font: inherit; color: inherit; cursor: pointer;
+  background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net);
+}
+.lieu-l__pastille { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--nuit); background: var(--c); color: var(--ct); }
+.lieu-l__pastille .icon { width: 22px; height: 22px; }
+.lieu-l__nom { font-weight: 800; }
+.lieu-l__meta { display: block; font-size: var(--fs-xs); font-weight: 600; color: var(--texte-doux); }
+.lieu-l__dist { font-weight: 800; font-size: var(--fs-sm); white-space: nowrap; }
+
+/* ---------- Fiche lieu ---------- */
+.fiche-lieu__cat { display: inline-flex; align-items: center; gap: var(--s-1); font-weight: 800; color: var(--texte-doux); }
+.fiche-lieu__titre { font-size: clamp(2rem, 10vw, 2.75rem); line-height: 1; text-shadow: var(--decalage); margin-bottom: var(--s-3); }
+.fiche-lieu__corps { display: grid; gap: var(--s-3); }
+.fiche-lieu__infos { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.fiche-lieu__trajet { display: flex; align-items: center; gap: var(--s-2); padding: var(--s-3); font-weight: 800; background: var(--papier-2); border-radius: var(--r-net); }
+.fiche-lieu__scene { display: grid; gap: 2px; padding: var(--s-3); border: 2px solid var(--nuit); border-radius: var(--r-net); }
+.fiche-lieu__scene strong { font-family: var(--font-affiche); font-weight: 400; font-size: 1.5rem; line-height: 1; text-transform: uppercase; }
+.fiche-lieu__scene .en-cours { color: #C4123F; font-weight: 800; }
+.fiche-lieu__actions { display: grid; gap: var(--s-2); }
+
+/* ---------- Urgence ---------- */
+.urgence__corps { display: grid; gap: var(--s-3); }
+.urgence__appel { --btn-bg: #C4123F; --btn-fg: var(--papier); }
+.urgence__appel .icon { fill: none; }
+.urgence__conseils { display: grid; gap: var(--s-2); padding-left: 1.2em; list-style: disc; }
+.urgence__proche { padding: var(--s-3); border: 2px solid var(--nuit); border-radius: var(--r-net); background: #FFE3EE; }
+.urgence__proche strong { display: block; font-size: var(--fs-lg); }

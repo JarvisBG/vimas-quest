@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#1F3FD1">
+  <title>Missions | DOMAF Quest</title>
+  <link rel="preload" href="assets/fonts/Anton-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/missions.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app" data-topbar>
+    <div class="wrap topbar__inner">
+      <h1 class="topbar__titre affiche">Missions</h1>
+      <span class="jetons-haut" data-jetons hidden></span>
+      <a class="icone-btn icone-compteur" href="annonces.html" aria-label="Annonces du festival">
+        <svg class="icon" aria-hidden="true"><use href="#i-cloche"></use></svg>
+        <span class="icone-compteur__nb" data-cloche-compteur hidden></span>
+      </a>
+    </div>
+  </header>
+
+  <main id="contenu" class="missions">
+    <div class="wrap missions__cadre">
+
+      <section class="bilan-m" aria-label="Ta progression">
+        <p class="bilan-m__phrase" data-bilan><span class="squelette" style="display:block;height:3.2em"></span></p>
+        <div class="crans crans--global" data-crans-global aria-hidden="true"></div>
+      </section>
+
+      <!-- Défi éclair (affiché seulement s'il y en a un d'ouvert) -->
+      <section class="eclair" data-eclair hidden aria-labelledby="eclair-titre">
+        <div class="eclair__haut">
+          <span class="eclair__lib"><i data-icon="eclair"></i> Défi éclair</span>
+          <span class="eclair__chrono chiffres" data-eclair-chrono aria-live="off"></span>
+        </div>
+        <h2 class="affiche eclair__titre" id="eclair-titre" data-eclair-titre></h2>
+        <p data-eclair-texte></p>
+        <div class="eclair__bas">
+          <span class="recompenses" data-eclair-gains></span>
+          <a class="btn btn--nuit" href="scanner.html"><i data-icon="qr"></i> Scanner</a>
+        </div>
+      </section>
+
+      <div class="onglets-m" role="tablist" aria-label="Filtrer les missions" data-onglets>
+        <button class="onglet-m" role="tab" type="button" id="onglet-afaire" aria-controls="panneau-m" aria-selected="true" data-groupe="afaire">
+          À faire <span class="onglet-m__nb" data-nb="afaire"></span>
+        </button>
+        <button class="onglet-m" role="tab" type="button" id="onglet-verrou" aria-controls="panneau-m" aria-selected="false" tabindex="-1" data-groupe="verrou">
+          Verrouillées <span class="onglet-m__nb" data-nb="verrou"></span>
+        </button>
+        <button class="onglet-m" role="tab" type="button" id="onglet-fini" aria-controls="panneau-m" aria-selected="false" tabindex="-1" data-groupe="fini">
+          Terminées <span class="onglet-m__nb" data-nb="fini"></span>
+        </button>
+      </div>
+
+      <fieldset class="filtres-m">
+        <legend class="sr-only">Catégorie</legend>
+        <div class="puces puces--defilant" data-categories></div>
+      </fieldset>
+
+      <div id="panneau-m" role="tabpanel" aria-labelledby="onglet-afaire" data-panneau>
+        <ul class="liste-m" data-liste>
+          <li class="squelette" style="height:180px"></li>
+          <li class="squelette" style="height:180px"></li>
+        </ul>
+        <div class="vide-m" data-vide hidden>
+          <p class="affiche vide-m__titre" data-vide-titre></p>
+          <p data-vide-texte></p>
+          <a class="btn btn--sodium" href="scanner.html" data-vide-action><i data-icon="qr"></i> Ouvrir le scanner</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Code de validation pour le staff -->
+  <dialog class="feuille feuille--validation" aria-labelledby="valid-titre" data-validation>
+    <div class="feuille__entete">
+      <h2 class="affiche feuille__titre" id="valid-titre">Code de validation</h2>
+      <button class="icone-btn" type="button" aria-label="Fermer" data-fermer-validation>
+        <svg class="icon" aria-hidden="true"><use href="#i-fermer"></use></svg>
+      </button>
+    </div>
+    <p class="validation__consigne">Montre cet écran à un membre de l'équipe en gilet jaune. Il le scanne pour valider <strong data-valid-mission></strong>.</p>
+    <div class="validation__qr" data-valid-qr></div>
+    <p class="validation__code" aria-label="Code de secours">
+      <span data-valid-code></span>
+    </p>
+    <p class="validation__info texte-doux">
+      <span data-valid-expire></span><br>
+      Monte la luminosité de ton écran si le scan ne passe pas.
+    </p>
+    <p class="validation__attente" aria-live="polite" data-valid-attente>
+      <span class="validation__point" aria-hidden="true"></span> En attente de la validation…
+    </p>
+    <button class="lien-fort validation__demo" type="button" data-valid-demo hidden>Démo : simuler la validation du staff</button>
+  </dialog>
+
+  <script src="assets/js/config.js" defer></script>
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/serveur.js" defer></script>
+  <script src="assets/js/vendor/qrcode-generator.min.js" defer></script>
+  <script src="assets/js/pages/missions.js" defer></script>
+</body>
+</html>

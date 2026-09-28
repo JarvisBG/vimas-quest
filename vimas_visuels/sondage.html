@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#3B0A12">
+  <title>Sondage du soir | Vimas Fest</title>
+  <link rel="preload" href="assets/fonts/Anton-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/sondage.css">
+</head>
+<body class="page-sondage">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app topbar--sondage" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="icone-btn topbar__retour" href="tableau-de-bord.html" aria-label="Retour à ma carte">
+        <svg class="icon" aria-hidden="true"><use href="#i-retour"></use></svg>
+      </a>
+      <h1 class="topbar__titre affiche">Sondage du soir</h1>
+      <span class="sondage__compteur chiffres" data-compteur aria-live="polite"></span>
+    </div>
+  </header>
+
+  <main id="contenu" class="sondage">
+    <div class="wrap sondage__cadre">
+      <div class="crans sondage__crans" data-crans aria-hidden="true" hidden></div>
+      <form class="sondage__ecran" data-ecran novalidate aria-live="polite">
+        <div class="squelette" style="height:260px"></div>
+      </form>
+    </div>
+  </main>
+
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/pages/sondage.js" defer></script>
+</body>
+</html>

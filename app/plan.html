@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#1F3FD1">
+  <title>Plan du festival | DOMAF Quest</title>
+  <meta name="description" content="Plan du DOMAF : scènes, stands, food-trucks, points d'eau, toilettes, secours et abris.">
+  <link rel="preload" href="assets/fonts/Anton-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/plan.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="icone-btn topbar__retour" href="index.html" aria-label="Retour" data-retour>
+        <svg class="icon" aria-hidden="true"><use href="#i-retour"></use></svg>
+      </a>
+      <h1 class="topbar__titre affiche">Plan</h1>
+      <button class="btn btn--sm btn-urgence" type="button" data-urgence>
+        <svg class="icon" aria-hidden="true"><use href="#i-croix"></use></svg> Urgence
+      </button>
+    </div>
+  </header>
+
+  <main id="contenu" class="plan">
+    <div class="wrap plan__cadre">
+
+      <a class="alerte-abri" href="#" data-alerte-abri hidden>
+        <i data-icon="alerte"></i>
+        <span><strong data-alerte-titre></strong><span>Touche ici pour voir les abris.</span></span>
+      </a>
+
+      <div class="outils-plan">
+        <div class="segments-plan" role="radiogroup" aria-label="Affichage">
+          <label><input type="radio" name="vue" value="plan" checked><span><i data-icon="plan"></i> Plan</span></label>
+          <label><input type="radio" name="vue" value="liste"><span><i data-icon="menu"></i> Liste</span></label>
+        </div>
+        <div class="proches" role="group" aria-label="Trouver le plus proche">
+          <button class="proche" type="button" data-proche="eau"><i data-icon="goutte"></i><span>Eau</span></button>
+          <button class="proche" type="button" data-proche="toilettes"><i data-icon="wc"></i><span>WC</span></button>
+          <button class="proche" type="button" data-proche="food"><i data-icon="couverts"></i><span>Manger</span></button>
+        </div>
+      </div>
+
+      <fieldset class="filtres-plan">
+        <legend class="sr-only">Afficher sur le plan</legend>
+        <div class="puces filtres-plan__liste" data-filtres></div>
+      </fieldset>
+
+      <!-- Vue plan -->
+      <section class="vue-plan" data-vue-plan aria-label="Plan interactif du site">
+        <div class="carte-p" data-carte tabindex="0" aria-describedby="aide-carte">
+          <svg class="carte-p__svg" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" data-svg role="img" aria-label="Plan du DOMAF">
+            <g data-monde>
+              <g data-fond></g>
+              <g data-marqueurs></g>
+              <g data-moi></g>
+            </g>
+          </svg>
+          <div class="carte-p__zoom">
+            <button class="icone-btn" type="button" data-zoom="1.5" aria-label="Zoomer"><i data-icon="zoomplus"></i></button>
+            <button class="icone-btn" type="button" data-zoom="0.66" aria-label="Dézoomer"><i data-icon="zoommoins"></i></button>
+            <button class="icone-btn" type="button" data-recentrer aria-label="Voir tout le site"><i data-icon="cadre"></i></button>
+          </div>
+          <button class="carte-p__moi" type="button" data-localiser><i data-icon="position"></i> <span>Ma position</span></button>
+        </div>
+        <p class="aide-carte texte-doux" id="aide-carte">Pince ou utilise les boutons pour zoomer, fais glisser pour te déplacer. Touche un lieu pour ses détails.</p>
+        <p class="etat-position" aria-live="polite" data-etat-position></p>
+      </section>
+
+      <!-- Vue liste (alternative accessible au plan) -->
+      <section class="vue-liste" data-vue-liste hidden aria-label="Liste des lieux">
+        <label class="sr-only" for="chercher-lieu">Chercher un lieu</label>
+        <input class="saisie" id="chercher-lieu" type="search" placeholder="Chercher un lieu…" autocomplete="off" data-chercher>
+        <div data-liste></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Fiche d'un lieu -->
+  <dialog class="feuille fiche-lieu" aria-labelledby="lieu-titre" data-fiche>
+    <div class="feuille__entete">
+      <span class="fiche-lieu__cat" data-fiche-cat></span>
+      <button class="icone-btn" type="button" aria-label="Fermer" data-fermer-fiche>
+        <svg class="icon" aria-hidden="true"><use href="#i-fermer"></use></svg>
+      </button>
+    </div>
+    <h2 class="affiche fiche-lieu__titre" id="lieu-titre" data-fiche-titre></h2>
+    <div class="fiche-lieu__corps" data-fiche-corps></div>
+  </dialog>
+
+  <!-- Urgence -->
+  <dialog class="feuille urgence" aria-labelledby="urgence-titre" data-dialogue-urgence>
+    <div class="feuille__entete">
+      <h2 class="affiche feuille__titre" id="urgence-titre">Besoin d'aide ?</h2>
+      <button class="icone-btn" type="button" aria-label="Fermer" data-fermer-urgence>
+        <svg class="icon" aria-hidden="true"><use href="#i-fermer"></use></svg>
+      </button>
+    </div>
+    <div class="urgence__corps" data-urgence-corps></div>
+  </dialog>
+
+  <script src="assets/js/config.js" defer></script>
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/serveur.js" defer></script>
+  <script src="assets/js/plan-fond.js" defer></script>
+  <script src="assets/js/pages/plan.js" defer></script>
+</body>
+</html>

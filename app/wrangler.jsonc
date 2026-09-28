@@ -1,0 +1,16 @@
+{
+  // Déploiement Cloudflare de DOMAF Quest : site 100 % statique servi depuis app/.
+  // Nom neutre (festival-quest) : le lien ne cite pas le DOMAF, le moteur servira à d'autres festivals.
+  // Mêmes réglages qu'Otaku Quest (voir ../Otaku_Quest/wrangler.jsonc pour le détail).
+  "name": "festival-quest",
+  "compatibility_date": "2026-09-17",
+  "assets": {
+    "directory": ".",
+    // "none" : on sert les adresses .html telles quelles (évite une redirection 307 par page).
+    // ⚠️ "/" ne sert plus index.html tout seul : c'est `_redirects` qui le rattrape.
+    "html_handling": "none",
+    // Adresse inconnue : 404.html (code 404), même avant l'installation du service
+    // worker. Sans ce réglage, Cloudflare répondait une page 404 vide.
+    "not_found_handling": "404-page"
+  }
+}

@@ -1,0 +1,286 @@
+k,v
+sequences,null
+sequences_liees,null
+enums,null
+autres_types,null
+index,"CREATE INDEX coeur_par_cible ON public.coups_de_coeur USING btree (qr_code_id);
+CREATE INDEX events_created_idx ON public.events USING btree (created_at DESC);
+CREATE INDEX events_player_created_idx ON public.events USING btree (player_id, created_at DESC);
+CREATE INDEX micro_votes_jour ON public.micro_votes USING btree (player_id, jour);
+CREATE INDEX contact_par_numero ON public.player_contact USING btree (telephone);
+CREATE INDEX players_xp_idx ON public.players USING btree (xp DESC);
+CREATE UNIQUE INDEX scans_once_per_day ON public.scans USING btree (player_id, qr_code_id, day);
+CREATE INDEX tickets_pass ON public.tickets USING btree (utilise_par, jour);
+CREATE INDEX tickets_rendus ON public.tickets USING btree (carnet_id) WHERE (rendu_le IS NOT NULL);
+CREATE INDEX tickets_carnet ON public.tickets USING btree (carnet_id, rang);"
+rls,"ALTER table public.announcements enable row level security;
+ALTER table public.badges enable row level security;
+ALTER table public.billetterie_config enable row level security;
+ALTER table public.carnets enable row level security;
+ALTER table public.coeur_config enable row level security;
+ALTER table public.contact_config enable row level security;
+ALTER table public.coups_de_coeur enable row level security;
+ALTER table public.duels enable row level security;
+ALTER table public.events enable row level security;
+ALTER table public.game_state enable row level security;
+ALTER table public.micro_config enable row level security;
+ALTER table public.micro_questions enable row level security;
+ALTER table public.micro_votes enable row level security;
+ALTER table public.player_badges enable row level security;
+ALTER table public.player_contact enable row level security;
+ALTER table public.player_profile enable row level security;
+ALTER table public.player_secrets enable row level security;
+ALTER table public.players enable row level security;
+ALTER table public.profil_config enable row level security;
+ALTER table public.qr_codes enable row level security;
+ALTER table public.quest_progress enable row level security;
+ALTER table public.quests enable row level security;
+ALTER table public.quiz_answers enable row level security;
+ALTER table public.quiz_questions enable row level security;
+ALTER table public.quiz_sessions enable row level security;
+ALTER table public.roulette_prizes enable row level security;
+ALTER table public.roulette_spins enable row level security;
+ALTER table public.scans enable row level security;
+ALTER table public.sortie_reponses enable row level security;
+ALTER table public.staff enable row level security;
+ALTER table public.tickets enable row level security;
+ALTER table public.tournament_kings enable row level security;
+ALTER table public.treasure_hunts enable row level security;
+ALTER table public.treasure_progress enable row level security;
+ALTER table public.treasure_steps enable row level security;"
+tables_sans_rls,null
+policies,"CREATE policy ""lecture publique"" on public.announcements as PERMISSIVE for SELECT to public using (true);
+CREATE policy ""lecture publique"" on public.badges as PERMISSIVE for SELECT to public using (true);
+CREATE policy ""ecriture gm"" on public.billetterie_config as PERMISSIVE for UPDATE to authenticated using (is_gm());
+CREATE policy ""lecture publique"" on public.billetterie_config as PERMISSIVE for SELECT to public using (true);
+CREATE policy ""ecriture staff"" on public.coeur_config as PERMISSIVE for UPDATE to authenticated using (is_staff());
+CREATE policy ""lecture publique"" on public.coeur_config as PERMISSIVE for SELECT to public using (true);
+CREATE policy ""ecriture staff"" on public.contact_config as PERMISSIVE for UPDATE to authenticated using (is_staff());
+CREATE policy ""lecture publique"" on public.contact_config as PERMISSIVE for SELECT to public using (true);
+CREATE policy ""lecture staff"" on public.coups_de_coeur as PERMISSIVE for SELECT to authenticated using (is_staff());
+CREATE policy ""lecture staff"" on public.duels as PERMISSIVE for SELECT to authenticated using (is_staff());
+CREATE policy ""lecture publique"" on public.events as PERMISSIVE for SELECT to public using (true);
+CREATE policy ""lecture publique"" on public.game_state as PERMISSIVE for SELECT to public using (true);
+CREATE policy ""ecriture staff"" on public.micro_config as PERMISSIVE for UPDATE to authenticated using (is_staff());
+CREATE policy ""lecture publique"" on public.micro_config as PERMISSIVE for SELECT to public using (true);
+CREATE policy ""ecriture staff"" on public.micro_questions as PERMISSIVE for ALL to authenticated using (is_staff()) with check (is_staff());
+CREATE policy ""lecture publique"" on public.micro_questions as PERMISSIVE for SELECT to public using (true);
+CREATE policy ""lecture staff"" on public.micro_votes as PERMISSIVE for SELECT to authenticated using (is_staff());
+CREATE policy ""lecture publique"" on public.player_badges as PERMISSIVE for SELECT to public using (true);
+CREATE policy ""lecture staff"" on public.player_contact as PERMISSIVE for SELECT to authenticated using (is_staff());
+CREATE policy ""lecture staff"" on public.player_profile as PERMISSIVE for SELECT to authenticated using (is_staff());
+CREATE policy ""lecture publique"" on public.players as PERMISSIVE for SELECT to public using (true);
+CREATE policy ""ecriture staff"" on public.profil_config as PERMISSIVE for UPDATE to authenticated using (is_staff());
+CREATE policy ""lecture publique"" on public.profil_config as PERMISSIVE for SELECT to public using (true);
+CREATE policy ""lecture staff"" on public.qr_codes as PERMISSIVE for SELECT to authenticated using (is_staff());
+CREATE policy ""lecture publique"" on public.quest_progress as PERMISSIVE for SELECT to public using (true);
+CREATE policy ""lecture publique"" on public.quests as PERMISSIVE for SELECT to public using (true);
+CREATE policy ""lecture publique"" on public.roulette_prizes as PERMISSIVE for SELECT to public using (true);
+CREATE policy ""lecture staff"" on public.roulette_spins as PERMISSIVE for SELECT to authenticated using (is_staff());
+CREATE policy ""lecture staff"" on public.scans as PERMISSIVE for SELECT to authenticated using (is_staff());
+CREATE policy ""lecture staff"" on public.sortie_reponses as PERMISSIVE for SELECT to authenticated using (is_staff());
+CREATE policy ""staff se voit lui-meme"" on public.staff as PERMISSIVE for SELECT to authenticated using ((user_id = auth.uid()));
+CREATE policy ""lecture staff"" on public.tournament_kings as PERMISSIVE for SELECT to authenticated using (is_staff());"
+triggers,"CREATE TRIGGER pass_garde_players BEFORE UPDATE OF xp ON public.players FOR EACH ROW EXECUTE FUNCTION pass_garde();
+CREATE TRIGGER maj_xp_jour BEFORE UPDATE OF xp ON public.players FOR EACH ROW EXECUTE FUNCTION _maj_xp_jour();"
+realtime,"ALTER publication supabase_realtime add table public.players;
+ALTER publication supabase_realtime add table public.announcements;
+ALTER publication supabase_realtime add table public.events;
+ALTER publication supabase_realtime add table public.game_state;"
+replica_identity,null
+droits_tables,"announcements (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+badges (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+billetterie_config (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+carnets (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+coeur_config (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+contact_config (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+coups_de_coeur (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+duels (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+events (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+game_state (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+micro_config (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+micro_questions (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+micro_votes (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+player_badges (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+player_contact (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+player_profile (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+player_secrets (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+players (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+profil_config (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+qr_codes (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+quest_progress (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+quests (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+quiz_answers (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+quiz_questions (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+quiz_sessions (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+roulette_prizes (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+roulette_spins (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+scans (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+sortie_reponses (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+staff (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+tickets (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+tournament_kings (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+treasure_hunts (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+treasure_progress (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+treasure_steps (r) {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}"
+droits_fonctions,"_award_badge(p_player_id uuid, p_pseudo text, p_badge_name text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+_code_secret_tirage() {postgres=X/postgres,service_role=X/postgres}
+_gen_qr_code() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+_is_system_badge(p_name text) {postgres=X/postgres,service_role=X/postgres}
+_maj_xp_jour() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+_norm_answer(p text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+_norm_ticket(p_code text) {postgres=X/postgres,service_role=X/postgres}
+_points_jour(p_xp_jour integer, p_jour date) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+_raid_damage(p_session_id uuid) {postgres=X/postgres,service_role=X/postgres}
+_ticket_code() {postgres=X/postgres,service_role=X/postgres}
+admin_award_badge(p_player_id uuid, p_badge_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_award_bonus(p_player_id uuid, p_xp integer, p_reason text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_create_announcement(p_message text, p_type text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_create_badge(p_name text, p_icon text, p_description text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_create_hunt(p_title text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_create_prize(p_name text, p_icon text, p_weight integer, p_stock integer, p_active boolean, p_kind text, p_value integer, p_badge_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_create_qr(p_label text, p_type text, p_rarity text, p_xp integer, p_hint text, p_character text, p_anime text, p_badge_id uuid, p_quest_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_create_quest(p_title text, p_description text, p_type text, p_counter text, p_goal integer, p_xp integer, p_active boolean, p_badge_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_create_quiz_question(p_session_id uuid, p_question text, p_choices jsonb, p_correct integer, p_duration integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_create_quiz_session(p_title text, p_kind text, p_boss_name text, p_boss_image text, p_boss_hp integer, p_bonus_xp integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_create_step(p_hunt_id uuid, p_riddle text, p_answer text, p_xp integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_delete_announcement(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_delete_badge(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_delete_hunt(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_delete_prize(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_delete_qr(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_delete_quest(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_delete_quiz_question(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_delete_quiz_session(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_delete_step(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_duplicate_hunt(p_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_duplicate_quiz_session(p_session_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_edit_qr(p_id uuid, p_label text, p_hint text, p_character text, p_anime text, p_xp integer, p_quest_id uuid, p_touche_quest boolean) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_get_reconnect_code(p_player_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_journal_bonus(p_jour date) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_list_badges() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_list_duels(p_limit integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_list_hunts() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_list_qr() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_list_quests() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_list_quiz_questions(p_session_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_list_quiz_sessions() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_list_steps(p_hunt_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_liste_joueurs() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_manual_quests(p_player_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_move_quiz_question(p_id uuid, p_direction text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_quiz_end(p_session_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_quiz_live(p_session_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_quiz_next(p_session_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_quiz_start(p_session_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_recent_spins(p_limit integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_record_duel(p_player1 uuid, p_player2 uuid, p_winner uuid, p_xp integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_redeem(p_code text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_rename_player(p_player_id uuid, p_pseudo text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_rename_quiz_session(p_id uuid, p_title text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_set_hunt_active(p_id uuid, p_active boolean) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_set_phase(p_phase text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_set_qr_active(p_id uuid, p_active boolean) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_set_roulette_cost(p_cost integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_set_status(p_player_id uuid, p_status text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_stats() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_update_badge(p_id uuid, p_name text, p_icon text, p_description text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_update_hunt(p_id uuid, p_title text, p_first_bonus integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_update_prize(p_id uuid, p_name text, p_icon text, p_weight integer, p_stock integer, p_active boolean, p_kind text, p_value integer, p_badge_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_update_quest(p_id uuid, p_title text, p_description text, p_type text, p_counter text, p_goal integer, p_xp integer, p_active boolean, p_badge_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_update_quiz_question(p_id uuid, p_question text, p_choices jsonb, p_correct integer, p_duration integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_update_raid_params(p_session_id uuid, p_boss_name text, p_boss_image text, p_boss_hp integer, p_bonus_xp integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_update_step(p_id uuid, p_riddle text, p_answer text, p_xp integer) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+admin_validate_quest(p_player_id uuid, p_quest_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+archive_lire(p_table text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+billetterie_stats() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+carnet_attribuer(p_carnet_id uuid, p_email text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+carnet_creer(p_vendeur_nom text, p_nb_tickets integer, p_note text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+carnet_etat(p_carnet_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+carnet_liste() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+carnet_pointer(p_carnet_id uuid, p_rendus integer, p_actif boolean, p_note text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+carnet_rendre(p_carnet_id uuid, p_codes text[]) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+carnet_reprendre(p_carnet_id uuid, p_codes text[]) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+coeur_donner(p_secret_code text, p_qr_code_id uuid) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+coeur_liste(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+coeur_palmares(p_limite integer) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+coeur_retirer(p_secret_code text, p_qr_code_id uuid) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+contact_enregistrer(p_secret_code text, p_telephone text, p_consent boolean) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+contact_etat(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+create_player(p_pseudo text, p_archetype text, p_ticket text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+is_equipe() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+is_gm() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+is_staff() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+is_vendeur() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+jour_festival_label(p_jour date) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+leaderboard_view(p_player_id uuid) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+level_for_xp(p_xp integer) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+live_board() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+live_stats() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+login_with_code(p_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+micro_prochaine(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+micro_repondre(p_secret_code text, p_question_id integer, p_valeur text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+mon_acces() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+pass_actif(p_player_id uuid) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+pass_etat(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+pass_garde() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+player_collection(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+player_home(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+profil_etat(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+profil_options() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+profil_public_stats() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+profil_repondre(p_secret_code text, p_champ text, p_valeur text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+profil_stats() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+profil_valeurs(p_champ text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+quiz_answer(p_secret_code text, p_question_id uuid, p_answer_index integer) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+quiz_board() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+quiz_state(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+rank_for_level(p_level integer) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+roi_veille() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+scan_qr(p_secret_code text, p_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+sortie_etat(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+sortie_options() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+sortie_repondre(p_secret_code text, p_champ text, p_valeur text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+spin_roulette(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+staff_role() {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+stats_parcours() {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+ticket_utiliser(p_secret_code text, p_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+ticket_verifier(p_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+treasure_answer(p_secret_code text, p_answer text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+treasure_view(p_secret_code text) {=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+vendeur_award_bonus(p_player_id uuid, p_xp integer, p_reason text) {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}"
+droits_par_defaut,"postgres public r {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+postgres public f {postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+postgres public S {postgres=rwU/postgres,anon=rwU/postgres,authenticated=rwU/postgres,service_role=rwU/postgres}
+supabase_admin public S {postgres=rwU/supabase_admin,anon=rwU/supabase_admin,authenticated=rwU/supabase_admin,service_role=rwU/supabase_admin}
+supabase_admin public r {postgres=arwdDxtm/supabase_admin,anon=arwdDxtm/supabase_admin,authenticated=arwdDxtm/supabase_admin,service_role=arwdDxtm/supabase_admin}
+supabase_admin public f {postgres=X/supabase_admin,anon=X/supabase_admin,authenticated=X/supabase_admin,service_role=X/supabase_admin}
+postgres storage r {postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+postgres storage f {postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+postgres storage S {postgres=rwU/postgres,anon=rwU/postgres,authenticated=rwU/postgres,service_role=rwU/postgres}
+supabase_auth_admin auth r {postgres=arwdDxtm/supabase_auth_admin,dashboard_user=arwdDxtm/supabase_auth_admin}
+supabase_auth_admin auth S {postgres=rwU/supabase_auth_admin,dashboard_user=rwU/supabase_auth_admin}
+supabase_auth_admin auth f {postgres=X/supabase_auth_admin,dashboard_user=X/supabase_auth_admin}
+supabase_admin realtime r {postgres=arwdDxtm/supabase_admin,dashboard_user=arwdDxtm/supabase_admin}
+supabase_admin realtime S {postgres=rwU/supabase_admin,dashboard_user=rwU/supabase_admin}
+supabase_admin realtime f {postgres=X/supabase_admin,dashboard_user=X/supabase_admin}
+supabase_admin graphql_public S {postgres=rwU/supabase_admin,anon=rwU/supabase_admin,authenticated=rwU/supabase_admin,service_role=rwU/supabase_admin}
+supabase_admin graphql_public r {postgres=arwdDxtm/supabase_admin,anon=arwdDxtm/supabase_admin,authenticated=arwdDxtm/supabase_admin,service_role=arwdDxtm/supabase_admin}
+supabase_admin graphql_public f {postgres=X/supabase_admin,anon=X/supabase_admin,authenticated=X/supabase_admin,service_role=X/supabase_admin}
+supabase_admin extensions r {postgres=a*r*w*d*D*x*t*m*/supabase_admin}
+supabase_admin extensions f {postgres=X*/supabase_admin}
+supabase_admin extensions S {postgres=r*w*U*/supabase_admin}
+supabase_admin graphql r {postgres=arwdDxtm/supabase_admin,anon=arwdDxtm/supabase_admin,authenticated=arwdDxtm/supabase_admin,service_role=arwdDxtm/supabase_admin}
+supabase_admin graphql f {postgres=X/supabase_admin,anon=X/supabase_admin,authenticated=X/supabase_admin,service_role=X/supabase_admin}
+supabase_admin graphql S {postgres=rwU/supabase_admin,anon=rwU/supabase_admin,authenticated=rwU/supabase_admin,service_role=rwU/supabase_admin}"
+extensions,"CREATE extension if not exists plpgsql with schema pg_catalog; -- 1.0
+CREATE extension if not exists pg_stat_statements with schema extensions; -- 1.11
+CREATE extension if not exists ""uuid-ossp"" with schema extensions; -- 1.1
+CREATE extension if not exists pgcrypto with schema extensions; -- 1.3
+CREATE extension if not exists supabase_vault with schema vault; -- 0.3.1"
+fonctions_hors_extension,126
+agregats_ou_fenetres,null
+archive_yaounde,"players, scans, player_badges, events, quest_progress, roulette_spins, player_profile, player_contact, sortie_reponses, quiz_answers, micro_votes, coups_de_coeur, treasure_progress, duels, tournament_kings, tickets, carnets, qr_codes, quests, badges, quiz_sessions, quiz_questions, treasure_hunts, roulette_prizes, treasure_steps, micro_questions, announcements, manifeste"
+schemas_cron_net,null
+buckets,null
+version_postgres,"PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit"

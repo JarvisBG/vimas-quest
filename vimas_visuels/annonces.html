@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#D90A22">
+  <title>Annonces | Vimas Fest</title>
+  <meta name="description" content="Alertes et annonces en direct du festival Vimas Fest : météo, horaires, surprises.">
+  <link rel="preload" href="assets/fonts/Anton-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/annonces.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="icone-btn topbar__retour" href="index.html" aria-label="Retour" data-retour>
+        <svg class="icon" aria-hidden="true"><use href="#i-retour"></use></svg>
+      </a>
+      <h1 class="topbar__titre affiche">Annonces</h1>
+      <button class="btn btn--sodium btn--sm" type="button" data-tout-lire hidden>Tout lire</button>
+    </div>
+  </header>
+
+  <main id="contenu" class="ann">
+    <div class="wrap ann__cadre">
+
+      <p class="ann__resume" aria-live="polite" data-resume><span class="squelette" style="display:block;height:2em"></span></p>
+
+      <div class="puces ann__filtres" role="radiogroup" aria-label="Filtrer les annonces" data-filtres>
+        <label class="puce"><input type="radio" name="filtre" value="toutes" checked><span>Toutes</span></label>
+        <label class="puce"><input type="radio" name="filtre" value="non-lues"><span>Non lues <b data-nb-non-lues></b></span></label>
+        <label class="puce"><input type="radio" name="filtre" value="urgent"><span>Urgentes</span></label>
+        <label class="puce"><input type="radio" name="filtre" value="horaire"><span>Horaires</span></label>
+        <label class="puce"><input type="radio" name="filtre" value="surprise"><span>Surprises</span></label>
+      </div>
+
+      <div data-epinglees></div>
+      <ol class="fil" data-fil aria-label="Fil des annonces"></ol>
+      <p class="ann__vide texte-doux" data-vide hidden>Aucune annonce dans ce filtre.</p>
+
+      <details class="anciennes" data-anciennes hidden>
+        <summary>Plus d'actualité (<span data-nb-anciennes></span>)</summary>
+        <ol class="fil fil--anciennes" data-fil-anciennes></ol>
+      </details>
+
+      <section class="notif-ann" aria-labelledby="t-notif">
+        <h2 class="notif-ann__titre" id="t-notif"><i data-icon="cloche"></i> Ne rate pas une alerte</h2>
+        <p class="texte-doux">Les alertes urgentes (orage, sécurité) s'affichent aussi sur l'écran géant et en haut de ta carte.</p>
+        <p data-notif-etat></p>
+      </section>
+
+      <button class="lien-fort ann__demo" type="button" data-demo hidden>Démo : recevoir une nouvelle annonce</button>
+    </div>
+  </main>
+
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/pages/annonces.js" defer></script>
+</body>
+</html>

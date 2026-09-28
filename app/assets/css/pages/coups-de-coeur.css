@@ -1,0 +1,110 @@
+/* ==========================================================================
+   Page 13 — Coups de cœur
+   ========================================================================== */
+
+.cdc { background: var(--papier-2); min-height: calc(100svh - var(--topbar-h)); }
+.cdc__cadre { display: grid; gap: var(--s-4); padding-block: var(--s-5) var(--s-6); max-width: 40rem; }
+.cdc__intro { font-size: var(--fs-lg); font-weight: 600; }
+.cdc__intro span { display: block; margin-top: var(--s-1); font-size: var(--fs-sm); font-weight: 700; color: var(--texte-doux); }
+.cdc__resultats { font-size: var(--fs-sm); text-align: center; }
+
+.onglets-cdc { display: grid; grid-template-columns: 1fr 1fr; border: 2px solid var(--nuit); border-radius: var(--r-net); overflow: hidden; background: #fff; }
+.onglet-cdc { min-height: var(--tap); border: 0; background: transparent; cursor: pointer; font-family: var(--font-affiche); font-size: 1.375rem; text-transform: uppercase; color: var(--nuit); }
+.onglet-cdc + .onglet-cdc { border-left: 2px solid var(--nuit); }
+.onglet-cdc[aria-selected="true"] { background: var(--nuit); color: var(--rose); }
+
+/* ---------- Réserve de cœurs ---------- */
+.reserve {
+  display: grid; justify-items: center; gap: var(--s-2);
+  padding: var(--s-4); text-align: center;
+  background: var(--rose); color: var(--nuit);
+  border: 3px solid var(--nuit); border-radius: var(--r-billet);
+  box-shadow: 6px 6px 0 var(--nuit);
+}
+.reserve__coeurs { display: flex; gap: var(--s-3); }
+.coeur-r { position: relative; width: 64px; height: 64px; color: var(--nuit); transition: transform .3s var(--ease-rebond); }
+.coeur-r .icon { width: 100%; height: 100%; stroke-width: 2; }
+.coeur-r.is-plein .icon { fill: var(--papier); color: var(--nuit); }
+.coeur-r.is-plein { transform: rotate(-6deg); }
+.coeur-r:nth-child(2).is-plein { transform: rotate(4deg) translateY(-4px); }
+.coeur-r.is-vide .icon { stroke-dasharray: 3 3; opacity: .55; }
+.coeur-r.is-anime { animation: coeur-pop .5s var(--ease-rebond); }
+@keyframes coeur-pop { 40% { transform: scale(1.35); } }
+.reserve__texte { font-weight: 800; }
+.reserve.is-cloture { background: var(--papier); }
+
+.mission-cdc {
+  display: grid; grid-template-columns: 1fr auto; gap: var(--s-2) var(--s-3); align-items: center;
+  padding: var(--s-3) var(--s-4); background: var(--nuit); color: var(--papier); border-radius: var(--r-net);
+}
+.mission-cdc[hidden] { display: none; }
+.mission-cdc .crans { grid-column: 1 / -1; }
+.mission-cdc .crans i { border-color: var(--papier); background: rgba(250, 250, 247, .15); }
+.mission-cdc .crans i.is-fait { background: var(--sodium); }
+.mission-cdc a { color: var(--sodium); font-weight: 800; }
+
+.vue-cdc { display: flex; gap: var(--s-2); }
+.vue-cdc .puce span { min-height: 40px; }
+
+/* ---------- Liste de vote ---------- */
+.groupe-cdc { display: grid; gap: var(--s-2); margin-bottom: var(--s-5); }
+.groupe-cdc__titre { font-weight: 800; font-size: var(--fs-sm); color: var(--texte-doux); }
+.carte-cdc {
+  display: grid; grid-template-columns: auto 1fr auto; gap: var(--s-3); align-items: center;
+  min-height: 76px; padding: var(--s-2) var(--s-2) var(--s-2) var(--s-3);
+  background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net);
+  scroll-margin-top: calc(var(--topbar-h) + var(--s-4));
+}
+.carte-cdc.is-vote { background: #FFE3EE; box-shadow: 4px 4px 0 var(--rose); }
+.carte-cdc.is-bloque { border-style: dashed; background: transparent; }
+.carte-cdc.is-bloque .carte-cdc__nom { color: var(--texte-doux); }
+.carte-cdc.is-cible { animation: cible-cdc 1.6s var(--ease-sortie); }
+@keyframes cible-cdc { 0%, 40% { box-shadow: 0 0 0 5px var(--sodium); } }
+.carte-cdc__visuel { width: 52px; height: 52px; border: 2px solid var(--nuit); border-radius: var(--r-net); display: grid; place-items: center; overflow: hidden; }
+.carte-cdc__visuel .icon { width: 26px; height: 26px; }
+.carte-cdc__visuel--stand { background: var(--papier-2); color: var(--bleu); border-radius: 50%; }
+.carte-cdc.is-bloque .carte-cdc__visuel { border-style: dashed; background: transparent; color: #8C93B3; }
+.carte-cdc__txt { min-width: 0; display: grid; gap: 2px; }
+.carte-cdc__nom { font-family: var(--font-affiche); font-size: 1.375rem; line-height: 1.05; text-transform: uppercase; overflow-wrap: anywhere; }
+.carte-cdc__meta { font-size: var(--fs-xs); font-weight: 700; color: var(--texte-doux); }
+.carte-cdc__raison { font-size: var(--fs-xs); font-weight: 600; color: var(--texte-doux); display: flex; gap: var(--s-1); align-items: flex-start; }
+.carte-cdc__raison .icon { width: 1em; height: 1em; flex: none; margin-top: 2px; }
+
+.btn-coeur {
+  position: relative; display: grid; place-items: center;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #fff; color: var(--nuit); border: 2px solid var(--nuit);
+  cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  transition: transform .15s;
+}
+.btn-coeur .icon { width: 28px; height: 28px; }
+.btn-coeur[aria-pressed="true"] { background: var(--rose); }
+.btn-coeur[aria-pressed="true"] .icon { fill: var(--nuit); }
+.btn-coeur:active { transform: scale(.9); }
+.btn-coeur.is-anime { animation: coeur-pop .45s var(--ease-rebond); }
+.btn-coeur:disabled { cursor: not-allowed; opacity: .4; }
+.btn-coeur[aria-busy="true"] { opacity: .6; }
+
+.lien-cdc { font-size: var(--fs-xs); }
+
+/* ---------- Tendances ---------- */
+.tendances { display: grid; gap: var(--s-2); }
+.barre-t {
+  position: relative; display: grid; grid-template-columns: 2.2rem 1fr auto; gap: var(--s-3); align-items: center;
+  min-height: 56px; padding: 0 var(--s-3);
+  background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net); overflow: hidden;
+}
+.barre-t__fond { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--sodium); opacity: .55; transition: width .9s var(--ease-sortie); }
+.barre-t:nth-child(1) .barre-t__fond { background: var(--rose); opacity: .6; }
+.barre-t > :not(.barre-t__fond) { position: relative; }
+.barre-t__rang { font-family: var(--font-affiche); font-size: 1.5rem; }
+.barre-t__nom { font-weight: 800; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.barre-t__nom .icon { display: inline-block; width: 1em; height: 1em; color: #C8246B; vertical-align: -2px; }
+.barre-t__pct { font-family: var(--font-affiche); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.tendances__note { margin-top: var(--s-3); font-size: var(--fs-sm); color: var(--texte-doux); }
+
+/* ---------- Éclats de cœurs ---------- */
+.eclats { position: fixed; inset: 0; pointer-events: none; z-index: 70; }
+.eclat { position: absolute; width: 18px; height: 18px; color: var(--rose); animation: eclat .8s ease-out forwards; }
+.eclat .icon { width: 100%; height: 100%; fill: currentColor; }
+@keyframes eclat { to { transform: translate(var(--dx), var(--dy)) scale(.3) rotate(var(--rot)); opacity: 0; } }

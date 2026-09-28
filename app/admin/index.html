@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <title>Tableau de bord | Console DOMAF Quest</title>
+  <script src="../assets/js/console-theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/console.css">
+</head>
+<body class="sans-sw">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <div class="bg-layer bg-glow"></div>
+  <div class="bg-layer bg-grid"></div>
+
+  <div class="console-grille">
+    <nav class="cnav" aria-label="Console">
+      <a class="cnav__marque" href="index.html"><i data-icon="onde"></i> DOMAF QUEST</a>
+      <p class="cnav__tag" data-console-tag>Game Master</p>
+      <div data-console-nav></div>
+      <div class="cnav__pied">
+        <p class="cnav__qui" data-console-qui></p>
+        <button class="cnav__sortir" type="button" data-console-sortir><i data-icon="sortie"></i> Déconnexion</button>
+      </div>
+    </nav>
+    <div class="console-voile" data-console-voile></div>
+    <button class="ctete__menu" type="button" aria-expanded="false" data-console-menu><i data-icon="menu"></i><span class="sr-only">Ouvrir le menu</span></button>
+
+    <div class="console-principal">
+      <div class="ccorps">
+        <header class="ctete">
+          <div class="ctete__titres">
+            <p class="ctete__sur">DOMAF 2026 · 15ᵉ édition</p>
+            <h1 class="ctete__titre">Vue d'ensemble</h1>
+            <p class="ctete__sous" data-jour>Journée de jeu</p>
+          </div>
+          <div class="ctete__actions">
+            <span class="cdirect" data-console-direct data-etat="coupe"><span data-console-direct-texte>Connexion…</span></span>
+            <span class="cpuce-admin"><i data-icon="cadenas"></i><span data-console-nom>GM</span></span>
+          </div>
+        </header>
+
+        <main class="ccontenu" id="contenu" data-console-contenu>
+
+          <!-- Chiffres de la journée -->
+          <section aria-label="Chiffres de la journée">
+            <div class="cchiffres" data-chiffres></div>
+          </section>
+
+          <!-- Phase du jeu -->
+          <section class="cpanneau" aria-labelledby="t-phase">
+            <div class="cpanneau__tete">
+              <h2 class="cpanneau__titre" id="t-phase"><i data-icon="des"></i> Phase du jeu</h2>
+              <p class="cpanneau__note">Écran géant : tout de suite · téléphones : sous 30 s</p>
+            </div>
+            <div class="cphase" data-phases></div>
+            <p class="cphase__aide" data-phase-aide></p>
+            <div class="cmanche" data-manche hidden></div>
+          </section>
+
+          <div class="cdeux">
+            <div class="ccolonne">
+              <section class="cpanneau" aria-labelledby="t-top">
+                <div class="cpanneau__tete">
+                  <h2 class="cpanneau__titre" id="t-top"><i data-icon="trophee"></i> Tournoi du jour</h2>
+                  <a class="cpanneau__note" href="../ecran/mur.html" target="_blank" rel="noopener">Écran géant ›</a>
+                </div>
+                <p class="cvide" data-roi hidden></p>
+                <ol class="cliste" data-top><li class="cvide">Chargement…</li></ol>
+              </section>
+
+              <section class="cpanneau" aria-labelledby="t-fil">
+                <div class="cpanneau__tete">
+                  <h2 class="cpanneau__titre" id="t-fil"><i data-icon="onde"></i> Fil d'activité</h2>
+                  <p class="cpanneau__note">sans les scans de scènes et de stands</p>
+                </div>
+                <ul class="cliste" data-fil><li class="cvide">Chargement…</li></ul>
+              </section>
+            </div>
+
+            <div class="ccolonne">
+              <section class="cpanneau" aria-labelledby="t-annonces">
+                <div class="cpanneau__tete">
+                  <h2 class="cpanneau__titre" id="t-annonces"><i data-icon="cloche"></i> Annonces</h2>
+                  <p class="cpanneau__note" data-annonces-nb></p>
+                </div>
+                <ul class="cliste" data-annonces></ul>
+                <form class="cform" data-alerte novalidate>
+                  <p class="csous-titre">Publier une annonce rapide</p>
+                  <div class="cform__ligne">
+                    <div class="champ">
+                      <label class="champ__label" for="a-niveau">Niveau</label>
+                      <select class="saisie" id="a-niveau" name="niveau">
+                        <option value="info">Info</option>
+                        <option value="alerte">Important</option>
+                        <option value="danger">Urgent (épinglée)</option>
+                      </select>
+                    </div>
+                    <div class="champ">
+                      <label class="champ__label" for="a-categorie">Catégorie</label>
+                      <select class="saisie" id="a-categorie" name="categorie">
+                        <option value="pratique">Pratique</option>
+                        <option value="horaire">Horaires</option>
+                        <option value="meteo">Météo</option>
+                        <option value="securite">Sécurité</option>
+                        <option value="jeu">Jeu</option>
+                        <option value="surprise">Surprise</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="champ">
+                    <label class="champ__label" for="a-titre">Titre (facultatif)</label>
+                    <input class="saisie" id="a-titre" name="titre" maxlength="80" autocomplete="off">
+                  </div>
+                  <div class="champ">
+                    <label class="champ__label" for="a-message">Message</label>
+                    <textarea class="saisie" id="a-message" name="message" maxlength="500" required></textarea>
+                  </div>
+                  <p class="message" role="alert" data-alerte-erreur hidden></p>
+                  <button class="cbtn cbtn--primaire cbtn--bloc" type="submit"><i data-icon="cloche"></i> Publier l'annonce</button>
+                  <p class="champ__aide">Écran géant : tout de suite. Téléphones : sous 1 min. Lien, fin de validité, fermeture : écran Annonces (6.5).</p>
+                </form>
+              </section>
+
+              <section class="cpanneau" aria-labelledby="t-bonus">
+                <div class="cpanneau__tete">
+                  <h2 class="cpanneau__titre" id="t-bonus"><i data-icon="cadeau"></i> Points offerts aujourd'hui</h2>
+                  <p class="cpanneau__note" data-bonus-total>—</p>
+                </div>
+                <div data-bonus><p class="cvide">Chargement…</p></div>
+              </section>
+
+              <section class="cpanneau" aria-labelledby="t-contenu">
+                <div class="cpanneau__tete">
+                  <h2 class="cpanneau__titre" id="t-contenu"><i data-icon="coche"></i> Contenu en base</h2>
+                  <p class="cpanneau__note">à remplir avant le festival</p>
+                </div>
+                <div class="cprets" data-contenu></div>
+              </section>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/config.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/vendor/supabase.min.js" defer></script>
+  <script src="../assets/js/serveur.js" defer></script>
+  <script src="../assets/js/console.js" defer></script>
+  <script src="../assets/js/pages/console-accueil.js" defer></script>
+</body>
+</html>

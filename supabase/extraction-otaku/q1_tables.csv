@@ -1,0 +1,288 @@
+table_name,lignes_estimees,ddl
+announcements,3,"CREATE table public.announcements (
+  id uuid default gen_random_uuid() not null,
+  message text not null,
+  type text default 'info'::text not null,
+  created_at timestamp with time zone default now() not null
+);"
+badges,-1,"CREATE table public.badges (
+  id uuid default gen_random_uuid() not null,
+  name text not null,
+  icon text default 'fa-medal'::text not null,
+  description text,
+  created_at timestamp with time zone default now() not null
+);"
+billetterie_config,-1,"CREATE table public.billetterie_config (
+  id integer default 1 not null,
+  prix_journee integer default 500 not null,
+  actif boolean default true not null,
+  message text default 'Le jeu se joue avec un ticket. Cherche un membre de l''équipe, il en a sur lui.'::text not null
+);"
+carnets,-1,"CREATE table public.carnets (
+  id uuid default gen_random_uuid() not null,
+  numero integer not null,
+  vendeur_nom text not null,
+  vendeur_user uuid,
+  nb_tickets integer not null,
+  rendus integer default 0 not null,
+  actif boolean default true not null,
+  note text,
+  cree_le timestamp with time zone default now() not null,
+  cree_par uuid
+);"
+coeur_config,-1,"CREATE table public.coeur_config (
+  id integer default 1 not null,
+  xp_par_coeur integer default 10 not null,
+  max_coeurs integer default 3 not null,
+  actif boolean default true not null
+);"
+contact_config,-1,"CREATE table public.contact_config (
+  id integer default 1 not null,
+  actif boolean default true not null,
+  jetons_bonus integer default 0 not null
+);"
+coups_de_coeur,74,"CREATE table public.coups_de_coeur (
+  player_id uuid not null,
+  qr_code_id uuid not null,
+  created_at timestamp with time zone default now() not null
+);"
+duels,-1,"CREATE table public.duels (
+  id uuid default gen_random_uuid() not null,
+  player1_id uuid not null,
+  player2_id uuid not null,
+  winner_id uuid,
+  created_at timestamp with time zone default now() not null,
+  xp integer default 200 not null
+);"
+events,6377,"CREATE table public.events (
+  id uuid default gen_random_uuid() not null,
+  type text not null,
+  player_id uuid,
+  payload jsonb default '{}'::jsonb not null,
+  created_at timestamp with time zone default now() not null
+);"
+game_state,1,"CREATE table public.game_state (
+  id integer default 1 not null,
+  phase text default 'EXPLORATION'::text not null,
+  updated_at timestamp with time zone default now() not null,
+  roulette_cost integer default 30 not null
+);"
+micro_config,-1,"CREATE table public.micro_config (
+  id integer default 1 not null,
+  xp_par_reponse integer default 10 not null,
+  xp_bonus_complet integer default 30 not null,
+  scans_avant_premier integer default 2 not null,
+  scans_entre_deux integer default 3 not null,
+  max_par_jour integer default 3 not null,
+  actif boolean default true not null
+);"
+micro_questions,-1,"CREATE table public.micro_questions (
+  id integer not null,
+  ordre integer not null,
+  question text not null,
+  options jsonb not null,
+  active boolean default true not null
+);"
+micro_votes,409,"CREATE table public.micro_votes (
+  player_id uuid not null,
+  question_id integer not null,
+  valeur text not null,
+  jour date default CURRENT_DATE not null,
+  created_at timestamp with time zone default now() not null
+);"
+player_badges,571,"CREATE table public.player_badges (
+  player_id uuid not null,
+  badge_id uuid not null,
+  earned_at timestamp with time zone default now() not null
+);"
+player_contact,-1,"CREATE table public.player_contact (
+  player_id uuid not null,
+  telephone text not null,
+  consent boolean default false not null,
+  created_at timestamp with time zone default now() not null
+);"
+player_profile,224,"CREATE table public.player_profile (
+  player_id uuid not null,
+  tranche_age text,
+  sexe text,
+  quartier text,
+  anime_prefere text,
+  bonus_verse boolean default false not null,
+  updated_at timestamp with time zone default now() not null,
+  coeurs_payes integer default 0 not null
+);"
+player_secrets,222,"CREATE table public.player_secrets (
+  player_id uuid not null,
+  secret_code text not null
+);"
+players,239,"CREATE table public.players (
+  id uuid default gen_random_uuid() not null,
+  pseudo text not null,
+  archetype text not null,
+  xp integer default 0 not null,
+  jetons integer default 0 not null,
+  level integer default 1 not null,
+  rank text default 'E'::text not null,
+  status text default 'actif'::text not null,
+  created_at timestamp with time zone default now() not null,
+  xp_jour integer default 0 not null,
+  jour date default CURRENT_DATE not null
+);"
+profil_config,-1,"CREATE table public.profil_config (
+  id integer default 1 not null,
+  xp_par_reponse integer default 20 not null,
+  xp_bonus_complet integer default 50 not null,
+  actif boolean default true not null
+);"
+qr_codes,91,"CREATE table public.qr_codes (
+  id uuid default gen_random_uuid() not null,
+  code text not null,
+  label text not null,
+  type text not null,
+  rarity text,
+  xp_reward integer default 50 not null,
+  badge_id uuid,
+  hint text,
+  character_name text,
+  anime text,
+  active boolean default true not null,
+  created_at timestamp with time zone default now() not null,
+  quest_id uuid
+);"
+quest_progress,2411,"CREATE table public.quest_progress (
+  player_id uuid not null,
+  quest_id uuid not null,
+  progress integer default 0 not null,
+  completed_at timestamp with time zone,
+  jour date default CURRENT_DATE not null
+);"
+quests,121,"CREATE table public.quests (
+  id uuid default gen_random_uuid() not null,
+  title text not null,
+  description text,
+  type text default 'standard'::text not null,
+  goal_count integer default 1 not null,
+  xp_reward integer default 100 not null,
+  badge_id uuid,
+  requires_staff boolean default false not null,
+  active boolean default true not null,
+  created_at timestamp with time zone default now() not null,
+  counter text default 'manuel'::text not null,
+  vague smallint default 0 not null,
+  priorite smallint default 0 not null
+);"
+quiz_answers,6155,"CREATE table public.quiz_answers (
+  id uuid default gen_random_uuid() not null,
+  question_id uuid not null,
+  player_id uuid not null,
+  answer_index integer not null,
+  is_correct boolean,
+  response_ms integer,
+  answered_at timestamp with time zone default now() not null,
+  points integer default 0 not null
+);"
+quiz_questions,912,"CREATE table public.quiz_questions (
+  id uuid default gen_random_uuid() not null,
+  session_id uuid not null,
+  question text not null,
+  choices jsonb not null,
+  correct_index integer not null,
+  question_order integer default 1 not null,
+  duration_seconds integer default 20 not null
+);"
+quiz_sessions,67,"CREATE table public.quiz_sessions (
+  id uuid default gen_random_uuid() not null,
+  title text not null,
+  status text default 'preparee'::text not null,
+  current_question integer default 0 not null,
+  created_at timestamp with time zone default now() not null,
+  question_started_at timestamp with time zone,
+  kind text default 'quiz'::text not null,
+  boss_name text,
+  boss_image text,
+  boss_hp_max integer default 0 not null,
+  raid_bonus_xp integer default 0 not null
+);"
+roulette_prizes,4,"CREATE table public.roulette_prizes (
+  id uuid default gen_random_uuid() not null,
+  name text not null,
+  icon text default 'fa-gift'::text not null,
+  weight integer default 10 not null,
+  stock integer,
+  active boolean default true not null,
+  created_at timestamp with time zone default now() not null,
+  kind text default 'objet'::text not null,
+  value integer default 0 not null,
+  badge_id uuid
+);"
+roulette_spins,186,"CREATE table public.roulette_spins (
+  id uuid default gen_random_uuid() not null,
+  player_id uuid not null,
+  prize_id uuid,
+  cost integer default 30 not null,
+  redeem_code text,
+  redeemed_at timestamp with time zone,
+  created_at timestamp with time zone default now() not null
+);"
+scans,3064,"CREATE table public.scans (
+  id uuid default gen_random_uuid() not null,
+  player_id uuid not null,
+  qr_code_id uuid not null,
+  day date default CURRENT_DATE not null,
+  scanned_at timestamp with time zone default now() not null
+);"
+sortie_reponses,41,"CREATE table public.sortie_reponses (
+  player_id uuid not null,
+  journee text,
+  revenir text,
+  depense text,
+  ameliorer text,
+  tampon boolean default false not null,
+  updated_at timestamp with time zone default now() not null,
+  jour date default CURRENT_DATE not null
+);"
+staff,-1,"CREATE table public.staff (
+  user_id uuid not null,
+  display_name text default 'Staff'::text not null,
+  role text default 'gm'::text not null,
+  created_at timestamp with time zone default now() not null
+);"
+tickets,500,"CREATE table public.tickets (
+  id uuid default gen_random_uuid() not null,
+  carnet_id uuid not null,
+  code text not null,
+  rang integer not null,
+  utilise_par uuid,
+  utilise_le timestamp with time zone,
+  jour date,
+  rendu_le timestamp with time zone
+);"
+tournament_kings,-1,"CREATE table public.tournament_kings (
+  jour date not null,
+  pseudo text not null,
+  points integer not null,
+  decided_at timestamp with time zone default now() not null
+);"
+treasure_hunts,4,"CREATE table public.treasure_hunts (
+  id uuid default gen_random_uuid() not null,
+  title text not null,
+  active boolean default false not null,
+  created_at timestamp with time zone default now() not null,
+  first_bonus integer default 0 not null
+);"
+treasure_progress,-1,"CREATE table public.treasure_progress (
+  player_id uuid not null,
+  hunt_id uuid not null,
+  current_step integer default 1 not null,
+  completed_at timestamp with time zone,
+  xp_earned integer default 0 not null,
+  last_try_at timestamp with time zone
+);"
+treasure_steps,20,"CREATE table public.treasure_steps (
+  id uuid default gen_random_uuid() not null,
+  hunt_id uuid not null,
+  step_order integer not null,
+  riddle text not null,
+  answer text not null,
+  xp_reward integer default 100 not null
+);"

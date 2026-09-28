@@ -1,0 +1,5 @@
+# Fichiers à NE PAS publier sur Cloudflare (syntaxe .gitignore)
+.assetsignore
+*.md
+wrangler.jsonc
+lancer-serveur.bat

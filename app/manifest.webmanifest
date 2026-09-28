@@ -1,0 +1,22 @@
+{
+  "name": "DOMAF Quest, le jeu du DOMAF 2026",
+  "short_name": "DOMAF Quest",
+  "description": "Le jeu du DOMAF : scanne, joue, gagne.",
+  "lang": "fr",
+  "start_url": "./tableau-de-bord.html?source=ecran-accueil",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0A1440",
+  "theme_color": "#1F3FD1",
+  "icons": [
+    { "src": "assets/icons/icone-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icons/icone-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/icons/icone-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/icons/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ],
+  "shortcuts": [
+    { "name": "Scanner", "url": "./scanner.html", "icons": [{ "src": "assets/icons/icone-192.png", "sizes": "192x192" }] },
+    { "name": "Plan", "url": "./plan.html", "icons": [{ "src": "assets/icons/icone-192.png", "sizes": "192x192" }] }
+  ]
+}

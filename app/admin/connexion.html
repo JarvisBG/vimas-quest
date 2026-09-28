@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <title>Connexion | Console DOMAF Quest</title>
+  <script src="../assets/js/console-theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/console.css">
+</head>
+<body class="sans-sw">
+  <div class="bg-layer bg-glow"></div>
+  <div class="bg-layer bg-grid"></div>
+
+  <a class="cretour" href="../index.html"><i data-icon="retour"></i> Retour au jeu</a>
+
+  <main class="cscene">
+    <section class="cconnexion" aria-labelledby="t-connexion">
+      <span class="cconnexion__coin cconnexion__coin--hg"></span>
+      <span class="cconnexion__coin cconnexion__coin--bd"></span>
+
+      <div class="cconnexion__bouclier"><i data-icon="cadenas"></i></div>
+      <p class="cconnexion__tag">Accès Game Master</p>
+      <h1 id="t-connexion">DOMAF Quest</h1>
+
+      <p class="message message--info" data-vendeur hidden>
+        <i data-icon="billet"></i>
+        <span>Ce compte est un compte <strong>vendeur</strong>. L'espace vendeur ouvre bientôt ; la console est réservée à l'équipe.</span>
+      </p>
+
+      <form class="cform" data-form novalidate>
+        <div class="champ">
+          <label class="champ__label" for="email">E-mail</label>
+          <input class="saisie" id="email" name="email" type="email" autocomplete="username" placeholder="gm@domaf.org" required>
+        </div>
+        <div class="champ">
+          <label class="champ__label" for="mdp">Mot de passe</label>
+          <input class="saisie" id="mdp" name="mdp" type="password" autocomplete="current-password" required>
+        </div>
+        <p class="message" role="alert" data-erreur hidden></p>
+        <button class="cbtn cbtn--primaire cbtn--bloc" type="submit"><i data-icon="entree"></i> Se connecter</button>
+      </form>
+
+      <button class="cbtn cbtn--danger cbtn--bloc" type="button" data-sortir hidden>
+        <i data-icon="sortie"></i> Se déconnecter
+      </button>
+
+      <p class="cconnexion__pied">Comptes créés par le Game Master dans Supabase (table staff).</p>
+    </section>
+  </main>
+
+  <script src="../assets/js/config.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/vendor/supabase.min.js" defer></script>
+  <script src="../assets/js/serveur.js" defer></script>
+  <script src="../assets/js/console.js" defer></script>
+  <script src="../assets/js/pages/console-connexion.js" defer></script>
+</body>
+</html>

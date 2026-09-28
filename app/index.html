@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#1F3FD1">
+  <title>DOMAF Quest, le jeu du DOMAF 2026</title>
+  <meta name="description" content="Quatre jours de concerts et un jeu grandeur nature : scanne les QR codes du site, remplis des missions, grimpe au classement et gagne des lots réels.">
+  <link rel="preload" href="assets/fonts/Anton-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/accueil.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <!-- Barre du haut (commune) -->
+  <header class="topbar" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="marque" href="index.html" aria-label="DOMAF Quest, accueil">
+        <span class="marque__signe eq" data-eq="5"></span>
+        <span class="marque__nom">DOMAF Quest</span>
+      </a>
+      <nav class="topbar__nav" id="menu-principal" data-menu aria-label="Navigation principale">
+        <a href="#jeu">Le jeu</a>
+        <a href="#lineup">Line-up</a>
+        <a href="#lots">Lots</a>
+        <a href="#partenaires" data-lien-partenaires hidden>Partenaires</a>
+        <a href="infos.html">Infos pratiques</a>
+      </nav>
+      <a class="btn btn--sodium btn--sm" href="inscription.html" data-play-link>Jouer</a>
+      <button class="icone-btn topbar__toggle" type="button" aria-controls="menu-principal" aria-expanded="false" aria-label="Ouvrir le menu" data-menu-toggle>
+        <svg class="icon" aria-hidden="true"><use href="#i-menu"></use></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="contenu">
+
+    <!-- 1. L'affiche -->
+    <section class="hero" aria-labelledby="hero-titre">
+      <div class="hero__faisceaux" aria-hidden="true"></div>
+      <div class="wrap hero__grille">
+        <div>
+          <p class="hero__edition">
+            <span class="pastille pastille--sodium" data-edition>4e édition</span>
+            <span class="pastille" data-dates>26 au 29 novembre 2026</span>
+          </p>
+          <h1 class="hero__titre affiche" id="hero-titre">
+            <span class="hero__nom">DOMAF Quest</span>
+            <span class="hero__slogan">Le DOMAF se joue</span>
+          </h1>
+          <div class="hero__eq eq" data-eq="28"></div>
+          <p class="hero__texte chapo">Scanne les QR codes cachés sur le site, remplis tes missions et gagne de vrais lots entre deux concerts.</p>
+          <div class="hero__actions">
+            <a class="btn btn--sodium btn--lg" href="inscription.html">
+              <i data-icon="carte"></i> Créer ma carte
+            </a>
+            <a class="btn btn--contour" href="#jeu">Comment on joue</a>
+          </div>
+        </div>
+
+        <div class="hero__cote">
+          <div class="billet decompte" data-countdown>
+            <p class="decompte__titre">Ouverture des portes dans</p>
+            <p class="decompte__lieu"><i data-icon="lieu"></i> <span data-lieu>Stade Annexe de Bonamoussadi</span></p>
+            <hr class="billet__pointilles">
+            <div class="countdown chiffres" aria-live="off">
+              <p><span class="countdown__val" data-j>–</span><span class="countdown__lib">jours</span></p>
+              <p><span class="countdown__val" data-h>–</span><span class="countdown__lib">heures</span></p>
+              <p><span class="countdown__val" data-m>–</span><span class="countdown__lib">minutes</span></p>
+            </div>
+          </div>
+
+          <div class="affiche-lineup">
+            <p class="affiche-lineup__intro">Sur scène cette année</p>
+            <ul class="affiche-lineup__tetes affiche" data-tetes></ul>
+            <p class="affiche-lineup__autres" data-autres></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bandeau -->
+    <div class="bandeau" aria-hidden="true">
+      <div class="bandeau__piste" data-bandeau></div>
+    </div>
+
+    <!-- 2. Le jeu -->
+    <section class="zone zone--papier" id="jeu" aria-labelledby="jeu-titre">
+      <div class="wrap">
+        <div class="entete-zone">
+          <h2 class="affiche titre-zone titre-zone--decale" id="jeu-titre">Le festival devient une manette</h2>
+          <p class="chapo texte-doux">Quatre étapes, aucune application à installer. Tout se passe dans le navigateur de ton téléphone.</p>
+        </div>
+        <ol class="setlist" data-etapes></ol>
+      </div>
+    </section>
+
+    <!-- 3. Line-up -->
+    <section class="zone zone--papier-2" id="lineup" aria-labelledby="lineup-titre">
+      <div class="wrap">
+        <div class="entete-zone">
+          <h2 class="affiche titre-zone" id="lineup-titre">Le line-up</h2>
+          <p class="texte-doux">Chaque concert auquel tu assistes peut compter pour une mission.</p>
+        </div>
+        <div class="onglets" role="tablist" aria-label="Jours du festival" data-onglets></div>
+        <div class="programme" role="tabpanel" id="panneau-jour" tabindex="0" data-programme></div>
+        <p class="programme__suite">
+          <a class="lien-fort" href="programme.html">Voir tout le programme</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- 4. Blind test -->
+    <section class="zone zone--nuit" aria-labelledby="blind-titre">
+      <div class="wrap blind">
+        <div>
+          <h2 class="affiche blind__titre" id="blind-titre">Blind test géant</h2>
+          <p class="chapo">Tout le public joue en même temps depuis son téléphone. Les meilleurs montent sur le podium de l'écran géant.</p>
+          <ul class="blind__infos" data-blind-infos></ul>
+        </div>
+
+        <div class="quiz" data-quiz>
+          <div class="quiz__haut">
+            <span>Question d'essai</span>
+            <span class="pastille pastille--sodium">+30 XP</span>
+          </div>
+          <div class="quiz__onde eq" data-eq="32"></div>
+          <div class="quiz__chrono" aria-hidden="true"><span></span></div>
+          <p class="quiz__question" id="quiz-question" data-quiz-question></p>
+          <div class="quiz__choix" role="group" aria-labelledby="quiz-question" data-quiz-choix></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Récompenses -->
+    <section class="zone zone--sodium" id="lots" aria-labelledby="lots-titre">
+      <div class="wrap">
+        <div class="entete-zone">
+          <h2 class="affiche titre-zone" id="lots-titre">Des lots à retirer sur place</h2>
+          <p class="chapo">Tes jetons font tourner la roue. Ce que tu gagnes t'attend au stand DOMAF Quest.</p>
+        </div>
+        <div class="lots">
+          <div class="roue-scene">
+            <div class="roue">
+              <span class="roue__fleche" aria-hidden="true"></span>
+              <div class="roue__disque" data-roue aria-hidden="true"></div>
+            </div>
+            <button class="btn btn--nuit" type="button" data-roue-btn>
+              <i data-icon="roue"></i> Essayer la roue
+            </button>
+            <p class="roue__legende">Démo sans jetons. La vraie roue s'ouvre dès que ta carte est créée.</p>
+          </div>
+
+          <div>
+            <ul class="liste-lots" data-lots></ul>
+            <div class="rangs">
+              <p class="rangs__titre">Cinq rangs à gravir, de Spectateur à Tête d'affiche</p>
+              <ol class="echelle" data-rangs></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Partenaires -->
+    <section class="zone zone--papier" id="partenaires" aria-labelledby="part-titre" hidden>
+      <div class="wrap">
+        <div class="entete-zone">
+          <h2 class="affiche titre-zone titre-zone--decale" id="part-titre">Ils font vibrer le site</h2>
+          <p class="texte-doux">Chaque stand partenaire a son QR code, ses missions et sa place dans le classement des coups de cœur.</p>
+        </div>
+        <ul class="partenaires" data-partenaires></ul>
+        <div class="devenir">
+          <p><strong>Vous voulez un stand dans le jeu&nbsp;?</strong> Nous créons avec vous une mission sur mesure et vous recevez les statistiques de visite de votre stand.</p>
+          <a class="btn btn--nuit" href="#" data-contact>
+            <i data-icon="mail"></i> Devenir partenaire
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Appel final -->
+    <section class="zone--bleu final" aria-labelledby="final-titre">
+      <div class="wrap">
+        <div class="billet grand-billet">
+          <div class="grand-billet__corps">
+            <h2 class="affiche grand-billet__titre" id="final-titre">La partie commence à l'entrée</h2>
+            <p class="texte-doux">Un pseudo, une pochette, et c&rsquo;est parti. Pas de mot de passe&nbsp;: tu reçois un code secret à garder.</p>
+            <a class="btn btn--sodium btn--lg btn--bloc" href="inscription.html">
+              <i data-icon="carte"></i> Créer ma carte
+            </a>
+            <a class="lien-fort" href="infos.html#regles">Lire les règles du jeu</a>
+          </div>
+          <div class="grand-billet__souche" aria-hidden="true">
+            <span class="tampon">Joueur</span>
+            <span class="code-barre"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pied de page (commun) -->
+  <footer class="pied">
+    <div class="wrap">
+      <div class="pied__grille">
+        <div>
+          <p class="affiche pied__marque">DOMAF Quest</p>
+          <p class="texte-doux">Stade Annexe de Bonamoussadi, 26 au 29 novembre 2026</p>
+        </div>
+        <nav class="pied__liens" aria-label="Aide">
+          <a href="infos.html">Infos pratiques</a>
+          <a href="infos.html#regles">Règles du jeu</a>
+          <a href="infos.html#securite">Sécurité</a>
+          <a href="infos.html#contact">Contact</a>
+        </nav>
+        <nav class="pied__liens" aria-label="Espaces">
+          <a href="inscription.html">Espace joueur</a>
+          <a href="admin/connexion.html">Espace équipe</a>
+          <a href="#partenaires" data-lien-partenaires hidden>Partenaires</a>
+        </nav>
+      </div>
+      <p class="pied__mention">© <span data-year>2026</span> DOMAF Quest. Jeu gratuit, ouvert à tous les festivaliers. Lots dans la limite des stocks.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js" defer></script>
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/serveur.js" defer></script>
+  <script src="assets/js/pages/accueil.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+/* ==========================================================================
+   Page 29 — Écran géant : mur en direct (1920 × 1080)
+   Conçu pour être lu à 20 m : textes ≥ 28 px, contrastes forts, aucun petit détail utile.
+   ========================================================================== */
+
+.scene-ecran--mur { display: grid; grid-template-rows: 124px 1fr 96px; }
+
+/* ---------- En-tête ---------- */
+.mur-tete {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  padding: 0 48px;
+  border-bottom: 4px solid var(--sodium);
+}
+.mur-tete__marque { display: flex; align-items: center; gap: 20px; }
+.mur-tete__eq { width: 64px; height: 56px; color: var(--sodium); }
+.mur-tete__nom { font-size: 76px; color: var(--sodium); text-shadow: .05em .035em 0 var(--rose); }
+.mur-tete__lieu { white-space: nowrap; padding: 6px 18px; font-size: 24px; font-weight: 800; border: 3px solid var(--papier); border-radius: var(--r-pastille); }
+.mur-tete__direct { display: flex; align-items: center; gap: 32px; }
+.mur-chiffre { font-size: 26px; font-weight: 700; color: #F7D4C4; white-space: nowrap; }
+.mur-chiffre strong { font-family: var(--font-affiche); font-weight: 400; font-size: 46px; color: var(--papier); margin-right: 6px; }
+.mur-horloge { justify-self: end; font-size: 104px; line-height: 1; color: var(--papier); }
+.mur-horloge span { animation: clignote-e 2s steps(2) infinite; }
+
+/* ---------- Corps ---------- */
+.mur-corps {
+  display: grid; grid-template-columns: 640px minmax(0, 1fr) 420px; gap: 32px;
+  padding: 28px 48px 24px;
+  min-height: 0;
+}
+.panneau { position: relative; min-height: 0; border-radius: 18px; }
+.panneau__titre { font-size: 56px; line-height: 1; margin-bottom: 16px; white-space: nowrap; }
+.panneau__titre span { color: var(--sodium); }
+
+/* ---------- A. Top 10 ---------- */
+.panneau--top { padding: 24px 26px; background: var(--bleu); border: 4px solid var(--papier); box-shadow: 10px 10px 0 var(--rose); }
+.top { display: grid; gap: 6px; position: relative; }
+.top-ligne {
+  display: grid; grid-template-columns: 56px 44px minmax(0, 1fr) auto; align-items: center; gap: 14px;
+  position: relative; height: 58px; padding: 0 16px;
+  background: rgba(59, 10, 18, .55); border-radius: 10px;
+  will-change: transform;
+}
+.top-ligne__rang { font-family: var(--font-affiche); font-size: 44px; line-height: 1; color: var(--sodium); }
+.top-ligne .pochette { --taille: 44px; }
+.top-ligne .pochette__initiale { font-size: 14px; }
+.top-ligne__pseudo { font-size: 32px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.top-ligne__xp { font-family: var(--font-affiche); font-size: 36px; font-variant-numeric: tabular-nums; }
+.top-ligne__xp small { font-size: .55em; color: #F7D4C4; }
+.top-ligne__evo { position: absolute; left: 4px; top: 50%; transform: translateY(-50%); width: 0; height: 0; border-inline: 7px solid transparent; }
+.top-ligne__evo.is-monte { border-bottom: 10px solid var(--vert); }
+.top-ligne__evo.is-descend { border-top: 10px solid var(--rose); }
+.top-ligne:nth-child(1) { height: 86px; background: var(--sodium); color: var(--nuit); }
+.top-ligne:nth-child(1) .top-ligne__rang { font-size: 64px; color: var(--nuit); }
+.top-ligne:nth-child(1) .top-ligne__pseudo { font-size: 40px; }
+.top-ligne:nth-child(1) .pochette { --taille: 60px; }
+.top-ligne:nth-child(1) { grid-template-columns: 56px 60px minmax(0, 1fr) auto; }
+.top-ligne:nth-child(1) .top-ligne__xp small { color: var(--nuit); }
+.top-ligne:nth-child(2), .top-ligne:nth-child(3) { background: var(--papier); color: var(--nuit); }
+.top-ligne:nth-child(2) .top-ligne__rang, .top-ligne:nth-child(3) .top-ligne__rang { color: var(--bleu); }
+.top-ligne:nth-child(2) .top-ligne__xp small, .top-ligne:nth-child(3) .top-ligne__xp small { color: var(--texte-doux); }
+.top-ligne.is-nouveau { animation: entre-top .6s var(--ease-rebond); }
+.top-ligne.is-monte-flash { box-shadow: 0 0 0 4px var(--vert); }
+@keyframes entre-top { from { opacity: 0; transform: translateX(-40px); } }
+
+/* ---------- B. Diaporama ---------- */
+.panneau--diapo { display: grid; grid-template-rows: auto auto 1fr; overflow: hidden; background: #0F1C55; border: 4px solid rgba(255, 248, 238, .25); }
+.diapo__barre { height: 10px; background: rgba(255, 248, 238, .15); }
+.diapo__barre i { display: block; height: 100%; width: 100%; background: var(--sodium); transform-origin: left; transform: scaleX(0); }
+.diapo__barre i.is-anime { animation: remplit var(--duree-diapo, 15s) linear forwards; }
+.panneau--diapo.is-pause .diapo__barre i { animation-play-state: paused; }
+.diapo__points { display: flex; gap: 12px; padding: 20px 32px 0; }
+.diapo__points i { width: 44px; height: 8px; border-radius: 4px; background: rgba(255, 248, 238, .25); }
+.diapo__points i.is-actif { background: var(--papier); }
+.diapo__contenu { padding: 20px 36px 32px; min-height: 0; display: grid; }
+.diapo { display: grid; align-content: start; gap: 22px; animation: diapo-in .6s var(--ease-sortie); }
+@keyframes diapo-in { from { opacity: 0; transform: translateY(30px); } }
+.diapo__titre { font-size: 76px; line-height: .95; }
+
+/* Concerts */
+.en-scene {
+  display: grid; gap: 8px; padding: 26px 30px;
+  background: var(--rose); color: var(--nuit); border-radius: 14px;
+}
+.en-scene__lib { display: flex; align-items: center; gap: 12px; font-size: 28px; font-weight: 800; }
+.en-scene__lib::before { content: ""; width: 18px; height: 18px; border-radius: 50%; background: var(--nuit); animation: clignote-e 1.2s infinite; }
+.en-scene__nom { font-size: 84px; line-height: .95; }
+.en-scene__meta { font-size: 30px; font-weight: 700; }
+.suivants { display: grid; gap: 14px; }
+.suivant {
+  display: grid; grid-template-columns: 170px minmax(0, 1fr); align-items: center; gap: 22px;
+  padding: 14px 22px; background: rgba(255, 248, 238, .07); border-left: 10px solid var(--c, var(--sodium)); border-radius: 10px;
+}
+.suivant__heure { font-family: var(--font-affiche); font-size: 58px; line-height: 1; }
+.suivant__nom { display: block; font-family: var(--font-affiche); text-transform: uppercase; font-size: 48px; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.suivant__scene { font-size: 26px; font-weight: 700; color: #F7D4C4; margin-top: 4px; }
+.suivant__dans { display: block; margin-top: 6px; font-size: 26px; font-weight: 800; color: var(--sodium); white-space: nowrap; }
+.c-sodium { --c: var(--sodium); } .c-vert { --c: var(--vert); } .c-rose { --c: var(--rose); } .c-bleu { --c: #5C7BFF; } .c-nuit { --c: var(--papier); }
+.vide-diapo { font-size: 40px; color: #F7D4C4; }
+
+/* Blind test */
+.diapo--blind { justify-items: start; }
+.diapo--blind { gap: 14px; }
+.diapo--blind .diapo__titre { font-size: 130px; white-space: nowrap; color: var(--rose); text-shadow: .05em .035em 0 var(--sodium); }
+.blind-heure { font-family: var(--font-affiche); font-size: 210px; line-height: .9; color: var(--papier); }
+.blind-dans { font-size: 48px; font-weight: 800; color: var(--sodium); }
+.blind-texte { font-size: 32px; max-width: 30ch; color: #FFE4CF; }
+.blind-eq { width: 100%; height: 90px; color: var(--sodium); margin-top: 6px; }
+
+/* Défi */
+.diapo--defi .diapo__titre { color: var(--sodium); }
+.defi-carte {
+  display: grid; gap: 18px; padding: 32px 36px;
+  background: var(--rose); color: var(--nuit); border-radius: 14px;
+  background-image: repeating-linear-gradient(-45deg, rgba(59, 10, 18, .08) 0 20px, transparent 20px 40px);
+}
+.defi-carte__lib { font-size: 32px; font-weight: 800; }
+.defi-carte__nom { font-size: 96px; line-height: .95; }
+.defi-carte__texte { font-size: 40px; font-weight: 600; }
+.defi-chrono { font-family: var(--font-affiche); font-size: 150px; line-height: 1; color: var(--papier); }
+.defi-chrono small { display: block; font-family: var(--font-texte); font-size: 30px; font-weight: 700; color: #F7D4C4; }
+.defi-gains { display: flex; gap: 16px; }
+.defi-gains span { padding: 8px 22px; font-size: 32px; font-weight: 800; background: var(--sodium); color: var(--nuit); border-radius: var(--r-pastille); }
+
+/* ---------- C. Exploits + rejoindre ---------- */
+.colonne-c { display: grid; grid-template-rows: 1fr auto; gap: 24px; min-height: 0; }
+.panneau--exploits { overflow: hidden; }
+.panneau--exploits .panneau__titre { font-size: 48px; padding-left: 6px; }
+.exploits { display: grid; gap: 12px; }
+.exploit {
+  display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: start;
+  padding: 14px 16px; background: rgba(255, 248, 238, .08); border-radius: 10px;
+  animation: exploit-in .7s var(--ease-rebond);
+}
+.exploit:first-child { background: rgba(255, 210, 63, .16); }
+@keyframes exploit-in { from { opacity: 0; transform: translateY(-30px) scale(.96); } }
+.exploit__icone { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--c, var(--sodium)); color: var(--nuit); }
+.exploit__icone .icon { width: 30px; height: 30px; }
+.exploit__texte { font-size: 26px; line-height: 1.2; }
+.exploit__texte strong { display: block; font-size: 28px; color: var(--sodium); }
+.exploit__meta { display: block; margin-top: 4px; font-size: 22px; font-weight: 700; color: #F7D4C4; }
+
+.rejoindre {
+  display: grid; grid-template-columns: 190px 1fr; gap: 22px; align-items: center;
+  padding: 20px; background: var(--sodium); color: var(--nuit); border-radius: 18px;
+  box-shadow: 8px 8px 0 var(--rose);
+}
+.rejoindre__qr { background: #fff; padding: 6px; border-radius: 8px; }
+.rejoindre__qr .qr { width: 100%; height: auto; display: block; }
+.rejoindre__titre { font-size: 50px; line-height: .95; }
+.rejoindre__texte p:not(.rejoindre__titre) { font-size: 24px; font-weight: 700; margin-top: 8px; }
+.rejoindre__url { font-size: 20px !important; }
+
+/* ---------- Bandeau d'annonces ---------- */
+.mur-pied { display: grid; grid-template-columns: auto 1fr; align-items: stretch; background: var(--papier); color: var(--nuit); }
+.mur-pied__lib { display: flex; align-items: center; gap: 12px; padding: 0 32px; font-size: 44px; background: var(--rose); }
+.mur-pied__lib .icon { width: 40px; height: 40px; }
+.mur-pied__piste-cadre { overflow: hidden; display: flex; align-items: center; }
+.mur-pied__piste { display: flex; width: max-content; animation: defile-e var(--duree-bandeau, 60s) linear infinite; }
+.mur-pied__piste span { display: inline-flex; align-items: center; gap: 22px; padding: 0 40px; font-size: 38px; font-weight: 700; white-space: nowrap; }
+.mur-pied__piste strong { font-family: var(--font-affiche); font-weight: 400; font-size: 44px; text-transform: uppercase; }
+.mur-pied__piste span::after { content: ""; width: 16px; height: 16px; background: var(--bleu); transform: rotate(45deg); margin-left: 40px; }
+@keyframes defile-e { to { transform: translateX(-50%); } }
+
+/* ---------- Alerte urgente plein écran ---------- */
+.alerte-ecran {
+  position: absolute; inset: 0; z-index: 20;
+  display: grid; place-items: center;
+  background: var(--rose); color: var(--nuit);
+  background-image: repeating-linear-gradient(-45deg, rgba(59, 10, 18, .1) 0 40px, transparent 40px 80px);
+  animation: alerte-in .5s var(--ease-sortie);
+}
+.alerte-ecran[hidden] { display: none; }
+@keyframes alerte-in { from { opacity: 0; transform: scale(1.04); } }
+.alerte-ecran__cadre { display: grid; justify-items: center; gap: 24px; max-width: 1500px; text-align: center; }
+.alerte-ecran__icone { width: 160px; height: 160px; stroke-width: 2.4; animation: vibre 1s ease-in-out infinite; }
+@keyframes vibre { 50% { transform: scale(1.08); } }
+.alerte-ecran__lib { font-size: 40px; font-weight: 800; padding: 8px 28px; background: var(--nuit); color: var(--papier); border-radius: var(--r-pastille); }
+.alerte-ecran__titre { font-size: 150px; line-height: .95; }
+.alerte-ecran__texte { font-size: 56px; font-weight: 700; max-width: 30ch; }
+.alerte-ecran__barre { position: absolute; left: 0; right: 0; bottom: 0; height: 18px; background: rgba(59, 10, 18, .2); }
+.alerte-ecran__barre i { display: block; height: 100%; background: var(--nuit); transform-origin: left; animation: remplit var(--duree-alerte, 15s) linear forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mur-pied__piste { animation-duration: 240s !important; animation-iteration-count: infinite !important; }
+}

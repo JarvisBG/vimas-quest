@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#1F3FD1">
+  <title>Mon programme | DOMAF Quest</title>
+  <link rel="preload" href="assets/fonts/Anton-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/mon-programme.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="icone-btn topbar__retour" href="tableau-de-bord.html" aria-label="Retour à ma carte">
+        <svg class="icon" aria-hidden="true"><use href="#i-retour"></use></svg>
+      </a>
+      <h1 class="topbar__titre affiche">Mon programme</h1>
+      <a class="btn btn--sodium btn--sm" href="programme.html">Ajouter</a>
+    </div>
+  </header>
+
+  <main id="contenu" class="mp">
+    <div class="wrap mp__cadre">
+
+      <div class="annuler-mp" role="status" data-annuler hidden>
+        <span data-annuler-txt></span>
+        <button class="lien-fort" type="button" data-annuler-btn>Annuler</button>
+      </div>
+
+      <section class="resume-mp" aria-live="polite" data-resume>
+        <div class="squelette" style="height:120px"></div>
+      </section>
+
+      <div data-contenu></div>
+
+      <section class="bloc-mp" aria-labelledby="t-rappels" data-bloc-rappels hidden>
+        <h2 class="affiche bloc-mp__titre" id="t-rappels">Rappels</h2>
+        <label class="interrupteur">
+          <span><strong>Me prévenir avant mes concerts</strong><br><span class="texte-doux">Tant que le jeu est ouvert sur ton téléphone</span></span>
+          <input type="checkbox" role="switch" data-rappels-actif>
+        </label>
+        <div class="champ">
+          <span class="champ__label" id="lib-avance">Combien de temps avant ?</span>
+          <div class="puces" role="radiogroup" aria-labelledby="lib-avance" data-avance>
+            <label class="puce"><input type="radio" name="avance" value="10"><span>10 min</span></label>
+            <label class="puce"><input type="radio" name="avance" value="15"><span>15 min</span></label>
+            <label class="puce"><input type="radio" name="avance" value="30"><span>30 min</span></label>
+          </div>
+        </div>
+        <p class="notif-mp" data-notif></p>
+        <div class="agenda-mp">
+          <button class="btn btn--nuit btn--bloc" type="button" data-agenda>
+            <i data-icon="calendrier"></i> Ajouter à mon agenda
+          </button>
+          <p class="texte-doux">Le plus fiable : ton téléphone te préviendra même application fermée ou sans réseau.</p>
+        </div>
+      </section>
+
+      <section class="bloc-mp" aria-labelledby="t-sugg" data-bloc-sugg hidden>
+        <h2 class="affiche bloc-mp__titre" id="t-sugg">Ça pourrait te plaire</h2>
+        <ul class="sugg-mp" data-suggestions></ul>
+      </section>
+    </div>
+  </main>
+
+  <script src="assets/js/config.js" defer></script>
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/serveur.js" defer></script>
+  <script src="assets/js/pages/mon-programme.js" defer></script>
+</body>
+</html>

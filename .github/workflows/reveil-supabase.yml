@@ -1,0 +1,34 @@
+# Empêche la mise en pause du projet Supabase (forfait gratuit : pause après
+# 7 jours sans activité). Une requête légère tous les 3 jours suffit.
+# Clé publishable = publique par conception (même clé que app/assets/js/config.js).
+# Voir supabase/ROUTINE.md.
+name: Réveil Supabase
+
+on:
+  schedule:
+    - cron: "17 5 */3 * *"   # 5 h 17 UTC (6 h 17 à Douala), tous les 3 jours
+  workflow_dispatch:          # lancement à la main : onglet Actions → Run workflow
+
+permissions: {}
+
+jobs:
+  reveil:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Interroger la base
+        env:
+          URL: https://greawdlzcuewlcndddxq.supabase.co/rest/v1/rpc/jour_jeu
+          CLE: sb_publishable_fQDV-1i_GFd1rq9tZLqDJA_Kggiz9li
+        run: |
+          for essai in 1 2 3; do
+            if reponse=$(curl -fsS -m 30 -X POST "$URL" \
+                 -H "apikey: $CLE" -H "Content-Type: application/json" -d '{}'); then
+              echo "Base éveillée — journée de jeu : $reponse"
+              exit 0
+            fi
+            echo "Essai $essai sans réponse, nouvel essai dans 60 s"
+            sleep 60
+          done
+          echo "::error::Supabase ne répond pas : le projet est peut-être en pause (Restore project dans le tableau de bord)."
+          exit 1

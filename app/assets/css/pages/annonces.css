@@ -1,0 +1,75 @@
+/* ==========================================================================
+   Page 15 — Annonces
+   ========================================================================== */
+
+.ann { background: var(--papier-2); min-height: calc(100svh - var(--topbar-h)); }
+.ann__cadre { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-4); padding-block: var(--s-4) var(--s-6); max-width: 40rem; }
+.ann__resume { font-size: var(--fs-lg); font-weight: 700; }
+.ann__resume strong { font-family: var(--font-affiche); font-weight: 400; font-size: 1.75rem; color: var(--bleu); }
+.ann__filtres { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: calc(-1 * var(--s-4)); padding: 2px var(--s-4); }
+.ann__filtres::-webkit-scrollbar { display: none; }
+.ann__filtres .puce { flex: none; }
+.ann__filtres .puce span { min-height: 40px; }
+.ann__filtres b { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; font-size: .75rem; background: var(--rose); color: var(--nuit); border-radius: var(--r-pastille); }
+.ann__filtres b:empty { display: none; }
+
+/* ---------- Type → couleur ---------- */
+.ty-meteo    { --ty: #8FA6FF; }
+.ty-horaire  { --ty: var(--sodium); }
+.ty-surprise { --ty: var(--vert); }
+.ty-securite { --ty: #C4123F; }
+.ty-jeu      { --ty: var(--rose); }
+.ty-pratique { --ty: var(--papier-2); }
+
+/* ---------- Annonce épinglée (urgente) : élément fort ---------- */
+.epinglee {
+  position: relative; display: grid; gap: var(--s-2); padding: var(--s-4); margin-bottom: var(--s-2);
+  background: var(--rose); color: var(--nuit);
+  background-image: repeating-linear-gradient(-45deg, rgba(10, 20, 64, .08) 0 14px, transparent 14px 28px);
+  border: 3px solid var(--nuit); border-radius: var(--r-billet); box-shadow: 6px 6px 0 var(--nuit);
+}
+.epinglee__haut { display: flex; justify-content: space-between; align-items: center; gap: var(--s-2); flex-wrap: wrap; }
+.epinglee__lib { display: inline-flex; align-items: center; gap: var(--s-1); padding: 4px 12px; font-weight: 800; font-size: var(--fs-sm); color: var(--papier); background: var(--nuit); border-radius: var(--r-pastille); }
+.epinglee__lib .icon { animation: vibre-a 1.2s ease-in-out infinite; }
+@keyframes vibre-a { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(-14deg); } 40% { transform: rotate(12deg); } }
+.epinglee__titre { font-size: clamp(2rem, 10vw, 2.75rem); line-height: .95; }
+.epinglee__texte { font-size: var(--fs-lg); font-weight: 600; }
+.epinglee__meta { font-size: var(--fs-sm); font-weight: 700; }
+.epinglee .btn { justify-self: start; }
+
+/* ---------- Fil ---------- */
+.fil { display: grid; gap: var(--s-3); }
+.annonce {
+  position: relative; display: grid; grid-template-columns: 44px 1fr; gap: var(--s-3);
+  padding: var(--s-3) var(--s-4) var(--s-3) var(--s-3);
+  background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net);
+  box-shadow: inset 6px 0 0 var(--ty);
+  scroll-margin-top: calc(var(--topbar-h) + var(--s-4));
+}
+.annonce.is-non-lue { box-shadow: inset 6px 0 0 var(--ty), 4px 4px 0 var(--nuit); }
+.annonce.is-nouvelle { animation: arrivee-a .7s var(--ease-rebond); }
+@keyframes arrivee-a { from { opacity: 0; transform: translateY(-24px) scale(.97); } }
+.annonce.is-cible { animation: cible-a 1.6s var(--ease-sortie); }
+@keyframes cible-a { 0%, 40% { outline: 4px solid var(--sodium); } }
+.annonce__icone { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--ty); border: 2px solid var(--nuit); }
+.ty-securite .annonce__icone { color: var(--papier); }
+.ty-securite .annonce__icone .icon { fill: currentColor; stroke: none; }
+.annonce__corps { display: grid; gap: var(--s-1); min-width: 0; }
+.annonce__haut { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-1) var(--s-2); font-size: var(--fs-xs); font-weight: 800; color: var(--texte-doux); }
+.annonce__nouveau { padding: 1px 8px; background: var(--rose); color: var(--nuit); border-radius: var(--r-pastille); }
+.annonce__niveau { padding: 1px 8px; background: var(--nuit); color: var(--sodium); border-radius: var(--r-pastille); }
+.annonce__titre { font-family: var(--font-affiche); font-weight: 400; font-size: 1.5rem; line-height: 1.05; text-transform: uppercase; }
+.annonce__validite { font-size: var(--fs-xs); font-weight: 700; color: var(--texte-doux); }
+.annonce__lien { justify-self: start; margin-top: var(--s-1); font-size: var(--fs-sm); }
+.fil--anciennes .annonce { opacity: .7; box-shadow: none; }
+
+.anciennes { padding: var(--s-3) var(--s-4); background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net); }
+.anciennes summary { min-height: 36px; display: flex; align-items: center; font-weight: 800; cursor: pointer; }
+.anciennes[open] .fil { margin-top: var(--s-3); }
+
+.notif-ann { display: grid; gap: var(--s-2); padding: var(--s-4); background: var(--nuit); color: var(--papier); border-radius: var(--r-net); }
+.notif-ann__titre { display: flex; align-items: center; gap: var(--s-2); font-size: var(--fs-lg); }
+.notif-ann__titre .icon { color: var(--sodium); }
+.notif-ann .texte-doux { color: #C9D1F5; }
+.notif-ann .btn--contour { color: var(--papier); }
+.ann__demo { justify-self: center; background: none; border: 0; cursor: pointer; }

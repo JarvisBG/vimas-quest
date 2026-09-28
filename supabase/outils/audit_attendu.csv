@@ -1,0 +1,251 @@
+genre,objet,detail
+declencheur,coeurs / coeurs_compter,CREATE TRIGGER coeurs_compter AFTER INSERT OR DELETE ON public.coeurs FOR EACH ROW EXECUTE FUNCTION _coeurs_compter()
+declencheur,players / maj_xp_jour,CREATE TRIGGER maj_xp_jour BEFORE UPDATE OF xp ON public.players FOR EACH ROW EXECUTE FUNCTION _maj_xp_jour()
+declencheur,players / pass_garde_players,CREATE TRIGGER pass_garde_players BEFORE UPDATE OF xp ON public.players FOR EACH ROW EXECUTE FUNCTION pass_garde()
+declencheur,quest_progress / quest_progress_compter,CREATE TRIGGER quest_progress_compter AFTER INSERT OR DELETE OR UPDATE OF completed_at ON public.quest_progress FOR EACH ROW EXECUTE FUNCTION _missions_faites_compter()
+declencheur,scans / scans_compter,CREATE TRIGGER scans_compter AFTER INSERT OR DELETE ON public.scans FOR EACH ROW EXECUTE FUNCTION _qr_scans_compter()
+fonction,"_artistes_du_jour(p_player uuid, p_jour date)",invoker search_path=public anon=- auth=- corps=986a03d15f
+fonction,"_award_badge(p_player_id uuid, p_pseudo text, p_badge_name text",DEFINER search_path=public anon=- auth=- corps=3dd88415b5
+fonction,"_classement(p_periode text, p_moi uuid, p_jour date)",invoker search_path=public anon=- auth=- corps=5de8d37103
+fonction,_code_secret_tirage(),invoker search_path=public anon=- auth=- corps=199d285dd2
+fonction,_coeur_ouvert(p_categorie text),invoker search_path=public anon=- auth=- corps=4d732f7713
+fonction,"_coeur_votable(p_player uuid, p_categorie text, p_cible text)",invoker search_path=public anon=- auth=- corps=3d618a8e2c
+fonction,_coeurs_compter(),invoker search_path=public anon=- auth=- corps=97ede6bd8f
+fonction,_coffre_json(p_c coffres),invoker search_path=public anon=- auth=- corps=e8d8d7309b
+fonction,"_coffre_remplir(p_player uuid, p_xp integer, p_jetons integer)",invoker search_path=public anon=- auth=- corps=fb480064b2
+fonction,"_collecte_prochaine(p_player uuid, p_jour date, p_soir boolean)",invoker search_path=public anon=- auth=- corps=627fae7350
+fonction,_collecte_soir(),invoker search_path=public anon=- auth=- corps=c4dcdd1ff4
+fonction,_compteurs_mission(),invoker search_path=public anon=- auth=- corps=e7df9c7457
+fonction,_debut_jour_jeu(),invoker search_path=public anon=- auth=- corps=3a6009e4d3
+fonction,_fiche_champs(),invoker search_path=public anon=- auth=- corps=5252120cd5
+fonction,_fiche_etat(p_player uuid),invoker search_path=public anon=- auth=- corps=90a297c308
+fonction,_fiche_majeur(p_tranche text),invoker search_path=public anon=- auth=- corps=ca6cece1e0
+fonction,_fiche_texte(p_champ text),invoker search_path=public anon=- auth=- corps=35ca06712c
+fonction,_gen_qr_code(),DEFINER search_path=public anon=- auth=- corps=240a6163cd
+fonction,_genres_artiste(),invoker search_path=public anon=- auth=- corps=7a6ec3d63d
+fonction,_is_system_badge(p_name text),invoker search_path=public anon=- auth=- corps=0907eabd75
+fonction,"_json_entier(p jsonb, p_cle text)",invoker search_path=public anon=- auth=- corps=f2db48949e
+fonction,"_json_instant(p jsonb, p_cle text)",invoker search_path=public anon=- auth=- corps=61f8442816
+fonction,"_json_uuid(p jsonb, p_cle text)",invoker search_path=public anon=- auth=- corps=127df973b2
+fonction,_maj_xp_jour(),invoker search_path=public anon=X auth=X corps=afc457ec0b
+fonction,_missions_faites_compter(),invoker search_path=public anon=- auth=- corps=b5f5470f25
+fonction,_norm_answer(p text),invoker search_path=public anon=X auth=X corps=96c1e87b0c
+fonction,_norm_ticket(p_code text),invoker search_path=public anon=- auth=- corps=5132af7f7c
+fonction,"_points_jour(p_xp_jour integer, p_jour date)",invoker search_path=public anon=X auth=X corps=2beef07bf5
+fonction,"_qr_lieu_compatible(p_type text, p_categorie text)",invoker search_path=public anon=- auth=- corps=1b3d86dc7f
+fonction,_qr_scans_compter(),invoker search_path=public anon=- auth=- corps=40732e8375
+fonction,_raid_damage(p_session_id uuid),DEFINER search_path=public anon=- auth=- corps=78509e2ed1
+fonction,_staff_nom(),DEFINER search_path=public anon=- auth=- corps=3ce7f9c49d
+fonction,_ticket_code(),invoker search_path=public anon=- auth=- corps=b1446bed85
+fonction,"_xp_qr_defaut(p_type text, p_rarete text)",invoker search_path=public anon=- auth=- corps=bbfa442226
+fonction,"admin_award_badge(p_player_id uuid, p_badge_id uuid)",DEFINER search_path=public anon=- auth=X corps=a1a138e8d5
+fonction,"admin_award_bonus(p_player_id uuid, p_xp integer, p_reason text",DEFINER search_path=public anon=- auth=X corps=23f9690f14
+fonction,"admin_blind_question(p_id uuid, p_categorie text, p_reponse tex",DEFINER search_path=public anon=- auth=X corps=e792e40419
+fonction,"admin_create_announcement(p_message text, p_type text)",DEFINER search_path=public anon=- auth=X corps=ace5487b75
+fonction,"admin_create_prize(p_name text, p_icon text, p_weight integer, ",DEFINER search_path=public anon=- auth=X corps=f48f190eae
+fonction,"admin_create_quiz_question(p_session_id uuid, p_question text, ",DEFINER search_path=public anon=- auth=X corps=d93047330e
+fonction,"admin_create_quiz_session(p_title text, p_kind text, p_boss_nam",DEFINER search_path=public anon=- auth=X corps=3767c3c430
+fonction,admin_delete_announcement(p_id uuid),DEFINER search_path=public anon=- auth=X corps=b89260ffc9
+fonction,admin_delete_prize(p_id uuid),DEFINER search_path=public anon=- auth=X corps=94acc05c1c
+fonction,admin_delete_quiz_question(p_id uuid),DEFINER search_path=public anon=- auth=X corps=1d8e2d082f
+fonction,admin_delete_quiz_session(p_id uuid),DEFINER search_path=public anon=- auth=X corps=20b8f4db64
+fonction,admin_duplicate_quiz_session(p_session_id uuid),DEFINER search_path=public anon=- auth=X corps=17cf4197a7
+fonction,"admin_effacer_joueur(p_player_id uuid, p_confirmation text)",DEFINER search_path=public anon=- auth=X corps=699e4810e0
+fonction,admin_fermer_annonce(p_id uuid),DEFINER search_path=public anon=- auth=X corps=5bfe2ff4eb
+fonction,admin_get_reconnect_code(p_player_id uuid),DEFINER search_path=public anon=- auth=X corps=f970fa8efe
+fonction,admin_journal_bonus(p_jour date),DEFINER search_path=public anon=- auth=X corps=15e0c2a438
+fonction,admin_list_quiz_questions(p_session_id uuid),DEFINER search_path=public anon=- auth=X corps=c285d17ce0
+fonction,admin_list_quiz_sessions(),DEFINER search_path=public anon=- auth=X corps=1030a6b780
+fonction,admin_manual_quests(p_player_id uuid),DEFINER search_path=public anon=- auth=X corps=42de619982
+fonction,"admin_move_quiz_question(p_id uuid, p_direction text)",DEFINER search_path=public anon=- auth=X corps=1b80133b50
+fonction,"admin_prize_affichage(p_id uuid, p_rarete text, p_court text)",DEFINER search_path=public anon=- auth=X corps=2caa61c4f3
+fonction,"admin_publier_annonce(p_titre text, p_message text, p_type text",DEFINER search_path=public anon=- auth=X corps=30d108f055
+fonction,admin_quiz_end(p_session_id uuid),DEFINER search_path=public anon=- auth=X corps=c1fed662e7
+fonction,admin_quiz_live(p_session_id uuid),DEFINER search_path=public anon=- auth=X corps=c9d93a6933
+fonction,admin_quiz_next(p_session_id uuid),DEFINER search_path=public anon=- auth=X corps=5e3efa5668
+fonction,admin_quiz_start(p_session_id uuid),DEFINER search_path=public anon=- auth=X corps=6ac739a98d
+fonction,admin_recent_spins(p_limit integer),DEFINER search_path=public anon=- auth=X corps=731a891217
+fonction,admin_redeem(p_code text),DEFINER search_path=public anon=- auth=X corps=a4e6f43391
+fonction,"admin_rename_player(p_player_id uuid, p_pseudo text)",DEFINER search_path=public anon=- auth=X corps=b88798db00
+fonction,"admin_rename_quiz_session(p_id uuid, p_title text)",DEFINER search_path=public anon=- auth=X corps=e2967b6660
+fonction,admin_set_phase(p_phase text),DEFINER search_path=public anon=- auth=X corps=b64184dc11
+fonction,admin_set_roulette_cost(p_cost integer),DEFINER search_path=public anon=- auth=X corps=61f414a7d9
+fonction,admin_set_roulette_plafond(p_max integer),DEFINER search_path=public anon=- auth=X corps=3f315f91cd
+fonction,"admin_set_status(p_player_id uuid, p_status text)",DEFINER search_path=public anon=- auth=X corps=d362b5b446
+fonction,admin_stats(),DEFINER search_path=public anon=- auth=X corps=6378e550df
+fonction,"admin_update_prize(p_id uuid, p_name text, p_icon text, p_weigh",DEFINER search_path=public anon=- auth=X corps=aba1fd3525
+fonction,"admin_update_quiz_question(p_id uuid, p_question text, p_choice",DEFINER search_path=public anon=- auth=X corps=079fb88515
+fonction,"admin_update_raid_params(p_session_id uuid, p_boss_name text, p",DEFINER search_path=public anon=- auth=X corps=08c099287d
+fonction,"admin_validate_quest(p_player_id uuid, p_quest_id uuid)",DEFINER search_path=public anon=- auth=X corps=523a0db714
+fonction,billetterie_stats(),DEFINER search_path=public anon=- auth=X corps=58858a5eb9
+fonction,"carnet_attribuer(p_carnet_id uuid, p_email text)",DEFINER search_path=public anon=- auth=X corps=8718ea1211
+fonction,"carnet_creer(p_vendeur_nom text, p_nb_tickets integer, p_note t",DEFINER search_path=public anon=- auth=X corps=2224555c69
+fonction,carnet_etat(p_carnet_id uuid),DEFINER search_path=public anon=- auth=X corps=bcc63d9949
+fonction,carnet_liste(),DEFINER search_path=public anon=- auth=X corps=15378b374e
+fonction,"carnet_pointer(p_carnet_id uuid, p_rendus integer, p_actif bool",DEFINER search_path=public anon=- auth=X corps=4a2bdeadef
+fonction,"carnet_rendre(p_carnet_id uuid, p_codes text[])",DEFINER search_path=public anon=- auth=X corps=dcf43e9c9a
+fonction,"carnet_reprendre(p_carnet_id uuid, p_codes text[])",DEFINER search_path=public anon=- auth=X corps=1a3f2e1d8e
+fonction,"classement_amis(p_secret_code text, p_pseudos text[], p_periode",DEFINER search_path=public anon=X auth=X corps=d8e4b9641f
+fonction,"classement_chercher(p_secret_code text, p_texte text, p_periode",DEFINER search_path=public anon=X auth=X corps=62af47a84a
+fonction,"classement_joueur(p_secret_code text, p_periode text)",DEFINER search_path=public anon=X auth=X corps=cf4fc7bfab
+fonction,"coeur_donner(p_secret_code text, p_categorie text, p_cible text",DEFINER search_path=public anon=X auth=X corps=7a9249f5e7
+fonction,coeur_liste(p_secret_code text),DEFINER search_path=public anon=X auth=X corps=a1f4b046d3
+fonction,"coeur_palmares(p_categorie text, p_limite integer)",DEFINER search_path=public anon=X auth=X corps=b4fdfa692d
+fonction,"coeur_retirer(p_secret_code text, p_categorie text, p_cible tex",DEFINER search_path=public anon=X auth=X corps=fb2cbfd910
+fonction,"coffre_ouvrir(p_secret_code text, p_cle text, p_valeur text, p_",DEFINER search_path=public anon=X auth=X corps=1255cffc40
+fonction,console_accueil(),DEFINER search_path=public anon=- auth=X corps=dd479445ed
+fonction,"console_activer(p_quoi text, p_id uuid, p_actif boolean)",DEFINER search_path=public anon=- auth=X corps=a0b90212a4
+fonction,"console_artiste_enregistrer(p_id text, p_artiste jsonb)",DEFINER search_path=public anon=- auth=X corps=e55e44599f
+fonction,"console_badge_enregistrer(p_id uuid, p_badge jsonb)",DEFINER search_path=public anon=- auth=X corps=4484a15f4b
+fonction,console_badge_supprimer(p_id uuid),DEFINER search_path=public anon=- auth=X corps=64ef607b20
+fonction,console_badges(),DEFINER search_path=public anon=- auth=X corps=c8082e5a2f
+fonction,"console_concert_enregistrer(p_id uuid, p_concert jsonb)",DEFINER search_path=public anon=- auth=X corps=3ac0ef79fd
+fonction,"console_dedicace_enregistrer(p_id uuid, p_dedicace jsonb)",DEFINER search_path=public anon=- auth=X corps=4198d5e3c5
+fonction,console_joueur(p_player_id uuid),DEFINER search_path=public anon=- auth=X corps=3008fd15a5
+fonction,"console_joueurs(p_recherche text, p_filtre text, p_rang text, p",DEFINER search_path=public anon=- auth=X corps=0141336da6
+fonction,"console_lieu_enregistrer(p_id text, p_lieu jsonb)",DEFINER search_path=public anon=- auth=X corps=4a29b63a54
+fonction,"console_mission_enregistrer(p_id uuid, p_mission jsonb)",DEFINER search_path=public anon=- auth=X corps=926d2b0e03
+fonction,console_mission_supprimer(p_id uuid),DEFINER search_path=public anon=- auth=X corps=907d3a634e
+fonction,console_missions(),DEFINER search_path=public anon=- auth=X corps=6455b13b0b
+fonction,console_programme(),DEFINER search_path=public anon=- auth=X corps=3641b4546e
+fonction,"console_programme_activer(p_quoi text, p_id text, p_actif boole",DEFINER search_path=public anon=- auth=X corps=513e7fdc57
+fonction,"console_programme_supprimer(p_quoi text, p_id text)",DEFINER search_path=public anon=- auth=X corps=18a9fc88a5
+fonction,console_qr(),DEFINER search_path=public anon=- auth=X corps=8ba16b91d0
+fonction,"console_qr_enregistrer(p_id uuid, p_qr jsonb)",DEFINER search_path=public anon=- auth=X corps=c71da95082
+fonction,console_qr_scans(p_id uuid),DEFINER search_path=public anon=- auth=X corps=60dc1e2b35
+fonction,console_qr_supprimer(p_id uuid),DEFINER search_path=public anon=- auth=X corps=17e01213b5
+fonction,"create_player(p_pseudo text, p_archetype text, p_ticket text)",DEFINER search_path=public anon=X auth=X corps=67f5ca2d7d
+fonction,"fiche_enregistrer(p_secret_code text, p_fiche jsonb, p_telephon",DEFINER search_path=public anon=X auth=X corps=6a34a7fb89
+fonction,is_equipe(),DEFINER search_path=public anon=X auth=X corps=1c09b7bdf9
+fonction,is_gm(),DEFINER search_path=public anon=X auth=X corps=d8edd41967
+fonction,is_staff(),DEFINER search_path=public anon=X auth=X corps=e975e2312b
+fonction,is_vendeur(),DEFINER search_path=public anon=X auth=X corps=cdb2b239ee
+fonction,jour_de(p_instant timestamp with time zone),invoker search_path=public anon=X auth=X corps=1260b5719c
+fonction,jour_festival_label(p_jour date),invoker search_path=public anon=X auth=X corps=3c0e6a9043
+fonction,jour_jeu(),invoker search_path=public anon=X auth=X corps=1433b11ce7
+fonction,leaderboard_view(p_player_id uuid),DEFINER search_path=public anon=X auth=X corps=7c2952b817
+fonction,level_for_xp(p_xp integer),invoker search_path=public anon=X auth=X corps=075e12b99e
+fonction,live_board(),DEFINER search_path=public anon=X auth=X corps=0c81d6911c
+fonction,live_stats(),DEFINER search_path=public anon=X auth=X corps=3577572732
+fonction,login_with_code(p_code text),DEFINER search_path=public anon=X auth=X corps=5c6f0dd454
+fonction,mon_acces(),DEFINER search_path=public anon=- auth=X corps=835f023602
+fonction,mur_direct(),DEFINER search_path=public anon=X auth=X corps=b440b96526
+fonction,pass_actif(p_player_id uuid),DEFINER search_path=public anon=- auth=- corps=8043c7621f
+fonction,pass_etat(p_secret_code text),DEFINER search_path=public anon=X auth=X corps=1bfc0cac4b
+fonction,pass_garde(),DEFINER search_path=public anon=X auth=X corps=e1c2b633e0
+fonction,player_collection(p_secret_code text),DEFINER search_path=public anon=X auth=X corps=c1265f5db7
+fonction,player_home(p_secret_code text),DEFINER search_path=public anon=X auth=X corps=3ac46fe5b4
+fonction,profil_options(),invoker search_path=public anon=X auth=X corps=5bd90b2614
+fonction,profil_public_stats(),DEFINER search_path=public anon=X auth=X corps=86dd553dfa
+fonction,profil_stats(),DEFINER search_path=public anon=- auth=X corps=c1bd2f0009
+fonction,profil_valeurs(p_champ text),invoker search_path=public anon=X auth=X corps=3bd678c3e5
+fonction,"programme_basculer_favori(p_secret_code text, p_creneau_id uuid",DEFINER search_path=public anon=X auth=X corps=08a0eee3fc
+fonction,programme_favoris(p_secret_code text),DEFINER search_path=public anon=X auth=X corps=22c487ebff
+fonction,programme_popularite(),DEFINER search_path=public anon=X auth=X corps=741d8b55b1
+fonction,programme_public(),invoker search_path=public anon=X auth=X corps=d742ff4575
+fonction,"programme_rappel(p_secret_code text, p_creneau_id uuid, p_rappe",DEFINER search_path=public anon=X auth=X corps=5a06c504c7
+fonction,"quiz_answer(p_secret_code text, p_question_id uuid, p_answer_in",DEFINER search_path=public anon=X auth=X corps=fb4ccccc52
+fonction,quiz_board(),DEFINER search_path=public anon=X auth=X corps=33209fd382
+fonction,quiz_state(p_secret_code text),DEFINER search_path=public anon=X auth=X corps=ffaa120a8d
+fonction,rank_for_level(p_level integer),invoker search_path=public anon=X auth=X corps=84aca97489
+fonction,regles_jeu(),DEFINER search_path=public anon=X auth=X corps=5a2f616a71
+fonction,roi_veille(),invoker search_path=public anon=X auth=X corps=85399f353e
+fonction,roulette_joueur(p_secret_code text),DEFINER search_path=public anon=X auth=X corps=269b19fc1a
+fonction,"scan_qr(p_secret_code text, p_code text)",DEFINER search_path=public anon=X auth=X corps=d79d19e751
+fonction,spin_roulette(p_secret_code text),DEFINER search_path=public anon=X auth=X corps=5610f79adf
+fonction,staff_role(),DEFINER search_path=public anon=X auth=X corps=9cfa39c7a3
+fonction,stats_parcours(),DEFINER search_path=public anon=- auth=X corps=bee3e62591
+fonction,"ticket_utiliser(p_secret_code text, p_code text)",DEFINER search_path=public anon=X auth=X corps=0792f138b2
+fonction,ticket_verifier(p_code text),DEFINER search_path=public anon=X auth=X corps=42efbba50b
+fonction,"vendeur_award_bonus(p_player_id uuid, p_xp integer, p_reason te",DEFINER search_path=public anon=- auth=X corps=b374750eda
+politique,announcements / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,artistes / ecriture staff,ALL authenticated PERMISSIVE using=is_staff() check=is_staff()
+politique,artistes / lecture publique,SELECT public PERMISSIVE using=actif check=-
+politique,badges / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,billetterie_config / ecriture gm,UPDATE authenticated PERMISSIVE using=is_gm() check=-
+politique,billetterie_config / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,coeur_config / ecriture staff,UPDATE authenticated PERMISSIVE using=is_staff() check=-
+politique,coeur_config / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,coeurs / lecture staff,SELECT authenticated PERMISSIVE using=is_staff() check=-
+politique,contact_config / ecriture staff,UPDATE authenticated PERMISSIVE using=is_staff() check=-
+politique,contact_config / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,creneaux / ecriture staff,ALL authenticated PERMISSIVE using=is_staff() check=is_staff()
+politique,creneaux / lecture publique,"SELECT public PERMISSIVE using=(EXISTS ( SELECT 1
+   FROM artistes a
+  WHERE ((a.id = creneaux.artiste_id) AND a.actif))) check=-"
+politique,dedicaces / ecriture staff,ALL authenticated PERMISSIVE using=is_staff() check=is_staff()
+politique,dedicaces / lecture publique,"SELECT public PERMISSIVE using=(EXISTS ( SELECT 1
+   FROM artistes a
+  WHERE ((a.id = dedicaces.artiste_id) AND a.actif))) check=-"
+politique,events / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,game_state / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,lieux / ecriture staff,ALL authenticated PERMISSIVE using=is_staff() check=is_staff()
+politique,lieux / lecture publique,SELECT public PERMISSIVE using=actif check=-
+politique,micro_config / ecriture staff,UPDATE authenticated PERMISSIVE using=is_staff() check=-
+politique,micro_config / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,micro_questions / ecriture staff,ALL authenticated PERMISSIVE using=is_staff() check=is_staff()
+politique,micro_questions / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,micro_votes / lecture staff,SELECT authenticated PERMISSIVE using=is_staff() check=-
+politique,player_badges / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,player_contact / lecture staff,SELECT authenticated PERMISSIVE using=is_staff() check=-
+politique,player_profile / lecture staff,SELECT authenticated PERMISSIVE using=is_staff() check=-
+politique,players / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,profil_config / ecriture staff,UPDATE authenticated PERMISSIVE using=is_staff() check=-
+politique,profil_config / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,qr_codes / lecture staff,SELECT authenticated PERMISSIVE using=is_staff() check=-
+politique,quest_progress / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,quests / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,roulette_prizes / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,roulette_spins / lecture staff,SELECT authenticated PERMISSIVE using=is_staff() check=-
+politique,scans / lecture staff,SELECT authenticated PERMISSIVE using=is_staff() check=-
+politique,scenes / ecriture staff,ALL authenticated PERMISSIVE using=is_staff() check=is_staff()
+politique,scenes / lecture publique,SELECT public PERMISSIVE using=true check=-
+politique,staff / staff se voit lui-meme,SELECT authenticated PERMISSIVE using=(user_id = auth.uid()) check=-
+politique,tournament_kings / lecture staff,SELECT authenticated PERMISSIVE using=is_staff() check=-
+realtime,announcements,supabase_realtime
+realtime,events,supabase_realtime
+realtime,game_state,supabase_realtime
+realtime,players,supabase_realtime
+sequence,console_journal_id_seq,anon=-
+table,announcements,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,artistes,rls=true force=false anon=SIUD auth=SIUD politiques=2
+table,badges,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,billetterie_config,rls=true force=false anon=SIUD auth=SIUD politiques=2
+table,carnets,rls=true force=false anon=SIUD auth=SIUD politiques=0
+table,coeur_config,rls=true force=false anon=SIUD auth=SIUD politiques=2
+table,coeurs,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,coeurs_totaux,rls=true force=false anon=SIUD auth=SIUD politiques=0
+table,coffres,rls=true force=false anon=SIUD auth=SIUD politiques=0
+table,console_journal,rls=true force=false anon=SIUD auth=SIUD politiques=0
+table,contact_config,rls=true force=false anon=SIUD auth=SIUD politiques=2
+table,creneaux,rls=true force=false anon=SIUD auth=SIUD politiques=2
+table,dedicaces,rls=true force=false anon=SIUD auth=SIUD politiques=2
+table,events,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,favoris_programme,rls=true force=false anon=SIUD auth=SIUD politiques=0
+table,game_state,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,lieux,rls=true force=false anon=SIUD auth=SIUD politiques=2
+table,micro_config,rls=true force=false anon=SIUD auth=SIUD politiques=2
+table,micro_questions,rls=true force=false anon=SIUD auth=SIUD politiques=2
+table,micro_votes,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,missions_faites_jour,rls=true force=false anon=SIUD auth=SIUD politiques=0
+table,player_badges,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,player_contact,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,player_profile,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,player_secrets,rls=true force=false anon=SIUD auth=SIUD politiques=0
+table,players,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,profil_config,rls=true force=false anon=SIUD auth=SIUD politiques=2
+table,qr_codes,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,qr_scans_jour,rls=true force=false anon=SIUD auth=SIUD politiques=0
+table,quest_progress,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,quests,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,quiz_answers,rls=true force=false anon=SIUD auth=SIUD politiques=0
+table,quiz_questions,rls=true force=false anon=SIUD auth=SIUD politiques=0
+table,quiz_scores,rls=true force=false anon=SIUD auth=SIUD politiques=0
+table,quiz_sessions,rls=true force=false anon=SIUD auth=SIUD politiques=0
+table,roulette_prizes,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,roulette_spins,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,scans,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,scenes,rls=true force=false anon=SIUD auth=SIUD politiques=2
+table,staff,rls=true force=false anon=SIUD auth=SIUD politiques=1
+table,tickets,rls=true force=false anon=SIUD auth=SIUD politiques=0
+table,tournament_kings,rls=true force=false anon=SIUD auth=SIUD politiques=1

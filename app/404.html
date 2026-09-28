@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Servie par Cloudflare à N'IMPORTE QUELLE adresse inconnue (/a/b/c) :
+       chemins absolus (le site est à la racine du domaine) -->
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#0A1440">
+  <meta name="robots" content="noindex">
+  <title>Page introuvable | DOMAF Quest</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/pages/erreur.css">
+</head>
+<body class="page-erreur" data-code="404">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app topbar--erreur" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="marque" href="/index.html" aria-label="DOMAF Quest, accueil">
+        <span class="marque__signe eq" data-eq="5"></span>
+        <span class="marque__nom">DOMAF Quest</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="contenu" class="erreur">
+    <div class="wrap erreur__cadre">
+      <div class="erreur__visuel" data-visuel aria-hidden="true"></div>
+      <div class="erreur__texte">
+        <p class="erreur__code" data-surtitre></p>
+        <h1 class="affiche erreur__titre" data-titre tabindex="-1"></h1>
+        <p class="erreur__message" data-message></p>
+        <p class="etat-connexion" aria-live="polite" data-connexion hidden></p>
+        <div class="erreur__actions" data-actions></div>
+      </div>
+
+      <section class="bloc-e" data-hors-ligne hidden aria-labelledby="t-marche">
+        <h2 class="bloc-e__titre" id="t-marche">Ce qui marche sans réseau</h2>
+        <ul class="liens-e" data-liens-hors-ligne></ul>
+        <ul class="conseils-e">
+          <li>Le Wi-Fi gratuit <strong>Telco+</strong> est disponible près des scènes et à l'entrée nord.</li>
+          <li>Tes réponses au blind test sont renvoyées automatiquement au retour du réseau.</li>
+          <li>Batterie faible ? Recharge gratuite à la Consigne, près de l'entrée.</li>
+        </ul>
+      </section>
+
+      <section class="bloc-e rythme" data-rythme hidden aria-labelledby="t-rythme">
+        <h2 class="bloc-e__titre" id="t-rythme">En attendant : garde le rythme</h2>
+        <p class="texte-clair">Touche le cercle pile sur le temps. Combien de temps d'affilée ?</p>
+        <button class="rythme__cercle" type="button" data-rythme-btn aria-describedby="rythme-etat">
+          <span class="rythme__onde" aria-hidden="true"></span>
+          <span class="rythme__txt" data-rythme-txt>Commencer</span>
+        </button>
+        <p class="rythme__etat" id="rythme-etat" aria-live="polite" data-rythme-etat>Série : 0, record : 0</p>
+      </section>
+
+      <p class="erreur__aide texte-clair" data-aide></p>
+    </div>
+  </main>
+
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/data/mock.js" defer></script>
+  <script src="/assets/js/app.js" defer></script>
+  <script src="/assets/js/serveur.js" defer></script>
+  <script src="/assets/js/pages/erreur.js" defer></script>
+</body>
+</html>

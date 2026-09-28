@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#1F3FD1">
+  <title>Passeport | DOMAF Quest</title>
+  <link rel="preload" href="assets/fonts/Anton-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/passeport.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="icone-btn topbar__retour" href="tableau-de-bord.html" aria-label="Retour à ma carte">
+        <svg class="icon" aria-hidden="true"><use href="#i-retour"></use></svg>
+      </a>
+      <h1 class="topbar__titre affiche">Passeport</h1>
+    </div>
+  </header>
+
+  <main id="contenu" class="passeport">
+    <div class="wrap passeport__grille">
+
+      <!-- Aperçu : c'est l'image exacte qui sera partagée -->
+      <div class="apercu-p">
+        <div class="apercu-p__cadre" data-cadre data-format="story">
+          <canvas class="apercu-p__canvas" width="1080" height="1920" role="img" aria-label="Aperçu de ton passeport" data-canvas></canvas>
+          <div class="apercu-p__chargement squelette" data-chargement></div>
+        </div>
+      </div>
+
+      <div class="reglages-p">
+        <p class="chapo">Ton festival en une image, prête pour tes stories et tes posts.</p>
+
+        <fieldset class="champ">
+          <legend class="champ__label">Format</legend>
+          <div class="segments" data-formats>
+            <label class="segment"><input type="radio" name="format" value="story" checked><span><i class="forme forme--story" aria-hidden="true"></i>Story</span></label>
+            <label class="segment"><input type="radio" name="format" value="carre"><span><i class="forme forme--carre" aria-hidden="true"></i>Post carré</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="champ">
+          <legend class="champ__label">Couleur</legend>
+          <div class="nuancier" data-themes>
+            <label class="teinte teinte--bleu"><input type="radio" name="theme" value="bleu" checked><span class="sr-only">Bleu</span></label>
+            <label class="teinte teinte--nuit"><input type="radio" name="theme" value="nuit"><span class="sr-only">Nuit</span></label>
+            <label class="teinte teinte--sodium"><input type="radio" name="theme" value="sodium"><span class="sr-only">Jaune</span></label>
+            <label class="teinte teinte--rose"><input type="radio" name="theme" value="rose"><span class="sr-only">Rose</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="champ">
+          <legend class="champ__label">Afficher</legend>
+          <label class="case"><input type="checkbox" name="place" checked><span class="case__texte">Ma place au classement</span></label>
+          <label class="case"><input type="checkbox" name="artistes" checked><span class="case__texte">Les artistes que j'ai vus</span></label>
+          <label class="case"><input type="checkbox" name="qr" checked><span class="case__texte">Un QR pour inviter mes amis à jouer</span></label>
+        </fieldset>
+
+        <div class="actions-p">
+          <button class="btn btn--sodium btn--lg btn--bloc" type="button" data-partager>
+            <i data-icon="partage"></i> Partager
+          </button>
+          <div class="actions-p__ligne">
+            <button class="btn btn--contour btn--bloc" type="button" data-telecharger>Enregistrer l'image</button>
+            <button class="btn btn--contour btn--bloc" type="button" data-copier>Copier le lien du jeu</button>
+          </div>
+          <p class="texte-doux actions-p__note">L'image montre ton pseudo, ton rang, tes badges et les artistes vus. Le lien et le QR mènent au jeu : jamais à ton code secret ni à tes infos personnelles.</p>
+        </div>
+
+        <details class="resume-p">
+          <summary>Ce que raconte ton passeport</summary>
+          <ul class="resume-p__liste" data-resume></ul>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/config.js" defer></script>
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/serveur.js" defer></script>
+  <script src="assets/js/vendor/qrcode-generator.min.js" defer></script>
+  <script src="assets/js/pages/passeport.js" defer></script>
+</body>
+</html>

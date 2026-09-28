@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <title>Joueurs | Console DOMAF Quest</title>
+  <script src="../assets/js/console-theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/console.css">
+</head>
+<body class="sans-sw">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <div class="bg-layer bg-glow"></div>
+  <div class="bg-layer bg-grid"></div>
+
+  <div class="console-grille">
+    <nav class="cnav" aria-label="Console">
+      <a class="cnav__marque" href="index.html"><i data-icon="onde"></i> DOMAF QUEST</a>
+      <p class="cnav__tag" data-console-tag>Game Master</p>
+      <div data-console-nav></div>
+      <div class="cnav__pied">
+        <p class="cnav__qui" data-console-qui></p>
+        <button class="cnav__sortir" type="button" data-console-sortir><i data-icon="sortie"></i> Déconnexion</button>
+      </div>
+    </nav>
+    <div class="console-voile" data-console-voile></div>
+    <button class="ctete__menu" type="button" aria-expanded="false" data-console-menu><i data-icon="menu"></i><span class="sr-only">Ouvrir le menu</span></button>
+
+    <div class="console-principal">
+      <div class="ccorps">
+        <header class="ctete">
+          <div class="ctete__titres">
+            <p class="ctete__sur">Gestion</p>
+            <h1 class="ctete__titre">Joueurs</h1>
+            <p class="ctete__sous" data-resume>Chargement…</p>
+          </div>
+          <div class="ctete__actions">
+            <button class="cbtn cbtn--primaire" type="button" data-scanner><i data-icon="qr"></i> Scanner un joueur</button>
+            <span class="cpuce-admin"><i data-icon="cadenas"></i><span data-console-nom>GM</span></span>
+          </div>
+        </header>
+
+        <main class="ccontenu" id="contenu" data-console-contenu>
+          <form class="coutils" data-recherche role="search">
+            <div class="coutils__chercher">
+              <label class="sr-only" for="r-texte">Pseudo ou identifiant</label>
+              <input class="saisie" id="r-texte" name="texte" type="search" maxlength="40" autocomplete="off"
+                     placeholder="Pseudo (ou une partie) ou identifiant">
+              <button class="cbtn" type="submit">Chercher</button>
+            </div>
+            <label class="sr-only" for="r-filtre">Filtre</label>
+            <select class="saisie" id="r-filtre" name="filtre">
+              <option value="">Tout le monde</option>
+              <option value="actifs">Actifs</option>
+              <option value="exclus">Exclus</option>
+              <option value="joue">A gagné des XP aujourd'hui</option>
+              <option value="pas_joue">Pas encore joué aujourd'hui</option>
+              <option value="ticket" data-billet>A son ticket du jour</option>
+              <option value="sans_ticket" data-billet>Sans ticket aujourd'hui</option>
+            </select>
+            <label class="sr-only" for="r-rang">Rang</label>
+            <select class="saisie" id="r-rang" name="rang">
+              <option value="">Tous les rangs</option>
+              <option>Spectateur</option>
+              <option>Fan</option>
+              <option>Groupie</option>
+              <option>Backstage</option>
+              <option>Tête d'affiche</option>
+            </select>
+          </form>
+
+          <section class="cpanneau cpanneau--table" aria-labelledby="t-liste">
+            <h2 class="sr-only" id="t-liste">Liste des joueurs</h2>
+            <div class="ctable-defile">
+              <table class="ctable">
+                <thead>
+                  <tr>
+                    <th scope="col">Joueur</th>
+                    <th scope="col" class="ctable__large">Rang</th>
+                    <th scope="col" class="ctable__nb">XP</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col" class="ctable__large">Journée</th>
+                    <th scope="col" class="ctable__large">Inscrit</th>
+                    <th scope="col"><span class="sr-only">Ouvrir</span></th>
+                  </tr>
+                </thead>
+                <tbody data-lignes><tr><td colspan="7" class="cvide">Chargement…</td></tr></tbody>
+              </table>
+            </div>
+            <div class="cpages">
+              <span data-pages-texte></span>
+              <span class="cpages__boutons">
+                <button class="cbtn" type="button" data-page="-1"><i data-icon="retour"></i> Précédents</button>
+                <button class="cbtn" type="button" data-page="1">Suivants <i data-icon="fleche"></i></button>
+              </span>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fiche d'un joueur -->
+  <dialog class="cboite cfiche" data-fiche aria-labelledby="f-titre">
+    <div class="cfiche__tete">
+      <span class="cfiche__avatar" data-f-initiale>?</span>
+      <div class="cfiche__titres">
+        <h2 class="cboite__titre" id="f-titre" data-f-pseudo>…</h2>
+        <p class="cfiche__sous" data-f-sous></p>
+      </div>
+      <button class="cbtn cbtn--icone" type="button" data-fermer><i data-icon="fermer"></i><span class="sr-only">Fermer la fiche</span></button>
+    </div>
+    <div class="cfiche__corps" data-f-corps><p class="cvide">Chargement…</p></div>
+  </dialog>
+
+  <!-- Scan de la carte d'un joueur (QR « DQ-JOUEUR:… » de la page Missions) -->
+  <dialog class="cboite cscan" data-scan aria-labelledby="s-titre">
+    <div class="cboite__corps">
+      <h2 class="cboite__titre" id="s-titre">Scanner la carte d'un joueur</h2>
+      <p>Sur son téléphone, le joueur ouvre <strong>Missions</strong> puis <strong>« Montrer mon code au staff »</strong>. Sans caméra : cherche le pseudo écrit sous son QR.</p>
+      <div class="cscan__cadre"><video data-scan-video muted playsinline></video></div>
+      <p class="message" role="alert" data-scan-message hidden></p>
+      <div class="cboite__actions">
+        <button class="cbtn" type="button" data-scan-fermer>Fermer</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="../assets/js/config.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/vendor/supabase.min.js" defer></script>
+  <script src="../assets/js/serveur.js" defer></script>
+  <script src="../assets/js/console.js" defer></script>
+  <script src="../assets/js/qr-lecteur.js" defer></script>
+  <script src="../assets/js/pages/console-joueurs.js" defer></script>
+</body>
+</html>

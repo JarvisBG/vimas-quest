@@ -1,0 +1,217 @@
+/* ==========================================================================
+   Page 2 — Inscription / connexion
+   ========================================================================== */
+
+.inscription { min-height: calc(100svh - var(--topbar-h)); background: var(--papier); }
+.inscription__cadre { padding-block: var(--s-5) var(--s-7); }
+.panneau { display: grid; gap: var(--s-5); max-width: 30rem; margin-inline: auto; }
+
+@media (min-width: 720px) {
+  .inscription { background: var(--bleu); }
+  .inscription__cadre { padding-block: var(--s-7) var(--s-8); }
+  .panneau {
+    background: var(--papier); padding: var(--s-6);
+    border: 2px solid var(--nuit); border-radius: var(--r-billet);
+    box-shadow: 8px 8px 0 var(--nuit);
+  }
+}
+
+/* ---------- Écrans ---------- */
+.ecran { display: grid; gap: var(--s-5); }
+.ecran[hidden] { display: none; }
+.ecran:not([hidden]) { animation: entre .35s var(--ease-sortie); }
+@keyframes entre { from { opacity: 0; transform: translateX(16px); } }
+.ecran__titre { font-size: clamp(2.5rem, 13vw, 3.5rem); text-shadow: var(--decalage); outline: none; }
+.ecran__titre--petit { font-size: clamp(2rem, 10vw, 2.75rem); }
+.ecran__actions { display: grid; gap: var(--s-3); }
+.ecran__actions--ligne { grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); }
+.formulaire { display: grid; gap: var(--s-5); }
+
+/* ---------- Illustration : la carte de joueur ----------
+   Ce n'est plus un billet de festival : c'est la carte que le jeu fabrique,
+   avec le code secret en bas, encore masqué. */
+.illu-carte {
+  display: grid; gap: var(--s-1);
+  padding: var(--s-4) var(--s-5);
+  background: var(--bleu); color: var(--papier);
+  border-radius: var(--r-billet);
+  transform: rotate(-2deg);
+  box-shadow: 6px 6px 0 var(--rose);
+}
+.illu-carte__lib { font-size: var(--fs-sm); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #DDE3FF; }
+.illu-carte__pseudo { font-size: 2rem; line-height: 1; color: var(--sodium); }
+.illu-carte__code { font-variant-numeric: tabular-nums; letter-spacing: .12em; font-weight: 700; color: #DDE3FF; }
+
+/* ---------- Ticket de la billetterie (seulement si le GM l'a ouverte) ---------- */
+.note-ticket {
+  display: flex; gap: var(--s-2); align-items: flex-start;
+  padding: var(--s-3) var(--s-4); font-size: var(--fs-sm); font-weight: 600;
+  background: var(--papier-2); border-left: 4px solid var(--bleu); border-radius: var(--r-net);
+}
+.note-ticket[hidden] { display: none; }
+.note-ticket .icon { flex: none; color: var(--bleu); }
+
+/* Sur un écran étroit le libellé passe à la ligne : le texte reste aligné à
+   gauche et l'icône en haut, sinon la deuxième ligne part au centre. */
+.ecran > .lien-fort {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  justify-self: start; text-align: left; align-items: flex-start;
+}
+.ecran > .lien-fort .icon { margin-top: .2em; }
+
+/* ---------- Viseur caméra ---------- */
+.viseur {
+  position: relative; aspect-ratio: 1; overflow: hidden;
+  background: var(--nuit); border-radius: var(--r-billet);
+}
+.viseur__video { width: 100%; height: 100%; object-fit: cover; }
+.viseur__cadre {
+  position: absolute; inset: 14%;
+  background:
+    linear-gradient(var(--sodium) 0 0) top left / 22% 6px,
+    linear-gradient(var(--sodium) 0 0) top left / 6px 22%,
+    linear-gradient(var(--sodium) 0 0) top right / 22% 6px,
+    linear-gradient(var(--sodium) 0 0) top right / 6px 22%,
+    linear-gradient(var(--sodium) 0 0) bottom left / 22% 6px,
+    linear-gradient(var(--sodium) 0 0) bottom left / 6px 22%,
+    linear-gradient(var(--sodium) 0 0) bottom right / 22% 6px,
+    linear-gradient(var(--sodium) 0 0) bottom right / 6px 22%;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 0 100vmax rgba(10, 20, 64, .45);
+}
+.viseur__ligne {
+  position: absolute; left: 18%; right: 18%; top: 18%; height: 3px;
+  background: var(--rose); box-shadow: 0 0 12px var(--rose);
+  animation: scan 2s ease-in-out infinite alternate;
+}
+@keyframes scan { to { top: 82%; } }
+.viseur.is-trouve .viseur__cadre { background-color: rgba(43, 182, 115, .35); }
+.viseur.is-trouve .viseur__ligne { display: none; }
+.viseur__etat { font-weight: 700; text-align: center; min-height: 1.5em; }
+
+/* ---------- Profil ---------- */
+.billet-ok {
+  display: inline-flex; align-items: center; gap: var(--s-2); justify-self: start;
+  min-height: 36px; padding: 0 var(--s-3);
+  background: var(--vert); color: var(--nuit); font-weight: 700;
+  border: 2px solid var(--nuit); border-radius: var(--r-pastille);
+}
+
+.apercu {
+  display: flex; align-items: center; gap: var(--s-4);
+  padding: var(--s-3); background: var(--nuit); color: var(--papier);
+  border-radius: var(--r-net);
+}
+.apercu__pseudo { font-size: 1.75rem; line-height: 1; overflow-wrap: anywhere; }
+.apercu__pseudo.is-vide { color: #7A82A6; }
+
+.icone-btn--cadre { flex: none; width: 56px; height: 56px; background: var(--sodium); border: 2px solid var(--nuit); box-shadow: 3px 3px 0 var(--nuit); }
+.icone-btn--cadre:active { transform: translate(3px, 3px); box-shadow: none; }
+.icone-btn--cadre.is-lance .icon { animation: lance .4s var(--ease-rebond); }
+@keyframes lance { from { transform: rotate(-180deg) scale(.6); } }
+
+.avatars { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-2); }
+.avatar-choix { position: relative; display: grid; justify-items: center; gap: var(--s-1); cursor: pointer; }
+.avatar-choix input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.avatar-choix .pochette { --taille: 100%; max-width: 76px; transition: transform var(--duree) var(--ease-rebond), box-shadow var(--duree); }
+.avatar-choix__nom { font-size: var(--fs-xs); font-weight: 600; color: var(--texte-doux); }
+.avatar-choix input:checked ~ .pochette { transform: translate(-2px, -2px) rotate(-3deg); box-shadow: 4px 4px 0 var(--rose); border-width: 3px; }
+.avatar-choix input:checked ~ .avatar-choix__nom { color: var(--nuit); font-weight: 800; }
+.avatar-choix input:focus-visible ~ .pochette { outline: 3px solid var(--rose); outline-offset: 3px; }
+
+/* ---------- Écrans de fête ---------- */
+.ecran--fete { justify-items: center; text-align: center; }
+.ecran--fete .btn { justify-self: stretch; }
+.fete__avatar { position: relative; animation: pose .6s var(--ease-rebond) both; }
+.fete__avatar .pochette { box-shadow: 8px 8px 0 var(--rose); transform: rotate(-4deg); }
+.fete__avatar::after {
+  content: "Joueur"; position: absolute; right: -18px; top: -12px;
+  padding: 2px 10px; font-family: var(--font-affiche); text-transform: uppercase;
+  color: var(--bleu); background: var(--papier); border: 2px solid currentColor; border-radius: var(--r-net);
+  transform: rotate(8deg);
+  animation: tampon .4s .45s var(--ease-rebond) both;
+}
+@keyframes pose { from { transform: scale(.6) rotate(-12deg); opacity: 0; } }
+@keyframes tampon { from { transform: scale(2.2) rotate(8deg); opacity: 0; } }
+
+.gains { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s-2); }
+.gains li {
+  display: grid; min-width: 6.5rem; padding: var(--s-2) var(--s-3);
+  border: 2px solid var(--nuit); border-radius: var(--r-net); background: #fff;
+}
+.gains strong { font-family: var(--font-affiche); font-weight: 400; font-size: 2rem; line-height: 1.05; color: var(--bleu); }
+.gains span { font-size: var(--fs-xs); font-weight: 700; color: var(--texte-doux); }
+.gains li:nth-child(2) strong { color: #8A6400; }
+
+.mission-une { width: 100%; padding: var(--s-4) var(--s-5); background: var(--sodium); text-align: left; }
+.mission-une__lib { font-size: var(--fs-sm); font-weight: 700; }
+.mission-une__titre { font-size: 1.5rem; line-height: 1.05; margin-top: var(--s-1); }
+
+.profil-rappel { display: flex; align-items: center; gap: var(--s-3); font-weight: 700; }
+
+/* ==========================================================================
+   Le code secret — l'écran le plus important du jeu.
+   Il doit se lire à bout de bras, dans le noir, avec un projecteur dans l'œil.
+   ========================================================================== */
+.code-secret {
+  display: grid; justify-items: center; gap: var(--s-3);
+  padding: var(--s-5) var(--s-4);
+  background: var(--nuit); color: var(--papier);
+  border-radius: var(--r-billet);
+  box-shadow: 6px 6px 0 var(--sodium);
+}
+.code-secret__lib {
+  font-size: var(--fs-sm); font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--sodium);
+}
+.code-secret__valeur {
+  /* clamp bas volontairement modeste : « BALAFO-40912 » doit tenir sur 320 px */
+  font-size: clamp(2rem, 11vw, 3.25rem);
+  line-height: 1; text-align: center;
+  letter-spacing: .04em; overflow-wrap: anywhere;
+  color: var(--papier); text-shadow: .04em .03em 0 var(--rose);
+}
+.code-secret__valeur:focus-visible { outline: 3px solid var(--sodium); outline-offset: 6px; }
+.code-secret .btn--contour { color: var(--papier); border-color: currentColor; }
+
+.conseils { display: grid; gap: var(--s-3); }
+.conseils li { display: flex; gap: var(--s-3); align-items: flex-start; font-size: var(--fs-sm); }
+.conseils .icon { flex: none; margin-top: .15em; color: var(--bleu); }
+
+/* La case « j'ai noté » commande le bouton : elle doit se voir. */
+.case--forte {
+  padding: var(--s-3) var(--s-4);
+  background: var(--sodium); border: 2px solid var(--nuit); border-radius: var(--r-net);
+  font-weight: 700;
+}
+
+.rappel-code { font-size: var(--fs-sm); }
+.rappel-code strong { font-variant-numeric: tabular-nums; letter-spacing: .06em; }
+
+/* ---------- Fiche de fan (6.3 bis) : une question par écran ---------- */
+.etapes--4 { grid-template-columns: repeat(4, 1fr); }
+.fiche { gap: var(--s-4); }
+.fiche__tete { display: grid; gap: var(--s-2); }
+.fiche__lib { display: flex; justify-content: space-between; align-items: baseline; font-weight: 800; }
+.fiche__lib span { font-family: var(--font-affiche); text-transform: uppercase; font-size: var(--fs-lg); }
+.fiche__barre { height: 12px; background: var(--papier-2); border: 2px solid var(--nuit); border-radius: var(--r-pastille); overflow: hidden; }
+.fiche__barre i { display: block; height: 100%; width: var(--p, 0%); background: var(--sodium); border-right: 2px solid var(--nuit); transition: width .35s var(--ease-sortie); }
+.fiche__gain { font-size: var(--fs-sm); font-weight: 700; color: var(--texte-doux); }
+.fiche .question:not(:empty) { animation: entre .3s var(--ease-sortie); }
+/* « Passer » : toujours là, jamais mis en avant */
+.fiche__passer {
+  justify-self: center; min-height: var(--tap); padding: 0 var(--s-4);
+  background: none; border: 0; color: var(--texte-doux);
+  font: inherit; font-size: var(--fs-sm); font-weight: 600; text-decoration: underline; cursor: pointer;
+}
+.fiche__passer[hidden] { display: none; }
+.fiche__envoi { display: grid; gap: var(--s-3); }
+.fiche__envoi[hidden] { display: none; }
+.fiche-tel { gap: var(--s-3); }
+.fiche-tel[hidden] { display: none; }
+.fiche-tel__raisons { display: grid; gap: var(--s-2); padding: var(--s-3) var(--s-4); background: var(--papier-2); border: 2px solid var(--nuit); border-radius: var(--r-net); }
+.fiche-tel__raisons li { display: flex; gap: var(--s-2); align-items: flex-start; }
+.fiche-tel__raisons .icon { flex: none; margin-top: 2px; color: var(--bleu); }
+.saisie-tel { display: flex; align-items: stretch; }
+.saisie-tel__indicatif { display: grid; place-items: center; padding: 0 var(--s-3); background: var(--nuit); color: var(--papier); font-weight: 800; border-radius: var(--r-net) 0 0 var(--r-net); }
+.saisie-tel .saisie { border-radius: 0 var(--r-net) var(--r-net) 0; flex: 1; min-width: 0; letter-spacing: .04em; }

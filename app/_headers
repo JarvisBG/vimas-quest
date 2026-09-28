@@ -1,0 +1,25 @@
+# DOMAF Quest — consignes de cache Cloudflare (reprises d'Otaku Quest).
+# Un fichier listé ici et remplacé SANS changer de nom restera l'ancien dans les téléphones.
+
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/icons/*
+  Cache-Control: public, max-age=604800
+
+# Photos d'artistes (sérigraphie deux encres, fabriquées par outils/photos.py).
+# Une semaine : assez pour ne pas les retélécharger chaque soir du festival,
+# assez court pour qu'une photo remplacée arrive avant la fin de l'édition.
+/assets/photos/*
+  Cache-Control: public, max-age=604800
+
+/assets/js/vendor/*
+  Cache-Control: public, max-age=604800
+
+# Pas listés volontairement : pages .html et nos scripts (app.js, pages/*.js),
+# pour qu'un correctif poussé pendant le festival arrive tout de suite.
+
+# Console de l'équipe : jamais indexée, jamais gardée en cache.
+/admin/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store

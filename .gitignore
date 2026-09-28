@@ -1,0 +1,23 @@
+# Fichiers système
+Thumbs.db
+desktop.ini
+.DS_Store
+*.bak
+*~
+~$*
+
+# Documents commerciaux et archives : restent sur la machine de Jarvis
+offre/
+_sauvegarde/
+parcours-domaf/
+*.pdf
+*.docx
+
+# Déploiement / outils locaux
+.wrangler/
+node_modules/
+__pycache__/
+.claude/settings.local.json
+
+# Sauvegardes de la base : données personnelles des joueurs, jamais dans Git
+supabase/sauvegardes/

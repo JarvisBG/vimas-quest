@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+  <meta name="robots" content="noindex">
+  <title>Mur en direct | DOMAF Quest</title>
+  <link rel="preload" href="../assets/fonts/Anton-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/ecran.css">
+  <link rel="stylesheet" href="../assets/css/pages/ecran-mur.css">
+</head>
+<body class="ecran">
+  <!-- Toute la mise en page est dessinée en 1920 × 1080 puis mise à l'échelle -->
+  <div class="scene-ecran scene-ecran--mur" data-scene>
+
+    <header class="mur-tete">
+      <div class="mur-tete__marque">
+        <span class="eq mur-tete__eq" data-eq="6"></span>
+        <span class="affiche mur-tete__nom">DOMAF Quest</span>
+        <span class="mur-tete__lieu" data-lieu>Écran géant</span>
+      </div>
+      <div class="mur-tete__direct">
+        <span class="etat-direct" data-etat><span class="etat-direct__point"></span><span data-etat-texte>En direct</span></span>
+        <span class="mur-chiffre"><strong class="chiffres" data-nb-joueurs>–</strong> joueurs</span>
+        <span class="mur-chiffre"><strong class="chiffres" data-nb-scans>–</strong> scans aujourd'hui</span>
+      </div>
+      <p class="mur-horloge affiche chiffres" data-horloge aria-live="off">--:--</p>
+    </header>
+
+    <main class="mur-corps">
+
+      <!-- A. Tournoi du jour (XP gagnés depuis 6 h) -->
+      <section class="panneau panneau--top" aria-labelledby="t-top">
+        <h1 class="panneau__titre affiche" id="t-top">Tournoi <span>du jour</span></h1>
+        <p class="top-roi" data-roi hidden></p>
+        <ol class="top" data-top></ol>
+      </section>
+
+      <!-- B. Diaporama : concerts, blind test -->
+      <section class="panneau panneau--diapo" aria-live="polite" data-diapo>
+        <div class="diapo__barre"><i data-diapo-barre></i></div>
+        <div class="diapo__points" data-diapo-points></div>
+        <div class="diapo__contenu" data-diapo-contenu></div>
+      </section>
+
+      <!-- C. Exploits + QR -->
+      <div class="colonne-c">
+        <section class="panneau panneau--exploits" aria-labelledby="t-exploits">
+          <h2 class="panneau__titre affiche" id="t-exploits">Derniers exploits</h2>
+          <ol class="exploits" data-exploits></ol>
+        </section>
+        <section class="rejoindre" aria-label="Rejoindre le jeu">
+          <div class="rejoindre__qr" data-qr-rejoindre></div>
+          <div class="rejoindre__texte">
+            <p class="affiche rejoindre__titre">Rejoins le jeu</p>
+            <p>Scanne ce code : ta carte de jeu est prête en une minute.</p>
+            <p class="rejoindre__url" data-url-rejoindre></p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Bandeau d'annonces -->
+    <footer class="mur-pied">
+      <span class="mur-pied__lib affiche"><svg class="icon" aria-hidden="true"><use href="#i-cloche"></use></svg> Infos</span>
+      <div class="mur-pied__piste-cadre"><div class="mur-pied__piste" data-bandeau></div></div>
+    </footer>
+
+    <!-- Alerte urgente plein écran -->
+    <div class="alerte-ecran" role="alert" data-alerte hidden>
+      <div class="alerte-ecran__cadre">
+        <svg class="icon alerte-ecran__icone" aria-hidden="true"><use href="#i-alerte"></use></svg>
+        <p class="alerte-ecran__lib">Information importante</p>
+        <p class="affiche alerte-ecran__titre" data-alerte-titre></p>
+        <p class="alerte-ecran__texte" data-alerte-texte></p>
+      </div>
+      <div class="alerte-ecran__barre"><i data-alerte-barre></i></div>
+    </div>
+
+    <!-- Aide régie (touche H) -->
+    <div class="aide-regie" data-aide hidden>
+      <p class="affiche">Commandes régie</p>
+      <ul>
+        <li><kbd>F</kbd> plein écran</li>
+        <li><kbd>Espace</kbd> pause du diaporama</li>
+        <li><kbd>←</kbd> <kbd>→</kbd> diapo précédente / suivante</li>
+        <li><kbd>U</kbd> afficher l'alerte urgente</li>
+        <li><kbd>H</kbd> afficher / masquer cette aide</li>
+      </ul>
+      <p>Paramètres d'URL : <code>?scene=soleil&amp;rotation=15</code></p>
+    </div>
+  </div>
+
+  <button class="bouton-demarrer" type="button" data-demarrer>
+    <span class="affiche">Lancer le mur</span>
+    <span>Plein écran, touche H pour l'aide</span>
+  </button>
+
+  <script src="../assets/js/config.js" defer></script>
+  <script src="../data/mock.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/vendor/supabase.min.js" defer></script>
+  <script src="../assets/js/serveur.js" defer></script>
+  <script src="../assets/js/vendor/qrcode-generator.min.js" defer></script>
+  <script src="../assets/js/ecran.js" defer></script>
+  <script src="../assets/js/pages/ecran-mur.js" defer></script>
+</body>
+</html>

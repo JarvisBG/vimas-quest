@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#1F3FD1">
+  <title>Collection | DOMAF Quest</title>
+  <link rel="preload" href="assets/fonts/Anton-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/collection.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="icone-btn topbar__retour" href="tableau-de-bord.html" aria-label="Retour à ma carte">
+        <svg class="icon" aria-hidden="true"><use href="#i-retour"></use></svg>
+      </a>
+      <h1 class="topbar__titre affiche">Collection</h1>
+      <a class="icone-btn icone-compteur" href="annonces.html" aria-label="Annonces du festival">
+        <svg class="icon" aria-hidden="true"><use href="#i-cloche"></use></svg>
+        <span class="icone-compteur__nb" data-cloche-compteur hidden></span>
+      </a>
+    </div>
+  </header>
+
+  <main id="contenu" class="collection">
+    <div class="wrap collection__cadre">
+
+      <p class="collection__phrase" data-phrase><span class="squelette" style="display:block;height:2.6em"></span></p>
+
+      <!-- Les onglets affichent aussi l'avancement de chaque rayon -->
+      <div class="rayons" role="tablist" aria-label="Rayons de la collection" data-onglets>
+        <button class="rayon" type="button" role="tab" id="onglet-badges" aria-controls="panneau-c" aria-selected="true" data-rayon="badges">
+          <span class="rayon__nom">Badges</span>
+          <span class="rayon__compte chiffres" data-compte="badges">–</span>
+          <span class="rayon__barre"><i data-barre="badges"></i></span>
+        </button>
+        <button class="rayon" type="button" role="tab" id="onglet-artistes" aria-controls="panneau-c" aria-selected="false" tabindex="-1" data-rayon="artistes">
+          <span class="rayon__nom">Artistes</span>
+          <span class="rayon__compte chiffres" data-compte="artistes">–</span>
+          <span class="rayon__barre"><i data-barre="artistes"></i></span>
+        </button>
+        <button class="rayon" type="button" role="tab" id="onglet-stands" aria-controls="panneau-c" aria-selected="false" tabindex="-1" data-rayon="stands">
+          <span class="rayon__nom">Stands</span>
+          <span class="rayon__compte chiffres" data-compte="stands">–</span>
+          <span class="rayon__barre"><i data-barre="stands"></i></span>
+        </button>
+        <button class="rayon" type="button" role="tab" id="onglet-reliques" aria-controls="panneau-c" aria-selected="false" tabindex="-1" data-rayon="reliques">
+          <span class="rayon__nom">Reliques</span>
+          <span class="rayon__compte chiffres" data-compte="reliques">–</span>
+          <span class="rayon__barre"><i data-barre="reliques"></i></span>
+        </button>
+      </div>
+
+      <div class="filtre-c" role="radiogroup" aria-label="Afficher">
+        <label class="puce"><input type="radio" name="filtre" value="tout" checked><span>Tout</span></label>
+        <label class="puce"><input type="radio" name="filtre" value="obtenus"><span>Obtenus</span></label>
+        <label class="puce"><input type="radio" name="filtre" value="manquants"><span>À trouver</span></label>
+      </div>
+
+      <section id="panneau-c" role="tabpanel" aria-labelledby="onglet-badges" data-panneau>
+        <p class="panneau-c__aide texte-doux" data-aide></p>
+        <ul class="grille-c" data-grille>
+          <li class="squelette" style="aspect-ratio:1"></li>
+          <li class="squelette" style="aspect-ratio:1"></li>
+          <li class="squelette" style="aspect-ratio:1"></li>
+        </ul>
+        <div class="vide-c" data-vide hidden>
+          <p class="affiche vide-c__titre" data-vide-titre></p>
+          <p data-vide-texte></p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Fiche détaillée -->
+  <dialog class="feuille fiche-c" aria-labelledby="fiche-titre" data-fiche>
+    <div class="feuille__entete">
+      <span class="fiche-c__rayon" data-fiche-rayon></span>
+      <button class="icone-btn" type="button" aria-label="Fermer" data-fermer-fiche>
+        <svg class="icon" aria-hidden="true"><use href="#i-fermer"></use></svg>
+      </button>
+    </div>
+    <div class="fiche-c__visuel" data-fiche-visuel></div>
+    <h2 class="affiche fiche-c__titre" id="fiche-titre" data-fiche-titre></h2>
+    <div class="fiche-c__infos" data-fiche-infos></div>
+    <div class="fiche-c__actions" data-fiche-actions></div>
+  </dialog>
+
+  <script src="assets/js/config.js" defer></script>
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/serveur.js" defer></script>
+  <script src="assets/js/pages/collection.js" defer></script>
+</body>
+</html>

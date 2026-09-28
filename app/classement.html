@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#0A1440">
+  <title>Classement | DOMAF Quest</title>
+  <link rel="preload" href="assets/fonts/Anton-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/classement.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app topbar--nuit-cl" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="icone-btn topbar__retour" href="tableau-de-bord.html" aria-label="Retour à ma carte">
+        <svg class="icon" aria-hidden="true"><use href="#i-retour"></use></svg>
+      </a>
+      <h1 class="topbar__titre affiche">Classement</h1>
+      <span class="direct" data-direct><span class="direct__point" aria-hidden="true"></span>En direct</span>
+    </div>
+  </header>
+
+  <main id="contenu" class="classement">
+
+    <!-- La scène : onglets + podium -->
+    <section class="scene-cl" aria-label="Podium">
+      <div class="scene-cl__projecteurs" aria-hidden="true"></div>
+      <div class="wrap scene-cl__cadre">
+        <div class="onglets-cl" role="tablist" aria-label="Type de classement" data-onglets>
+          <button class="onglet-cl" type="button" role="tab" id="onglet-general" aria-controls="panneau-cl" aria-selected="true" data-periode="general">Général</button>
+          <button class="onglet-cl" type="button" role="tab" id="onglet-jour" aria-controls="panneau-cl" aria-selected="false" tabindex="-1" data-periode="jour">Aujourd'hui</button>
+          <button class="onglet-cl" type="button" role="tab" id="onglet-amis" aria-controls="panneau-cl" aria-selected="false" tabindex="-1" data-periode="amis">Amis</button>
+        </div>
+        <p class="scene-cl__sous" data-sous-titre>&nbsp;</p>
+        <ol class="podium" data-podium aria-label="Les trois premiers"></ol>
+      </div>
+    </section>
+
+    <section class="wrap liste-cl" id="panneau-cl" role="tabpanel" aria-labelledby="onglet-general" data-panneau>
+
+      <form class="recherche-cl" role="search" data-recherche>
+        <label class="sr-only" for="chercher">Chercher un joueur par pseudo</label>
+        <input class="saisie" id="chercher" type="search" placeholder="Chercher un pseudo" autocomplete="off" enterkeyhint="search">
+        <button class="btn btn--nuit btn--sm" type="submit">Chercher</button>
+      </form>
+      <div class="resultat-recherche" data-resultat-recherche hidden></div>
+
+      <div class="amis-outils" data-amis-outils hidden>
+        <button class="btn btn--sodium btn--bloc" type="button" data-ouvrir-ami aria-haspopup="dialog">
+          <i data-icon="coeur"></i> Ajouter un ami
+        </button>
+      </div>
+
+      <ol class="rangs-cl" data-liste aria-live="polite" aria-busy="true">
+        <li class="squelette" style="height:56px"></li>
+        <li class="squelette" style="height:56px"></li>
+        <li class="squelette" style="height:56px"></li>
+      </ol>
+
+      <div class="vide-cl" data-vide hidden>
+        <p class="affiche vide-cl__titre">Joue avec ta bande</p>
+        <p>Ajoute tes amis avec leur pseudo pour vous comparer pendant tout le festival.</p>
+      </div>
+
+      <p class="maj-cl texte-doux" data-maj></p>
+      <p class="ecran-geant texte-doux"><i data-icon="trophee"></i> Le top 10 passe sur l'écran géant de la Scène Soleil toutes les 15 minutes.</p>
+    </section>
+
+    <!-- Ma position, toujours visible -->
+    <aside class="ma-position is-cachee" aria-label="Ma position" data-ma-position>
+      <div class="wrap ma-position__cadre">
+        <span class="ma-position__rang affiche chiffres" data-mon-rang></span>
+        <span class="ma-position__texte">
+          <strong data-mon-titre></strong>
+          <span data-mon-ecart></span>
+        </span>
+        <a class="btn btn--sodium btn--sm" href="scanner.html" aria-label="Gagner des XP en scannant">
+          <i data-icon="qr"></i><span class="ma-position__cta">XP</span>
+        </a>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Ajout d'ami -->
+  <dialog class="feuille feuille--ami" aria-labelledby="ami-titre" data-dialogue-ami>
+    <div class="feuille__entete">
+      <h2 class="affiche feuille__titre" id="ami-titre">Ajouter un ami</h2>
+      <button class="icone-btn" type="button" aria-label="Fermer" data-fermer-ami>
+        <svg class="icon" aria-hidden="true"><use href="#i-fermer"></use></svg>
+      </button>
+    </div>
+
+    <div class="mon-code">
+      <div>
+        <p class="mon-code__lib">Ton pseudo</p>
+        <p class="mon-code__code affiche" data-mon-code></p>
+        <p class="texte-doux mon-code__aide">Donne-le à tes amis : ils l'ajoutent ci-dessous sur leur téléphone. Ta bande reste sur ce téléphone.</p>
+      </div>
+    </div>
+
+    <form class="formulaire" novalidate data-form-ami>
+      <div class="champ" data-champ-ami>
+        <label class="champ__label" for="code-ami">Pseudo de ton ami</label>
+        <input class="saisie" id="code-ami" type="text" autocomplete="off" autocapitalize="none"
+          spellcheck="false" placeholder="Son pseudo exact" maxlength="30" required aria-describedby="code-ami-etat">
+        <p class="champ__etat" id="code-ami-etat" aria-live="polite" data-ami-etat></p>
+      </div>
+      <button class="btn btn--sodium btn--bloc" type="submit">Ajouter</button>
+    </form>
+    <p class="demo-ami texte-doux" data-demo-ami hidden>Démo : essaie <button type="button" data-code-demo="SaraLarsen">SaraLarsen</button> ou <button type="button" data-code-demo="JojoGroove">JojoGroove</button></p>
+  </dialog>
+
+  <script src="assets/js/config.js" defer></script>
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/serveur.js" defer></script>
+  <script src="assets/js/vendor/qrcode-generator.min.js" defer></script>
+  <script src="assets/js/pages/classement.js" defer></script>
+</body>
+</html>

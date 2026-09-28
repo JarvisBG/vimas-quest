@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <title>Programme | Console DOMAF Quest</title>
+  <script src="../assets/js/console-theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/console.css">
+</head>
+<body class="sans-sw">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <div class="bg-layer bg-glow"></div>
+  <div class="bg-layer bg-grid"></div>
+
+  <div class="console-grille">
+    <nav class="cnav" aria-label="Console">
+      <a class="cnav__marque" href="index.html"><i data-icon="onde"></i> DOMAF QUEST</a>
+      <p class="cnav__tag" data-console-tag>Game Master</p>
+      <div data-console-nav></div>
+      <div class="cnav__pied">
+        <p class="cnav__qui" data-console-qui></p>
+        <button class="cnav__sortir" type="button" data-console-sortir><i data-icon="sortie"></i> Déconnexion</button>
+      </div>
+    </nav>
+    <div class="console-voile" data-console-voile></div>
+    <button class="ctete__menu" type="button" aria-expanded="false" data-console-menu><i data-icon="menu"></i><span class="sr-only">Ouvrir le menu</span></button>
+
+    <div class="console-principal">
+      <div class="ccorps">
+        <header class="ctete">
+          <div class="ctete__titres">
+            <p class="ctete__sur">Le festival</p>
+            <h1 class="ctete__titre">Programme et lieux</h1>
+            <p class="ctete__sous" data-resume>Chargement…</p>
+          </div>
+          <div class="ctete__actions">
+            <button class="cbtn cbtn--primaire" type="button" data-nouveau>Nouveau</button>
+            <span class="cpuce-admin"><i data-icon="cadenas"></i><span data-console-nom>GM</span></span>
+          </div>
+        </header>
+
+        <main class="ccontenu" id="contenu" data-console-contenu>
+          <div class="congles" role="tablist" aria-label="Parties du programme" data-onglets>
+            <button type="button" role="tab" id="o-concerts" aria-controls="p-concerts" aria-selected="true" data-onglet="concerts"><i data-icon="micro"></i> Concerts</button>
+            <button type="button" role="tab" id="o-artistes" aria-controls="p-artistes" aria-selected="false" tabindex="-1" data-onglet="artistes"><i data-icon="etoile"></i> Artistes</button>
+            <button type="button" role="tab" id="o-lieux" aria-controls="p-lieux" aria-selected="false" tabindex="-1" data-onglet="lieux"><i data-icon="lieu"></i> Lieux et scènes</button>
+            <button type="button" role="tab" id="o-dedicaces" aria-controls="p-dedicaces" aria-selected="false" tabindex="-1" data-onglet="dedicaces"><i data-icon="coeur"></i> Dédicaces</button>
+          </div>
+
+          <!-- Concerts : grille jour × scène -->
+          <section class="congle" id="p-concerts" role="tabpanel" aria-labelledby="o-concerts" data-panneau="concerts">
+            <div class="cjours" data-jours></div>
+            <p class="champ__aide">Une journée va de 6 h à 6 h (un concert de 0 h 30 reste sur la soirée qui l'a vu commencer). Clique une case vide pour y poser un concert, un concert pour le modifier. Heures de Douala.</p>
+            <div class="cpanneau cpanneau--table">
+              <div class="cgrille-defile" data-grille><p class="cvide">Chargement…</p></div>
+            </div>
+          </section>
+
+          <!-- Artistes -->
+          <section class="congle" id="p-artistes" role="tabpanel" aria-labelledby="o-artistes" data-panneau="artistes" hidden>
+            <p class="message message--info"><i data-icon="info"></i><span>Un artiste « pas encore annoncé » reste invisible des joueurs, avec ses concerts et ses dédicaces : allume-le le jour de l'annonce. Déjà vu par un joueur ou soutenu par un cœur, il ne se supprime plus.</span></p>
+            <form class="coutils coutils--trois" data-filtres-artistes role="search">
+              <div class="coutils__chercher">
+                <label class="sr-only" for="fa-texte">Chercher un artiste</label>
+                <input class="saisie" id="fa-texte" name="texte" type="search" maxlength="40" autocomplete="off" placeholder="Nom ou identifiant">
+              </div>
+              <label class="sr-only" for="fa-genre">Style</label>
+              <select class="saisie" id="fa-genre" name="genre"><option value="">Tous les styles</option></select>
+              <label class="sr-only" for="fa-etat">État</label>
+              <select class="saisie" id="fa-etat" name="etat">
+                <option value="">Tous les états</option>
+                <option value="annonces">Annoncés</option>
+                <option value="caches">Pas encore annoncés</option>
+                <option value="sans-concert">Sans concert</option>
+                <option value="sans-photo">Sans photo</option>
+              </select>
+            </form>
+            <div class="cpanneau cpanneau--table">
+              <div class="ctable-defile">
+                <table class="ctable">
+                  <thead>
+                    <tr>
+                      <th scope="col">Artiste</th>
+                      <th scope="col" class="ctable__large">Au programme</th>
+                      <th scope="col" class="ctable__nb">Cœurs</th>
+                      <th scope="col">Annoncé</th>
+                      <th scope="col"><span class="sr-only">Actions</span></th>
+                    </tr>
+                  </thead>
+                  <tbody data-lignes-artistes><tr><td colspan="5" class="cvide">Chargement…</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- Lieux -->
+          <section class="congle" id="p-lieux" role="tabpanel" aria-labelledby="o-lieux" data-panneau="lieux" hidden>
+            <p class="message message--info"><i data-icon="info"></i><span>Tout ce qui figure sur le plan des joueurs : scènes (avec leur couleur), stands, food-trucks, points pratiques. Le QR d'un lieu se relie dans l'écran « QR et reliques ». Un lieu éteint disparaît du plan et du programme.</span></p>
+            <div class="clieux">
+              <div class="cpanneau cplan-panneau">
+                <div class="cplan" data-plan-general></div>
+                <p class="champ__aide">Clique un point pour ouvrir le lieu. Les lieux sans place n'apparaissent que dans la liste des joueurs.</p>
+              </div>
+              <div class="clieux__liste">
+                <form class="coutils coutils--trois" data-filtres-lieux role="search">
+                  <div class="coutils__chercher">
+                    <label class="sr-only" for="fl-texte">Chercher un lieu</label>
+                    <input class="saisie" id="fl-texte" name="texte" type="search" maxlength="40" autocomplete="off" placeholder="Nom ou identifiant">
+                  </div>
+                  <label class="sr-only" for="fl-cat">Catégorie</label>
+                  <select class="saisie" id="fl-cat" name="categorie"><option value="">Toutes les catégories</option></select>
+                  <label class="sr-only" for="fl-etat">État</label>
+                  <select class="saisie" id="fl-etat" name="etat">
+                    <option value="">Tous les états</option>
+                    <option value="non-places">Pas sur le plan</option>
+                    <option value="sans-qr">Sans QR</option>
+                    <option value="eteints">Éteints</option>
+                  </select>
+                </form>
+                <div class="cpanneau cpanneau--table">
+                  <div class="ctable-defile">
+                    <table class="ctable">
+                      <thead>
+                        <tr>
+                          <th scope="col">Lieu</th>
+                          <th scope="col" class="ctable__large">QR et usage</th>
+                          <th scope="col">Actif</th>
+                          <th scope="col"><span class="sr-only">Actions</span></th>
+                        </tr>
+                      </thead>
+                      <tbody data-lignes-lieux><tr><td colspan="4" class="cvide">Chargement…</td></tr></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Dédicaces -->
+          <section class="congle" id="p-dedicaces" role="tabpanel" aria-labelledby="o-dedicaces" data-panneau="dedicaces" hidden>
+            <p class="message message--info"><i data-icon="info"></i><span>Pendant sa séance, l'artiste tient le QR de dédicace : le scanner le fait entrer dans la collection du joueur. Le QR se crée et se relie à la séance dans l'écran « QR et reliques ».</span></p>
+            <div class="cpanneau cpanneau--table">
+              <div class="ctable-defile">
+                <table class="ctable">
+                  <thead>
+                    <tr>
+                      <th scope="col">Séance</th>
+                      <th scope="col" class="ctable__large">Lieu</th>
+                      <th scope="col">QR</th>
+                      <th scope="col"><span class="sr-only">Actions</span></th>
+                    </tr>
+                  </thead>
+                  <tbody data-lignes-dedicaces><tr><td colspan="4" class="cvide">Chargement…</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- Concert -->
+  <dialog class="cboite cfiche" data-boite="concert" aria-labelledby="c-titre">
+    <div class="cfiche__tete">
+      <span class="cfiche__avatar"><i data-icon="micro"></i></span>
+      <div class="cfiche__titres">
+        <h2 class="cboite__titre" id="c-titre" data-titre>Nouveau concert</h2>
+        <p class="cfiche__sous" data-sous></p>
+      </div>
+      <button class="cbtn cbtn--icone" type="button" data-fermer><i data-icon="fermer"></i><span class="sr-only">Fermer</span></button>
+    </div>
+    <form class="cfiche__corps cform" data-form novalidate>
+      <label class="champ">
+        <span class="champ__label">Artiste</span>
+        <select class="saisie" name="artiste_id" data-choix-artistes></select>
+        <span class="champ__aide" data-aide-artiste></span>
+      </label>
+      <label class="champ">
+        <span class="champ__label">Scène</span>
+        <select class="saisie" name="scene_id" data-choix-scenes></select>
+      </label>
+      <div class="cform__trois">
+        <label class="champ">
+          <span class="champ__label">Soirée</span>
+          <select class="saisie" name="jour" data-choix-jours></select>
+        </label>
+        <label class="champ">
+          <span class="champ__label">Début</span>
+          <input class="saisie" name="debut" type="time" step="300" required>
+        </label>
+        <label class="champ">
+          <span class="champ__label">Fin</span>
+          <input class="saisie" name="fin" type="time" step="300" required>
+        </label>
+      </div>
+      <p class="champ__aide" data-aide-heures>Avant 6 h, l'heure compte pour la nuit de la soirée choisie.</p>
+      <p class="message" role="alert" data-erreur hidden></p>
+    </form>
+    <div class="cfiche__pied">
+      <button class="cbtn cbtn--danger" type="button" data-supprimer hidden><i data-icon="croix"></i> Supprimer</button>
+      <button class="cbtn" type="button" data-fermer>Annuler</button>
+      <button class="cbtn cbtn--primaire" type="button" data-enregistrer><i data-icon="coche"></i> Enregistrer</button>
+    </div>
+  </dialog>
+
+  <!-- Artiste -->
+  <dialog class="cboite cfiche" data-boite="artiste" aria-labelledby="a-titre">
+    <div class="cfiche__tete">
+      <span class="cfiche__avatar"><i data-icon="etoile"></i></span>
+      <div class="cfiche__titres">
+        <h2 class="cboite__titre" id="a-titre" data-titre>Nouvel artiste</h2>
+        <p class="cfiche__sous" data-sous></p>
+      </div>
+      <button class="cbtn cbtn--icone" type="button" data-fermer><i data-icon="fermer"></i><span class="sr-only">Fermer</span></button>
+    </div>
+    <form class="cfiche__corps cform" data-form novalidate>
+      <div class="cform__ligne">
+        <label class="champ">
+          <span class="champ__label">Nom</span>
+          <input class="saisie" name="nom" maxlength="80" required autocomplete="off" placeholder="Nova Kassa">
+        </label>
+        <label class="champ">
+          <span class="champ__label">Identifiant</span>
+          <input class="saisie" name="id" maxlength="60" autocomplete="off" spellcheck="false" pattern="[a-z0-9]+(-[a-z0-9]+)*">
+          <span class="champ__aide" data-aide-id>Proposé à partir du nom. Il sert dans les liens et ne changera plus.</span>
+        </label>
+      </div>
+      <label class="champ">
+        <span class="champ__label">Style</span>
+        <select class="saisie" name="genre" data-choix-genres></select>
+        <span class="champ__aide">Les styles de la fiche fan : « mon programme » suggère les artistes du style préféré du joueur.</span>
+      </label>
+      <label class="champ">
+        <span class="champ__label">Présentation</span>
+        <textarea class="saisie" name="bio" maxlength="600" rows="4" placeholder="Deux ou trois phrases pour la fiche du programme."></textarea>
+      </label>
+      <div class="capercu">
+        <span class="cphoto" data-apercu-photo></span>
+        <label class="champ capercu__texte">
+          <span class="champ__label">Photo</span>
+          <input class="saisie" name="photo_url" maxlength="300" autocomplete="off" spellcheck="false" placeholder="assets/photos/nova-kassa.webp">
+          <span class="champ__aide">Un fichier passé par <code>outils/photos.py</code> et mis en ligne avec le site, ou une adresse https. Droit à l'image vérifié avant de l'afficher.</span>
+        </label>
+      </div>
+      <label class="ccase"><input type="checkbox" name="tete_affiche"><span>Tête d'affiche<small>Mis en avant sur l'accueil et en tête du programme.</small></span></label>
+      <label class="ccase"><input type="checkbox" name="actif"><span>Annoncé<small>Visible des joueurs, avec ses concerts et ses dédicaces.</small></span></label>
+      <p class="message" role="alert" data-erreur hidden></p>
+    </form>
+    <div class="cfiche__pied">
+      <button class="cbtn cbtn--danger" type="button" data-supprimer hidden><i data-icon="croix"></i> Supprimer</button>
+      <button class="cbtn" type="button" data-fermer>Annuler</button>
+      <button class="cbtn cbtn--primaire" type="button" data-enregistrer><i data-icon="coche"></i> Enregistrer</button>
+    </div>
+  </dialog>
+
+  <!-- Lieu -->
+  <dialog class="cboite cfiche cfiche--large" data-boite="lieu" aria-labelledby="l-titre">
+    <div class="cfiche__tete">
+      <span class="cfiche__avatar"><i data-icon="lieu"></i></span>
+      <div class="cfiche__titres">
+        <h2 class="cboite__titre" id="l-titre" data-titre>Nouveau lieu</h2>
+        <p class="cfiche__sous" data-sous></p>
+      </div>
+      <button class="cbtn cbtn--icone" type="button" data-fermer><i data-icon="fermer"></i><span class="sr-only">Fermer</span></button>
+    </div>
+    <form class="cfiche__corps cform" data-form novalidate>
+      <div class="cform__ligne">
+        <label class="champ">
+          <span class="champ__label">Catégorie</span>
+          <select class="saisie" name="categorie" data-choix-categories></select>
+          <span class="champ__aide" data-aide-categorie></span>
+        </label>
+        <label class="champ" data-champ-couleur>
+          <span class="champ__label">Couleur de la scène</span>
+          <select class="saisie" name="couleur" data-choix-couleurs></select>
+        </label>
+      </div>
+      <div class="cform__ligne">
+        <label class="champ">
+          <span class="champ__label">Nom</span>
+          <input class="saisie" name="nom" maxlength="80" required autocomplete="off" placeholder="Scène Soleil">
+        </label>
+        <label class="champ">
+          <span class="champ__label">Identifiant</span>
+          <input class="saisie" name="id" maxlength="40" autocomplete="off" spellcheck="false" pattern="[a-z0-9]+(-[a-z0-9]+)*">
+          <span class="champ__aide" data-aide-id>Proposé à partir du nom. Il sert dans les liens et ne changera plus.</span>
+        </label>
+      </div>
+      <fieldset class="champ">
+        <legend class="champ__label">Place sur le plan</legend>
+        <div class="cplan cplan--choix" data-plan-choix></div>
+        <div class="cplan__pied">
+          <span class="champ__aide" data-aide-place>Clique sur le plan pour placer le lieu.</span>
+          <button class="cbtn" type="button" data-retirer-place>Retirer du plan</button>
+        </div>
+        <input type="hidden" name="x"><input type="hidden" name="y">
+      </fieldset>
+      <label class="champ">
+        <span class="champ__label">Description</span>
+        <textarea class="saisie" name="description" maxlength="400" rows="3" placeholder="Grande scène au nord du terrain. Plateforme PMR à droite de la régie."></textarea>
+      </label>
+      <div class="cform__trois">
+        <label class="champ">
+          <span class="champ__label">Horaires</span>
+          <input class="saisie" name="horaires" maxlength="80" autocomplete="off" placeholder="18 h - 2 h">
+        </label>
+        <label class="champ">
+          <span class="champ__label">Accès PMR</span>
+          <select class="saisie" name="pmr">
+            <option value="">Non renseigné</option>
+            <option value="true">Oui</option>
+            <option value="false">Non</option>
+          </select>
+        </label>
+        <label class="champ">
+          <span class="champ__label">Ordre</span>
+          <input class="saisie" name="ordre" type="number" inputmode="numeric" min="-999" max="999" step="1">
+          <span class="champ__aide">Plus petit = plus haut dans les listes.</span>
+        </label>
+      </div>
+      <div class="cfiche__bloc" data-bloc-qr hidden></div>
+      <label class="ccase"><input type="checkbox" name="actif"><span>Actif<small>Éteint : retiré du plan et du programme des joueurs.</small></span></label>
+      <p class="message" role="alert" data-erreur hidden></p>
+    </form>
+    <div class="cfiche__pied">
+      <button class="cbtn cbtn--danger" type="button" data-supprimer hidden><i data-icon="croix"></i> Supprimer</button>
+      <button class="cbtn" type="button" data-fermer>Annuler</button>
+      <button class="cbtn cbtn--primaire" type="button" data-enregistrer><i data-icon="coche"></i> Enregistrer</button>
+    </div>
+  </dialog>
+
+  <!-- Dédicace -->
+  <dialog class="cboite cfiche" data-boite="dedicace" aria-labelledby="d-titre">
+    <div class="cfiche__tete">
+      <span class="cfiche__avatar"><i data-icon="coeur"></i></span>
+      <div class="cfiche__titres">
+        <h2 class="cboite__titre" id="d-titre" data-titre>Nouvelle séance</h2>
+        <p class="cfiche__sous" data-sous></p>
+      </div>
+      <button class="cbtn cbtn--icone" type="button" data-fermer><i data-icon="fermer"></i><span class="sr-only">Fermer</span></button>
+    </div>
+    <form class="cfiche__corps cform" data-form novalidate>
+      <label class="champ">
+        <span class="champ__label">Artiste</span>
+        <select class="saisie" name="artiste_id" data-choix-artistes></select>
+      </label>
+      <label class="champ">
+        <span class="champ__label">Lieu</span>
+        <select class="saisie" name="lieu_id" data-choix-lieux></select>
+      </label>
+      <div class="cform__trois">
+        <label class="champ">
+          <span class="champ__label">Jour</span>
+          <select class="saisie" name="jour" data-choix-jours></select>
+        </label>
+        <label class="champ">
+          <span class="champ__label">Début</span>
+          <input class="saisie" name="debut" type="time" step="300" required>
+        </label>
+        <label class="champ">
+          <span class="champ__label">Fin</span>
+          <input class="saisie" name="fin" type="time" step="300" required>
+        </label>
+      </div>
+      <div class="cfiche__bloc" data-bloc-qr hidden></div>
+      <p class="message" role="alert" data-erreur hidden></p>
+    </form>
+    <div class="cfiche__pied">
+      <button class="cbtn cbtn--danger" type="button" data-supprimer hidden><i data-icon="croix"></i> Supprimer</button>
+      <button class="cbtn" type="button" data-fermer>Annuler</button>
+      <button class="cbtn cbtn--primaire" type="button" data-enregistrer><i data-icon="coche"></i> Enregistrer</button>
+    </div>
+  </dialog>
+
+  <script src="../assets/js/config.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/vendor/supabase.min.js" defer></script>
+  <script src="../assets/js/serveur.js" defer></script>
+  <script src="../assets/js/console.js" defer></script>
+  <script src="../assets/js/plan-fond.js" defer></script>
+  <script src="../assets/js/pages/console-programme.js" defer></script>
+</body>
+</html>

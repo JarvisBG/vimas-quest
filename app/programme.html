@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#1F3FD1">
+  <title>Programme | DOMAF Quest</title>
+  <meta name="description" content="Le line-up complet du DOMAF : quatre jours, cinq scènes, horaires et fiches artistes.">
+  <link rel="preload" href="assets/fonts/Anton-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/programme.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="icone-btn topbar__retour" href="index.html" aria-label="Retour" data-retour>
+        <svg class="icon" aria-hidden="true"><use href="#i-retour"></use></svg>
+      </a>
+      <h1 class="topbar__titre affiche">Programme</h1>
+      <a class="btn btn--sodium btn--sm" href="inscription.html" data-jouer hidden>Jouer</a>
+    </div>
+  </header>
+
+  <main id="contenu" class="prog">
+    <div class="prog__barre">
+      <div class="wrap prog__barre-cadre">
+        <div class="jours-p" role="tablist" aria-label="Jours du festival" data-jours></div>
+
+        <div class="outils-p">
+          <div class="segments-p" role="radiogroup" aria-label="Affichage">
+            <label><input type="radio" name="affichage" value="liste" checked><span><i data-icon="menu"></i> Liste</span></label>
+            <label><input type="radio" name="affichage" value="grille"><span><i data-icon="calendrier"></i> Grille</span></label>
+          </div>
+          <label class="recherche-p">
+            <span class="sr-only">Chercher un artiste</span>
+            <input class="saisie" type="search" placeholder="Artiste, style…" autocomplete="off" data-recherche>
+          </label>
+        </div>
+
+        <fieldset class="scenes-p">
+          <legend class="sr-only">Filtrer par scène</legend>
+          <div class="puces puces--defilant-p" data-scenes></div>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="wrap prog__cadre">
+      <p class="invite-p" data-invite hidden>
+        <i data-icon="etoile"></i>
+        <span><a href="inscription.html">Crée ta carte</a> pour ajouter des concerts à ton programme, recevoir des rappels et jouer.</span>
+      </p>
+
+      <section id="panneau-p" role="tabpanel" data-panneau aria-live="polite">
+        <div class="squelette" style="height:80px;margin-bottom:8px"></div>
+        <div class="squelette" style="height:80px;margin-bottom:8px"></div>
+        <div class="squelette" style="height:80px"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Fiche artiste -->
+  <dialog class="feuille fiche-a" aria-labelledby="fiche-a-titre" data-fiche>
+    <div class="fiche-a__visuel" data-fiche-visuel>
+      <img class="fiche-a__photo" data-fiche-photo alt="" width="480" height="480" decoding="async" hidden>
+      <button class="icone-btn fiche-a__fermer" type="button" aria-label="Fermer" data-fermer-fiche>
+        <svg class="icon" aria-hidden="true"><use href="#i-fermer"></use></svg>
+      </button>
+      <h2 class="affiche fiche-a__nom" id="fiche-a-titre" data-fiche-nom></h2>
+    </div>
+    <div class="fiche-a__corps" data-fiche-corps></div>
+  </dialog>
+
+  <script src="assets/js/config.js" defer></script>
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/serveur.js" defer></script>
+  <script src="assets/js/pages/programme.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#D90A22">
+  <title>Infos pratiques | Vimas Fest</title>
+  <meta name="description" content="Horaires, accès, accessibilité, règles du jeu, sécurité, questions fréquentes et contact du festival Vimas Fest.">
+  <link rel="preload" href="assets/fonts/Anton-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/infos.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="icone-btn topbar__retour" href="index.html" aria-label="Retour" data-retour>
+        <svg class="icon" aria-hidden="true"><use href="#i-retour"></use></svg>
+      </a>
+      <h1 class="topbar__titre affiche">Infos pratiques</h1>
+      <a class="btn btn--sodium btn--sm" href="inscription.html" data-jouer hidden>Jouer</a>
+    </div>
+  </header>
+
+  <nav class="sommaire" aria-label="Sommaire de la page">
+    <div class="wrap">
+      <ul class="sommaire__liste">
+        <li><a href="#essentiel">L'essentiel</a></li>
+        <li><a href="#acces">Accès</a></li>
+        <li><a href="#regles">Règles du jeu</a></li>
+        <li><a href="#securite">Sécurité</a></li>
+        <li><a href="#faq">Questions</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="contenu" class="infos">
+    <div class="wrap infos__cadre">
+
+      <!-- L'essentiel -->
+      <section class="section-i" id="essentiel" aria-labelledby="t-essentiel">
+        <h2 class="affiche section-i__titre" id="t-essentiel">L'essentiel</h2>
+        <div class="etat-site" data-etat-site></div>
+        <div class="horaires" data-horaires></div>
+        <p class="adresse-i"><i data-icon="lieu"></i> <span data-adresse></span></p>
+        <a class="btn btn--nuit" href="plan.html"><i data-icon="plan"></i> Ouvrir le plan du site</a>
+      </section>
+
+      <!-- Accès -->
+      <section class="section-i" id="acces" aria-labelledby="t-acces">
+        <h2 class="affiche section-i__titre" id="t-acces">Venir et circuler</h2>
+        <ul class="cartes-i" data-acces></ul>
+        <h3 class="sous-titre-i" id="accessibilite">Accessibilité</h3>
+        <ul class="liste-coches" data-accessibilite></ul>
+        <p class="texte-doux">Besoin d'un accompagnement particulier ? Écris-nous avant ta venue via le formulaire ci-dessous, sujet « Accessibilité ».</p>
+      </section>
+
+      <!-- Règles du jeu -->
+      <section class="section-i section-i--jeu" id="regles" aria-labelledby="t-regles">
+        <h2 class="affiche section-i__titre" id="t-regles">Règles du jeu</h2>
+        <ol class="etapes-i">
+          <li><span><strong>Crée ton profil</strong> en scannant le QR de ton billet ou de ton bracelet. Une partie par billet.</span></li>
+          <li><span><strong>Scanne les QR Vimas Fest</strong> du site pour gagner des XP et des jetons.</span></li>
+          <li><span><strong>Remplis des missions</strong>, dont certaines sont validées par l'équipe sur place.</span></li>
+          <li><span><strong>Dépense tes jetons</strong> à la roue et retire tes lots au Stand Vimas Fest.</span></li>
+        </ol>
+
+        <h3 class="sous-titre-i">Ce que rapporte un scan</h3>
+        <div class="tableau-i" role="region" aria-labelledby="cap-bareme" tabindex="0">
+          <table>
+            <caption id="cap-bareme" class="sr-only">XP gagnés par type de QR</caption>
+            <thead><tr><th scope="col">QR</th><th scope="col">XP</th></tr></thead>
+            <tbody data-bareme></tbody>
+          </table>
+        </div>
+        <p class="texte-doux">Un même QR rapporte des XP <strong>une fois par jour</strong>. Missions, badges, blind test et sondage du soir donnent des bonus en plus.</p>
+
+        <h3 class="sous-titre-i">Les rangs</h3>
+        <ol class="rangs-i" data-rangs></ol>
+
+        <h3 class="sous-titre-i">Jetons, roue et lots</h3>
+        <ul class="liste-coches" data-roue-regles></ul>
+
+        <h3 class="sous-titre-i">Jeu loyal</h3>
+        <ul class="liste-coches liste-coches--alerte">
+          <li>Les QR sont personnels à chaque lieu : les photos partagées sont détectées et les scans annulés.</li>
+          <li>Un seul profil par billet. Les comptes multiples sont exclus du classement.</li>
+          <li>L'équipe peut retirer des points ou bloquer un profil en cas de triche avérée.</li>
+          <li>Ton pseudo apparaît dans les classements et sur l'écran géant : il ne doit pas permettre de t'identifier.</li>
+        </ul>
+      </section>
+
+      <!-- Sécurité -->
+      <section class="section-i" id="securite" aria-labelledby="t-securite">
+        <h2 class="affiche section-i__titre" id="t-securite">Sécurité et bien-être</h2>
+        <a class="urgence-i" href="plan.html?urgence=1">
+          <i data-icon="croix"></i>
+          <span><strong>Besoin d'aide maintenant ?</strong><span>Postes de secours, appel à la sécurité, conseils</span></span>
+        </a>
+        <div class="grille-i">
+          <div class="bloc-i">
+            <h3><i data-icon="valide"></i> Gilets jaunes</h3>
+            <p>Les bénévoles en gilet jaune sont reliés par radio aux secours et à la sécurité. N'hésite jamais à les solliciter.</p>
+          </div>
+          <div class="bloc-i">
+            <h3><i data-icon="coeur"></i> <span data-refuge-titre>Point Refuge</span></h3>
+            <p data-refuge-texte></p>
+          </div>
+          <div class="bloc-i">
+            <h3><i data-icon="goutte"></i> Chaleur et fatigue</h3>
+            <p>Bois de l'eau régulièrement : les points d'eau sont gratuits. Protège ta tête en journée et fais des pauses loin des enceintes.</p>
+          </div>
+          <div class="bloc-i">
+            <h3><i data-icon="tente"></i> Orage</h3>
+            <p>En cas d'alerte, une annonce s'affiche dans le jeu et sur l'écran géant. Rejoins un abri et éloigne-toi des structures métalliques.</p>
+          </div>
+          <div class="bloc-i">
+            <h3><i data-icon="info"></i> Perdu, objet ou proche</h3>
+            <p>Rendez-vous au Point info près de l'entrée. Fixez un point de rendez-vous avec vos proches dès l'arrivée.</p>
+          </div>
+          <div class="bloc-i">
+            <h3><i data-icon="onde"></i> Protège tes oreilles</h3>
+            <p>Bouchons d'oreilles gratuits au Point info et au Stand Vimas Fest. Casques enfants en prêt.</p>
+          </div>
+        </div>
+        <h3 class="sous-titre-i">Interdit sur le site</h3>
+        <ul class="interdits" data-interdits></ul>
+      </section>
+
+      <!-- FAQ -->
+      <section class="section-i" id="faq" aria-labelledby="t-faq">
+        <h2 class="affiche section-i__titre" id="t-faq">Questions fréquentes</h2>
+        <label class="sr-only" for="chercher-faq">Chercher dans les questions</label>
+        <input class="saisie" id="chercher-faq" type="search" placeholder="Billet, QR, batterie, lots…" autocomplete="off" data-chercher-faq>
+        <div class="faq" data-faq></div>
+        <p class="faq__vide texte-doux" data-faq-vide hidden>Pas de réponse à cette question ? Écris-nous juste en dessous.</p>
+      </section>
+
+      <!-- Contact -->
+      <section class="section-i" id="contact" aria-labelledby="t-contact">
+        <h2 class="affiche section-i__titre" id="t-contact">Contact</h2>
+        <p class="alerte-i"><i data-icon="alerte"></i> <span>Pour une urgence sur place, ne passe pas par ce formulaire : <a href="plan.html?urgence=1">ouvre l'aide d'urgence</a> ou adresse-toi à un gilet jaune.</span></p>
+
+        <form class="formulaire contact-i" novalidate data-form-contact>
+          <div class="champ">
+            <label class="champ__label" for="sujet">Sujet</label>
+            <select class="saisie" id="sujet" name="sujet" required data-sujets></select>
+          </div>
+          <div class="champ" data-champ-message>
+            <label class="champ__label" for="message">Ton message</label>
+            <textarea class="saisie contact-i__message" id="message" name="message" minlength="10" maxlength="1000" required aria-describedby="message-aide"></textarea>
+            <p class="champ__aide" id="message-aide"><span data-message-compteur>0</span>/1000. Si c'est à propos du jeu, ton pseudo est joint automatiquement.</p>
+          </div>
+          <div class="champ" data-champ-email>
+            <label class="champ__label" for="email">Adresse e-mail <span class="texte-doux">(facultative)</span></label>
+            <input class="saisie" id="email" name="email" type="email" autocomplete="email" inputmode="email" aria-describedby="email-aide">
+            <p class="champ__aide" id="email-aide">Seulement pour te répondre, jamais utilisée pour de la publicité.</p>
+          </div>
+          <p class="message" role="alert" data-contact-erreur hidden></p>
+          <button class="btn btn--sodium btn--lg btn--bloc" type="submit">Envoyer</button>
+        </form>
+        <div class="contact-ok" data-contact-ok hidden tabindex="-1"></div>
+
+        <div class="coordonnees-i">
+          <p><i data-icon="mail"></i> <a data-email></a></p>
+          <p><i data-icon="horloge"></i> <span data-delai></span></p>
+        </div>
+
+        <div class="donnees-i" data-donnees hidden>
+          <h3 class="sous-titre-i">Mes données de jeu</h3>
+          <p>Tu peux effacer ta partie : points, badges, collection, votes et lots non retirés. Ton billet reste valable pour entrer sur le site.</p>
+          <button class="btn btn--contour" type="button" data-supprimer>Supprimer ma partie</button>
+        </div>
+      </section>
+
+      <p class="version-i texte-doux">Vimas Fest, le jeu du festival. Astuce : ajoute cette page à ton écran d'accueil pour l'ouvrir même sans réseau.</p>
+    </div>
+  </main>
+
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/pages/infos.js" defer></script>
+</body>
+</html>

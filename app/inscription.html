@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#1F3FD1">
+  <title>Créer ma carte | DOMAF Quest</title>
+  <meta name="description" content="Crée ta carte de joueur DOMAF Quest : un pseudo, une pochette, et un code secret à garder. Pas de mot de passe, pas d'adresse e-mail.">
+  <link rel="preload" href="assets/fonts/Anton-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/inscription.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app" data-topbar>
+    <div class="wrap topbar__inner">
+      <button class="icone-btn topbar__retour" type="button" aria-label="Retour" data-retour>
+        <svg class="icon" aria-hidden="true"><use href="#i-retour"></use></svg>
+      </button>
+      <a class="marque" href="index.html" aria-label="DOMAF Quest, accueil">
+        <span class="marque__signe eq" data-eq="5"></span>
+        <span class="marque__nom">DOMAF Quest</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="contenu" class="inscription">
+    <div class="wrap inscription__cadre">
+      <div class="panneau">
+
+        <ol class="etapes etapes--4" aria-label="Progression de l'inscription" data-etapes>
+          <li data-etape="1">Ton profil</li>
+          <li data-etape="2">Ton code</li>
+          <li data-etape="3">Ta fiche</li>
+          <li data-etape="4">En jeu</li>
+        </ol>
+
+        <div class="message" role="alert" hidden data-erreur>
+          <i data-icon="alerte"></i><p data-erreur-texte></p>
+        </div>
+
+        <!-- ============ Déjà connecté sur ce téléphone ============ -->
+        <section class="ecran" data-ecran="deja" data-etape-num="4" hidden aria-labelledby="t-deja">
+          <div class="profil-rappel" data-deja-profil></div>
+          <h1 class="affiche ecran__titre" id="t-deja" tabindex="-1">Tu es déjà dans la partie</h1>
+          <p class="texte-doux">Ce téléphone est connecté au profil ci-dessus.</p>
+          <div class="ecran__actions">
+            <a class="btn btn--sodium btn--lg btn--bloc" href="tableau-de-bord.html">Voir ma carte</a>
+            <button class="btn btn--contour btn--bloc" type="button" data-changer-compte>
+              <i data-icon="sortie"></i> Jouer avec un autre profil
+            </button>
+          </div>
+        </section>
+
+        <!-- ============ Choix : créer ou reprendre ============ -->
+        <section class="ecran" data-ecran="accueil" data-etape-num="1" hidden aria-labelledby="t-accueil">
+          <div class="illu-carte" aria-hidden="true">
+            <span class="illu-carte__lib">Carte de joueur</span>
+            <span class="illu-carte__pseudo affiche">Ton pseudo</span>
+            <span class="illu-carte__code">KORA-•••••</span>
+          </div>
+          <h1 class="affiche ecran__titre" id="t-accueil" tabindex="-1">Entre dans la partie</h1>
+          <p>Choisis un pseudo, une pochette, et c'est tout. Pas de mot de passe, pas d'adresse e-mail&nbsp;: tu reçois un <strong>code secret</strong> à garder.</p>
+          <div class="ecran__actions">
+            <button class="btn btn--sodium btn--lg btn--bloc" type="button" data-aller="profil">
+              <i data-icon="carte"></i> Créer ma carte
+            </button>
+            <button class="btn btn--contour btn--bloc" type="button" data-aller="retour">
+              <i data-icon="cadenas"></i> J'ai déjà un code
+            </button>
+          </div>
+          <p class="note-ticket" data-note-ticket hidden>
+            <i data-icon="billet"></i>
+            <span data-note-ticket-txt></span>
+          </p>
+        </section>
+
+        <!-- ============ Ticket papier (seulement si la billetterie est ouverte) ============ -->
+        <section class="ecran" data-ecran="ticket" data-etape-num="1" hidden aria-labelledby="t-ticket">
+          <h1 class="affiche ecran__titre ecran__titre--petit" id="t-ticket" tabindex="-1">Scanne ton ticket</h1>
+          <p class="texte-doux">Le ticket que l'équipe en gilet t'a remis. Son QR ouvre ta journée de jeu.</p>
+          <div class="viseur" data-viseur>
+            <video class="viseur__video" playsinline muted data-video></video>
+            <span class="viseur__cadre" aria-hidden="true"></span>
+            <span class="viseur__ligne" aria-hidden="true"></span>
+          </div>
+          <p class="viseur__etat" aria-live="polite" data-camera-etat>Démarrage de la caméra…</p>
+          <div class="ecran__actions ecran__actions--ligne">
+            <button class="btn btn--contour" type="button" data-lampe hidden aria-pressed="false">
+              <i data-icon="lampe"></i> Lampe
+            </button>
+            <button class="btn btn--contour" type="button" data-aller="ticket-code">
+              <i data-icon="clavier"></i> Saisir le code
+            </button>
+          </div>
+        </section>
+
+        <!-- ============ Ticket saisi à la main ============ -->
+        <section class="ecran" data-ecran="ticket-code" data-etape-num="1" hidden aria-labelledby="t-ticket-code">
+          <h1 class="affiche ecran__titre ecran__titre--petit" id="t-ticket-code" tabindex="-1">Le code de ton ticket</h1>
+          <form class="formulaire" novalidate data-form-ticket>
+            <div class="champ" data-champ-ticket>
+              <label class="champ__label" for="code-ticket">Code du ticket</label>
+              <input class="saisie saisie--code" id="code-ticket" name="ticket" type="text"
+                inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false"
+                placeholder="DQ-XXXX-XXXX" maxlength="16" aria-describedby="ticket-aide" required>
+              <p class="champ__aide" id="ticket-aide">Il est imprimé sous le QR code de ton ticket.</p>
+            </div>
+            <button class="btn btn--sodium btn--lg btn--bloc" type="submit">Valider mon ticket</button>
+          </form>
+          <button class="lien-fort" type="button" data-aller="ticket">
+            <i data-icon="camera"></i> Utiliser la caméra
+          </button>
+        </section>
+
+        <!-- ============ Création du profil ============ -->
+        <section class="ecran" data-ecran="profil" data-etape-num="1" hidden aria-labelledby="t-profil">
+          <p class="billet-ok" data-ticket-ok hidden><i data-icon="coche"></i> <span data-ticket-txt></span></p>
+          <h1 class="affiche ecran__titre" id="t-profil" tabindex="-1">Crée ta carte</h1>
+
+          <form class="formulaire" novalidate data-form-profil>
+            <div class="apercu" aria-hidden="true">
+              <span data-apercu-avatar></span>
+              <span class="apercu__pseudo affiche" data-apercu-pseudo>Ton pseudo</span>
+            </div>
+
+            <div class="champ" data-champ-pseudo>
+              <label class="champ__label" for="pseudo">Pseudo</label>
+              <div class="champ__ligne">
+                <input class="saisie" id="pseudo" name="pseudo" type="text" autocomplete="nickname"
+                  minlength="2" maxlength="16" aria-describedby="pseudo-aide pseudo-etat" required>
+                <button class="icone-btn icone-btn--cadre" type="button" aria-label="Proposer un pseudo au hasard" data-pseudo-hasard>
+                  <i data-icon="des"></i>
+                </button>
+              </div>
+              <p class="champ__aide" id="pseudo-aide">2 à 16 caractères. Il apparaîtra au classement et sur l'écran géant.</p>
+              <p class="champ__etat" id="pseudo-etat" aria-live="polite" data-pseudo-etat></p>
+            </div>
+
+            <fieldset class="champ">
+              <legend class="champ__label">Ta pochette</legend>
+              <div class="avatars" data-avatars></div>
+            </fieldset>
+
+            <div class="champ">
+              <label class="case">
+                <input type="checkbox" name="regles" required data-regles>
+                <span class="case__texte">J'accepte les <a href="infos.html#regles" target="_blank" rel="noopener">règles du jeu</a> et l'affichage de mon pseudo sur l'écran géant.</span>
+              </label>
+            </div>
+
+            <button class="btn btn--sodium btn--lg btn--bloc" type="submit" data-creer>Créer ma carte</button>
+          </form>
+        </section>
+
+        <!-- ============ LE CODE SECRET — l'écran le plus important du jeu ============ -->
+        <section class="ecran" data-ecran="code" data-etape-num="2" hidden aria-labelledby="t-code">
+          <h1 class="affiche ecran__titre" id="t-code" tabindex="-1">Note ce code</h1>
+          <p>C'est <strong>ta seule clé</strong>. Il remplace le mot de passe : avec lui, tu retrouves ta partie sur n'importe quel téléphone.</p>
+
+          <div class="code-secret">
+            <p class="code-secret__lib">Ton code secret</p>
+            <p class="code-secret__valeur affiche" data-code-valeur tabindex="0"></p>
+            <button class="btn btn--contour btn--sm" type="button" data-copier>
+              <i data-icon="partage"></i> <span data-copier-txt>Copier le code</span>
+            </button>
+          </div>
+
+          <ul class="conseils">
+            <li><i data-icon="alerte"></i> Écris-le quelque part, ou fais une capture d'écran.</li>
+            <li><i data-icon="cadenas"></i> Ne le montre à personne : il donne accès à ta partie.</li>
+            <li><i data-icon="info"></i> Perdu ? L'équipe du stand DOMAF Quest peut le retrouver.</li>
+          </ul>
+
+          <label class="case case--forte">
+            <input type="checkbox" data-code-note>
+            <span class="case__texte">J'ai noté mon code, je peux continuer.</span>
+          </label>
+          <button class="btn btn--sodium btn--lg btn--bloc" type="button" data-suite-code disabled>Continuer</button>
+        </section>
+
+        <!-- ============ Fiche de fan (étape 6.3 bis) ============
+             Une question par écran, « Passer » toujours présent ; le téléphone
+             en dernier, seulement à partir de 19 ans. Tout part en UN appel à la fin. -->
+        <section class="ecran fiche" data-ecran="fiche" data-etape-num="3" hidden aria-labelledby="t-fiche">
+          <h1 class="sr-only" id="t-fiche" tabindex="-1">Complète ta carte</h1>
+          <div class="fiche__tete">
+            <p class="fiche__lib"><span>Complète ta carte</span> <strong class="chiffres" data-fiche-rang></strong></p>
+            <div class="fiche__barre" aria-hidden="true"><i data-fiche-barre></i></div>
+            <p class="fiche__gain" data-fiche-gain></p>
+          </div>
+
+          <div data-fiche-question></div>
+
+          <form class="formulaire fiche-tel" novalidate data-fiche-tel hidden>
+            <p class="question__texte">Ton numéro de téléphone</p>
+            <ul class="fiche-tel__raisons">
+              <li><i data-icon="cadenas"></i><span><strong>Ne perds jamais ta carte.</strong> Code oublié, téléphone perdu&nbsp;: au stand, ton numéro suffit pour la retrouver.</span></li>
+              <li><i data-icon="trophee"></i><span><strong>Tirage au sort final</strong> le 29 novembre&nbsp;: on t'appelle si tu gagnes.</span></li>
+              <li><i data-icon="roue"></i><span><strong>Un tour de roue offert</strong>, tout de suite.</span></li>
+            </ul>
+            <div class="champ" data-champ-tel>
+              <label class="champ__label" for="telephone">Numéro camerounais</label>
+              <div class="saisie-tel">
+                <span class="saisie-tel__indicatif" aria-hidden="true">+237</span>
+                <input class="saisie" id="telephone" name="telephone" type="tel" inputmode="numeric"
+                  autocomplete="tel-national" placeholder="6XX XX XX XX" maxlength="14" aria-describedby="tel-aide">
+              </div>
+              <p class="champ__aide" id="tel-aide">9 chiffres, commence par 6. Il n'apparaît nulle part dans le jeu.</p>
+            </div>
+            <label class="case">
+              <input type="checkbox" data-consent-domaf>
+              <span class="case__texte">Le DOMAF peut me prévenir des surprises et des prochaines éditions.</span>
+            </label>
+            <label class="case">
+              <input type="checkbox" data-consent-partenaires>
+              <span class="case__texte">Les partenaires du DOMAF peuvent me contacter.</span>
+            </label>
+            <button class="btn btn--sodium btn--lg btn--bloc" type="submit" data-fiche-valider>Valider ma carte</button>
+          </form>
+
+          <div class="fiche__envoi" data-fiche-envoi hidden>
+            <button class="btn btn--sodium btn--lg btn--bloc" type="button" data-fiche-reessayer>Réessayer</button>
+            <button class="lien-fort" type="button" data-fiche-plus-tard>Continuer sans enregistrer</button>
+          </div>
+
+          <button class="fiche__passer" type="button" data-fiche-passer>Passer</button>
+        </section>
+
+        <!-- ============ Bienvenue ============ -->
+        <section class="ecran ecran--fete" data-ecran="bienvenue" data-etape-num="4" hidden aria-labelledby="t-bienvenue">
+          <div class="fete__avatar" data-bienvenue-avatar></div>
+          <h1 class="affiche ecran__titre" id="t-bienvenue" tabindex="-1">Bienvenue, <span data-bienvenue-pseudo></span></h1>
+          <div class="billet mission-une">
+            <p class="mission-une__lib">Ta première mission</p>
+            <p class="mission-une__titre affiche" data-premiere-mission></p>
+          </div>
+          <a class="btn btn--sodium btn--lg btn--bloc" href="tableau-de-bord.html">Voir ma carte</a>
+          <p class="rappel-code texte-doux">Ton code&nbsp;: <strong data-rappel-code></strong></p>
+        </section>
+
+        <!-- ============ Reprise de partie par le code ============ -->
+        <section class="ecran" data-ecran="retour" data-etape-num="1" hidden aria-labelledby="t-retour">
+          <h1 class="affiche ecran__titre ecran__titre--petit" id="t-retour" tabindex="-1">Ton code secret</h1>
+          <p class="texte-doux">Celui qu'on t'a donné à la création de ta carte. Il ressemble à <strong>KORA-40912</strong>.</p>
+          <form class="formulaire" novalidate data-form-connexion>
+            <div class="champ" data-champ-connexion>
+              <label class="champ__label" for="code-joueur">Code secret</label>
+              <input class="saisie saisie--code" id="code-joueur" name="code" type="text"
+                inputmode="text" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false"
+                placeholder="MOT-00000" maxlength="14" aria-describedby="connexion-aide" required>
+              <p class="champ__aide" id="connexion-aide">Un mot, un tiret, cinq chiffres. Les majuscules se mettent toutes seules.</p>
+            </div>
+            <button class="btn btn--sodium btn--lg btn--bloc" type="submit" data-connecter>Reprendre ma partie</button>
+          </form>
+          <button class="lien-fort" type="button" data-aller="profil">
+            <i data-icon="carte"></i> Je n'ai pas de code, créer ma carte
+          </button>
+        </section>
+
+        <!-- ============ Retour d'un joueur connu ============ -->
+        <section class="ecran ecran--fete" data-ecran="retrouve" data-etape-num="4" hidden aria-labelledby="t-retrouve">
+          <div class="fete__avatar" data-retrouve-avatar></div>
+          <h1 class="affiche ecran__titre" id="t-retrouve" tabindex="-1">Content de te revoir, <span data-retrouve-pseudo></span></h1>
+          <ul class="gains" data-retrouve-stats></ul>
+          <a class="btn btn--sodium btn--lg btn--bloc" href="tableau-de-bord.html">Reprendre la partie</a>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/config.js" defer></script>
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/serveur.js" defer></script>
+  <script src="assets/js/qr-lecteur.js" defer></script>
+  <script src="assets/js/pages/inscription.js" defer></script>
+</body>
+</html>

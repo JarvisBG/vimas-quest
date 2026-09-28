@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#3B0A12">
+  <title>Blind test | Vimas Fest</title>
+  <link rel="preload" href="assets/fonts/Anton-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pages/blind-test.css">
+</head>
+<body class="page-bt">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <header class="topbar topbar--app topbar--bt" data-topbar>
+    <div class="wrap topbar__inner">
+      <a class="icone-btn topbar__retour" href="tableau-de-bord.html" aria-label="Retour à ma carte" data-retour>
+        <svg class="icon" aria-hidden="true"><use href="#i-retour"></use></svg>
+      </a>
+      <h1 class="topbar__titre affiche">Blind test</h1>
+      <span class="score-bt" data-score hidden><strong class="chiffres" data-score-val>0</strong> pts</span>
+    </div>
+  </header>
+
+  <main id="contenu" class="bt-j" data-phase="attente">
+    <div class="wrap bt-j__cadre">
+      <p class="bt-j__progres" data-progres hidden>
+        <span data-progres-txt></span>
+        <span class="bt-j__pastilles" data-pastilles aria-hidden="true"></span>
+      </p>
+      <div class="bt-j__vue" data-vue aria-live="polite"></div>
+      <p class="bt-j__etat" data-etat><span class="bt-j__point" aria-hidden="true"></span><span data-etat-txt>Connexion…</span></p>
+    </div>
+  </main>
+
+  <script src="data/mock.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+  <script src="assets/js/pages/blind-test.js" defer></script>
+</body>
+</html>

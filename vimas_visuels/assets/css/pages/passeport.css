@@ -1,0 +1,69 @@
+/* ==========================================================================
+   Page 14 — Passeport partageable
+   ========================================================================== */
+
+.passeport { background: var(--papier-2); min-height: calc(100svh - var(--topbar-h)); }
+.passeport__grille { display: grid; gap: var(--s-5); padding-block: var(--s-5) var(--s-6); }
+@media (min-width: 900px) {
+  .passeport__grille { grid-template-columns: minmax(300px, 400px) 1fr; align-items: start; gap: var(--s-7); max-width: 60rem; }
+  .apercu-p { position: sticky; top: calc(var(--topbar-h) + var(--s-4)); }
+}
+
+/* ---------- Aperçu ---------- */
+.apercu-p { display: grid; justify-items: center; }
+.apercu-p__cadre {
+  position: relative; width: 100%;
+  border: 3px solid var(--nuit); border-radius: 14px;
+  box-shadow: 8px 8px 0 var(--nuit);
+  overflow: hidden; background: var(--nuit);
+  transition: max-width .3s var(--ease-sortie);
+}
+.apercu-p__cadre[data-format="story"] { max-width: min(78vw, 360px); aspect-ratio: 9 / 16; }
+.apercu-p__cadre[data-format="carre"] { max-width: min(92vw, 400px); aspect-ratio: 1; }
+.apercu-p__canvas { display: block; width: 100%; height: 100%; }
+.apercu-p__chargement { position: absolute; inset: 0; border-radius: 0; }
+.apercu-p__chargement[hidden] { display: none; }
+.apercu-p__cadre.is-rendu .apercu-p__canvas { animation: rendu .35s var(--ease-sortie); }
+@keyframes rendu { from { opacity: .4; transform: scale(.985); } }
+
+/* ---------- Réglages ---------- */
+.reglages-p { display: grid; gap: var(--s-5); align-content: start; }
+.reglages-p .chapo { max-width: 30ch; }
+
+.segments { display: grid; grid-template-columns: 1fr 1fr; border: 2px solid var(--nuit); border-radius: var(--r-net); overflow: hidden; background: #fff; }
+.segment { position: relative; }
+.segment input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.segment span {
+  display: flex; align-items: center; justify-content: center; gap: var(--s-2);
+  min-height: var(--tap); font-weight: 800;
+}
+.segment + .segment span { border-left: 2px solid var(--nuit); }
+.segment input:checked + span { background: var(--nuit); color: var(--sodium); }
+.segment input:focus-visible + span { outline: 3px solid var(--rose); outline-offset: -5px; }
+.forme { display: inline-block; border: 2px solid currentColor; border-radius: 2px; }
+.forme--story { width: 10px; height: 17px; }
+.forme--carre { width: 15px; height: 15px; }
+
+.nuancier { display: flex; gap: var(--s-3); }
+.teinte { position: relative; width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--nuit); cursor: pointer; }
+.teinte input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.teinte--bleu { background: var(--bleu); }
+.teinte--nuit { background: var(--nuit); }
+.teinte--sodium { background: var(--sodium); }
+.teinte--rose { background: var(--rose); }
+.teinte::after { content: ""; position: absolute; inset: -7px; border-radius: 50%; border: 3px solid transparent; }
+.teinte:has(input:checked)::after { border-color: var(--nuit); }
+.teinte:has(input:checked) { box-shadow: inset 0 0 0 3px var(--papier); }
+.teinte:has(input:focus-visible)::after { border-color: var(--rose); }
+
+.actions-p { display: grid; gap: var(--s-3); }
+.actions-p__ligne { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
+.actions-p__ligne .btn { font-size: 1rem; padding: 0 var(--s-2); white-space: normal; line-height: 1.1; text-align: center; }
+.actions-p__note { font-size: var(--fs-sm); }
+
+.resume-p { padding: var(--s-3) var(--s-4); background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net); }
+.resume-p summary { min-height: 36px; display: flex; align-items: center; font-weight: 800; cursor: pointer; }
+.resume-p__liste { display: grid; gap: var(--s-2); margin-top: var(--s-2); }
+.resume-p__liste li { display: flex; justify-content: space-between; gap: var(--s-3); padding-bottom: var(--s-2); border-bottom: 1px dashed rgba(59, 10, 18, .25); }
+.resume-p__liste li:last-child { border-bottom: 0; }
+.resume-p__liste strong { text-align: right; }

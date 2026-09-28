@@ -1,0 +1,142 @@
+/* ==========================================================================
+   Page 11 — Roue des récompenses
+   ========================================================================== */
+
+.roue-p { background: var(--papier-2); min-height: calc(100svh - var(--topbar-h)); }
+
+/* ---------- Plateau ---------- */
+.plateau-roue {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: var(--bleu); color: var(--papier);
+  padding-block: var(--s-5) var(--s-6);
+}
+.plateau-roue::before {
+  content: ""; position: absolute; inset: -40%; z-index: -1;
+  background: repeating-conic-gradient(rgba(255, 210, 63, .12) 0 10deg, transparent 10deg 20deg);
+}
+.plateau-roue.is-tourne::before { animation: rayons-r 6s linear infinite; }
+@keyframes rayons-r { to { transform: rotate(360deg); } }
+.plateau-roue__cadre { display: grid; justify-items: center; gap: var(--s-4); max-width: 26rem; }
+.plateau-roue__info { text-align: center; font-weight: 700; min-height: 3em; }
+.plateau-roue__info a { color: var(--sodium); }
+
+/* ---------- Roue (élément fort) ---------- */
+.roue-g { position: relative; width: min(84vw, 360px); aspect-ratio: 1; }
+.roue-g__disque {
+  width: 100%; height: 100%; border-radius: 50%;
+  box-shadow: 0 0 0 6px var(--nuit), 0 0 0 12px var(--sodium), 8px 12px 0 12px var(--nuit);
+  will-change: transform;
+}
+.roue-g__disque svg { display: block; width: 100%; height: 100%; }
+.roue-g__disque text { font-family: var(--font-affiche); text-transform: uppercase; }
+/* ampoules autour de la roue */
+.roue-g::before {
+  content: ""; position: absolute; inset: -9px; border-radius: 50%; z-index: 1; pointer-events: none;
+  background: repeating-conic-gradient(var(--papier) 0 2deg, transparent 2deg 22.5deg);
+  -webkit-mask: radial-gradient(circle, transparent calc(50% - 4px), #000 calc(50% - 3px) calc(50% + 1px), transparent calc(50% + 2px));
+          mask: radial-gradient(circle, transparent calc(50% - 4px), #000 calc(50% - 3px) calc(50% + 1px), transparent calc(50% + 2px));
+}
+.roue-g.is-tourne::before { animation: clignote-r .3s steps(2) infinite; }
+@keyframes clignote-r { 50% { opacity: .3; } }
+
+.roue-g__languette {
+  position: absolute; left: 50%; top: -22px; z-index: 3;
+  width: 40px; height: 54px; margin-left: -20px;
+  background: var(--rose);
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 50% 100%, 0 45%);
+  filter: drop-shadow(0 3px 0 var(--nuit));
+  transform-origin: 50% 20%;
+}
+.roue-g__languette::after { content: ""; position: absolute; left: 50%; top: 12px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; background: var(--nuit); }
+.roue-g__languette.is-choc { animation: choc .12s ease-out; }
+@keyframes choc { 50% { transform: rotate(-18deg); } }
+
+.roue-g__moyeu {
+  position: absolute; left: 50%; top: 50%; z-index: 2;
+  width: 26%; aspect-ratio: 1; transform: translate(-50%, -50%);
+  display: grid; place-items: center;
+  background: var(--sodium); color: var(--nuit);
+  border: 5px solid var(--nuit); border-radius: 50%;
+  box-shadow: 0 0 0 4px var(--papier);
+  cursor: pointer; font-size: clamp(1.5rem, 7vw, 2.25rem);
+  transition: transform .15s;
+}
+.roue-g__moyeu:active { transform: translate(-50%, -50%) scale(.92); }
+.roue-g__moyeu:disabled { cursor: not-allowed; background: var(--papier-2); color: var(--texte-doux); }
+
+/* ---------- Chances ---------- */
+.roue-p__bas { display: grid; gap: var(--s-5); padding-block: var(--s-5) var(--s-6); max-width: 40rem; }
+.chances { padding: var(--s-3) var(--s-4); background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net); }
+.chances summary { min-height: 36px; display: flex; align-items: center; font-weight: 800; cursor: pointer; }
+.chances__liste { display: grid; gap: var(--s-1); margin-top: var(--s-3); }
+.chances__liste li { display: grid; grid-template-columns: 18px 1fr auto; gap: var(--s-2); align-items: center; padding-block: var(--s-1); border-bottom: 1px dashed rgba(10, 20, 64, .2); }
+.chances__liste li.is-epuise { color: var(--texte-doux); text-decoration: line-through; }
+.chances__puce { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--nuit); }
+.chances__pct { font-weight: 800; font-variant-numeric: tabular-nums; }
+.chances__note { margin-top: var(--s-3); font-size: var(--fs-sm); }
+
+/* ---------- Mes lots ---------- */
+.mes-lots__tete { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--s-3); }
+.mes-lots__titre { font-size: 1.75rem; }
+.mes-lots__tete .pastille[hidden] { display: none; }
+.bons { display: grid; gap: var(--s-3); }
+.bon-carte {
+  --pos-encoche: 50%; --encoche: 10px;
+  display: grid; grid-template-columns: auto 1fr auto; gap: var(--s-3); align-items: center; width: 100%;
+  padding: var(--s-3) var(--s-4); text-align: left; cursor: pointer;
+  border: 0; font: inherit; color: var(--nuit);
+}
+.bon-carte__icone { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--c, var(--papier-2)); border: 2px solid var(--nuit); }
+.bon-carte__nom { font-family: var(--font-affiche); font-size: 1.25rem; line-height: 1.05; text-transform: uppercase; }
+.bon-carte__meta { display: block; font-size: var(--fs-xs); font-weight: 700; color: var(--texte-doux); }
+.bon-carte.is-retire { opacity: .6; }
+.bon-carte.is-nouveau { animation: nouveau-bon 1.4s var(--ease-sortie); }
+@keyframes nouveau-bon { 0%, 40% { box-shadow: 0 0 0 5px var(--sodium); } }
+.bons__vide[hidden] { display: none; }
+
+.retrait { display: grid; gap: var(--s-2); padding: var(--s-4); background: var(--nuit); color: var(--papier); border-radius: var(--r-net); }
+.retrait__titre { display: flex; align-items: center; gap: var(--s-2); font-size: var(--fs-lg); }
+.retrait__titre .icon { color: var(--sodium); }
+.retrait .texte-doux { color: #C9D1F5; }
+.retrait .lien-fort { color: var(--sodium); justify-self: start; }
+
+/* ---------- Résultat ---------- */
+.gain { text-align: center; overflow: visible; }
+.gain[open] { animation: gain-in .45s var(--ease-rebond); }
+@keyframes gain-in { from { transform: translateY(60px) scale(.9); opacity: 0; } }
+.gain__visuel {
+  width: 128px; height: 128px; margin: -80px auto var(--s-5);
+  display: grid; place-items: center; border-radius: 50%;
+  background: var(--c, var(--sodium)); color: var(--nuit);
+  border: 5px solid var(--nuit); box-shadow: 0 0 0 6px var(--papier), 6px 8px 0 6px var(--nuit);
+  animation: tampon-g .6s .15s var(--ease-rebond) both;
+}
+.gain__visuel .icon { width: 56px; height: 56px; stroke-width: 2.2; }
+@keyframes tampon-g { from { transform: scale(0) rotate(-90deg); } }
+.gain__lib { font-weight: 800; color: var(--texte-doux); }
+.gain__titre { font-size: clamp(2.25rem, 11vw, 3rem); line-height: 1; text-shadow: var(--decalage); margin-block: var(--s-1) var(--s-2); }
+.gain__texte { max-width: 30ch; margin-inline: auto; }
+.gain__actions { display: grid; gap: var(--s-2); margin-top: var(--s-4); }
+
+/* ---------- Bon de retrait ---------- */
+.bon-d__lib { font-weight: 800; color: var(--texte-doux); }
+.bon-d__billet {
+  --pos-encoche: 62%; --encoche: 16px;
+  display: grid; justify-items: center; gap: var(--s-2);
+  padding: var(--s-5) var(--s-4); background: #fff; text-align: center;
+  border: 3px solid var(--nuit);
+}
+.bon-d__nom { font-family: var(--font-affiche); font-size: 2rem; line-height: 1; text-transform: uppercase; }
+.bon-d__qr { width: min(60vw, 230px); padding: 6px; background: #fff; border: 3px solid var(--nuit); border-radius: 8px; }
+.bon-d__qr .qr { display: block; width: 100%; height: auto; }
+.bon-d__code { font-family: var(--font-affiche); font-size: 1.75rem; letter-spacing: .08em; color: var(--bleu); }
+.bon-d__infos { display: grid; gap: 2px; width: 100%; padding-top: var(--s-3); border-top: 2px dashed rgba(10, 20, 64, .3); font-size: var(--fs-sm); }
+.bon-d__retire { display: grid; place-items: center; gap: var(--s-2); min-height: 180px; }
+.bon-d__retire .tampon { font-size: 2rem; color: #13784A; }
+.bon-d__demo { display: flex; margin: var(--s-4) auto 0; background: none; border: 0; cursor: pointer; }
+.bon-d__demo[hidden] { display: none; }
+
+/* ---------- Confettis ---------- */
+.confettis-roue { position: fixed; inset: 0; pointer-events: none; z-index: 1000; overflow: hidden; }
+.confettis-roue i { position: absolute; top: -30px; left: var(--x); width: 10px; height: 16px; background: var(--c); animation: tombe-r var(--d) var(--r) linear forwards; }
+@keyframes tombe-r { to { transform: translate(var(--dx), 110vh) rotate(var(--rot)); } }
