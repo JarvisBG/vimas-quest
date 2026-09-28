@@ -63,10 +63,8 @@ document.addEventListener("app:ready", async () => {
 
   /* ---------- Repères (= mock.js : jours, categoriesLieux ; couleurs de style.css) ---------- */
   const JOURS = [
-    { date: "2026-11-26", court: "Jeu. 26", long: "Jeudi 26 novembre" },
-    { date: "2026-11-27", court: "Ven. 27", long: "Vendredi 27 novembre" },
-    { date: "2026-11-28", court: "Sam. 28", long: "Samedi 28 novembre" },
-    { date: "2026-11-29", court: "Dim. 29", long: "Dimanche 29 novembre" }
+    { date: "2026-12-26", court: "Sam. 26", long: "Samedi 26 décembre" },
+    { date: "2026-12-27", court: "Dim. 27", long: "Dimanche 27 décembre" }
   ];
   const CATEGORIES = {
     scene: { nom: "Scène", icone: "micro" },
@@ -240,8 +238,8 @@ document.addEventListener("app:ready", async () => {
     const t0 = debutJournee(jourCourant);
     const duJour = donnees.concerts.filter((c) => jourDe(c.debut) === jourCourant);
     /* Axe (en heures depuis 6 h) : les concerts du jour, une heure de marge de
-       chaque côté, 6 heures au moins ; journée vide : 14 h → 2 h */
-    let de = 8, a = 20;
+       chaque côté, 6 heures au moins ; journée vide : 10 h → 22 h (festival de jour) */
+    let de = 4, a = 16;
     if (duJour.length) {
       de = Math.min(...duJour.map((c) => Math.floor((Date.parse(c.debut) - t0) / HEURE))) - 1;
       a = Math.max(...duJour.map((c) => Math.ceil((Date.parse(c.fin) - t0) / HEURE))) + 1;
@@ -599,8 +597,8 @@ document.addEventListener("app:ready", async () => {
     el.scene_id.innerHTML = scenes().map((s) => `<option value="${esc(s.id)}">${esc(s.nom)}${s.actif ? "" : " (éteinte)"}</option>`).join("");
     el.scene_id.value = src.scene_id || scenes()[0].id;
     optionsJours(el.jour, src.debut ? jourDe(src.debut) : preset.jour);
-    el.debut.value = src.debut ? hhmm(src.debut) : "20:00";
-    el.fin.value = src.fin ? hhmm(src.fin) : "21:00";
+    el.debut.value = src.debut ? hhmm(src.debut) : "15:00";
+    el.fin.value = src.fin ? hhmm(src.fin) : "16:00";
     el.artiste_id.disabled = el.scene_id.disabled = !!(c && c.scanne);
     dans("concert", "[data-sous]").textContent = c
       ? [c.scanne ? "Déjà scanné : l'artiste et la scène ne changent plus, l'horaire oui" : "",
@@ -625,7 +623,7 @@ document.addEventListener("app:ready", async () => {
     const h = lireHeures(el);
     if (!h) { erreur("concert", C.messages.HEURE_INVALIDE); return; }
     if (Date.parse(h.fin) - Date.parse(h.debut) > 12 * HEURE) { erreur("concert", C.messages.DUREE_INVALIDE); return; }
-    jourCourant = el.jour.value;   // la grille rouvre sur la soirée du concert
+    jourCourant = el.jour.value;   // la grille rouvre sur la journée du concert
     enregistrer("concert", e.currentTarget, "console_concert_enregistrer", {
       p_id: c ? c.id : null,
       p_concert: { artiste_id: el.artiste_id.value, scene_id: el.scene_id.value, debut: h.debut, fin: h.fin }

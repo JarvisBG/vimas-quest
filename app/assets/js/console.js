@@ -41,9 +41,9 @@
     ] },
     { groupe: "Animation", liens: [
       { page: "blind-test.html", nom: "Régie blind test", icone: "micro", etape: "6.6" },
-      { page: "roue.html", nom: "Roue et lots", icone: "roue", etape: "6.5" },
-      { page: "annonces.html", nom: "Annonces", icone: "cloche", etape: "6.5" },
-      { page: "coups-de-coeur.html", nom: "Coups de cœur", icone: "coeur", etape: "6.5" }
+      { page: "roue.html", nom: "Roue et lots", icone: "roue" },
+      { page: "annonces.html", nom: "Annonces", icone: "cloche" },
+      { page: "coups-de-coeur.html", nom: "Coups de cœur", icone: "coeur" }
     ] },
     { groupe: "Billetterie", liens: [
       { page: "carnets.html", nom: "Carnets", icone: "billet", etape: "6.7", gm: true }

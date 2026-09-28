@@ -52,7 +52,7 @@
           <!-- Concerts : grille jour × scène -->
           <section class="congle" id="p-concerts" role="tabpanel" aria-labelledby="o-concerts" data-panneau="concerts">
             <div class="cjours" data-jours></div>
-            <p class="champ__aide">Une journée va de 6 h à 6 h (un concert de 0 h 30 reste sur la soirée qui l'a vu commencer). Clique une case vide pour y poser un concert, un concert pour le modifier. Heures de Douala.</p>
+            <p class="champ__aide">Une journée va de 6 h à 6 h (un concert de 0 h 30 reste sur la journée qui l'a vu commencer). Clique une case vide pour y poser un concert, un concert pour le modifier. Heure du Cameroun.</p>
             <div class="cpanneau cpanneau--table">
               <div class="cgrille-defile" data-grille><p class="cvide">Chargement…</p></div>
             </div>
@@ -184,7 +184,7 @@
       </label>
       <div class="cform__trois">
         <label class="champ">
-          <span class="champ__label">Soirée</span>
+          <span class="champ__label">Journée</span>
           <select class="saisie" name="jour" data-choix-jours></select>
         </label>
         <label class="champ">
@@ -196,7 +196,7 @@
           <input class="saisie" name="fin" type="time" step="300" required>
         </label>
       </div>
-      <p class="champ__aide" data-aide-heures>Avant 6 h, l'heure compte pour la nuit de la soirée choisie.</p>
+      <p class="champ__aide" data-aide-heures>Avant 6 h, l'heure compte pour la nuit qui suit la journée choisie.</p>
       <p class="message" role="alert" data-erreur hidden></p>
     </form>
     <div class="cfiche__pied">

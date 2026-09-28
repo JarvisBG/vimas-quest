@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <title>Annonces | Console Vimas Quest</title>
+  <script src="../assets/js/console-theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/console.css">
+</head>
+<body class="sans-sw">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <div class="bg-layer bg-glow"></div>
+  <div class="bg-layer bg-grid"></div>
+
+  <div class="console-grille">
+    <nav class="cnav" aria-label="Console">
+      <a class="cnav__marque" href="index.html"><i data-icon="onde"></i> VIMAS QUEST</a>
+      <p class="cnav__tag" data-console-tag>Game Master</p>
+      <div data-console-nav></div>
+      <div class="cnav__pied">
+        <p class="cnav__qui" data-console-qui></p>
+        <button class="cnav__sortir" type="button" data-console-sortir><i data-icon="sortie"></i> Déconnexion</button>
+      </div>
+    </nav>
+    <div class="console-voile" data-console-voile></div>
+    <button class="ctete__menu" type="button" aria-expanded="false" data-console-menu><i data-icon="menu"></i><span class="sr-only">Ouvrir le menu</span></button>
+
+    <div class="console-principal">
+      <div class="ccorps">
+        <header class="ctete">
+          <div class="ctete__titres">
+            <p class="ctete__sur">Animation</p>
+            <h1 class="ctete__titre">Annonces</h1>
+            <p class="ctete__sous" data-resume>Chargement…</p>
+          </div>
+          <div class="ctete__actions">
+            <span class="cdirect" data-console-direct data-etat="coupe"><span data-console-direct-texte>Connexion…</span></span>
+            <span class="cpuce-admin"><i data-icon="cadenas"></i><span data-console-nom>GM</span></span>
+          </div>
+        </header>
+
+        <main class="ccontenu" id="contenu" data-console-contenu>
+          <div class="cdeux">
+            <section class="cpanneau cpanneau--table" aria-labelledby="t-liste">
+              <div class="cpanneau__tete">
+                <h2 class="cpanneau__titre" id="t-liste"><i data-icon="cloche"></i> Publiées</h2>
+                <span class="cpanneau__note">les téléphones montrent les 48 dernières heures</span>
+              </div>
+              <div class="ctable-defile">
+                <table class="ctable">
+                  <thead>
+                    <tr>
+                      <th scope="col">Annonce</th>
+                      <th scope="col" class="ctable__date">Publiée</th>
+                      <th scope="col">État</th>
+                      <th scope="col"><span class="sr-only">Actions</span></th>
+                    </tr>
+                  </thead>
+                  <tbody data-lignes><tr><td colspan="4" class="cvide">Chargement…</td></tr></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="cpanneau" aria-labelledby="t-nouvelle">
+              <h2 class="cpanneau__titre" id="t-nouvelle"><i data-icon="eclair"></i> Nouvelle annonce</h2>
+              <form class="cform" data-form novalidate>
+                <label class="champ">
+                  <span class="champ__label">Titre (facultatif)</span>
+                  <input class="saisie" name="titre" maxlength="80" autocomplete="off" placeholder="Changement de scène">
+                </label>
+                <label class="champ">
+                  <span class="champ__label">Message</span>
+                  <textarea class="saisie" name="message" maxlength="400" required placeholder="Le défilé du Podium Mode passe à 16 h, même endroit."></textarea>
+                </label>
+                <div class="cform__ligne">
+                  <label class="champ">
+                    <span class="champ__label">Niveau</span>
+                    <select class="saisie" name="niveau">
+                      <option value="info">Info</option>
+                      <option value="alerte">Important</option>
+                      <option value="danger">Urgent (épinglée)</option>
+                    </select>
+                  </label>
+                  <label class="champ">
+                    <span class="champ__label">Catégorie</span>
+                    <select class="saisie" name="categorie">
+                      <option value="pratique">Pratique</option>
+                      <option value="horaire">Horaires</option>
+                      <option value="meteo">Météo</option>
+                      <option value="securite">Sécurité</option>
+                      <option value="jeu">Jeu</option>
+                      <option value="surprise">Surprise</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="cform__ligne">
+                  <label class="champ">
+                    <span class="champ__label">Bouton vers une page</span>
+                    <select class="saisie" name="lien" data-liens></select>
+                  </label>
+                  <label class="champ">
+                    <span class="champ__label">Texte du bouton</span>
+                    <input class="saisie" name="lien_libelle" maxlength="40" autocomplete="off" placeholder="Voir le programme" disabled>
+                  </label>
+                </div>
+                <label class="champ">
+                  <span class="champ__label">Retirer automatiquement le (facultatif)</span>
+                  <input class="saisie" name="fin" type="datetime-local" step="300">
+                  <span class="champ__aide">Heure du Cameroun. Passé ce moment, l'annonce rejoint « Anciennes » sur les téléphones. Vide : elle reste 48 h.</span>
+                </label>
+                <p class="message" role="alert" data-erreur hidden></p>
+                <button class="cbtn cbtn--primaire" type="submit"><i data-icon="cloche"></i> Publier</button>
+              </form>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/config.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/vendor/supabase.min.js" defer></script>
+  <script src="../assets/js/serveur.js" defer></script>
+  <script src="../assets/js/console.js" defer></script>
+  <script src="../assets/js/pages/console-annonces.js" defer></script>
+</body>
+</html>

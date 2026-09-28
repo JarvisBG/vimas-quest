@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <title>Coups de cœur | Console Vimas Quest</title>
+  <script src="../assets/js/console-theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/console.css">
+</head>
+<body class="sans-sw">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <div class="bg-layer bg-glow"></div>
+  <div class="bg-layer bg-grid"></div>
+
+  <div class="console-grille">
+    <nav class="cnav" aria-label="Console">
+      <a class="cnav__marque" href="index.html"><i data-icon="onde"></i> VIMAS QUEST</a>
+      <p class="cnav__tag" data-console-tag>Game Master</p>
+      <div data-console-nav></div>
+      <div class="cnav__pied">
+        <p class="cnav__qui" data-console-qui></p>
+        <button class="cnav__sortir" type="button" data-console-sortir><i data-icon="sortie"></i> Déconnexion</button>
+      </div>
+    </nav>
+    <div class="console-voile" data-console-voile></div>
+    <button class="ctete__menu" type="button" aria-expanded="false" data-console-menu><i data-icon="menu"></i><span class="sr-only">Ouvrir le menu</span></button>
+
+    <div class="console-principal">
+      <div class="ccorps">
+        <header class="ctete">
+          <div class="ctete__titres">
+            <p class="ctete__sur">Animation</p>
+            <h1 class="ctete__titre">Coups de cœur</h1>
+            <p class="ctete__sous" data-resume>Chargement…</p>
+          </div>
+          <div class="ctete__actions">
+            <span class="cdirect" data-console-direct data-etat="coupe"><span data-console-direct-texte>Connexion…</span></span>
+            <span class="cpuce-admin"><i data-icon="cadenas"></i><span data-console-nom>GM</span></span>
+          </div>
+        </header>
+
+        <main class="ccontenu" id="contenu" data-console-contenu>
+          <p class="message message--info"><i data-icon="info"></i><span>Chaque joueur donne ses cœurs à des artistes et à des stands qu'il a vraiment vus (scène scannée pendant le concert, dédicace, QR du stand). Il peut les déplacer jusqu'à la clôture. Passer le jeu en phase « Jeu terminé » ferme aussi les votes.</span></p>
+          <p class="message" role="status" data-alerte-date hidden></p>
+
+          <div class="cdeux">
+            <div class="ccolonne">
+              <section class="cpanneau" aria-labelledby="t-artistes">
+                <div class="cpanneau__tete">
+                  <h2 class="cpanneau__titre" id="t-artistes"><i data-icon="micro"></i> Palmarès des artistes</h2>
+                  <span class="cpanneau__note" data-note-artistes></span>
+                </div>
+                <ol class="cliste" data-palmares="artistes"><li class="cvide">Chargement…</li></ol>
+              </section>
+              <section class="cpanneau" aria-labelledby="t-stands">
+                <div class="cpanneau__tete">
+                  <h2 class="cpanneau__titre" id="t-stands"><i data-icon="tente"></i> Palmarès des stands</h2>
+                  <span class="cpanneau__note" data-note-stands></span>
+                </div>
+                <ol class="cliste" data-palmares="stands"><li class="cvide">Chargement…</li></ol>
+              </section>
+            </div>
+
+            <section class="cpanneau" aria-labelledby="t-reglages">
+              <h2 class="cpanneau__titre" id="t-reglages"><i data-icon="horloge"></i> Réglages</h2>
+              <form class="cform" data-reglages novalidate>
+                <label class="ccase"><input type="checkbox" name="actif"><span>Votes ouverts<small>Décoché : la page Coups de cœur des téléphones dit « fermés pour le moment ».</small></span></label>
+                <label class="champ">
+                  <span class="champ__label">Clôture des votes</span>
+                  <input class="saisie" name="cloture" type="datetime-local" step="300" required>
+                  <span class="champ__aide">Heure du Cameroun. Le palmarès est figé à ce moment.</span>
+                </label>
+                <div class="cform__ligne">
+                  <label class="champ">
+                    <span class="champ__label">Cœurs par catégorie</span>
+                    <input class="saisie" name="max" type="number" min="1" max="10" step="1" required>
+                    <span class="champ__aide">artistes et stands, chacun</span>
+                  </label>
+                  <label class="champ">
+                    <span class="champ__label">XP par cœur</span>
+                    <input class="saisie" name="xp" type="number" min="0" max="1000" step="1" required>
+                    <span class="champ__aide">versés une fois par cœur (+ 1 jeton)</span>
+                  </label>
+                </div>
+                <p class="message" role="alert" data-erreur hidden></p>
+                <button class="cbtn cbtn--primaire" type="submit"><i data-icon="coche"></i> Enregistrer</button>
+              </form>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/config.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/vendor/supabase.min.js" defer></script>
+  <script src="../assets/js/serveur.js" defer></script>
+  <script src="../assets/js/console.js" defer></script>
+  <script src="../assets/js/pages/console-coeurs.js" defer></script>
+</body>
+</html>

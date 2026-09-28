@@ -236,7 +236,8 @@ body.is-menu-ouvert .console-voile { display: block; position: fixed; inset: 0; 
 .cliste__quand { flex: none; font-family: var(--font-mono); font-size: .62rem; color: var(--ink-faint); white-space: nowrap; }
 .cliste__texte { flex: 1; min-width: 0; font-size: .82rem; overflow-wrap: anywhere; }
 .cliste__texte time { display: block; font-family: var(--font-mono); font-size: .62rem; color: var(--ink-faint); margin-top: 2px; }
-.cliste__val { flex: none; font-family: var(--font-mono); font-size: .72rem; color: var(--gold); white-space: nowrap; }
+.cliste__val { flex: none; font-family: var(--font-mono); font-size: .72rem; color: var(--gold); white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; }
+.cliste__val .icon { width: 13px; height: 13px; }
 .cliste__place { flex: none; width: 22px; text-align: center; font-family: var(--font-mono); font-weight: 600; color: var(--ink-faint); }
 .cliste__place--1 { color: #FFC94A; } .cliste__place--2 { color: #CBD3DE; } .cliste__place--3 { color: #E0985A; }
 .cbadge { flex: none; font-family: var(--font-mono); font-size: .58rem; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; color: var(--blue); background: rgba(46, 111, 242, .1); border: 1px solid var(--blue-soft); }

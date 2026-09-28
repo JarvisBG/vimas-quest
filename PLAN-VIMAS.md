@@ -15,14 +15,12 @@
 > Continue le projet **Vimas Quest** (dossier `C:\Users\HP\Documents\PROJETS\vimas\vimas-quest`, dépôt
 > GitHub `JarvisBG/vimas-quest`, branche `main` — commit + push à chaque fin de tâche, tu y es autorisé).
 > Lis d'abord `CLAUDE.md` et `PLAN-VIMAS.md`, et `docs/NOTES-MOTEUR-DOMAF.md` avant de toucher une page.
-> Étapes 1 à 4 terminées (habillage, textes, écrans géants refaits sur le modèle d'Otaku Quest, passe
-> anti-« IA » avec le skill `impeccable`). Attaque l'**étape 5 — console d'administration** (`app/admin/`,
-> style néon d'Otaku gardé) :
-> - **5.0** marque Vimas déjà posée ; reste les **dates du festival** dans `app/assets/js/pages/console-programme.js`
->   (grille de 4 jours de novembre → sam. 26 et dim. 27 décembre 2026, journées **10 h → 22 h**) ;
-> - puis **5.1 Animation** : roue (lots, coût, plafond, retrait des bons), annonces, coups de cœur (clôture,
->   palmarès), tirage au sort final. Comparer d'abord ce que la base offre (`supabase/sources/`, fonctions
->   `console_*` / `admin_*`) et soumettre à Jarvis ce qui manque avant d'écrire du SQL.
+> Étapes 1 à 4 terminées, 5.0 terminée, **5.1 faite sauf le tirage au sort final** (mis de côté par Jarvis,
+> proposition dans la case 5.1) : écrans Annonces, Roue et lots, Coups de cœur essayés sur une fausse base et poussés.
+> Attaque la **5.2 — régie du blind test** (`admin/blind-test.html`) : comparer d'abord les fonctions existantes
+> (`admin_quiz_*`, `admin_*_quiz_*`, `admin_blind_question`, `sources/25_blind_joueur.sql`, `98_ecran_blind.sql`)
+> et soumettre à Jarvis ce qui manque avant d'écrire du SQL. Essai sans compte : copie de page + script qui remplace
+> `C.garde` / `C.appel` / `C.sb` / `C.confirmer` et force `document.hidden` à `false` (effacer ensuite).
 > Rappels : base Supabase **partagée** avec l'ancien DOMAF (`domaf-quest`) → sauvegarde SQL avant toute écriture ;
 > festival supposé **de jour, 10 h → 22 h** (contenu à adapter en étape 6) ; serveur local
 > `app/lancer-serveur.bat` → http://localhost:8767 ; pour tester dans Chrome, désinscrire le service worker
@@ -43,6 +41,9 @@
 | 28/09/2026 | Mur de l'écran géant refait sur le modèle d'Otaku Quest (un panneau à la fois, enseigne sobre, une annonce en pied) + passe `impeccable polish`. Skill impeccable (pbakaus/impeccable) installé dans `~/.claude/skills/` à la demande de Jarvis. |
 | 28/09/2026 | Plateau du blind test aligné sur le mur ; passe anti-« IA » sur toutes les pages festivalier (détecteur impeccable) ; `sw.js` → `vimasquest-v2`. **Étape 4 terminée** (hors contenu de jour, étape 6). |
 | 28/09/2026 | Fin de session : fichiers de progression à jour, prochain prompt préparé (étape 5, console). |
+| 28/09/2026 | **5.0 terminée** (dates de la console). Inventaire de la base pour 5.1 : seul le tirage au sort final manque côté SQL — proposition soumise à Jarvis. |
+| 28/09/2026 | Jarvis : « laisse d'abord le tirage ». Écrans **Annonces**, **Roue et lots**, **Coups de cœur** écrits sur les fonctions existantes (aucun SQL). Non essayés, non committés (shell indisponible). |
+| 28/09/2026 | Shell revenu (hors mode automatique) : `node --check` OK, les trois écrans essayés dans Chrome sur une fausse base, un défaut d'affichage corrigé ; commit + push. |
 
 ---
 
@@ -101,8 +102,15 @@ Le moteur DOMAF est calé sur des **soirées de concerts** : à adapter (étapes
 - [ ] Contenu des panneaux (horaires de jour, blind test l'après-midi) : avec l'étape 6
 
 ## Étape 5 — Console d'administration (finir ce que le DOMAF n'a pas fini)
-- [ ] 5.0 Marque Vimas dans la console (le style néon est gardé), dates du festival dans `console-programme.js`
+- [x] 5.0 Marque Vimas dans la console (le style néon est gardé), dates du festival dans `console-programme.js` (sam. 26 / dim. 27 déc., grille vide 10 h → 22 h, concert proposé à 15 h, « Soirée » → « Journée » dans `admin/programme.html`)
+- Inventaire base pour 5.1 (28/09) : roue = tout existe (`admin_create/update/delete_prize`, `admin_prize_affichage`, `admin_set_roulette_cost`, `admin_set_roulette_plafond`, `admin_recent_spins`, `admin_redeem`) ; annonces = tout existe (`admin_publier_annonce`, `admin_fermer_annonce`, `admin_delete_announcement`) ; cœurs = `coeur_config` modifiable par le staff (table), `coeur_palmares` ; **tirage au sort final : rien en base** (à écrire). À revoir en 5.4 : les fonctions de lots acceptent `is_equipe()` (un vendeur peut modifier la roue) ; `_code_secret_tirage()` contient des mots DOMAF/Douala (étape 8).
 - [ ] 5.1 Animation : roue (lots, coût, plafond, retrait des bons), annonces, coups de cœur (clôture, palmarès), **tirage au sort final**
+  - [x] `admin/annonces.html` + `console-annonces.js` : liste (table `announcements`), publier (titre, niveau, catégorie, bouton vers une page, retrait daté), retirer, effacer ; temps réel
+  - [x] `admin/roue.html` + `console-roue.js` : lots (chance calculée, stock, interrupteur, création / modification / suppression, rareté + libellé court), coût et plafond par jour, **remise d'un objet par son code** (`admin_redeem`), 30 derniers bons + nombre à retirer
+  - [x] `admin/coups-de-coeur.html` + `console-coeurs.js` : palmarès artistes / stands (`coeur_palmares`, 20 premiers), réglages `coeur_config` (ouverture, clôture datée, cœurs par catégorie, XP) ; alerte si la clôture tombe hors du 26–27/12 (la base a encore **29/11 20 h**, date DOMAF)
+  - [x] Menu de la console : les trois écrans allumés
+  - [x] Essayés dans Chrome (28/09) avec une fausse base (garde, appels et tables simulés, fichiers effacés ensuite) : remise d'un bon (bon et mauvais code), interrupteur, modification / création de lot, suppression refusée après gain, réglages de la roue ; publier (message vide, fin passée, lien), retirer, effacer une annonce ; réglages des cœurs (bornes, confirmation à la baisse, alerte de date). Corrigé : l'icône du cœur passait au-dessus du chiffre (`.cliste__val` en ligne). **Pas encore essayés sur la vraie base** (compte GM) : à faire en étape 9
+  - [ ] Tirage au sort final : **mis de côté par Jarvis** (28/09) — proposition prête : table `tirages` + `console_tirage(n)` (GM, joueurs actifs avec numéro, sans remise)
 - [ ] 5.2 Régie du blind test : manches, questions (extrait, pochette), boss, lancement / passage en direct
 - [ ] 5.3 Billetterie : carnets de tickets (GM) + espace vendeur (encaissement)
 - [ ] 5.4 Statistiques (parcours, profil, micro-questions, consentements) + relecture des droits ; retirer `live_board` / `leaderboard_view` si inutiles
