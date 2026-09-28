@@ -48,7 +48,7 @@ pas un discours. **Le moins de travail possible** : on change la peau et le cont
 
 | Chemin | Rôle |
 |---|---|
-| `app/` | L'application (site statique, Cloudflare). Serveur local : `app/lancer-serveur.bat` → http://localhost:8766 |
+| `app/` | L'application (site statique, Cloudflare). Serveur local : `app/lancer-serveur.bat` → http://localhost:8767 (8766 reste au DOMAF) |
 | `app/assets/js/config.js` | URL Supabase + clé publishable (publique). Jamais de `sb_secret_…` |
 | `app/data/mock.js` | Données du **mode démo** (`?mock=1`) — à passer en Vimas |
 | `vimas_visuels/` | Maquette statique déjà ré-habillée Vimas (27/09) : **référence** pour l'habillage de `app/` |
@@ -66,8 +66,10 @@ pas un discours. **Le moins de travail possible** : on change la peau et le cont
 - **Rien de public au nom de Vimas sans prévenir Jarvis** : le lien est public ; la maquette doit
   afficher clairement « démonstration » tant que Vimas n'a pas validé (logos partenaires compris).
 - Changer `VERSION` dans `app/sw.js` à chaque mise en ligne (`cd app && npx wrangler deploy`).
-- Git : dépôt local ici ; `gh` n'est pas installé → Jarvis crée le dépôt vide sur github.com.
+- Git : dépôt **JarvisBG/vimas-quest** (privé, `main`) ; commit + push à chaque fin de tâche. `gh` n'est pas installé.
   Le dépôt `JarvisBG/domaf` n'est pas celui de ce projet.
+- Contrôle visuel sans redimensionner Chrome : réécrire la page avec des `<iframe>` de 390 px (le redimensionnement
+  de fenêtre ne prend pas). Edge sans fenêtre (`--headless`) impose une largeur minimale : captures trompeuses sous ~500 px.
 - Le workflow `.github/workflows/reveil-supabase.yml` réveille la même base : inutile de le doubler.
 
 ## Méthode de travail

@@ -13,8 +13,8 @@
 ## ▶ Prochain prompt (en cas de coupure)
 
 > Continue le projet Vimas Quest : lis `CLAUDE.md` et `PLAN-VIMAS.md` (et `docs/NOTES-MOTEUR-DOMAF.md`
-> avant de toucher une page), puis attaque l'**étape 2** — habillage festivalier de `app/` aux couleurs
-> Vimas en reprenant les valeurs de `vimas_visuels/`.
+> avant de toucher une page), puis attaque l'**étape 3** — identité et textes (DOMAF → VIMAS FEST, 2 jours,
+> Majestic Cinéma, clés `vimasquest.*`, consentement Vimas Production, bandeau « démonstration »).
 
 ---
 
@@ -25,6 +25,7 @@
 | 28/09/2026 | Cadrage : maquette pour Vimas, même base et même lien que DOMAF. Copie de `domaf/` → `vimas-quest/` (sans offre ni archives), docs de suivi créés, dépôt Git local. |
 | 28/09/2026 | Vérifié : le mode démo (`?mock=1`) accepte les vrais QR imprimés (`scanner.html?code=QR-…`), sans base. Limites : chaque téléphone joue seul, classement et écran géant simulés. |
 | 28/09/2026 | Décision de Jarvis : on **termine** l'application pour Vimas (festivalier + console + écrans). Plan complet réécrit (étapes 1 → 13). |
+| 28/09/2026 | Dépôt GitHub JarvisBG/vimas-quest créé et poussé. **Étape 2 terminée** : couleurs, icônes, marque, manifeste ; `VERSION` du service worker = `vimasquest-v1` ; serveur local sur le port **8767** (8766 = DOMAF). |
 
 ---
 
@@ -44,14 +45,15 @@
 - [x] Copie du projet dans `vimas-quest/` (app, supabase, outils, visuels Vimas, affiche)
 - [x] `CLAUDE.md`, `PLAN-VIMAS.md`, notes techniques du moteur dans `docs/`
 - [x] Dépôt Git local
-- [ ] Dépôt GitHub privé propre à Vimas (créé par Jarvis sur github.com, pas de `gh` sur la machine) + premier push
+- [x] Dépôt GitHub privé **JarvisBG/vimas-quest** (branche `main`), premier push le 28/09
 - [ ] Valider le nom « Vimas Quest »
 
-## Étape 2 — Habillage festivalier
-- [ ] Couleurs Vimas dans `app/assets/css` (valeurs de `vimas_visuels/`, noms de variables gardés)
-- [ ] Logo / marque de l'en-tête, icônes de l'app (PWA), `manifest.webmanifest` (nom, couleurs)
-- [ ] Police : vérifier les caractères utilisés (sinon `outils/police.py`)
-- [ ] Contrôle visuel des 14 pages à 390 px, en local
+## Étape 2 — Habillage festivalier ✅ (28/09)
+- [x] Couleurs Vimas dans `app/` (336 valeurs, 51 fichiers : CSS, pages JS, SVG) — correspondance tirée de `vimas_visuels/` + teintes intermédiaires ; console (`console.css`, `console-*.js`), fond du plan (`plan-fond.js`) et étiquettes non touchés
+- [x] Marque « Vimas Quest » (en-têtes, pieds, titres), accueil « Vimas / Quest — Le VIMAS FEST se joue », icônes PWA + favicon Vimas, `manifest.webmanifest`
+- [x] Police : aucun caractère nouveau (même alphabet)
+- [x] Contrôle visuel dans Chrome à 390 px (accueil, inscription, tableau de bord, passeport, collection, roue, programme, plan, infos, blind test, hors ligne) + écrans géants (mur, blind test) : pas de débordement, contrastes lisibles
+- Reste pour l'étape 3 : textes « DOMAF » (ex. titre du passeport partagé), dates, lieu, édition
 
 ## Étape 3 — Identité et textes (festivalier)
 - [ ] « DOMAF » → « VIMAS FEST » / « Vimas Quest » partout (≈ 188 mentions, 54 fichiers) : accueil, infos, règles, FAQ, 404, hors ligne
