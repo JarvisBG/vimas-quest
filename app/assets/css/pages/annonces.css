@@ -14,10 +14,10 @@
 .ann__filtres b:empty { display: none; }
 
 /* ---------- Type → couleur ---------- */
-.ty-meteo    { --ty: #8FA6FF; }
+.ty-meteo    { --ty: #FF9A85; }
 .ty-horaire  { --ty: var(--sodium); }
 .ty-surprise { --ty: var(--vert); }
-.ty-securite { --ty: #C4123F; }
+.ty-securite { --ty: #A00D25; }
 .ty-jeu      { --ty: var(--rose); }
 .ty-pratique { --ty: var(--papier-2); }
 
@@ -25,7 +25,7 @@
 .epinglee {
   position: relative; display: grid; gap: var(--s-2); padding: var(--s-4); margin-bottom: var(--s-2);
   background: var(--rose); color: var(--nuit);
-  background-image: repeating-linear-gradient(-45deg, rgba(10, 20, 64, .08) 0 14px, transparent 14px 28px);
+  background-image: repeating-linear-gradient(-45deg, rgba(59, 10, 18, .08) 0 14px, transparent 14px 28px);
   border: 3px solid var(--nuit); border-radius: var(--r-billet); box-shadow: 6px 6px 0 var(--nuit);
 }
 .epinglee__haut { display: flex; justify-content: space-between; align-items: center; gap: var(--s-2); flex-wrap: wrap; }
@@ -70,6 +70,6 @@
 .notif-ann { display: grid; gap: var(--s-2); padding: var(--s-4); background: var(--nuit); color: var(--papier); border-radius: var(--r-net); }
 .notif-ann__titre { display: flex; align-items: center; gap: var(--s-2); font-size: var(--fs-lg); }
 .notif-ann__titre .icon { color: var(--sodium); }
-.notif-ann .texte-doux { color: #C9D1F5; }
+.notif-ann .texte-doux { color: #F7D4C4; }
 .notif-ann .btn--contour { color: var(--papier); }
 .ann__demo { justify-self: center; background: none; border: 0; cursor: pointer; }

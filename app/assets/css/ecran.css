@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DOMAF Quest — ecran.css (commun aux écrans géants 1920 × 1080)
+   Vimas Quest — ecran.css (commun aux écrans géants 1920 × 1080)
    ========================================================================== */
 
 body.ecran { margin: 0; overflow: hidden; background: #000; color: var(--papier); cursor: default; }
@@ -13,7 +13,7 @@ body.ecran.is-curseur-cache, body.ecran.is-curseur-cache * { cursor: none !impor
   transform-origin: center;
   overflow: hidden;
   background:
-    radial-gradient(ellipse 900px 600px at 50% -10%, rgba(31, 63, 209, .55), transparent 70%),
+    radial-gradient(ellipse 900px 600px at 50% -10%, rgba(217, 10, 34, .55), transparent 70%),
     var(--nuit);
 }
 

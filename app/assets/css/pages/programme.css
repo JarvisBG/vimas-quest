@@ -26,7 +26,7 @@
 .jour-p__nom { font-family: var(--font-affiche); font-size: 1.25rem; line-height: 1.1; text-transform: uppercase; }
 .jour-p__info { font-size: .6875rem; font-weight: 800; color: var(--texte-doux); }
 .jour-p[aria-selected="true"] { background: var(--nuit); color: var(--sodium); box-shadow: 3px 3px 0 var(--rose); }
-.jour-p[aria-selected="true"] .jour-p__info { color: #C9D1F5; }
+.jour-p[aria-selected="true"] .jour-p__info { color: #F7D4C4; }
 
 .outils-p { display: grid; grid-template-columns: auto 1fr; gap: var(--s-2); }
 .segments-p { display: flex; border: 2px solid var(--nuit); border-radius: var(--r-net); overflow: hidden; }
@@ -52,7 +52,7 @@
 
 /* ---------- Liste ---------- */
 .liste-p { display: grid; gap: var(--s-3); }
-.maintenant-p { display: flex; align-items: center; gap: var(--s-2); font-weight: 800; color: #C4123F; }
+.maintenant-p { display: flex; align-items: center; gap: var(--s-2); font-weight: 800; color: #A00D25; }
 .maintenant-p::before, .maintenant-p::after { content: ""; flex: 1; height: 3px; background: currentColor; border-radius: 2px; }
 .concert-p {
   display: grid; grid-template-columns: 4.2rem 1fr auto; gap: var(--s-3); align-items: center;
@@ -62,7 +62,7 @@
   scroll-margin-top: calc(var(--topbar-h) + 190px);
 }
 .concert-p.is-termine { opacity: .55; }
-.concert-p.is-en-cours { box-shadow: inset 8px 0 0 var(--sc), 0 0 0 3px #C4123F; }
+.concert-p.is-en-cours { box-shadow: inset 8px 0 0 var(--sc), 0 0 0 3px #A00D25; }
 .concert-p.is-cible { animation: cible-p 1.6s var(--ease-sortie); }
 @keyframes cible-p { 0%, 40% { box-shadow: inset 8px 0 0 var(--sc), 0 0 0 5px var(--sodium); } }
 .concert-p__heure { display: grid; justify-items: end; padding-left: var(--s-3); }
@@ -78,7 +78,7 @@
 .concert-p__meta { display: flex; flex-wrap: wrap; gap: var(--s-1) var(--s-2); align-items: center; font-size: var(--fs-xs); font-weight: 700; color: var(--texte-doux); }
 .pastille-sc { background: var(--sc); color: var(--sc-txt); }
 .statut-p { font-weight: 800; }
-.statut-p--en-cours { color: #C4123F; }
+.statut-p--en-cours { color: #A00D25; }
 .statut-p--en-cours::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 4px; border-radius: 50%; background: currentColor; animation: pulse-p 1.2s infinite; }
 @keyframes pulse-p { 50% { opacity: .2; } }
 
@@ -104,13 +104,13 @@
 .grille-p__table { position: relative; display: grid; grid-template-columns: var(--rail) repeat(var(--n), minmax(var(--col), 1fr)); width: max-content; min-width: 100%; }
 .grille-p__coin, .grille-p__scene { position: sticky; top: 0; z-index: 3; height: 52px; background: var(--nuit); color: var(--papier); }
 .grille-p__coin { left: 0; z-index: 4; }
-.grille-p__scene { display: flex; align-items: center; gap: var(--s-2); padding: 0 var(--s-2); font-weight: 800; font-size: var(--fs-sm); border-left: 1px solid rgba(250, 250, 247, .2); border-bottom: 5px solid var(--sc); }
+.grille-p__scene { display: flex; align-items: center; gap: var(--s-2); padding: 0 var(--s-2); font-weight: 800; font-size: var(--fs-sm); border-left: 1px solid rgba(255, 248, 238, .2); border-bottom: 5px solid var(--sc); }
 .grille-p__rail { position: sticky; left: 0; z-index: 2; height: var(--h); background: var(--papier); border-right: 2px solid var(--nuit); }
 .grille-p__heure { position: absolute; left: 0; right: 0; transform: translateY(-50%); padding-right: 6px; text-align: right; font-size: .75rem; font-weight: 800; font-variant-numeric: tabular-nums; }
 .grille-p__col {
   position: relative; height: var(--h);
-  border-left: 1px solid rgba(10, 20, 64, .12);
-  background-image: linear-gradient(rgba(10, 20, 64, .1) 1px, transparent 1px);
+  border-left: 1px solid rgba(59, 10, 18, .12);
+  background-image: linear-gradient(rgba(59, 10, 18, .1) 1px, transparent 1px);
   background-size: 100% calc(var(--ppm) * 30);
 }
 .bloc-p {
@@ -125,16 +125,16 @@
 .bloc-p__etoile { position: absolute; right: 4px; bottom: 4px; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: var(--papier); color: var(--nuit); border: 1.5px solid var(--nuit); }
 .bloc-p__etoile .icon { width: 14px; height: 14px; fill: var(--nuit); }
 .bloc-p.is-termine { filter: saturate(.3); opacity: .6; }
-.bloc-p.is-en-cours { outline: 3px solid #C4123F; outline-offset: 2px; }
+.bloc-p.is-en-cours { outline: 3px solid #A00D25; outline-offset: 2px; }
 .bloc-p--ded { background: repeating-linear-gradient(-45deg, var(--papier) 0 6px, var(--papier-2) 6px 12px); color: var(--nuit); border-style: dashed; box-shadow: none; }
 .grille-p__maintenant {
   position: absolute; left: var(--rail); right: 0; top: calc(52px + var(--y)); z-index: 2; height: 3px;
-  background: #C4123F; pointer-events: none;
+  background: #A00D25; pointer-events: none;
 }
 .grille-p__maintenant::before {
   content: "Maintenant"; position: sticky; left: calc(var(--rail) + 4px);
   display: inline-block; transform: translateY(-50%); padding: 1px 8px;
-  font-size: .6875rem; font-weight: 800; color: var(--papier); background: #C4123F; border-radius: var(--r-pastille);
+  font-size: .6875rem; font-weight: 800; color: var(--papier); background: #A00D25; border-radius: var(--r-pastille);
 }
 .grille-p__note { font-size: var(--fs-sm); color: var(--texte-doux); }
 
@@ -145,14 +145,14 @@
   background-color: var(--fond); color: var(--papier);
   border-bottom: 3px solid var(--nuit);
 }
-.fiche-a__visuel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 30%, rgba(10, 20, 64, .85)); }
+.fiche-a__visuel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 30%, rgba(59, 10, 18, .85)); }
 /* Photo plein cadre : image deux encres + trame de points en CSS (réglages
    --trame-force / --trame-pas de style.css, pas ajusté à la largeur du cadre). */
 .fiche-a__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; }
 .fiche-a__visuel.a-photo { min-height: min(78vw, 340px); background-color: var(--nuit); }
 .fiche-a__visuel.a-photo::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background-image: radial-gradient(circle, rgba(10, 20, 64, .55) 0 38%, transparent 0);
+  background-image: radial-gradient(circle, rgba(59, 10, 18, .55) 0 38%, transparent 0);
   background-size: 7px 7px; mix-blend-mode: multiply; opacity: var(--trame-force);
 }
 .fiche-a__nom { position: relative; z-index: 1; font-size: clamp(2.5rem, 12vw, 3.5rem); line-height: .95; text-shadow: var(--decalage); }

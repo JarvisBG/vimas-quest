@@ -226,7 +226,7 @@ document.addEventListener("app:ready", async () => {
     badge:   { icone: "etoile",  couleur: "var(--sodium)" },
     mission: { icone: "valide",  couleur: "var(--vert)" },
     roue:    { icone: "roue",    couleur: "var(--papier)" },
-    rang:    { icone: "trophee", couleur: "#8FA6FF" }
+    rang:    { icone: "trophee", couleur: "#FF9A85" }
   };
   const LIB_BADGE = { commun: "Badge commun", rare: "Badge rare", epique: "Badge épique", legendaire: "Badge légendaire !" };
   const LIB_RELIQUE = { commune: "Relique commune", rare: "Relique rare", legendaire: "Relique légendaire !" };

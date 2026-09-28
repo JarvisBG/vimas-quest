@@ -55,7 +55,7 @@ document.addEventListener("app:ready", async () => {
     d.coutTirage == null ? "La roue ouvre bientôt."
       : `Un tour de roue coûte ${d.coutTirage} jetons${d.maxTirages ? `, ${d.maxTirages} tours maximum par jour de festival (de 6 h à 6 h)` : ""}.`,
     "Le résultat est tiré au sort par le serveur ; les chances et les stocks sont affichés sur la page de la roue.",
-    "Chaque lot gagné crée un bon de retrait avec un QR, à présenter au Stand DOMAF Quest avec ton billet avant dimanche 23h.",
+    "Chaque lot gagné crée un bon de retrait avec un QR, à présenter au Stand Vimas Quest avec ton billet avant dimanche 23h.",
     `Blind test chaque soir à ${fmt.heure(d.blind.horaire)} : le podium gagne un lot, le top 10 le badge Oreille d'or.`
   ].map((t) => `<li>${esc(t)}</li>`).join("");
 

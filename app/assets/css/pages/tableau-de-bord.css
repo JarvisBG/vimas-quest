@@ -31,7 +31,7 @@
 }
 .lanyard::after {
   content: ""; position: absolute; left: 50%; bottom: -12px; transform: translateX(-50%);
-  width: 20px; height: 20px; border: 4px solid #8C93B3; border-radius: 50%; background: transparent;
+  width: 20px; height: 20px; border: 4px solid #A5857A; border-radius: 50%; background: transparent;
 }
 
 .pass {
@@ -83,7 +83,7 @@
   border-top: 2px solid var(--nuit); border-bottom: 2px solid var(--nuit);
 }
 .pass__stats div { padding: var(--s-2) var(--s-1); text-align: center; }
-.pass__stats div + div { border-left: 1px dashed rgba(10, 20, 64, .35); }
+.pass__stats div + div { border-left: 1px dashed rgba(59, 10, 18, .35); }
 .pass__stats dt { font-size: .6875rem; font-weight: 700; color: var(--texte-doux); }
 .pass__stats dd { margin: 0; font-family: var(--font-affiche); font-size: 1.5rem; line-height: 1.1; }
 
@@ -130,12 +130,12 @@
 .concert-carte { --pos-encoche: 62%; padding: var(--s-4); border: 0; }
 .concert-carte__haut { display: flex; justify-content: space-between; align-items: center; gap: var(--s-2); flex-wrap: wrap; }
 .compte { display: inline-flex; align-items: center; gap: var(--s-1); font-weight: 800; color: var(--bleu); }
-.compte--direct { color: #C4123F; }
+.compte--direct { color: #A00D25; }
 .compte--direct::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: currentColor; animation: pulse 1.2s ease-in-out infinite; }
 @keyframes pulse { 50% { opacity: .25; } }
 .concert-carte__nom { font-size: clamp(2rem, 11vw, 2.75rem); margin-top: var(--s-2); }
 .concert-carte__detail { display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: center; margin-top: var(--s-2); color: var(--texte-doux); font-weight: 600; }
-.concert-carte__actions { display: flex; gap: var(--s-4); flex-wrap: wrap; margin-top: var(--s-4); padding-top: var(--s-3); border-top: 2px dashed rgba(10, 20, 64, .3); }
+.concert-carte__actions { display: flex; gap: var(--s-4); flex-wrap: wrap; margin-top: var(--s-4); padding-top: var(--s-3); border-top: 2px dashed rgba(59, 10, 18, .3); }
 .concert-carte__vide { padding-block: var(--s-3); }
 
 /* Mission principale */
@@ -146,8 +146,8 @@
   box-shadow: 4px 4px 0 var(--sodium);
 }
 .mission__titre { font-size: 1.75rem; line-height: 1; }
-.mission__texte { color: #C9D1F5; }
-.mission .crans i { border-color: var(--papier); background: rgba(250, 250, 247, .15); }
+.mission__texte { color: #F7D4C4; }
+.mission .crans i { border-color: var(--papier); background: rgba(255, 248, 238, .15); }
 .mission .crans i.is-fait { background: var(--sodium); }
 .mission__bas { display: flex; justify-content: space-between; align-items: center; gap: var(--s-2); flex-wrap: wrap; }
 .mission__avancee { font-weight: 800; }
@@ -156,7 +156,7 @@
 .missions-mini li a {
   display: flex; justify-content: space-between; align-items: center; gap: var(--s-3);
   min-height: 56px; padding-block: var(--s-2);
-  border-bottom: 1px solid rgba(10, 20, 64, .2); text-decoration: none; font-weight: 700;
+  border-bottom: 1px solid rgba(59, 10, 18, .2); text-decoration: none; font-weight: 700;
 }
 .missions-mini small { font-weight: 600; color: var(--texte-doux); white-space: nowrap; }
 

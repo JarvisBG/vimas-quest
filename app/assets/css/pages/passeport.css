@@ -64,6 +64,6 @@
 .resume-p { padding: var(--s-3) var(--s-4); background: var(--papier); border: 2px solid var(--nuit); border-radius: var(--r-net); }
 .resume-p summary { min-height: 36px; display: flex; align-items: center; font-weight: 800; cursor: pointer; }
 .resume-p__liste { display: grid; gap: var(--s-2); margin-top: var(--s-2); }
-.resume-p__liste li { display: flex; justify-content: space-between; gap: var(--s-3); padding-bottom: var(--s-2); border-bottom: 1px dashed rgba(10, 20, 64, .25); }
+.resume-p__liste li { display: flex; justify-content: space-between; gap: var(--s-3); padding-bottom: var(--s-2); border-bottom: 1px dashed rgba(59, 10, 18, .25); }
 .resume-p__liste li:last-child { border-bottom: 0; }
 .resume-p__liste strong { text-align: right; }

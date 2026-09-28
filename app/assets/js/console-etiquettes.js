@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DOMAF Quest — console-etiquettes.js : étiquettes QR à imprimer (étape 6.3)
+   Vimas Quest — console-etiquettes.js : étiquettes QR à imprimer (étape 6.3)
    Décision de Jarvis (19/09) : habillage des joueurs, sérigraphie deux
    encres — papier blanc (rien à imprimer), encre « nuit » pour le QR et les
    textes, une seule encre de couleur par type (bande du haut, décalage du
@@ -73,7 +73,7 @@
       pages.push(`<section class="page">${liste.slice(i, i + parPage).map((q) => etiquette(q, essai)).join("")}</section>`);
     }
     const police = new URL("assets/fonts/Anton-Regular.woff2", App.racine).href;
-    return `<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Étiquettes DOMAF Quest</title><style>
+    return `<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Étiquettes Vimas Quest</title><style>
 @font-face { font-family: "Anton"; src: url("${police}") format("woff2"); font-display: block; }
 @page { size: A4 portrait; margin: 0; }
 * { box-sizing: border-box; margin: 0; padding: 0; }

@@ -409,7 +409,7 @@ document.addEventListener("app:ready", async () => {
       case "pass":
         return {
           ton: "attente", icone: "billet", titre: "Journée pas ouverte",
-          texte: "Pour gagner des XP aujourd'hui, prends un ticket de jeu auprès de l'équipe DOMAF Quest, puis scanne son QR ici."
+          texte: "Pour gagner des XP aujourd'hui, prends un ticket de jeu auprès de l'équipe Vimas Quest, puis scanne son QR ici."
         };
       case "raid":
         return {
@@ -478,7 +478,7 @@ document.addEventListener("app:ready", async () => {
       default:
         return {
           ton: "ko", icone: "alerte", titre: "QR inconnu",
-          texte: "Ce QR ne fait pas partie du jeu. Cherche le logo DOMAF Quest sur les affiches, les stands et les scènes."
+          texte: "Ce QR ne fait pas partie du jeu. Cherche le logo Vimas Quest sur les affiches, les stands et les scènes."
         };
     }
   }

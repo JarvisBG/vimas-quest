@@ -169,7 +169,7 @@ document.addEventListener("app:ready", async () => {
     inconnu: "Ce ticket n'existe pas. Vérifie le code, ou demande à l'équipe.",
     utilise: "Ce ticket a déjà servi : un ticket ne s'utilise qu'une fois.",
     rendu: "Ce ticket a été rendu invendu : il ne vaut plus rien. Prends-en un neuf auprès de l'équipe.",
-    annule: "Ce carnet de tickets a été annulé. Va voir l'équipe DOMAF Quest."
+    annule: "Ce carnet de tickets a été annulé. Va voir l'équipe Vimas Quest."
   };
 
   async function verifierTicket(code, bouton) {
@@ -224,7 +224,7 @@ document.addEventListener("app:ready", async () => {
   function codeLu(texte) {
     const code = extraireTicket(texte);
     if (code.length < 4) {
-      etatCamera.textContent = "Ce QR n'est pas celui d'un ticket DOMAF Quest.";
+      etatCamera.textContent = "Ce QR n'est pas celui d'un ticket Vimas Quest.";
       return;
     }
     $("[data-viseur]").classList.add("is-trouve");
@@ -617,7 +617,7 @@ document.addEventListener("app:ready", async () => {
       const joueur = await api.reprendre(code);
       afficherRetrouve(joueur);
     } catch (err) {
-      dire(err, "Code inconnu : vérifie l'orthographe, ou passe au stand DOMAF Quest.");
+      dire(err, "Code inconnu : vérifie l'orthographe, ou passe au stand Vimas Quest.");
       champConnexion.focus();
       champConnexion.select();
     } finally {

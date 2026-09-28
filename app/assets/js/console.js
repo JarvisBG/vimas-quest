@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DOMAF Quest — console.js : socle de la console d'administration (étape 6)
+   Vimas Quest — console.js : socle de la console d'administration (étape 6)
    Ordre de chargement : config.js, app.js, vendor/supabase.min.js, serveur.js,
    console.js, page.
 

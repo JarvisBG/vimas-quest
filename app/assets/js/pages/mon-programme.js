@@ -245,7 +245,7 @@ document.addEventListener("app:ready", async () => {
     const echap = (t) => String(t).replace(/\\/g, "\\\\").replace(/([,;])/g, "\\$1").replace(/\n/g, "\\n");
     const lieu = festival.lieu || "DOMAF 2026";
     const lignes = [
-      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//DOMAF Quest//Mon programme//FR", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Vimas Quest//Mon programme//FR", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
       "X-WR-CALNAME:DOMAF, mon programme"
     ];
     aVenir.forEach((a) => {

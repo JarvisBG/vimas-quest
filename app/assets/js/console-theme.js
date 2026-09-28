@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DOMAF Quest — console-theme.js : clair / sombre (repris d'Otaku, theme.js)
+   Vimas Quest — console-theme.js : clair / sombre (repris d'Otaku, theme.js)
    Chargé TÔT dans <head>, sans defer : le thème mémorisé s'applique avant
    la première peinture. Sombre par défaut ; le clair sert en plein soleil
    (le festival est en plein air). Mémorisé sur l'appareil.

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DOMAF Quest — données simulées
+   Vimas Quest — données simulées
    Chaque clé correspond à une future route d'API (GET /api/<clé>).
    Les pages n'accèdent JAMAIS directement à MOCK : elles passent par
    App.data.get('<clé>') (voir assets/js/app.js).
@@ -7,7 +7,7 @@
 window.MOCK = {
   festival: {
     nom: "DOMAF",
-    jeu: "DOMAF Quest",
+    jeu: "Vimas Quest",
     edition: 15,
     slogan: "Le DOMAF se joue",
     lieu: "Stade Annexe de Bonamoussadi",
@@ -112,16 +112,16 @@ window.MOCK = {
       delai: "Réponse par e-mail sous 48 h"
     },
     faq: [
-      { id: "code-perdu", q: "J'ai perdu mon code secret, comment récupérer ma partie ?", r: "Passe au stand DOMAF Quest avec ton pseudo : l'équipe retrouve ton code. Tant que tu joues sur le même téléphone, tu n'as besoin de rien." },
+      { id: "code-perdu", q: "J'ai perdu mon code secret, comment récupérer ma partie ?", r: "Passe au stand Vimas Quest avec ton pseudo : l'équipe retrouve ton code. Tant que tu joues sur le même téléphone, tu n'as besoin de rien." },
       { id: "qr-illisible", q: "Un QR du site ne se scanne pas.", r: "Essaie avec la lampe du scanner, puis utilise « Saisir un code » : chaque QR a un code court imprimé en dessous (par exemple SOL-4821)." },
       { id: "rescanner", q: "Puis-je scanner le même QR plusieurs fois ?", r: "Chaque QR rapporte des XP une fois par jour. Le lendemain, il redevient actif." },
       { id: "reseau", q: "Le réseau ne passe pas, je perds mes points ?", r: "Non. Tes réponses au blind test sont renvoyées automatiquement, et le Wi-Fi gratuit Telco+ est disponible près des scènes." },
       { id: "batterie", q: "Mon téléphone n'a plus de batterie.", r: "Des bornes de recharge gratuites sont à la Consigne (16h à 3h) et au Salon Telco+. Ta partie est sauvegardée : rien n'est perdu." },
-      { id: "lots", q: "Jusqu'à quand puis-je retirer mes lots ?", r: "Jusqu'au dimanche 23h au Stand DOMAF Quest, avec ton bon de retrait et ton billet. Les lots non retirés ne sont pas envoyés par la poste." },
+      { id: "lots", q: "Jusqu'à quand puis-je retirer mes lots ?", r: "Jusqu'au dimanche 23h au Stand Vimas Quest, avec ton bon de retrait et ton billet. Les lots non retirés ne sont pas envoyés par la poste." },
       { id: "mineurs", q: "Les mineurs peuvent-ils jouer ?", r: "Oui, à partir de 12 ans, accompagnés d'un adulte sur le site. Les lots avec de l'alcool ne sont jamais remis aux mineurs." },
       { id: "sortie", q: "Puis-je sortir et revenir ?", r: "Oui, ton bracelet permet de sortir et de revenir autant de fois que tu veux jusqu'à 1h du matin." },
       { id: "pseudo", q: "Mon pseudo est-il visible par tout le monde ?", r: "Oui, dans les classements et sur l'écran géant. Il ne contient jamais ton nom : choisis un pseudo qui ne permet pas de t'identifier." },
-      { id: "donnees", q: "Comment supprimer mes données de jeu ?", r: "Passe au Stand DOMAF Quest avec ton code secret : l'équipe efface ta partie (points, badges, collection, votes). Pour simplement quitter ta partie sur ce téléphone, utilise « Déconnecter ce téléphone » en bas de cette page." }
+      { id: "donnees", q: "Comment supprimer mes données de jeu ?", r: "Passe au Stand Vimas Quest avec ton code secret : l'équipe efface ta partie (points, badges, collection, votes). Pour simplement quitter ta partie sur ce téléphone, utilise « Déconnecter ce téléphone » en bas de cette page." }
     ]
   },
 
@@ -212,14 +212,14 @@ window.MOCK = {
     {"id": 31, "code": "S33", "theme": "profil", "moment": "toujours", "chaqueJour": false, "ordreFixe": true, "type": "choix", "question": "Tu as des enfants ?", "options": [{"valeur": "oui", "libelle": "Oui"}, {"valeur": "non", "libelle": "Non"}]},
     {"id": 32, "code": "N1", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": true, "type": "choix", "question": "Ta journée, tu la notes comment ?", "options": [{"valeur": "decevante", "libelle": "Décevante"}, {"valeur": "moyenne", "libelle": "Moyenne"}, {"valeur": "bien", "libelle": "Bien"}, {"valeur": "tres-bien", "libelle": "Très bien"}, {"valeur": "inoubliable", "libelle": "Inoubliable"}]},
     {"id": 33, "code": "N2", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": true, "type": "artiste", "question": "Ton concert préféré aujourd'hui ?"},
-    {"id": 34, "code": "N3", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": false, "type": "choix", "question": "Ce qui t'a le plus plu aujourd'hui ?", "options": [{"valeur": "la-musique", "libelle": "La musique"}, {"valeur": "l-ambiance", "libelle": "L'ambiance"}, {"valeur": "le-jeu-domaf-quest", "libelle": "Le jeu DOMAF Quest"}, {"valeur": "la-nourriture", "libelle": "La nourriture"}, {"valeur": "l-organisation", "libelle": "L'organisation"}, {"valeur": "les-rencontres", "libelle": "Les rencontres"}]},
+    {"id": 34, "code": "N3", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": false, "type": "choix", "question": "Ce qui t'a le plus plu aujourd'hui ?", "options": [{"valeur": "la-musique", "libelle": "La musique"}, {"valeur": "l-ambiance", "libelle": "L'ambiance"}, {"valeur": "le-jeu-domaf-quest", "libelle": "Le jeu Vimas Quest"}, {"valeur": "la-nourriture", "libelle": "La nourriture"}, {"valeur": "l-organisation", "libelle": "L'organisation"}, {"valeur": "les-rencontres", "libelle": "Les rencontres"}]},
     {"id": 35, "code": "N4", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": true, "type": "choix", "question": "L'attente à l'entrée ?", "options": [{"valeur": "rapide", "libelle": "Rapide"}, {"valeur": "correcte", "libelle": "Correcte"}, {"valeur": "trop-longue", "libelle": "Trop longue"}]},
     {"id": 36, "code": "N5", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": true, "type": "choix", "question": "L'attente au bar ?", "options": [{"valeur": "rapide", "libelle": "Rapide"}, {"valeur": "correcte", "libelle": "Correcte"}, {"valeur": "trop-longue", "libelle": "Trop longue"}]},
     {"id": 37, "code": "N6", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": true, "type": "choix", "question": "L'attente aux food-trucks ?", "options": [{"valeur": "rapide", "libelle": "Rapide"}, {"valeur": "correcte", "libelle": "Correcte"}, {"valeur": "trop-longue", "libelle": "Trop longue"}]},
     {"id": 38, "code": "N7", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": true, "type": "choix", "question": "Les toilettes ?", "options": [{"valeur": "propres-et-rapides", "libelle": "Propres et rapides"}, {"valeur": "correctes", "libelle": "Correctes"}, {"valeur": "a-revoir", "libelle": "À revoir"}]},
     {"id": 39, "code": "N8", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": true, "type": "choix", "question": "Combien as-tu dépensé aujourd'hui, sans le billet ?", "options": [{"valeur": "rien-du-tout", "libelle": "Rien du tout"}, {"valeur": "moins-de-2-000-fcfa", "libelle": "Moins de 2 000 FCFA"}, {"valeur": "2-000-a-5-000-fcfa", "libelle": "2 000 à 5 000 FCFA"}, {"valeur": "5-000-a-10-000-fcfa", "libelle": "5 000 à 10 000 FCFA"}, {"valeur": "plus-de-10-000-fcfa", "libelle": "Plus de 10 000 FCFA"}]},
     {"id": 40, "code": "N9", "theme": "soir", "moment": "soir", "chaqueJour": true, "ordreFixe": false, "type": "choix", "question": "Ce qu'on doit améliorer en priorité ?", "options": [{"valeur": "plus-de-stands", "libelle": "Plus de stands"}, {"valeur": "moins-d-attente", "libelle": "Moins d'attente"}, {"valeur": "plus-d-activites", "libelle": "Plus d'activités"}, {"valeur": "plus-de-place", "libelle": "Plus de place"}, {"valeur": "la-nourriture", "libelle": "La nourriture"}, {"valeur": "rien-c-etait-bien", "libelle": "Rien, c'était bien", "bas": true}]},
-    {"id": 41, "code": "N10", "theme": "soir", "moment": "soir", "chaqueJour": false, "ordreFixe": true, "type": "choix", "question": "Conseillerais-tu DOMAF Quest à un ami ? (0 = pas du tout, 10 = carrément)", "options": [{"valeur": "0", "libelle": "0"}, {"valeur": "1", "libelle": "1"}, {"valeur": "2", "libelle": "2"}, {"valeur": "3", "libelle": "3"}, {"valeur": "4", "libelle": "4"}, {"valeur": "5", "libelle": "5"}, {"valeur": "6", "libelle": "6"}, {"valeur": "7", "libelle": "7"}, {"valeur": "8", "libelle": "8"}, {"valeur": "9", "libelle": "9"}, {"valeur": "10", "libelle": "10"}]},
+    {"id": 41, "code": "N10", "theme": "soir", "moment": "soir", "chaqueJour": false, "ordreFixe": true, "type": "choix", "question": "Conseillerais-tu Vimas Quest à un ami ? (0 = pas du tout, 10 = carrément)", "options": [{"valeur": "0", "libelle": "0"}, {"valeur": "1", "libelle": "1"}, {"valeur": "2", "libelle": "2"}, {"valeur": "3", "libelle": "3"}, {"valeur": "4", "libelle": "4"}, {"valeur": "5", "libelle": "5"}, {"valeur": "6", "libelle": "6"}, {"valeur": "7", "libelle": "7"}, {"valeur": "8", "libelle": "8"}, {"valeur": "9", "libelle": "9"}, {"valeur": "10", "libelle": "10"}]},
     {"id": 42, "code": "N11", "theme": "soir", "moment": "soir", "chaqueJour": false, "ordreFixe": true, "type": "choix", "question": "Tu reviendras au DOMAF l'an prochain ?", "options": [{"valeur": "oui-sur", "libelle": "Oui, sûr"}, {"valeur": "peut-etre", "libelle": "Peut-être"}, {"valeur": "non", "libelle": "Non"}]}
   ],
 
@@ -262,7 +262,7 @@ window.MOCK = {
     { id: "st-kora",         cat: "stand", nom: "Maison Kora",       x: 632, y: 420, desc: "Artisans luthiers, essais d'instruments." },
     { id: "st-brasserie",    cat: "stand", nom: "Brasserie du Port", x: 560, y: 425, desc: "Bar central, sur la pelouse." },
     { id: "st-fraicheur",    cat: "stand", nom: "Fraîcheur Lab",     x: 632, y: 265, desc: "Brumisateurs et gourdes à remplir." },
-    { id: "st-quest",    cat: "stand", nom: "Stand DOMAF Quest",   x: 615, y: 550, horaires: "16h à 23h", desc: "Accueil du jeu, retrait des lots, aide aux joueurs." },
+    { id: "st-quest",    cat: "stand", nom: "Stand Vimas Quest",   x: 615, y: 550, horaires: "16h à 23h", desc: "Accueil du jeu, retrait des lots, aide aux joueurs." },
 
     { id: "st-yassa",        cat: "food", nom: "Chez Yassa",       x: 372, y: 150, desc: "Village food, coin nord-ouest." },
     { id: "st-braise",       cat: "food", nom: "Le Braisé",        x: 418, y: 178, desc: "Village food." },
@@ -298,7 +298,7 @@ window.MOCK = {
     { titre: "Crée ta carte",         texte: "Un pseudo, une pochette, et tu reçois un code secret. Pas de mot de passe à retenir.", gain: "Carte créée" },
     { titre: "Chasse les QR du site",   texte: "Scènes, stands, food-trucks, dédicaces et quelques recoins bien cachés.",                  gain: "Des XP à chaque QR" },
     { titre: "Remplis tes missions",    texte: "Trois concerts sur trois scènes, un QR près de la grande scène, un vote pour ton stand préféré…", gain: "Jetons et badges" },
-    { titre: "Fais tourner la roue",    texte: "Dépense tes jetons et retire ton lot au Stand DOMAF Quest.",       gain: "Lots réels" }
+    { titre: "Fais tourner la roue",    texte: "Dépense tes jetons et retire ton lot au Stand Vimas Quest.",       gain: "Lots réels" }
   ],
 
   /* Seuils = ceux de la base (rank_for_level(level_for_xp(xp)) : niveaux 3, 6,
@@ -343,7 +343,7 @@ window.MOCK = {
     { categorie: "Style",      question: "De quel style s'agit-il ?",                   choix: ["Soul", "Rock", "Fanfare", "Électro"],                                     bonne: 0, reponse: "Ama Rise, « Encore une fois »",       anecdote: "Chanté en trois langues.",                          motif: [60, 63, 67, 70, 68, 67, 63, 60], onde: "sine",     tempo: 80 },
     { categorie: "Instrument", question: "Quelle percussion entend-on ?",               choix: ["Batterie", "Cajón", "Djembé", "Tambour d'eau"],                           bonne: 2, reponse: "Kalé & les Ondes, « Pluie »",         anecdote: "Le djembé vient d'un atelier de Bafoussam.",        motif: [48, 48, 55, 48, 51, 48, 46, 48], onde: "square",   tempo: 104 },
     { categorie: "Année",      question: "En quelle année est sorti ce titre ?",        choix: ["1998", "2004", "2011", "2021"],                                           bonne: 1, reponse: "Les Lampadaires, « Rue des Palmiers »", anecdote: "Réédité pour les 20 ans du groupe.",               motif: [62, 66, 69, 74, 73, 69, 66, 62], onde: "sawtooth", tempo: 122 },
-    { categorie: "Artiste",    question: "Quel groupe de l'affiche joue ici ?",         choix: ["Tanka", "Les Lampadaires", "Pixel Griot", "Kalé & les Ondes"],            bonne: 1, reponse: "Les Lampadaires, « Coupure de courant »", anecdote: "Joué pour la première fois à DOMAF Quest 2023.",  motif: [59, 62, 66, 71, 69, 66, 64, 62], onde: "sawtooth", tempo: 132 },
+    { categorie: "Artiste",    question: "Quel groupe de l'affiche joue ici ?",         choix: ["Tanka", "Les Lampadaires", "Pixel Griot", "Kalé & les Ondes"],            bonne: 1, reponse: "Les Lampadaires, « Coupure de courant »", anecdote: "Joué pour la première fois à Vimas Quest 2023.",  motif: [59, 62, 66, 71, 69, 66, 64, 62], onde: "sawtooth", tempo: 132 },
     { categorie: "Style",      question: "De quel style s'agit-il ?",                   choix: ["Psyché", "Dub", "Afro-pop", "Jazz"],                                      bonne: 3, reponse: "Orchestre Minuit, « Swing du port »", anecdote: "Improvisé à 80 % sur scène.",                      motif: [65, 69, 72, 75, 74, 72, 69, 65], onde: "sine",     tempo: 116 },
     { categorie: "Finale",     question: "Qui clôture le festival dimanche ?",          choix: ["Tanka", "Nova Kassa", "Orchestre Minuit", "Ama Rise"],                    bonne: 0, reponse: "Tanka, « Dernier tour »",             anecdote: "Rendez-vous dimanche à 21h45, Scène Soleil.",      motif: [67, 71, 74, 79, 78, 74, 71, 67], onde: "triangle", tempo: 124 }
   ],
@@ -363,7 +363,7 @@ window.MOCK = {
     "Des QR codes cachés sur tout le site",
     "Classement en direct sur l'écran géant",
     "Votes ouverts pour ton stand préféré",
-    "Lots à retirer au stand DOMAF Quest"
+    "Lots à retirer au stand Vimas Quest"
   ],
 
   /* ---------- Inscription (page 2) ---------- */
@@ -470,7 +470,7 @@ window.MOCK = {
       jour: { scans: 7, xp: 320 },
       favoris: ["a1", "a6", "a7", "a12", "a11", "a9"],
       progression: { m1: 2, m3: 1, m2: 0, m4: 0, m5: 1, m9: 1, m8: 1, m10: 0 },
-      terminees: { m5: { heure: "17:02" }, m9: { heure: "18:15", par: "Awa, équipe DOMAF Quest" } },
+      terminees: { m5: { heure: "17:02" }, m9: { heure: "18:15", par: "Awa, équipe Vimas Quest" } },
       collection: {
         badges: {
           "b-premiere-note": { jour: "2026-11-27", heure: "17:02" },
@@ -566,7 +566,7 @@ window.MOCK = {
       { id: "s8", type: "lot",    lot: "lot-pass",      court: "Pass 2027", poids: 0.5 }
     ],
     retrait: {
-      lieu: "Stand DOMAF Quest, entrée principale",
+      lieu: "Stand Vimas Quest, entrée principale",
       horaires: "Tous les jours de 16h à 23h",
       limite: { jour: "dim", heure: "23:00" }
     }
@@ -613,7 +613,7 @@ window.MOCK = {
     { id: "st-brasserie", nom: "Brasserie du Port",  type: "stand",     qr: "QR-BRASS",    zone: "Bar central" },
     { id: "st-telco",     nom: "Salon Telco+",       type: "stand",     qr: "QR-TELCO",    zone: "Entrée nord" },
     { id: "st-fraicheur", nom: "Fraîcheur Lab",      type: "stand",     qr: "QR-FRAICH",   zone: "Derrière Le Dock" },
-    { id: "st-quest", nom: "Stand DOMAF Quest",    type: "stand",     qr: "QR-RSN",      zone: "Entrée principale" },
+    { id: "st-quest", nom: "Stand Vimas Quest",    type: "stand",     qr: "QR-RSN",      zone: "Entrée principale" },
     { id: "st-yassa",     nom: "Chez Yassa",         type: "foodtruck", qr: "QR-FT-YASSA", zone: "Village food" },
     { id: "st-braise",    nom: "Le Braisé",          type: "foodtruck", qr: "QR-FT-BRAISE", zone: "Village food" },
     { id: "st-sucre",     nom: "Sucre & Sel",        type: "foodtruck", qr: "QR-FT-SUCRE", zone: "Village food" },

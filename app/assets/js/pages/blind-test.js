@@ -175,7 +175,7 @@ document.addEventListener("app:ready", async () => {
           ${d.repondu ? `<p>Répondu en ${(d.temps / 1000).toFixed(1).replace(".", ",")} s</p>` : "<p>Aucune réponse reçue pour cette question.</p>"}
           ${s.serie >= 2 ? `<p class="resultat-j__serie">Série de ${s.serie} bonnes réponses</p>` : ""}
         </div>
-        <div class="bonne-rep" style="--c:${["var(--sodium)", "var(--rose)", "var(--vert)", "#8FA6FF"][r.bonne]}">
+        <div class="bonne-rep" style="--c:${["var(--sodium)", "var(--rose)", "var(--vert)", "#FF9A85"][r.bonne]}">
           ${forme(r.bonne)}
           <span><strong>${esc(q.choix[r.bonne])}</strong><span class="texte-clair">${esc(r.reponse)}</span></span>
         </div>
@@ -236,7 +236,7 @@ document.addEventListener("app:ready", async () => {
           <p>Ta place finale</p>
           <p class="recap-j__rang chiffres">${rangTxt(rc.rang)}</p>
           <p><strong class="chiffres">${fmt.nombre(rc.total)}</strong> points, ${rc.bonnes}/${rc.total_questions} bonnes réponses</p>
-          ${rc.rang <= 3 ? "<p><strong>Tu es sur le podium ! Ton lot t'attend au stand DOMAF Quest.</strong></p>" : ""}
+          ${rc.rang <= 3 ? "<p><strong>Tu es sur le podium ! Ton lot t'attend au stand Vimas Quest.</strong></p>" : ""}
         </div>
         <ul class="recompenses-j">${recompenses}</ul>
         <div class="actions-j">
@@ -587,7 +587,7 @@ document.addEventListener("app:ready", async () => {
             ${m && m.temps != null ? `<p>Répondu en ${(m.temps / 1000).toFixed(1).replace(".", ",")} s</p>` : m ? "" : "<p>Aucune réponse reçue pour cette question.</p>"}
             ${moi.serie >= 2 ? `<p class="resultat-j__serie">Série de ${moi.serie} bonnes réponses</p>` : ""}
           </div>
-          <div class="bonne-rep" style="--c:${["var(--sodium)", "var(--rose)", "var(--vert)", "#8FA6FF"][r.bonne] || "var(--sodium)"}">
+          <div class="bonne-rep" style="--c:${["var(--sodium)", "var(--rose)", "var(--vert)", "#FF9A85"][r.bonne] || "var(--sodium)"}">
             ${forme(r.bonne)}
             <span><strong>${esc(q.choix[r.bonne])}</strong>${r.reponse ? `<span class="texte-clair">${esc(r.reponse)}</span>` : ""}</span>
           </div>
@@ -639,7 +639,7 @@ document.addEventListener("app:ready", async () => {
             <p>Ta place finale</p>
             <p class="recap-j__rang chiffres">${rangTxt(rc.rang)}</p>
             <p><strong class="chiffres">${fmt.nombre(rc.points)}</strong> points, ${rc.bonnes}/${rc.total_questions} bonnes réponses</p>
-            ${rc.rang <= 3 && rc.points > 0 ? "<p><strong>Tu es sur le podium ! Ton lot t'attend au Stand DOMAF Quest.</strong></p>" : ""}
+            ${rc.rang <= 3 && rc.points > 0 ? "<p><strong>Tu es sur le podium ! Ton lot t'attend au Stand Vimas Quest.</strong></p>" : ""}
           </div>
           ${recompenses ? `<ul class="recompenses-j">${recompenses}</ul>` : ""}
           ${bandeauBoss()}

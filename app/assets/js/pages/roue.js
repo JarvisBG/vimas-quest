@@ -16,10 +16,10 @@ document.addEventListener("app:ready", async () => {
   const dlgBon = $("[data-bon]");
 
   const COULEUR = {
-    xp: ["#1F3FD1", "#FAFAF7"], jetons: ["#FFD23F", "#0A1440"],
-    commun: ["#FAFAF7", "#0A1440"], rare: ["#2BB673", "#0A1440"],
-    epique: ["#FF5FA2", "#0A1440"], legendaire: ["#0A1440", "#FFD23F"],
-    rien: ["#E6E1D3", "#6A7299"]
+    xp: ["#D90A22", "#FFF8EE"], jetons: ["#FFC72C", "#3B0A12"],
+    commun: ["#FFF8EE", "#3B0A12"], rare: ["#1FA05A", "#3B0A12"],
+    epique: ["#F9A209", "#3B0A12"], legendaire: ["#3B0A12", "#FFC72C"],
+    rien: ["#E6E1D3", "#8A5A4E"]
   };
   const ICONE = { xp: "eclair", jetons: "roue", rien: "fermer" };
   const RARETE = { commun: "Commun", rare: "Rare", epique: "Épique", legendaire: "Légendaire" };
@@ -64,14 +64,14 @@ document.addEventListener("app:ready", async () => {
       return [C + r * Math.cos(rad), C + r * Math.sin(rad)];
     };
     const parts = d.segments.map((sg, i) => {
-      const [fond, encre] = sg.epuise ? ["#D3D8EA", "#6A7299"] : couleurs(sg);
+      const [fond, encre] = sg.epuise ? ["#EBD3C2", "#8A5A4E"] : couleurs(sg);
       const a1 = i * pas - pas / 2, a2 = i * pas + pas / 2;
       const [x1, y1] = pt(a1, R), [x2, y2] = pt(a2, R);
       const [ix, iy] = pt(i * pas, R * 0.84);
       const etiquette = sg.epuise ? "Épuisé" : sg.court;
       return `
         <g>
-          <path d="M${C} ${C} L${x1.toFixed(2)} ${y1.toFixed(2)} A${R} ${R} 0 0 1 ${x2.toFixed(2)} ${y2.toFixed(2)} Z" fill="${fond}" stroke="#0A1440" stroke-width="3"/>
+          <path d="M${C} ${C} L${x1.toFixed(2)} ${y1.toFixed(2)} A${R} ${R} 0 0 1 ${x2.toFixed(2)} ${y2.toFixed(2)} Z" fill="${fond}" stroke="#3B0A12" stroke-width="3"/>
           ${sg.epuise ? `<path d="M${C} ${C} L${x1.toFixed(2)} ${y1.toFixed(2)} A${R} ${R} 0 0 1 ${x2.toFixed(2)} ${y2.toFixed(2)} Z" fill="url(#raye)"/>` : ""}
           <use href="#i-${sg.epuise ? "cadenas" : iconeDe(sg)}" x="${(ix - 13).toFixed(1)}" y="${(iy - 13).toFixed(1)}" width="26" height="26"
             fill="none" stroke="${encre}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
@@ -83,9 +83,9 @@ document.addEventListener("app:ready", async () => {
     disque.innerHTML = `
       <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
         <defs><pattern id="raye" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <rect width="4" height="10" fill="rgba(10,20,64,.12)"/></pattern></defs>
+          <rect width="4" height="10" fill="rgba(59,10,18,.12)"/></pattern></defs>
         ${parts}
-        <circle cx="${C}" cy="${C}" r="${R - 1.5}" fill="none" stroke="#0A1440" stroke-width="3"/>
+        <circle cx="${C}" cy="${C}" r="${R - 1.5}" fill="none" stroke="#3B0A12" stroke-width="3"/>
       </svg>`;
     disque.style.transform = `rotate(${angle}deg)`;
   }
@@ -287,7 +287,7 @@ document.addEventListener("app:ready", async () => {
     if (App.reduceMotion) return;
     const zone = $("[data-confettis]");
     conteneur.append(zone); // dans la boîte de dialogue pour passer au premier plan
-    const c = ["#FFD23F", "#FF5FA2", "#2BB673", "#1F3FD1", "#FAFAF7"];
+    const c = ["#FFC72C", "#F9A209", "#1FA05A", "#D90A22", "#FFF8EE"];
     zone.innerHTML = Array.from({ length: 60 }, (_, i) =>
       `<i style="--x:${Math.random() * 100}%;--c:${c[i % 5]};--r:${Math.random()}s;--d:${2 + Math.random() * 2}s;--dx:${(Math.random() - 0.5) * 200}px;--rot:${360 + Math.random() * 720}deg"></i>`).join("");
     setTimeout(() => (zone.innerHTML = ""), 4500);

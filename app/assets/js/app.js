@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DOMAF Quest — app.js (commun à toutes les pages)
+   Vimas Quest — app.js (commun à toutes les pages)
    Contenu : icônes SVG, accès aux données, session, navigation, utilitaires.
    Aucune dépendance. Expose window.App.
    ========================================================================== */
@@ -1487,7 +1487,7 @@
       const m = (await App.data.get("missions")).find((x) => x.id === id);
       const partie = App.partie.get(joueur.id);
       partie.progression[id] = m.objectif;
-      partie.terminees[id] = { heure: App.heureFestival().replace("h", ":"), par: "Awa, équipe DOMAF Quest" };
+      partie.terminees[id] = { heure: App.heureFestival().replace("h", ":"), par: "Awa, équipe Vimas Quest" };
       partie.activite.unshift({ heure: partie.terminees[id].heure, jour: App.jourFestival(), type: "mission", texte: `Mission ${m.titre} validée`, xp: m.xp });
       App.partie.set(joueur.id, partie);
       const maj = { ...joueur, xp: joueur.xp + m.xp, jetons: joueur.jetons + m.jetons };
@@ -1699,7 +1699,7 @@
   };
 
   /* ---------- Génération de QR en SVG (nécessite assets/js/vendor/qrcode-generator.min.js) ---------- */
-  App.qrSvg = (texte, { niveau = "M", marge = 2, encre = "#0A1440", fond = "#FFFFFF", titre = "" } = {}) => {
+  App.qrSvg = (texte, { niveau = "M", marge = 2, encre = "#3B0A12", fond = "#FFFFFF", titre = "" } = {}) => {
     if (typeof window.qrcode !== "function") throw new Error("qrcode-generator n'est pas chargé sur cette page");
     const qr = window.qrcode(0, niveau);
     qr.addData(texte);

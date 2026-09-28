@@ -23,7 +23,7 @@
 .rayon__barre i { display: block; height: 100%; width: var(--p, 0%); background: var(--bleu); border-radius: inherit; transition: width .6s var(--ease-sortie); }
 .rayon[aria-selected="true"] { background: var(--nuit); color: var(--papier); transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--sodium); }
 .rayon[aria-selected="true"] .rayon__compte { color: var(--sodium); }
-.rayon[aria-selected="true"] .rayon__barre { background: rgba(250, 250, 247, .2); }
+.rayon[aria-selected="true"] .rayon__barre { background: rgba(255, 248, 238, .2); }
 .rayon[aria-selected="true"] .rayon__barre i { background: var(--sodium); }
 
 .filtre-c { display: flex; gap: var(--s-2); flex-wrap: wrap; }
@@ -91,8 +91,8 @@
 @keyframes reflet { to { background-position: -150% 0, 0 0; } }
 
 .autocollant.is-verrou .autocollant__ombre { filter: none; }
-.autocollant.is-verrou .autocollant__decoupe { background: #C3C9E0; }
-.autocollant.is-verrou .autocollant__fond { background: #E1E5F2; color: #8C93B3; background-image: none; }
+.autocollant.is-verrou .autocollant__decoupe { background: #E3C6B6; }
+.autocollant.is-verrou .autocollant__fond { background: #F3E2D4; color: #A5857A; background-image: none; }
 .autocollant.is-verrou .autocollant__nom { color: var(--texte-doux); font-weight: 600; }
 
 .grille-c .autocollant { transform: rotate(var(--rot, 0deg)); }
@@ -135,11 +135,11 @@
 .signature path { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .pastille-dedicace { position: absolute; top: var(--s-2); left: var(--s-2); z-index: 3; }
 
-.pochette-a.is-verrou .pochette-a__disque { box-shadow: none; border-style: dashed; background: #E1E5F2; }
+.pochette-a.is-verrou .pochette-a__disque { box-shadow: none; border-style: dashed; background: #F3E2D4; }
 .pochette-a.is-verrou .pochette-a__disque::after { display: none; }
-.pochette-a.is-verrou .pochette-a__art { background: repeating-linear-gradient(45deg, #E1E5F2 0 8px, #D3D8EA 8px 16px); display: grid; place-items: center; color: #8C93B3; }
+.pochette-a.is-verrou .pochette-a__art { background: repeating-linear-gradient(45deg, #F3E2D4 0 8px, #EBD3C2 8px 16px); display: grid; place-items: center; color: #A5857A; }
 .pochette-a.is-verrou .pochette-a__art .icon { width: 34%; height: 34%; }
-.pochette-a.is-verrou .pochette-a__titre { background: #F1F3FA; color: var(--texte-doux); border-top-style: dashed; }
+.pochette-a.is-verrou .pochette-a__titre { background: #FBF0E4; color: var(--texte-doux); border-top-style: dashed; }
 
 /* ---------- Tampons (stands) ---------- */
 .tampon-s { display: grid; justify-items: center; }
@@ -157,12 +157,12 @@
 .tampon-s__nom { font-family: var(--font-affiche); text-transform: uppercase; font-size: 1.25rem; line-height: 1; }
 .tampon-s__date { font-size: .6875rem; font-weight: 800; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
 .tampon-s__type { font-size: .6875rem; font-weight: 700; }
-.encre-rose { --encre: #C8246B; }
+.encre-rose { --encre: #A85A00; }
 .encre-bleu { --encre: var(--bleu); }
 .encre-vert { --encre: #13784A; }
 
 .tampon-s.is-verrou .tampon-s__cadre {
-  color: #8C93B3; background: transparent; border: 2px dashed #A5ACC9; outline: none;
+  color: #A5857A; background: transparent; border: 2px dashed #C9A294; outline: none;
   transform: none; mix-blend-mode: normal;
 }
 .tampon-s.is-verrou .tampon-s__nom { font-family: var(--font-texte); text-transform: none; font-weight: 700; font-size: var(--fs-sm); color: var(--texte-doux); }

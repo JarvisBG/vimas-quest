@@ -5,7 +5,7 @@
 .plan { background: var(--papier-2); min-height: calc(100svh - var(--topbar-h)); }
 .plan__cadre { display: grid; gap: var(--s-3); padding-block: var(--s-3) var(--s-6); max-width: 60rem; }
 
-.btn-urgence { --btn-bg: #C4123F; --btn-fg: var(--papier); --btn-bord: var(--nuit); }
+.btn-urgence { --btn-bg: #A00D25; --btn-fg: var(--papier); --btn-bord: var(--nuit); }
 .btn-urgence .icon { width: 1em; height: 1em; fill: currentColor; stroke: none; }
 
 .alerte-abri {
@@ -71,8 +71,8 @@
 
 /* Dessin du site */
 .carte-p text { font-family: var(--font-affiche); text-transform: uppercase; pointer-events: none; }
-.zone-lib { font-size: 15px; fill: rgba(10, 20, 64, .45); letter-spacing: .08em; }
-.lac-lib { font-size: 22px; fill: rgba(250, 250, 247, .85); letter-spacing: .15em; }
+.zone-lib { font-size: 15px; fill: rgba(59, 10, 18, .45); letter-spacing: .08em; }
+.lac-lib { font-size: 22px; fill: rgba(255, 248, 238, .85); letter-spacing: .15em; }
 
 .marqueur { cursor: pointer; }
 .marqueur:focus { outline: none; }
@@ -125,13 +125,13 @@
 .fiche-lieu__trajet { display: flex; align-items: center; gap: var(--s-2); padding: var(--s-3); font-weight: 800; background: var(--papier-2); border-radius: var(--r-net); }
 .fiche-lieu__scene { display: grid; gap: 2px; padding: var(--s-3); border: 2px solid var(--nuit); border-radius: var(--r-net); }
 .fiche-lieu__scene strong { font-family: var(--font-affiche); font-weight: 400; font-size: 1.5rem; line-height: 1; text-transform: uppercase; }
-.fiche-lieu__scene .en-cours { color: #C4123F; font-weight: 800; }
+.fiche-lieu__scene .en-cours { color: #A00D25; font-weight: 800; }
 .fiche-lieu__actions { display: grid; gap: var(--s-2); }
 
 /* ---------- Urgence ---------- */
 .urgence__corps { display: grid; gap: var(--s-3); }
-.urgence__appel { --btn-bg: #C4123F; --btn-fg: var(--papier); }
+.urgence__appel { --btn-bg: #A00D25; --btn-fg: var(--papier); }
 .urgence__appel .icon { fill: none; }
 .urgence__conseils { display: grid; gap: var(--s-2); padding-left: 1.2em; list-style: disc; }
-.urgence__proche { padding: var(--s-3); border: 2px solid var(--nuit); border-radius: var(--r-net); background: #FFE3EE; }
+.urgence__proche { padding: var(--s-3); border: 2px solid var(--nuit); border-radius: var(--r-net); background: #FFEFD0; }
 .urgence__proche strong { display: block; font-size: var(--fs-lg); }

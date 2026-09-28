@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DOMAF Quest — ecran.js (commun aux écrans géants)
+   Vimas Quest — ecran.js (commun aux écrans géants)
    Mise à l'échelle 1920 × 1080, plein écran, curseur masqué, verrou d'écran,
    canal de commandes de la régie.
    ========================================================================== */

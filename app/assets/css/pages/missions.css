@@ -18,7 +18,7 @@
   background: var(--rose); color: var(--nuit);
   border: 3px solid var(--nuit); border-radius: var(--r-net);
   box-shadow: 6px 6px 0 var(--nuit);
-  background-image: repeating-linear-gradient(-45deg, rgba(10, 20, 64, .08) 0 12px, transparent 12px 24px);
+  background-image: repeating-linear-gradient(-45deg, rgba(59, 10, 18, .08) 0 12px, transparent 12px 24px);
 }
 .eclair[hidden] { display: none; }
 .eclair__haut { display: flex; justify-content: space-between; align-items: center; gap: var(--s-2); }
@@ -83,7 +83,7 @@
 .mcarte__toggle .icon { transform: rotate(90deg); transition: transform var(--duree); }
 .mcarte__toggle[aria-expanded="true"] .icon { transform: rotate(-90deg); }
 
-.mcarte__details { display: grid; gap: var(--s-3); padding-top: var(--s-3); border-top: 2px dashed rgba(10, 20, 64, .3); }
+.mcarte__details { display: grid; gap: var(--s-3); padding-top: var(--s-3); border-top: 2px dashed rgba(59, 10, 18, .3); }
 .mcarte__details[hidden] { display: none; }
 .mcarte__actions { display: grid; gap: var(--s-2); }
 

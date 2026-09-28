@@ -195,7 +195,7 @@ document.addEventListener("app:ready", async () => {
   /* ======================================================================
      Vues
      ====================================================================== */
-  const COULEURS_CONFETTIS = ["var(--sodium)", "var(--rose)", "var(--vert)", "var(--papier)", "#8FA6FF"];
+  const COULEURS_CONFETTIS = ["var(--sodium)", "var(--rose)", "var(--vert)", "var(--papier)", "#FF9A85"];
   const mmss = (ms) => {
     const s = Math.ceil(ms / 1000);
     return `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
@@ -383,7 +383,7 @@ document.addEventListener("app:ready", async () => {
           <ol class="suite-bt">
             ${e.podium.slice(3).map((j) => `<li><b>${j.rang}</b><span>${esc(j.pseudo)}</span><span class="chiffres">${fmt.nombre(j.points)}</span></li>`).join("")}
           </ol>
-          <p class="fin-lots">Le podium retire son lot au stand DOMAF Quest. Le top 10 gagne le badge Oreille d'or.</p>
+          <p class="fin-lots">Le podium retire son lot au stand Vimas Quest. Le top 10 gagne le badge Oreille d'or.</p>
         </div>
       </div>`;
     // La fête seulement pour une manche vue en direct (pas pour un écran rallumé après)
@@ -418,7 +418,7 @@ document.addEventListener("app:ready", async () => {
       const t = Date.now() / 180;
       valeurs = Array.from({ length: n }, (_, i) => enPause() || etat?.phase !== "question" ? 0.08 : 0.25 + 0.7 * Math.abs(Math.sin(t + i * 0.9) * Math.cos(t / 3 + i)));
     }
-    g.fillStyle = "#FF5FA2";
+    g.fillStyle = "#F9A209";
     valeurs.forEach((v, i) => {
       const h = Math.max(6, v * c.height);
       g.fillRect(i * larg + 2, c.height - h, larg - 4, h);

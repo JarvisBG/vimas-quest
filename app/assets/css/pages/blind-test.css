@@ -25,11 +25,11 @@ body.is-en-jeu .bt-j { min-height: calc(100svh - var(--topbar-h)); }
 .bt-j__progres { display: grid; gap: var(--s-2); font-weight: 800; }
 .bt-j__progres[hidden] { display: none; }
 .bt-j__pastilles { display: flex; gap: 3px; }
-.bt-j__pastilles i { flex: 1; height: 6px; border-radius: 3px; background: rgba(250, 250, 247, .2); }
+.bt-j__pastilles i { flex: 1; height: 6px; border-radius: 3px; background: rgba(255, 248, 238, .2); }
 .bt-j__pastilles i.is-fait { background: var(--sodium); }
 .bt-j__pastilles i.is-actuel { background: var(--rose); }
 .bt-j__vue { display: grid; align-content: start; }
-.bt-j__etat { display: flex; align-items: center; justify-content: center; gap: var(--s-2); font-size: var(--fs-xs); font-weight: 700; color: #AEB6DC; }
+.bt-j__etat { display: flex; align-items: center; justify-content: center; gap: var(--s-2); font-size: var(--fs-xs); font-weight: 700; color: #E6B7A2; }
 .bt-j__point { width: 8px; height: 8px; border-radius: 50%; background: var(--vert); }
 .bt-j__etat.is-ko .bt-j__point { background: var(--rose); animation: pulse-bt 1s infinite; }
 @keyframes pulse-bt { 50% { opacity: .2; } }
@@ -37,7 +37,7 @@ body.is-en-jeu .bt-j { min-height: calc(100svh - var(--topbar-h)); }
 .vue-j { display: grid; gap: var(--s-4); animation: vue-j .35s var(--ease-sortie); }
 @keyframes vue-j { from { opacity: 0; transform: translateY(12px); } }
 .vue-j__titre { font-size: clamp(2.5rem, 13vw, 3.5rem); line-height: .95; }
-.texte-clair { color: #C9D1F5; }
+.texte-clair { color: #F7D4C4; }
 
 /* ---------- Attente ---------- */
 .rdv {
@@ -53,10 +53,10 @@ body.is-en-jeu .bt-j { min-height: calc(100svh - var(--topbar-h)); }
   content: counter(r); display: grid; place-items: center; width: 40px; height: 40px;
   font-family: var(--font-affiche); font-size: 1.25rem; color: var(--nuit); background: var(--sodium); border-radius: 50%;
 }
-.gains-bt { display: grid; gap: var(--s-2); padding: var(--s-4); border: 2px dashed rgba(250, 250, 247, .35); border-radius: var(--r-net); }
+.gains-bt { display: grid; gap: var(--s-2); padding: var(--s-4); border: 2px dashed rgba(255, 248, 238, .35); border-radius: var(--r-net); }
 .gains-bt p { display: flex; justify-content: space-between; gap: var(--s-3); }
 .gains-bt strong { color: var(--sodium); text-align: right; }
-.demo-bt { display: grid; gap: var(--s-2); font-size: var(--fs-sm); color: #C9D1F5; }
+.demo-bt { display: grid; gap: var(--s-2); font-size: var(--fs-sm); color: #F7D4C4; }
 .demo-bt .btn { color: var(--papier); }
 
 /* ---------- Intro ---------- */
@@ -71,7 +71,7 @@ body.is-en-jeu .bt-j { min-height: calc(100svh - var(--topbar-h)); }
 .q-cat { font-size: var(--fs-sm); font-weight: 800; color: var(--sodium); }
 .q-texte { font-size: var(--fs-lg); font-weight: 800; line-height: 1.2; }
 .q-chrono { display: grid; grid-template-columns: 1fr auto; gap: var(--s-3); align-items: center; }
-.q-chrono__barre { height: 12px; background: rgba(250, 250, 247, .15); border-radius: 6px; overflow: hidden; }
+.q-chrono__barre { height: 12px; background: rgba(255, 248, 238, .15); border-radius: 6px; overflow: hidden; }
 .q-chrono__barre i { display: block; height: 100%; background: var(--sodium); transform-origin: left; transition: transform .25s linear; }
 .q-chrono.is-urgent .q-chrono__barre i { background: var(--rose); }
 .q-chrono__s { font-family: var(--font-affiche); font-size: 2rem; line-height: 1; min-width: 2ch; text-align: right; font-variant-numeric: tabular-nums; }
@@ -92,7 +92,7 @@ body.is-en-jeu .bt-j { min-height: calc(100svh - var(--topbar-h)); }
 .touche:nth-child(1) { --c: var(--sodium); }
 .touche:nth-child(2) { --c: var(--rose); }
 .touche:nth-child(3) { --c: var(--vert); }
-.touche:nth-child(4) { --c: #8FA6FF; }
+.touche:nth-child(4) { --c: #FF9A85; }
 .touche:active { transform: translateY(5px); box-shadow: 0 1px 0 rgba(0, 0, 0, .45); }
 .touche__forme { width: 42px; height: 42px; background: var(--nuit); display: grid; place-items: center; color: var(--c); font-family: var(--font-affiche); font-size: 1.5rem; }
 .forme-0 { border-radius: 50%; }
@@ -105,7 +105,7 @@ body.is-en-jeu .bt-j { min-height: calc(100svh - var(--topbar-h)); }
 
 .envoi {
   display: flex; align-items: center; gap: var(--s-2); justify-content: center;
-  padding: var(--s-3); font-weight: 800; background: rgba(250, 250, 247, .1); border-radius: var(--r-net);
+  padding: var(--s-3); font-weight: 800; background: rgba(255, 248, 238, .1); border-radius: var(--r-net);
 }
 .envoi[hidden] { display: none; }
 .envoi .icon { color: var(--vert); }
@@ -119,20 +119,20 @@ body.is-en-jeu .bt-j { min-height: calc(100svh - var(--topbar-h)); }
 }
 .resultat-j--juste { background: var(--vert); color: var(--nuit); }
 .resultat-j--faux { background: var(--rose); color: var(--nuit); }
-.resultat-j--absent { background: rgba(250, 250, 247, .1); color: var(--papier); border-color: rgba(250, 250, 247, .3); }
+.resultat-j--absent { background: rgba(255, 248, 238, .1); color: var(--papier); border-color: rgba(255, 248, 238, .3); }
 .resultat-j__titre { font-size: 2.5rem; line-height: 1; }
 .resultat-j__points { font-family: var(--font-affiche); font-size: 5rem; line-height: .9; }
 .resultat-j__serie { padding: 4px 14px; font-weight: 800; background: var(--nuit); color: var(--sodium); border-radius: var(--r-pastille); }
-.bonne-rep { display: flex; align-items: center; gap: var(--s-3); padding: var(--s-3) var(--s-4); background: rgba(250, 250, 247, .08); border-radius: var(--r-net); }
+.bonne-rep { display: flex; align-items: center; gap: var(--s-3); padding: var(--s-3) var(--s-4); background: rgba(255, 248, 238, .08); border-radius: var(--r-net); }
 .bonne-rep .touche__forme { flex: none; }
 .bonne-rep strong { display: block; }
-.position-j { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-3); padding: var(--s-3) var(--s-4); border: 2px solid rgba(250, 250, 247, .25); border-radius: var(--r-net); }
+.position-j { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-3); padding: var(--s-3) var(--s-4); border: 2px solid rgba(255, 248, 238, .25); border-radius: var(--r-net); }
 .position-j__rang { font-family: var(--font-affiche); font-size: 2.5rem; line-height: 1; color: var(--sodium); }
 .position-j__rang small { font-size: .5em; }
 
 /* ---------- Classement / fin ---------- */
 .mini-top { display: grid; gap: var(--s-2); }
-.mini-top li { display: grid; grid-template-columns: 2rem auto 1fr auto; gap: var(--s-3); align-items: center; padding: var(--s-2) var(--s-3); background: rgba(250, 250, 247, .08); border-radius: var(--r-net); }
+.mini-top li { display: grid; grid-template-columns: 2rem auto 1fr auto; gap: var(--s-3); align-items: center; padding: var(--s-2) var(--s-3); background: rgba(255, 248, 238, .08); border-radius: var(--r-net); }
 .mini-top li b { font-family: var(--font-affiche); font-weight: 400; font-size: 1.5rem; color: var(--sodium); }
 .mini-top span:nth-child(3) { font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
@@ -149,9 +149,9 @@ body.is-en-jeu .bt-j { min-height: calc(100svh - var(--topbar-h)); }
 .actions-j .btn--contour { color: var(--papier); }
 
 /* Boss du blind test (mode serveur) : barre de PV collective, à la révélation */
-.boss-j { display: grid; gap: var(--s-2); padding: var(--s-3) var(--s-4); border: 2px solid rgba(250, 250, 247, .25); border-radius: var(--r-net); }
+.boss-j { display: grid; gap: var(--s-2); padding: var(--s-3) var(--s-4); border: 2px solid rgba(255, 248, 238, .25); border-radius: var(--r-net); }
 .boss-j__tete strong { font-family: var(--font-affiche); font-weight: 400; font-size: 1.5rem; }
-.boss-j__barre { height: 10px; border-radius: 5px; background: rgba(250, 250, 247, .15); overflow: hidden; }
+.boss-j__barre { height: 10px; border-radius: 5px; background: rgba(255, 248, 238, .15); overflow: hidden; }
 .boss-j__barre i { display: block; height: 100%; background: var(--rose); transform-origin: left; transition: transform .6s var(--ease-sortie); }
 .boss-j.is-vaincu .boss-j__barre i { background: var(--vert); }
 .boss-j__txt { font-size: var(--fs-sm); font-weight: 700; }

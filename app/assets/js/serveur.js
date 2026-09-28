@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DOMAF Quest — serveur.js : accès à la base Supabase
+   Vimas Quest — serveur.js : accès à la base Supabase
    Ordre de chargement : config.js, [mock.js], app.js, serveur.js, page.
    Écran géant / console : charger aussi vendor/supabase.min.js avant (temps réel).
 
@@ -212,10 +212,10 @@
     DEJA_SCANNE: "Tu as déjà scanné ce code !",
     JETONS_INSUFFISANTS: "Pas assez de jetons : scanne des QR codes pour en gagner.",
     PLAFOND_JOUR: "Tu as fait tous tes tirages du jour : la roue rouvre demain à 6 h.",
-    TICKET_REQUIS: "Il te faut un ticket pour créer ta carte. Prends-en un auprès de l'équipe DOMAF Quest, puis scanne son QR code.",
+    TICKET_REQUIS: "Il te faut un ticket pour créer ta carte. Prends-en un auprès de l'équipe Vimas Quest, puis scanne son QR code.",
     TICKET_INCONNU: "Ce ticket n'existe pas. Vérifie le code, ou demande à l'équipe.",
     TICKET_UTILISE: "Ce ticket a déjà servi : un ticket ne s'utilise qu'une fois.",
-    TICKET_ANNULE: "Ce carnet de tickets a été annulé. Va voir l'équipe DOMAF Quest.",
+    TICKET_ANNULE: "Ce carnet de tickets a été annulé. Va voir l'équipe Vimas Quest.",
     TICKET_RENDU: "Ce ticket a été rendu invendu : il ne vaut plus rien. Prends-en un neuf auprès de l'équipe.",
     PASS_REQUIS: "Ta journée de jeu n'est pas ouverte. Prends un ticket auprès de l'équipe, puis scanne son QR code.",
     NUMERO_INVALIDE: "Ce numéro ne ressemble pas à un numéro camerounais (9 chiffres, commence par 6).",
@@ -356,10 +356,10 @@
     verrouille = true;
     document.body.innerHTML =
       '<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;' +
-      'background:#0A1440;color:#fff;text-align:center;padding:24px;font-family:system-ui,sans-serif">' +
+      'background:#3B0A12;color:#fff;text-align:center;padding:24px;font-family:system-ui,sans-serif">' +
       '<div style="max-width:420px"><h1 style="font-size:1.6rem;margin:0 0 12px">Profil suspendu</h1>' +
       '<p style="line-height:1.6;opacity:.85">Ton profil a été suspendu par l\'organisation. ' +
-      'Passe au stand DOMAF Quest pour en discuter.</p>' +
+      'Passe au stand Vimas Quest pour en discuter.</p>' +
       '<button onclick="location.reload()" style="margin-top:24px;padding:14px 26px;border-radius:6px;' +
       'border:2px solid #fff;background:transparent;color:#fff;font:inherit;font-weight:700">Vérifier à nouveau</button>' +
       '</div></div>';
@@ -502,7 +502,7 @@
       roulette: () => `Roue : ${p.prize || "lot gagné"}`,
       quiz: () => "Meilleure oreille du blind test",
       profil: () => "Profil de festivalier complété",
-      bonus: () => "Bonus de l'équipe DOMAF Quest"
+      bonus: () => "Bonus de l'équipe Vimas Quest"
     };
     return {
       type: { quete: "mission" }[e.type] || e.type,

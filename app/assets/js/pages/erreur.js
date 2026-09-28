@@ -24,41 +24,41 @@ document.addEventListener("app:ready", () => {
     disque: `
       <svg viewBox="0 0 200 200">
         <g class="visu-disque visu-disque--saute">
-          <circle cx="100" cy="100" r="92" fill="#050A22" stroke="#FAFAF7" stroke-width="3"/>
-          <circle cx="100" cy="100" r="70" fill="none" stroke="rgba(250,250,247,.15)" stroke-width="2"/>
-          <circle cx="100" cy="100" r="54" fill="none" stroke="rgba(250,250,247,.12)" stroke-width="2"/>
-          <circle cx="100" cy="100" r="30" fill="#FFD23F"/>
-          <circle cx="100" cy="100" r="5" fill="#0A1440"/>
-          <path d="M30 70 L60 80 L52 92 L84 104" fill="none" stroke="#FF5FA2" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="100" cy="100" r="92" fill="#1F0409" stroke="#FFF8EE" stroke-width="3"/>
+          <circle cx="100" cy="100" r="70" fill="none" stroke="rgba(255,248,238,.15)" stroke-width="2"/>
+          <circle cx="100" cy="100" r="54" fill="none" stroke="rgba(255,248,238,.12)" stroke-width="2"/>
+          <circle cx="100" cy="100" r="30" fill="#FFC72C"/>
+          <circle cx="100" cy="100" r="5" fill="#3B0A12"/>
+          <path d="M30 70 L60 80 L52 92 L84 104" fill="none" stroke="#F9A209" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
         </g>
-        <path d="M188 20 L150 20 L118 62" fill="none" stroke="#FAFAF7" stroke-width="6" stroke-linecap="round"/>
-        <rect x="108" y="56" width="18" height="12" rx="2" fill="#FF5FA2" transform="rotate(-50 117 62)"/>
+        <path d="M188 20 L150 20 L118 62" fill="none" stroke="#FFF8EE" stroke-width="6" stroke-linecap="round"/>
+        <rect x="108" y="56" width="18" height="12" rx="2" fill="#F9A209" transform="rotate(-50 117 62)"/>
       </svg>`,
     micro: `
       <svg viewBox="0 0 200 200">
-        <rect x="70" y="14" width="60" height="96" rx="30" fill="#FFD23F" stroke="#FAFAF7" stroke-width="4"/>
-        <path d="M78 44h44M78 60h44M78 76h44" stroke="#0A1440" stroke-width="3" opacity=".35"/>
-        <path d="M50 88a50 50 0 0 0 100 0" fill="none" stroke="#FAFAF7" stroke-width="6" stroke-linecap="round"/>
-        <path d="M100 138v22 q0 12 -14 16" fill="none" stroke="#FAFAF7" stroke-width="6" stroke-linecap="round"/>
-        <rect x="64" y="170" width="24" height="16" rx="3" fill="#FF5FA2"/>
-        <path d="M112 184 q14 -2 22 -14 q8 -12 26 -10" fill="none" stroke="#FAFAF7" stroke-width="6" stroke-linecap="round"/>
-        <rect x="102" y="178" width="20" height="14" rx="3" fill="#FF5FA2"/>
-        <g class="visu-etincelle" fill="#FFD23F"><path d="M94 180l4-9 3 9 8 2-8 3-3 9-4-9-8-3z"/></g>
+        <rect x="70" y="14" width="60" height="96" rx="30" fill="#FFC72C" stroke="#FFF8EE" stroke-width="4"/>
+        <path d="M78 44h44M78 60h44M78 76h44" stroke="#3B0A12" stroke-width="3" opacity=".35"/>
+        <path d="M50 88a50 50 0 0 0 100 0" fill="none" stroke="#FFF8EE" stroke-width="6" stroke-linecap="round"/>
+        <path d="M100 138v22 q0 12 -14 16" fill="none" stroke="#FFF8EE" stroke-width="6" stroke-linecap="round"/>
+        <rect x="64" y="170" width="24" height="16" rx="3" fill="#F9A209"/>
+        <path d="M112 184 q14 -2 22 -14 q8 -12 26 -10" fill="none" stroke="#FFF8EE" stroke-width="6" stroke-linecap="round"/>
+        <rect x="102" y="178" width="20" height="14" rx="3" fill="#F9A209"/>
+        <g class="visu-etincelle" fill="#FFC72C"><path d="M94 180l4-9 3 9 8 2-8 3-3 9-4-9-8-3z"/></g>
       </svg>`,
     enceinte: `
       <svg viewBox="0 0 200 200">
-        <rect x="40" y="30" width="90" height="140" rx="10" fill="#050A22" stroke="#FAFAF7" stroke-width="4"/>
-        <circle cx="85" cy="70" r="16" fill="#FFD23F"/><circle cx="85" cy="70" r="6" fill="#0A1440"/>
-        <circle cx="85" cy="126" r="30" fill="#FFD23F"/><circle cx="85" cy="126" r="11" fill="#0A1440"/>
-        <g class="visu-onde" fill="none" stroke="#FF5FA2" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="40" y="30" width="90" height="140" rx="10" fill="#1F0409" stroke="#FFF8EE" stroke-width="4"/>
+        <circle cx="85" cy="70" r="16" fill="#FFC72C"/><circle cx="85" cy="70" r="6" fill="#3B0A12"/>
+        <circle cx="85" cy="126" r="30" fill="#FFC72C"/><circle cx="85" cy="126" r="11" fill="#3B0A12"/>
+        <g class="visu-onde" fill="none" stroke="#F9A209" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
           <path d="M140 70 l10 -10 l8 16 l10 -18 l10 14"/>
           <path d="M140 120 l12 -12 l8 18 l10 -20 l12 16"/>
         </g>
       </svg>`,
     pause: `
       <svg viewBox="0 0 200 200">
-        <circle cx="100" cy="100" r="92" fill="#1F3FD1" stroke="#FAFAF7" stroke-width="4"/>
-        <g class="visu-pause" fill="#FFD23F">
+        <circle cx="100" cy="100" r="92" fill="#D90A22" stroke="#FFF8EE" stroke-width="4"/>
+        <g class="visu-pause" fill="#FFC72C">
           <rect x="68" y="58" width="22" height="84" rx="5"/><rect x="110" y="58" width="22" height="84" rx="5"/>
         </g>
       </svg>`
@@ -103,7 +103,7 @@ document.addEventListener("app:ready", () => {
   };
   const c = CONTENUS[code] || CONTENUS["500"];
 
-  document.title = `${c.titre} | DOMAF Quest`;
+  document.title = `${c.titre} | Vimas Quest`;
   $("[data-visuel]").innerHTML = VISUELS[c.visuel];
   $("[data-surtitre]").textContent = c.surtitre;
   $("[data-titre]").textContent = c.titre;
@@ -114,7 +114,7 @@ document.addEventListener("app:ready", () => {
     return a.href
       ? `<a class="${cls}" href="${esc(lien(a.href))}">${ic} ${esc(a.lib)}</a>`
       : `<button class="${cls}" type="button" data-action="${esc(a.action)}">${ic} ${esc(a.lib)}</button>`;
-  }).join("") + (code === "500" ? `<p class="erreur__reference">Si ça persiste, passe au Point info ou au Stand DOMAF Quest.</p>` : "");
+  }).join("") + (code === "500" ? `<p class="erreur__reference">Si ça persiste, passe au Point info ou au Stand Vimas Quest.</p>` : "");
   $("[data-titre]").focus({ preventScroll: true });
 
   document.addEventListener("click", (e) => {

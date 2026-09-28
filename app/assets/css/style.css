@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DOMAF Quest — style.css (commun)
+   Vimas Quest — style.css (commun)
    Système visuel « Sérigraphie de scène »
    ========================================================================== */
 
@@ -14,18 +14,18 @@
 /* ---------- 1. Variables ---------- */
 :root {
   /* Encres */
-  --bleu: #1F3FD1;        /* encre principale */
-  --bleu-fonce: #162FA3;
-  --nuit: #0A1440;        /* texte fort, fonds de nuit */
-  --sodium: #FFD23F;      /* projecteurs */
-  --rose: #FF5FA2;        /* 2e passe d'encre */
-  --vert: #2BB673;        /* scène Clairière, succès */
-  --papier: #FAFAF7;
-  --papier-2: #ECEFF8;    /* papier légèrement bleuté */
-  --texte: #0A1440;
-  --texte-doux: #454E78;  /* 7:1 sur papier */
-  --texte-inverse: #FAFAF7;
-  --trait: #0A1440;
+  --bleu: #D90A22;        /* encre principale */
+  --bleu-fonce: #B00A1E;
+  --nuit: #3B0A12;        /* texte fort, fonds de nuit */
+  --sodium: #FFC72C;      /* projecteurs */
+  --rose: #F9A209;        /* 2e passe d'encre */
+  --vert: #1FA05A;        /* scène Clairière, succès */
+  --papier: #FFF8EE;
+  --papier-2: #FCEBD8;    /* papier légèrement bleuté */
+  --texte: #3B0A12;
+  --texte-doux: #6E3A30;  /* 7:1 sur papier */
+  --texte-inverse: #FFF8EE;
+  --trait: #3B0A12;
 
   /* Raretés des lots */
   --rarete-commun: var(--papier-2);
@@ -128,7 +128,7 @@ button { font: inherit; color: inherit; }
 .titre-zone--decale { text-shadow: var(--decalage); }
 .chapo { font-size: var(--fs-lg); line-height: 1.45; max-width: 36ch; }
 .texte-doux { color: var(--texte-doux); }
-.zone--bleu .texte-doux, .zone--nuit .texte-doux, .pied .texte-doux { color: #C9D1F5; }
+.zone--bleu .texte-doux, .zone--nuit .texte-doux, .pied .texte-doux { color: #F7D4C4; }
 .billet .texte-doux { color: var(--texte-doux); }
 .chiffres { font-variant-numeric: tabular-nums; }
 .entete-zone { display: grid; gap: var(--s-3); margin-bottom: var(--s-6); }
@@ -269,7 +269,7 @@ button { font: inherit; color: inherit; }
 .topbar__nav a {
   display: flex; align-items: center; min-height: 56px;
   font-family: var(--font-affiche); font-size: 1.75rem; text-transform: uppercase; text-decoration: none;
-  border-bottom: 1px solid rgba(250, 250, 247, .15);
+  border-bottom: 1px solid rgba(255, 248, 238, .15);
 }
 .topbar__nav a:hover { color: var(--sodium); }
 
@@ -290,7 +290,7 @@ button { font: inherit; color: inherit; }
 .pied__liens { display: grid; gap: var(--s-1); }
 .pied__liens a { display: inline-flex; align-items: center; min-height: var(--tap); text-decoration: none; }
 .pied__liens a:hover { color: var(--sodium); text-decoration: underline; }
-.pied__mention { margin-top: var(--s-6); padding-top: var(--s-4); border-top: 1px solid rgba(250, 250, 247, .2); font-size: var(--fs-xs); color: #C9D1F5; }
+.pied__mention { margin-top: var(--s-6); padding-top: var(--s-4); border-top: 1px solid rgba(255, 248, 238, .2); font-size: var(--fs-xs); color: #F7D4C4; }
 @media (min-width: 720px) { .pied__grille { grid-template-columns: 2fr 1fr 1fr; align-items: start; } }
 
 /* Bandeau réseau (hors connexion / rétabli) */
@@ -337,7 +337,7 @@ button { font: inherit; color: inherit; }
   box-shadow: inset 3px 3px 0 var(--papier-2);
   appearance: none;
 }
-.saisie::placeholder { color: #7A82A6; }
+.saisie::placeholder { color: #9A6A5E; }
 .saisie:focus { outline: none; border-color: var(--bleu); box-shadow: 0 0 0 3px var(--rose); }
 .saisie--code { font-family: var(--font-affiche); font-size: 1.75rem; letter-spacing: .08em; text-transform: uppercase; text-align: center; }
 .saisie-prefixe { position: relative; }
@@ -347,10 +347,10 @@ button { font: inherit; color: inherit; }
   pointer-events: none;
 }
 .saisie-prefixe .saisie { padding-left: 5.5rem; text-align: left; }
-.champ.is-invalide .saisie { border-color: #C4123F; box-shadow: inset 4px 0 0 #C4123F; }
+.champ.is-invalide .saisie { border-color: #A00D25; box-shadow: inset 4px 0 0 #A00D25; }
 .champ__etat { display: flex; align-items: center; gap: var(--s-1); min-height: 1.5em; font-size: var(--fs-sm); font-weight: 700; }
 .champ__etat.is-ok { color: #13784A; }
-.champ__etat.is-ko { color: #C4123F; }
+.champ__etat.is-ko { color: #A00D25; }
 
 fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
 legend { padding: 0; }
@@ -424,11 +424,11 @@ legend { padding: 0; }
 .message {
   display: flex; gap: var(--s-3); align-items: flex-start;
   padding: var(--s-3) var(--s-4);
-  background: #FFE3EE; color: var(--nuit);
-  border: 2px solid var(--nuit); border-left-width: 8px; border-left-color: #C4123F; border-radius: var(--r-net);
+  background: #FFEFD0; color: var(--nuit);
+  border: 2px solid var(--nuit); border-left-width: 8px; border-left-color: #A00D25; border-radius: var(--r-net);
   font-weight: 600;
 }
-.message .icon { color: #C4123F; margin-top: 2px; }
+.message .icon { color: #A00D25; margin-top: 2px; }
 .message--info { background: var(--papier-2); border-left-color: var(--bleu); }
 .message--info .icon { color: var(--bleu); }
 .message[hidden] { display: none; }
@@ -446,7 +446,7 @@ legend { padding: 0; }
 /* Progression en étapes */
 .etapes { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-2); counter-reset: etape; }
 .etapes li { counter-increment: etape; display: grid; gap: var(--s-1); font-size: var(--fs-xs); font-weight: 700; color: var(--texte-doux); }
-.etapes li::before { content: ""; height: 6px; border-radius: var(--r-pastille); background: var(--papier-2); border: 1px solid rgba(10, 20, 64, .25); }
+.etapes li::before { content: ""; height: 6px; border-radius: var(--r-pastille); background: var(--papier-2); border: 1px solid rgba(59, 10, 18, .25); }
 .etapes li.is-faite::before { background: var(--nuit); border-color: var(--nuit); }
 .etapes li[aria-current="step"] { color: var(--nuit); }
 .etapes li[aria-current="step"]::before { background: var(--bleu); border-color: var(--bleu); }
@@ -498,7 +498,7 @@ legend { padding: 0; }
   content: ""; position: absolute; inset: 0; pointer-events: none;
   /* Le pas suit la taille du cadre : une vignette de 40 px ne doit pas
      recevoir la même trame qu'une image de 176 px, sinon elle se salit. */
-  background-image: radial-gradient(circle, rgba(10, 20, 64, .55) 0 38%, transparent 0);
+  background-image: radial-gradient(circle, rgba(59, 10, 18, .55) 0 38%, transparent 0);
   background-size: calc(var(--taille) / var(--trame-pas)) calc(var(--taille) / var(--trame-pas));
   mix-blend-mode: multiply;
   opacity: var(--trame-force);
@@ -539,12 +539,12 @@ body.avec-tabbar .toast-zone { bottom: calc(var(--tabbar-h) + env(safe-area-inse
   display: grid; justify-items: center; align-content: center; gap: 2px;
   height: var(--tabbar-h); min-width: var(--tap);
   background: none; border: 0; cursor: pointer;
-  color: #AEB6DC; text-decoration: none; font-size: .6875rem; font-weight: 700;
+  color: #E6B7A2; text-decoration: none; font-size: .6875rem; font-weight: 700;
 }
 .tabbar__icone { position: relative; display: grid; place-items: center; width: 44px; height: 30px; border-radius: var(--r-pastille); }
 .tabbar__icone .icon { width: 24px; height: 24px; }
 .tabbar__lien[aria-current="page"] { color: var(--sodium); }
-.tabbar__lien[aria-current="page"] .tabbar__icone { background: rgba(255, 210, 63, .16); }
+.tabbar__lien[aria-current="page"] .tabbar__icone { background: rgba(255, 199, 44, .16); }
 .tabbar__lien--scan { align-content: end; padding-bottom: 8px; }
 .tabbar__lien--scan .tabbar__icone {
   width: 60px; height: 60px; margin-top: -26px;
@@ -570,7 +570,7 @@ body.avec-tabbar .toast-zone { bottom: calc(var(--tabbar-h) + env(safe-area-inse
   border: 0; border-top: 4px solid var(--nuit); border-radius: var(--r-billet) var(--r-billet) 0 0;
 }
 .feuille[open] { animation: monte .3s var(--ease-sortie); }
-.feuille::backdrop { background: rgba(10, 20, 64, .6); }
+.feuille::backdrop { background: rgba(59, 10, 18, .6); }
 @keyframes monte { from { transform: translateY(40px); opacity: 0; } }
 .feuille__entete { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--s-3); }
 .feuille__titre { font-size: 2rem; }
@@ -584,7 +584,7 @@ body.avec-tabbar .toast-zone { bottom: calc(var(--tabbar-h) + env(safe-area-inse
 .feuille__liens a:active { background: var(--sodium); }
 .feuille__liens .icon { color: var(--bleu); }
 .feuille__liens .pastille[hidden] { display: none; }
-.feuille__pied { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s-3); margin-top: var(--s-5); padding-top: var(--s-4); border-top: 2px dashed rgba(10, 20, 64, .3); font-size: var(--fs-sm); }
+.feuille__pied { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s-3); margin-top: var(--s-5); padding-top: var(--s-4); border-top: 2px dashed rgba(59, 10, 18, .3); font-size: var(--fs-sm); }
 @media (min-width: 720px) { .feuille { margin: auto; border: 3px solid var(--nuit); border-radius: var(--r-billet); } }
 
 /* Lien icône avec compteur (cloche des annonces) */

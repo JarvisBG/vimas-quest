@@ -18,8 +18,8 @@ document.addEventListener("app:ready", async () => {
   const carte = $("[data-carte]");
   const W = 1000, H = 700;
   const COULEURS = {
-    nuit: ["#0A1440", "#FAFAF7"], sodium: ["#FFD23F", "#0A1440"], vert: ["#2BB673", "#0A1440"],
-    bleu: ["#1F3FD1", "#FAFAF7"], rouge: ["#C4123F", "#FAFAF7"], papier: ["#FAFAF7", "#0A1440"], rose: ["#FF5FA2", "#0A1440"]
+    nuit: ["#3B0A12", "#FFF8EE"], sodium: ["#FFC72C", "#3B0A12"], vert: ["#1FA05A", "#3B0A12"],
+    bleu: ["#D90A22", "#FFF8EE"], rouge: ["#A00D25", "#FFF8EE"], papier: ["#FFF8EE", "#3B0A12"], rose: ["#F9A209", "#3B0A12"]
   };
   const ALIAS = { "stand-quest": "st-quest" };
   const CLE_POSITION = "domafquest.plan.position";
@@ -67,8 +67,8 @@ document.addEventListener("app:ready", async () => {
       return `
         <g transform="translate(${l.x} ${l.y})">
           <path d="M-46 -20 Q0 46 46 -20 Z" fill="${fond}" opacity=".22"/>
-          <rect x="-32" y="-38" width="64" height="18" rx="3" fill="${fond}" stroke="#0A1440" stroke-width="2.5"/>
-          <rect x="-32" y="-38" width="64" height="6" fill="#0A1440" opacity=".25"/>
+          <rect x="-32" y="-38" width="64" height="18" rx="3" fill="${fond}" stroke="#3B0A12" stroke-width="2.5"/>
+          <rect x="-32" y="-38" width="64" height="6" fill="#3B0A12" opacity=".25"/>
         </g>`;
     }).join("");
     const m = 100 / d.config.metresParUnite >= 40 ? 20 : 50;      // longueur de l'échelle, en mètres
@@ -77,13 +77,13 @@ document.addEventListener("app:ready", async () => {
       ${(App.planFond && App.planFond.svg) || `<rect width="${W}" height="${H}" fill="#E9EFD8"/>`}
       ${scenes}
       <g transform="translate(960 60)" aria-hidden="true">
-        <circle r="26" fill="#FAFAF7" stroke="#0A1440" stroke-width="2"/>
-        <path d="M0 -18 L6 0 L0 -4 L-6 0 Z" fill="#C4123F"/><path d="M0 18 L6 0 L0 4 L-6 0 Z" fill="#0A1440"/>
-        <text y="-30" text-anchor="middle" font-size="14" fill="#0A1440">N</text>
+        <circle r="26" fill="#FFF8EE" stroke="#3B0A12" stroke-width="2"/>
+        <path d="M0 -18 L6 0 L0 -4 L-6 0 Z" fill="#A00D25"/><path d="M0 18 L6 0 L0 4 L-6 0 Z" fill="#3B0A12"/>
+        <text y="-30" text-anchor="middle" font-size="14" fill="#3B0A12">N</text>
       </g>
       <g transform="translate(30 675)" aria-hidden="true">
-        <rect width="${u.toFixed(0)}" height="6" fill="#0A1440"/><rect width="${(u / 2).toFixed(0)}" height="6" fill="#FAFAF7" stroke="#0A1440" stroke-width="1"/>
-        <text y="-6" font-size="12" fill="#0A1440">${m} m</text>
+        <rect width="${u.toFixed(0)}" height="6" fill="#3B0A12"/><rect width="${(u / 2).toFixed(0)}" height="6" fill="#FFF8EE" stroke="#3B0A12" stroke-width="1"/>
+        <text y="-6" font-size="12" fill="#3B0A12">${m} m</text>
       </g>`;
   }
 

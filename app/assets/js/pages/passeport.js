@@ -13,14 +13,14 @@ document.addEventListener("app:ready", async () => {
   const CLE_PREFS = "domafquest.passeport";
 
   const COULEURS = {
-    bleu: "#1F3FD1", nuit: "#0A1440", sodium: "#FFD23F", rose: "#FF5FA2",
-    vert: "#2BB673", papier: "#FAFAF7", papier2: "#ECEFF8", doux: "#454E78"
+    bleu: "#D90A22", nuit: "#3B0A12", sodium: "#FFC72C", rose: "#F9A209",
+    vert: "#1FA05A", papier: "#FFF8EE", papier2: "#FCEBD8", doux: "#6E3A30"
   };
   const THEMES = {
-    bleu:   { fond: COULEURS.bleu,   texte: COULEURS.papier, titre: COULEURS.sodium, decalage: COULEURS.rose,   rayons: "rgba(255,210,63,.13)" },
-    nuit:   { fond: COULEURS.nuit,   texte: COULEURS.papier, titre: COULEURS.sodium, decalage: COULEURS.rose,   rayons: "rgba(255,95,162,.12)" },
-    sodium: { fond: COULEURS.sodium, texte: COULEURS.nuit,   titre: COULEURS.bleu,   decalage: COULEURS.rose,   rayons: "rgba(31,63,209,.10)" },
-    rose:   { fond: COULEURS.rose,   texte: COULEURS.nuit,   titre: COULEURS.nuit,   decalage: COULEURS.sodium, rayons: "rgba(10,20,64,.08)" }
+    bleu:   { fond: COULEURS.bleu,   texte: COULEURS.papier, titre: COULEURS.sodium, decalage: COULEURS.rose,   rayons: "rgba(255,199,44,.13)" },
+    nuit:   { fond: COULEURS.nuit,   texte: COULEURS.papier, titre: COULEURS.sodium, decalage: COULEURS.rose,   rayons: "rgba(249,162,9,.12)" },
+    sodium: { fond: COULEURS.sodium, texte: COULEURS.nuit,   titre: COULEURS.bleu,   decalage: COULEURS.rose,   rayons: "rgba(217,10,34,.10)" },
+    rose:   { fond: COULEURS.rose,   texte: COULEURS.nuit,   titre: COULEURS.nuit,   decalage: COULEURS.sodium, rayons: "rgba(59,10,18,.08)" }
   };
   const RARETE = {
     commun: [COULEURS.bleu, COULEURS.papier], rare: [COULEURS.vert, COULEURS.nuit],
@@ -172,7 +172,7 @@ document.addEventListener("app:ready", async () => {
     ctx.restore();
     // pointillés
     ctx.save();
-    ctx.strokeStyle = "rgba(10,20,64,.35)";
+    ctx.strokeStyle = "rgba(59,10,18,.35)";
     ctx.lineWidth = 4;
     ctx.setLineDash([18, 14]);
     ctx.beginPath();
@@ -563,11 +563,11 @@ document.addEventListener("app:ready", async () => {
     try {
       const blob = await versBlob();
       const fichier = new File([blob], nomFichier(), { type: "image/png" });
-      const texte = `Mon passeport DOMAF Quest : ${d.rang.actuel.nom}, ${fmt.nombre(d.joueur.xp)} XP. Viens jouer avec moi !`;
+      const texte = `Mon passeport Vimas Quest : ${d.rang.actuel.nom}, ${fmt.nombre(d.joueur.xp)} XP. Viens jouer avec moi !`;
       if (navigator.canShare && navigator.canShare({ files: [fichier] })) {
-        await navigator.share({ files: [fichier], title: "Mon passeport DOMAF Quest", text: `${texte} ${d.lienInvitation}` });
+        await navigator.share({ files: [fichier], title: "Mon passeport Vimas Quest", text: `${texte} ${d.lienInvitation}` });
       } else if (navigator.share) {
-        await navigator.share({ title: "Mon passeport DOMAF Quest", text: texte, url: d.lienPublic });
+        await navigator.share({ title: "Mon passeport Vimas Quest", text: texte, url: d.lienPublic });
         await telecharger(blob);
       } else {
         await telecharger(blob);

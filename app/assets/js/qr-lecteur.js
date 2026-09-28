@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DOMAF Quest — qr-lecteur.js (commun)
+   Vimas Quest — qr-lecteur.js (commun)
    Lecture de QR codes par la caméra, sans dépendance externe :
    1. BarcodeDetector natif (Chrome Android, rapide, 0 Ko) ;
    2. sinon jsQR hébergé localement (Safari iOS…), chargé seulement si nécessaire.

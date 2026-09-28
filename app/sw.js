@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DOMAF Quest — service worker
+   Vimas Quest — service worker
    Objectif : que le jeu s'ouvre et reste utilisable quand le réseau du festival sature.
    - Pages : réseau d'abord (3 s max), puis cache, puis page « hors connexion ».
    - Fichiers statiques : cache d'abord, mise à jour en arrière-plan.
@@ -9,7 +9,7 @@
      écrans géants et supabase-js (écran, console) se mettent en cache à la demande.
    Changer VERSION à chaque mise en ligne pour renouveler le cache.
    ========================================================================== */
-const VERSION = "domafquest-v15";
+const VERSION = "vimasquest-v1";
 const CACHE_APP = `${VERSION}-app`;
 const DELAI_RESEAU = 3000;
 
