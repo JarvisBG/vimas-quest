@@ -40,16 +40,16 @@
       { page: "programme.html", nom: "Programme, lieux", icone: "calendrier" }
     ] },
     { groupe: "Animation", liens: [
-      { page: "blind-test.html", nom: "Régie blind test", icone: "micro", etape: "6.6" },
+      { page: "blind-test.html", nom: "Régie blind test", icone: "micro" },
       { page: "roue.html", nom: "Roue et lots", icone: "roue" },
       { page: "annonces.html", nom: "Annonces", icone: "cloche" },
       { page: "coups-de-coeur.html", nom: "Coups de cœur", icone: "coeur" }
     ] },
     { groupe: "Billetterie", liens: [
-      { page: "carnets.html", nom: "Carnets", icone: "billet", etape: "6.7", gm: true }
+      { page: "carnets.html", nom: "Carnets", icone: "billet", etape: "5.3", gm: true }
     ] },
     { groupe: "Bilan", liens: [
-      { page: "statistiques.html", nom: "Statistiques", icone: "onde", etape: "6.8" }
+      { page: "statistiques.html", nom: "Statistiques", icone: "onde", etape: "5.4" }
     ] }
   ];
 
@@ -120,7 +120,7 @@
     return data && data.session;
   }
 
-  /* Page d'arrivée selon le rôle. Vendeur : son espace arrive à l'étape 6.7 ;
+  /* Page d'arrivée selon le rôle. Vendeur : son espace arrive à l'étape 5.3 ;
      d'ici là, la page de connexion le lui dit. */
   C.destination = (acces) => (acces && acces.vendeur ? "connexion.html?vendeur=1" : "index.html");
 

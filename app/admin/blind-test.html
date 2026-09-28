@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <title>Régie blind test | Console Vimas Quest</title>
+  <script src="../assets/js/console-theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/console.css">
+</head>
+<body class="sans-sw">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <div class="bg-layer bg-glow"></div>
+  <div class="bg-layer bg-grid"></div>
+
+  <div class="console-grille">
+    <nav class="cnav" aria-label="Console">
+      <a class="cnav__marque" href="index.html"><i data-icon="onde"></i> VIMAS QUEST</a>
+      <p class="cnav__tag" data-console-tag>Game Master</p>
+      <div data-console-nav></div>
+      <div class="cnav__pied">
+        <p class="cnav__qui" data-console-qui></p>
+        <button class="cnav__sortir" type="button" data-console-sortir><i data-icon="sortie"></i> Déconnexion</button>
+      </div>
+    </nav>
+    <div class="console-voile" data-console-voile></div>
+    <button class="ctete__menu" type="button" aria-expanded="false" data-console-menu><i data-icon="menu"></i><span class="sr-only">Ouvrir le menu</span></button>
+
+    <div class="console-principal">
+      <div class="ccorps">
+        <header class="ctete">
+          <div class="ctete__titres">
+            <p class="ctete__sur">Animation</p>
+            <h1 class="ctete__titre">Régie blind test</h1>
+            <p class="ctete__sous" data-resume>Chargement…</p>
+          </div>
+          <div class="ctete__actions">
+            <a class="cbtn" href="../ecran/blind-test.html" target="_blank" rel="noopener"><i data-icon="cadre"></i> Écran géant</a>
+            <button class="cbtn cbtn--primaire" type="button" data-nouvelle>Nouvelle manche</button>
+            <span class="cpuce-admin"><i data-icon="cadenas"></i><span data-console-nom>GM</span></span>
+          </div>
+        </header>
+
+        <main class="ccontenu" id="contenu" data-console-contenu>
+          <!-- La manche ouverte (préparation ou direct) -->
+          <div class="cdeux" data-manche hidden>
+            <div class="ccolonne">
+              <section class="cpanneau cregie" aria-labelledby="t-direct" data-direct>
+                <div class="cpanneau__tete">
+                  <h2 class="cpanneau__titre" id="t-direct"><i data-icon="micro"></i> <span data-m-titre></span></h2>
+                  <span class="cbadge" data-m-statut></span>
+                </div>
+                <div data-direct-corps></div>
+                <div class="cregie__actions" data-actions></div>
+                <p class="message" role="alert" data-direct-erreur hidden></p>
+              </section>
+
+              <section class="cpanneau cpanneau--table" aria-labelledby="t-questions">
+                <div class="cpanneau__tete">
+                  <h2 class="cpanneau__titre" id="t-questions"><i data-icon="onde"></i> Questions</h2>
+                  <button class="cbtn" type="button" data-nouvelle-question>Ajouter une question</button>
+                </div>
+                <div class="ctable-defile">
+                  <table class="ctable">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="ctable__nb">N°</th>
+                        <th scope="col">Question et réponses</th>
+                        <th scope="col" class="ctable__nb">Chrono</th>
+                        <th scope="col"><span class="sr-only">Actions</span></th>
+                      </tr>
+                    </thead>
+                    <tbody data-questions></tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+
+            <div class="ccolonne">
+              <section class="cpanneau" aria-labelledby="t-boss">
+                <h2 class="cpanneau__titre" id="t-boss"><i data-icon="trophee"></i> Manche et boss</h2>
+                <form class="cform" data-form-manche novalidate>
+                  <label class="champ">
+                    <span class="champ__label">Titre de la manche</span>
+                    <input class="saisie" name="titre" maxlength="80" required autocomplete="off">
+                    <span class="champ__aide">Affiché sur l'écran géant et les téléphones ; figé une fois la manche lancée.</span>
+                  </label>
+                  <label class="champ">
+                    <span class="champ__label">Boss (figure à conquérir)</span>
+                    <input class="saisie" name="boss" maxlength="60" required autocomplete="off">
+                  </label>
+                  <label class="champ">
+                    <span class="champ__label">Image du boss (facultatif)</span>
+                    <input class="saisie" name="image" maxlength="300" autocomplete="off" placeholder="assets/photos/boss-1.webp ou https://…">
+                    <span class="champ__aide">Chemin du site ou adresse https. Pas de photo d'une vraie personne sans son accord.</span>
+                  </label>
+                  <label class="champ">
+                    <span class="champ__label">Points de vie du boss</span>
+                    <input class="saisie" name="pv" type="number" min="1" max="100000000" step="1000" required>
+                    <span class="champ__aide" data-aide-pv></span>
+                  </label>
+                  <p class="message" role="alert" data-manche-erreur hidden></p>
+                  <div class="cregie__actions">
+                    <button class="cbtn" type="submit"><i data-icon="coche"></i> Enregistrer</button>
+                    <button class="cbtn" type="button" data-dupliquer>Dupliquer</button>
+                    <button class="cbtn cbtn--danger" type="button" data-supprimer-manche>Supprimer</button>
+                  </div>
+                </form>
+              </section>
+              <button class="cbtn" type="button" data-retour><i data-icon="retour"></i> Toutes les manches</button>
+            </div>
+          </div>
+
+          <!-- Toutes les manches -->
+          <section class="cpanneau cpanneau--table" aria-labelledby="t-manches" data-liste>
+            <div class="cpanneau__tete">
+              <h2 class="cpanneau__titre" id="t-manches"><i data-icon="micro"></i> Manches</h2>
+              <span class="cpanneau__note">une seule manche en direct à la fois</span>
+            </div>
+            <div class="ctable-defile">
+              <table class="ctable">
+                <thead>
+                  <tr>
+                    <th scope="col">Manche</th>
+                    <th scope="col" class="ctable__nb">Questions</th>
+                    <th scope="col" class="ctable__nb">Joueurs</th>
+                    <th scope="col">État</th>
+                    <th scope="col"><span class="sr-only">Ouvrir</span></th>
+                  </tr>
+                </thead>
+                <tbody data-manches><tr><td colspan="5" class="cvide">Chargement…</td></tr></tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nouvelle manche -->
+  <dialog class="cboite" data-boite-manche aria-labelledby="bm-titre">
+    <form class="cboite__corps cform" data-form-nouvelle novalidate>
+      <h2 class="cboite__titre" id="bm-titre">Nouvelle manche</h2>
+      <label class="champ">
+        <span class="champ__label">Titre</span>
+        <input class="saisie" name="titre" maxlength="80" required autocomplete="off" placeholder="Blind test du samedi">
+      </label>
+      <label class="champ">
+        <span class="champ__label">Boss</span>
+        <input class="saisie" name="boss" maxlength="60" required autocomplete="off" placeholder="Le Sound System fantôme">
+      </label>
+      <label class="champ">
+        <span class="champ__label">Points de vie</span>
+        <input class="saisie" name="pv" type="number" min="1" max="100000000" step="1000" value="300000" required>
+        <span class="champ__aide">Modifiable jusqu'à la fin de la manche.</span>
+      </label>
+      <p class="message" role="alert" data-nouvelle-erreur hidden></p>
+      <div class="cboite__actions">
+        <button class="cbtn" type="button" data-fermer>Annuler</button>
+        <button class="cbtn cbtn--primaire" type="submit">Créer</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Question -->
+  <dialog class="cboite cfiche" data-boite-question aria-labelledby="bq-titre">
+    <div class="cfiche__tete">
+      <span class="cfiche__avatar"><i data-icon="micro"></i></span>
+      <div class="cfiche__titres">
+        <h2 class="cboite__titre" id="bq-titre" data-q-titre>Nouvelle question</h2>
+        <p class="cfiche__sous" data-q-sous></p>
+      </div>
+      <button class="cbtn cbtn--icone" type="button" data-fermer><i data-icon="fermer"></i><span class="sr-only">Fermer</span></button>
+    </div>
+    <form class="cfiche__corps cform" data-form-question novalidate>
+      <div class="cform__ligne">
+        <label class="champ">
+          <span class="champ__label">Catégorie</span>
+          <input class="saisie" name="categorie" maxlength="40" autocomplete="off" placeholder="Artiste, Titre, Instrument…">
+        </label>
+        <label class="champ">
+          <span class="champ__label">Chrono (secondes)</span>
+          <input class="saisie" name="duree" type="number" min="5" max="120" step="1" value="20" required>
+        </label>
+      </div>
+      <label class="champ">
+        <span class="champ__label">Question</span>
+        <input class="saisie" name="question" maxlength="160" required autocomplete="off" placeholder="Qui chante ce morceau ?">
+      </label>
+      <fieldset class="champ">
+        <legend class="champ__label">Réponses proposées (coche la bonne)</legend>
+        <div class="cchoix-q" data-choix></div>
+        <span class="champ__aide">2 à 4 réponses ; les cases vides sont ignorées.</span>
+      </fieldset>
+      <label class="champ">
+        <span class="champ__label">Révélation (facultatif)</span>
+        <input class="saisie" name="reponse" maxlength="160" autocomplete="off" placeholder="Lion Yard, « Ngoa Riddim »">
+        <span class="champ__aide">Affichée sur l'écran géant quand le chrono est fini.</span>
+      </label>
+      <label class="champ">
+        <span class="champ__label">Anecdote (facultatif)</span>
+        <textarea class="saisie" name="anecdote" maxlength="400"></textarea>
+      </label>
+      <div class="cform__ligne">
+        <label class="champ">
+          <span class="champ__label">Extrait audio</span>
+          <input class="saisie" name="audio" maxlength="300" autocomplete="off" placeholder="bt/samedi/q07.mp3">
+          <span class="champ__aide">Joué par l'écran géant. Lisible par tous pendant la question : un nom qui ne trahit pas la réponse.</span>
+        </label>
+        <label class="champ">
+          <span class="champ__label">Départ dans le fichier (s)</span>
+          <input class="saisie" name="debut" type="number" min="0" max="3600" step="1" value="0">
+        </label>
+      </div>
+      <label class="champ">
+        <span class="champ__label">Pochette (facultatif)</span>
+        <input class="saisie" name="pochette" maxlength="300" autocomplete="off" placeholder="bt/samedi/q07.webp">
+        <span class="champ__aide">Montrée à la révélation.</span>
+      </label>
+      <p class="message" role="alert" data-q-erreur hidden></p>
+    </form>
+    <div class="cfiche__pied">
+      <button class="cbtn cbtn--danger" type="button" data-supprimer-question hidden><i data-icon="croix"></i> Supprimer</button>
+      <button class="cbtn" type="button" data-fermer>Annuler</button>
+      <button class="cbtn cbtn--primaire" type="button" data-enregistrer-question><i data-icon="coche"></i> Enregistrer</button>
+    </div>
+  </dialog>
+
+  <script src="../assets/js/config.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/vendor/supabase.min.js" defer></script>
+  <script src="../assets/js/serveur.js" defer></script>
+  <script src="../assets/js/console.js" defer></script>
+  <script src="../assets/js/pages/console-blind.js" defer></script>
+</body>
+</html>

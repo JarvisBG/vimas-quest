@@ -22,7 +22,7 @@ document.addEventListener("app:ready", async () => {
     { cle: "EXPLORATION", nom: "Jeu ouvert", icone: "valide", couleur: "var(--success)",
       aide: "Mode normal : scans, missions, roue et votes sont ouverts." },
     { cle: "RAID", nom: "Blind test", icone: "micro", couleur: "var(--violet)", regie: true,
-      aide: "Une manche est en cours : les missions attendent la fin. Se lance depuis la régie (6.6)." },
+      aide: "Une manche est en cours : les missions attendent la fin. Se lance depuis la régie (Animation → Régie blind test)." },
     { cle: "CLOTURE", nom: "Jeu terminé", icone: "cadenas", couleur: "var(--gold)",
       aide: "Jeu figé (plus de scans, votes ni tirages), podium sur l'écran géant. À la fin du festival." }
   ];
@@ -85,7 +85,7 @@ document.addEventListener("app:ready", async () => {
     const bloc = $("[data-manche]");
     bloc.hidden = !m;
     if (m) {
-      bloc.innerHTML = `${App.icon("micro")}<span>Manche en cours : <strong>${esc(m.titre)}</strong>${m.boss ? ` avec ${esc(m.boss)}` : ""}, question ${m.question} sur ${m.questions}. La régie arrive à l'étape 6.6.</span>`;
+      bloc.innerHTML = `${App.icon("micro")}<span>Manche en cours : <strong>${esc(m.titre)}</strong>${m.boss ? ` avec ${esc(m.boss)}` : ""}, question ${m.question} sur ${m.questions}. <a href="blind-test.html">Piloter depuis la régie</a>.</span>`;
     }
   }
 

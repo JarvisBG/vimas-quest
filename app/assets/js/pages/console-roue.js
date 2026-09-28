@@ -281,7 +281,7 @@ document.addEventListener("app:ready", async () => {
   retrait.addEventListener("submit", async (e) => {
     e.preventDefault();
     const zoneMsg = $("[data-retrait-message]");
-    const code = retrait.code.value.replace(/\s+/g, "").toUpperCase();
+    const code = retrait.code.value.replace(/\s+/g, "").toUpperCase().replace(/^DQ-BON:/, "");   // QR du bon (DQ-BON:…) ou code tapé
     const dire = (texte, ok) => {
       zoneMsg.className = ok ? "message message--info" : "message";
       zoneMsg.innerHTML = `${App.icon(ok ? "valide" : "alerte")}<span>${texte}</span>`;

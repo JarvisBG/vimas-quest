@@ -17,10 +17,13 @@
 > Lis d'abord `CLAUDE.md` et `PLAN-VIMAS.md`, et `docs/NOTES-MOTEUR-DOMAF.md` avant de toucher une page.
 > Étapes 1 à 4 terminées, 5.0 terminée, **5.1 faite sauf le tirage au sort final** (mis de côté par Jarvis,
 > proposition dans la case 5.1) : écrans Annonces, Roue et lots, Coups de cœur essayés sur une fausse base et poussés.
-> Attaque la **5.2 — régie du blind test** (`admin/blind-test.html`) : comparer d'abord les fonctions existantes
-> (`admin_quiz_*`, `admin_*_quiz_*`, `admin_blind_question`, `sources/25_blind_joueur.sql`, `98_ecran_blind.sql`)
+> 5.2 (régie du blind test) terminée. Attaque la **5.3 — billetterie** : carnets de tickets (GM, `admin/carnets.html`)
+> + espace vendeur (encaissement ; aujourd'hui un vendeur est renvoyé vers `connexion.html?vendeur=1`). Comparer
+> d'abord les fonctions existantes (tables `tickets`, `carnets`, fonctions `ticket_*`, `carnet*`, `vendeur*`, `pass_*`)
 > et soumettre à Jarvis ce qui manque avant d'écrire du SQL. Essai sans compte : copie de page + script qui remplace
-> `C.garde` / `C.appel` / `C.sb` / `C.confirmer` et force `document.hidden` à `false` (effacer ensuite).
+> `C.garde` / `C.appel` / `C.sb` / `C.confirmer` et force `document.hidden` à `false` (effacer ensuite) ; si
+> l'extension Chrome est déconnectée, Edge sans fenêtre (`--headless=new --dump-dom`, **profil neuf à chaque
+> essai**, sinon il ressert d'anciens fichiers) avec un script de scénario qui écrit ses résultats dans la page.
 > Rappels : base Supabase **partagée** avec l'ancien DOMAF (`domaf-quest`) → sauvegarde SQL avant toute écriture ;
 > festival supposé **de jour, 10 h → 22 h** (contenu à adapter en étape 6) ; serveur local
 > `app/lancer-serveur.bat` → http://localhost:8767 ; pour tester dans Chrome, désinscrire le service worker
@@ -44,6 +47,7 @@
 | 28/09/2026 | **5.0 terminée** (dates de la console). Inventaire de la base pour 5.1 : seul le tirage au sort final manque côté SQL — proposition soumise à Jarvis. |
 | 28/09/2026 | Jarvis : « laisse d'abord le tirage ». Écrans **Annonces**, **Roue et lots**, **Coups de cœur** écrits sur les fonctions existantes (aucun SQL). Non essayés, non committés (shell indisponible). |
 | 28/09/2026 | Shell revenu (hors mode automatique) : `node --check` OK, les trois écrans essayés dans Chrome sur une fausse base, un défaut d'affichage corrigé ; commit + push. |
+| 28/09/2026 | **5.2 terminée** : régie du blind test (aucun SQL), essayée dans Edge sans fenêtre (scénario complet), un doublon de question corrigé ; commit + push. |
 
 ---
 
@@ -111,7 +115,11 @@ Le moteur DOMAF est calé sur des **soirées de concerts** : à adapter (étapes
   - [x] Menu de la console : les trois écrans allumés
   - [x] Essayés dans Chrome (28/09) avec une fausse base (garde, appels et tables simulés, fichiers effacés ensuite) : remise d'un bon (bon et mauvais code), interrupteur, modification / création de lot, suppression refusée après gain, réglages de la roue ; publier (message vide, fin passée, lien), retirer, effacer une annonce ; réglages des cœurs (bornes, confirmation à la baisse, alerte de date). Corrigé : l'icône du cœur passait au-dessus du chiffre (`.cliste__val` en ligne). **Pas encore essayés sur la vraie base** (compte GM) : à faire en étape 9
   - [ ] Tirage au sort final : **mis de côté par Jarvis** (28/09) — proposition prête : table `tirages` + `console_tirage(n)` (GM, joueurs actifs avec numéro, sans remise)
-- [ ] 5.2 Régie du blind test : manches, questions (extrait, pochette), boss, lancement / passage en direct
+- [x] 5.2 Régie du blind test : manches, questions (extrait, pochette), boss, lancement / passage en direct (28/09)
+  - Aucune fonction SQL nouvelle : tout existait (`admin_list_quiz_sessions`, `admin_list_quiz_questions`, `admin_quiz_live`, `admin_create/rename/duplicate/delete_quiz_session`, `admin_update_raid_params`, `admin_create/update/delete/move_quiz_question`, `admin_blind_question`, `admin_quiz_start/next/end`, `admin_set_phase`)
+  - `admin/blind-test.html` + `console-blind.js` : liste des manches → une manche (préparation : boss, PV avec repère, questions 2 à 4 réponses, extrait, départ, pochette, révélation, ordre ; direct : chrono, répartition des réponses, bonne réponse, PV du boss, top 5, relu chaque seconde ; fin : récompenses puis « Rouvrir le jeu »). Confirmations : lancer, couper un chrono, terminer. Adresse d'extrait vérifiée avant envoi (sinon doublon de question, trouvé à l'essai)
+  - Essayée de bout en bout sur une fausse base dans **Edge sans fenêtre** (extension Chrome déconnectée) : scénario automatique + capture ; fichiers d'essai effacés
+  - Au passage : « Remettre un lot » accepte aussi le QR du bon (`DQ-BON:…`) ; numéros d'étape DOMAF (6.5–6.8) remplacés dans la console
 - [ ] 5.3 Billetterie : carnets de tickets (GM) + espace vendeur (encaissement)
 - [ ] 5.4 Statistiques (parcours, profil, micro-questions, consentements) + relecture des droits ; retirer `live_board` / `leaderboard_view` si inutiles
 - [ ] Chaque sous-étape : essai au banc local (`supabase/outils/banc/`) avant la base en ligne

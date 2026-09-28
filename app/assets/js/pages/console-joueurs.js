@@ -481,7 +481,7 @@ document.addEventListener("app:ready", async () => {
       ouvrirFiche(m[1], { missions: true });
       return;
     }
-    if (/^DQ-BON:/i.test(texte)) direScan("C'est un bon de la roue : le retrait se fait à l'écran Roue (6.5).");
+    if (/^DQ-BON:/i.test(texte)) direScan("C'est un bon de la roue : le retrait se fait à l'écran Roue et lots (menu Animation).");
     else if (/^DQ-[A-Z0-9]{4,}/i.test(texte) || /scanner\.html/i.test(texte)) direScan("C'est un QR du jeu (stand, scène…), pas la carte d'un joueur.");
     else direScan("Ce QR n'est pas la carte d'un joueur Vimas Quest.");
   }

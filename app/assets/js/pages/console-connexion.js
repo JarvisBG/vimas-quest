@@ -20,7 +20,7 @@ document.addEventListener("app:ready", async () => {
   };
 
   const partir = (acces) => {
-    if (acces.vendeur) {           // son espace arrive à l'étape 6.7
+    if (acces.vendeur) {           // son espace arrive à l'étape 5.3
       $("[data-vendeur]").hidden = false;
       form.hidden = true;
       $("[data-sortir]").hidden = false;

@@ -627,3 +627,31 @@ fieldset.champ legend { margin-bottom: 7px; }
 .champ__aide a, .cfiche__bloc a { color: var(--violet); text-decoration: underline; }
 a.cpuce { text-decoration: none; }
 .cphoto.is-absente { color: var(--danger); background: var(--danger-soft); }
+
+/* ---------- Régie du blind test (5.2 Vimas) ---------- */
+.cregie__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.cregie__etat { display: grid; gap: 14px; }
+.cregie__ligne { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
+.cregie__num { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); }
+.cregie__question { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; line-height: 1.3; }
+.cregie__chrono { font-family: var(--font-mono); font-weight: 700; font-size: 2rem; font-variant-numeric: tabular-nums; color: var(--gold); }
+.cregie__chrono.is-fini { color: var(--ink-faint); font-size: 1rem; }
+.cregie__reponses { display: grid; gap: 8px; }
+.cregie__rep { position: relative; display: flex; justify-content: space-between; gap: 10px; padding: 9px 12px; border-radius: 10px; overflow: hidden;
+  font-size: .86rem; border: 1px solid rgba(var(--surf), .09); background: rgba(var(--surf), .03); }
+.cregie__rep > span { position: relative; }
+.cregie__rep::before { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--part, 0%); background: rgba(139, 92, 246, .16); transition: width .4s ease; }
+.cregie__rep.is-bonne { border-color: rgba(74, 222, 128, .45); }
+.cregie__rep.is-bonne::before { background: rgba(74, 222, 128, .16); }
+.cregie__rep b { font-family: var(--font-mono); font-weight: 600; }
+.cregie__pv { display: grid; gap: 6px; }
+.cregie__barre { height: 10px; border-radius: 999px; background: rgba(var(--surf), .08); overflow: hidden; }
+.cregie__barre span { display: block; height: 100%; width: var(--pv, 100%); background: linear-gradient(90deg, var(--danger), var(--gold)); transition: width .4s ease; }
+.cregie__pv small { font-family: var(--font-mono); font-size: .66rem; color: var(--ink-faint); }
+.cchoix-q { display: grid; gap: 8px; }
+.cchoix-q label { display: flex; align-items: center; gap: 10px; }
+.cchoix-q input[type="radio"] { flex: none; width: 18px; height: 18px; accent-color: var(--success); }
+.cq-choix { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.cq-choix span { font-size: .74rem; padding: 2px 8px; border-radius: 999px; color: var(--ink-dim); border: 1px solid rgba(var(--surf), .1); }
+.cq-choix span.is-bonne { color: var(--success); border-color: rgba(74, 222, 128, .4); }
+tr.is-en-cours td { background: rgba(139, 92, 246, .08); }
