@@ -40,16 +40,16 @@ fonction,_ticket_code(),invoker search_path=public anon=- auth=- corps=b1446bed8
 fonction,"_xp_qr_defaut(p_type text, p_rarete text)",invoker search_path=public anon=- auth=- corps=bbfa442226
 fonction,"admin_award_badge(p_player_id uuid, p_badge_id uuid)",DEFINER search_path=public anon=- auth=X corps=a1a138e8d5
 fonction,"admin_award_bonus(p_player_id uuid, p_xp integer, p_reason text",DEFINER search_path=public anon=- auth=X corps=23f9690f14
-fonction,"admin_blind_question(p_id uuid, p_categorie text, p_reponse tex",DEFINER search_path=public anon=- auth=X corps=e792e40419
+fonction,"admin_blind_question(p_id uuid, p_categorie text, p_reponse tex",DEFINER search_path=public anon=- auth=X corps=3eda44b377
 fonction,"admin_create_announcement(p_message text, p_type text)",DEFINER search_path=public anon=- auth=X corps=ace5487b75
-fonction,"admin_create_prize(p_name text, p_icon text, p_weight integer, ",DEFINER search_path=public anon=- auth=X corps=f48f190eae
-fonction,"admin_create_quiz_question(p_session_id uuid, p_question text, ",DEFINER search_path=public anon=- auth=X corps=d93047330e
-fonction,"admin_create_quiz_session(p_title text, p_kind text, p_boss_nam",DEFINER search_path=public anon=- auth=X corps=3767c3c430
+fonction,"admin_create_prize(p_name text, p_icon text, p_weight integer, ",DEFINER search_path=public anon=- auth=X corps=52c7e250ad
+fonction,"admin_create_quiz_question(p_session_id uuid, p_question text, ",DEFINER search_path=public anon=- auth=X corps=e013ab4f89
+fonction,"admin_create_quiz_session(p_title text, p_kind text, p_boss_nam",DEFINER search_path=public anon=- auth=X corps=eaaa87ddda
 fonction,admin_delete_announcement(p_id uuid),DEFINER search_path=public anon=- auth=X corps=b89260ffc9
-fonction,admin_delete_prize(p_id uuid),DEFINER search_path=public anon=- auth=X corps=94acc05c1c
-fonction,admin_delete_quiz_question(p_id uuid),DEFINER search_path=public anon=- auth=X corps=1d8e2d082f
-fonction,admin_delete_quiz_session(p_id uuid),DEFINER search_path=public anon=- auth=X corps=20b8f4db64
-fonction,admin_duplicate_quiz_session(p_session_id uuid),DEFINER search_path=public anon=- auth=X corps=17cf4197a7
+fonction,admin_delete_prize(p_id uuid),DEFINER search_path=public anon=- auth=X corps=44774d059e
+fonction,admin_delete_quiz_question(p_id uuid),DEFINER search_path=public anon=- auth=X corps=e625a8e266
+fonction,admin_delete_quiz_session(p_id uuid),DEFINER search_path=public anon=- auth=X corps=54b6805bc0
+fonction,admin_duplicate_quiz_session(p_session_id uuid),DEFINER search_path=public anon=- auth=X corps=6ac3070228
 fonction,"admin_effacer_joueur(p_player_id uuid, p_confirmation text)",DEFINER search_path=public anon=- auth=X corps=699e4810e0
 fonction,admin_fermer_annonce(p_id uuid),DEFINER search_path=public anon=- auth=X corps=5bfe2ff4eb
 fonction,admin_get_reconnect_code(p_player_id uuid),DEFINER search_path=public anon=- auth=X corps=f970fa8efe
@@ -57,25 +57,25 @@ fonction,admin_journal_bonus(p_jour date),DEFINER search_path=public anon=- auth
 fonction,admin_list_quiz_questions(p_session_id uuid),DEFINER search_path=public anon=- auth=X corps=c285d17ce0
 fonction,admin_list_quiz_sessions(),DEFINER search_path=public anon=- auth=X corps=1030a6b780
 fonction,admin_manual_quests(p_player_id uuid),DEFINER search_path=public anon=- auth=X corps=42de619982
-fonction,"admin_move_quiz_question(p_id uuid, p_direction text)",DEFINER search_path=public anon=- auth=X corps=1b80133b50
-fonction,"admin_prize_affichage(p_id uuid, p_rarete text, p_court text)",DEFINER search_path=public anon=- auth=X corps=2caa61c4f3
+fonction,"admin_move_quiz_question(p_id uuid, p_direction text)",DEFINER search_path=public anon=- auth=X corps=bff3df25c6
+fonction,"admin_prize_affichage(p_id uuid, p_rarete text, p_court text)",DEFINER search_path=public anon=- auth=X corps=9e64d79285
 fonction,"admin_publier_annonce(p_titre text, p_message text, p_type text",DEFINER search_path=public anon=- auth=X corps=30d108f055
 fonction,admin_quiz_end(p_session_id uuid),DEFINER search_path=public anon=- auth=X corps=c1fed662e7
 fonction,admin_quiz_live(p_session_id uuid),DEFINER search_path=public anon=- auth=X corps=c9d93a6933
 fonction,admin_quiz_next(p_session_id uuid),DEFINER search_path=public anon=- auth=X corps=5e3efa5668
 fonction,admin_quiz_start(p_session_id uuid),DEFINER search_path=public anon=- auth=X corps=6ac739a98d
-fonction,admin_recent_spins(p_limit integer),DEFINER search_path=public anon=- auth=X corps=731a891217
-fonction,admin_redeem(p_code text),DEFINER search_path=public anon=- auth=X corps=a4e6f43391
+fonction,admin_recent_spins(p_limit integer),DEFINER search_path=public anon=- auth=X corps=600cbe3bd9
+fonction,admin_redeem(p_code text),DEFINER search_path=public anon=- auth=X corps=fe7e4e8ec5
 fonction,"admin_rename_player(p_player_id uuid, p_pseudo text)",DEFINER search_path=public anon=- auth=X corps=b88798db00
-fonction,"admin_rename_quiz_session(p_id uuid, p_title text)",DEFINER search_path=public anon=- auth=X corps=e2967b6660
+fonction,"admin_rename_quiz_session(p_id uuid, p_title text)",DEFINER search_path=public anon=- auth=X corps=5830f5adfd
 fonction,admin_set_phase(p_phase text),DEFINER search_path=public anon=- auth=X corps=b64184dc11
-fonction,admin_set_roulette_cost(p_cost integer),DEFINER search_path=public anon=- auth=X corps=61f414a7d9
+fonction,admin_set_roulette_cost(p_cost integer),DEFINER search_path=public anon=- auth=X corps=240223589e
 fonction,admin_set_roulette_plafond(p_max integer),DEFINER search_path=public anon=- auth=X corps=3f315f91cd
 fonction,"admin_set_status(p_player_id uuid, p_status text)",DEFINER search_path=public anon=- auth=X corps=d362b5b446
 fonction,admin_stats(),DEFINER search_path=public anon=- auth=X corps=6378e550df
-fonction,"admin_update_prize(p_id uuid, p_name text, p_icon text, p_weigh",DEFINER search_path=public anon=- auth=X corps=aba1fd3525
-fonction,"admin_update_quiz_question(p_id uuid, p_question text, p_choice",DEFINER search_path=public anon=- auth=X corps=079fb88515
-fonction,"admin_update_raid_params(p_session_id uuid, p_boss_name text, p",DEFINER search_path=public anon=- auth=X corps=08c099287d
+fonction,"admin_update_prize(p_id uuid, p_name text, p_icon text, p_weigh",DEFINER search_path=public anon=- auth=X corps=b4486a7925
+fonction,"admin_update_quiz_question(p_id uuid, p_question text, p_choice",DEFINER search_path=public anon=- auth=X corps=f85d3a8ec1
+fonction,"admin_update_raid_params(p_session_id uuid, p_boss_name text, p",DEFINER search_path=public anon=- auth=X corps=809f41fc05
 fonction,"admin_validate_quest(p_player_id uuid, p_quest_id uuid)",DEFINER search_path=public anon=- auth=X corps=523a0db714
 fonction,billetterie_stats(),DEFINER search_path=public anon=- auth=X corps=58858a5eb9
 fonction,"carnet_attribuer(p_carnet_id uuid, p_email text)",DEFINER search_path=public anon=- auth=X corps=8718ea1211
@@ -123,9 +123,7 @@ fonction,is_vendeur(),DEFINER search_path=public anon=X auth=X corps=cdb2b239ee
 fonction,jour_de(p_instant timestamp with time zone),invoker search_path=public anon=X auth=X corps=1260b5719c
 fonction,jour_festival_label(p_jour date),invoker search_path=public anon=X auth=X corps=3c0e6a9043
 fonction,jour_jeu(),invoker search_path=public anon=X auth=X corps=1433b11ce7
-fonction,leaderboard_view(p_player_id uuid),DEFINER search_path=public anon=X auth=X corps=7c2952b817
 fonction,level_for_xp(p_xp integer),invoker search_path=public anon=X auth=X corps=075e12b99e
-fonction,live_board(),DEFINER search_path=public anon=X auth=X corps=0c81d6911c
 fonction,live_stats(),DEFINER search_path=public anon=X auth=X corps=3577572732
 fonction,login_with_code(p_code text),DEFINER search_path=public anon=X auth=X corps=5c6f0dd454
 fonction,mon_acces(),DEFINER search_path=public anon=- auth=X corps=835f023602

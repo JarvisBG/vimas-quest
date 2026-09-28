@@ -102,7 +102,7 @@ declare
   v_rarete text := coalesce(nullif(lower(trim(coalesce(p_rarete, ''))), ''), 'commun');
   v_court  text := nullif(trim(coalesce(p_court, '')), '');
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   if v_rarete not in ('commun', 'rare', 'epique', 'legendaire') then raise exception 'RARETE_INVALIDE'; end if;
   if char_length(v_court) > 12 then raise exception 'LIBELLE_TROP_LONG'; end if;
   update public.roulette_prizes set rarete = v_rarete, court = v_court where id = p_id;

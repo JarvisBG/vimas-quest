@@ -36,7 +36,7 @@
 --     programme : lieux, scènes, artistes, concerts, dédicaces (sources/99_console_programme.sql) ;
 --   · player_home complète (carte en un appel), scan_qr renvoie l'avancée des missions ;
 --   · un QR de scène se scanne une fois par concert (scans.creneau_id).
--- Tables : 42 · fonctions : 154
+-- Tables : 42 · fonctions : 152
 -- ============================================================================
 
 begin;
@@ -455,7 +455,7 @@ alter table public.roulette_prizes add constraint roulette_prizes_kind_ck CHECK 
 alter table public.staff add constraint staff_role_check CHECK ((role = ANY (ARRAY['gm'::text, 'staff'::text, 'vendeur'::text])));
 
 -- ----------------------------------------------------------------------------
--- Fonctions (74)
+-- Fonctions (72)
 -- ----------------------------------------------------------------------------
 create or replace function public._award_badge(p_player_id uuid, p_pseudo text, p_badge_name text)
  RETURNS text
@@ -695,7 +695,7 @@ create or replace function public.admin_create_prize(p_name text, p_icon text, p
 AS $function$
 declare v_p public.roulette_prizes%rowtype; v_kind text;
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   if p_name is null or char_length(trim(p_name)) = 0 then raise exception 'NOM_MANQUANT'; end if;
   v_kind := coalesce(nullif(trim(coalesce(p_kind,'')),''), 'objet');
   if v_kind not in ('objet','xp','jetons','badge','rien') then raise exception 'GENRE_INCONNU'; end if;
@@ -721,7 +721,7 @@ AS $function$
 declare
   v_q public.quiz_questions%rowtype;
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   if not exists (select 1 from public.quiz_sessions where id = p_session_id) then
     raise exception 'QUIZ_INCONNU';
   end if;
@@ -759,7 +759,7 @@ AS $function$
 declare
   v_session public.quiz_sessions%rowtype;
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   if coalesce(trim(p_title), '') = '' then raise exception 'TITRE_MANQUANT'; end if;
   if p_kind not in ('quiz', 'raid') then raise exception 'TYPE_INVALIDE'; end if;
 
@@ -805,7 +805,7 @@ create or replace function public.admin_delete_prize(p_id uuid)
  SET search_path TO 'public'
 AS $function$
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   delete from public.roulette_prizes where id = p_id;
 end;
 $function$
@@ -821,7 +821,7 @@ declare
   v_q public.quiz_questions%rowtype;
   v_status text;
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   select * into v_q from public.quiz_questions where id = p_id;
   if v_q.id is null then raise exception 'QUESTION_INCONNUE'; end if;
   select status into v_status from public.quiz_sessions where id = v_q.session_id;
@@ -842,7 +842,7 @@ create or replace function public.admin_delete_quiz_session(p_id uuid)
  SET search_path TO 'public'
 AS $function$
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   if exists (select 1 from public.quiz_answers a
              join public.quiz_questions q on q.id = a.question_id
              where q.session_id = p_id) then
@@ -863,7 +863,7 @@ declare
   v_src public.quiz_sessions%rowtype;
   v_new public.quiz_sessions%rowtype;
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
 
   select * into v_src from public.quiz_sessions where id = p_session_id;
   if v_src.id is null then raise exception 'QUIZ_INCONNU'; end if;
@@ -1009,7 +1009,7 @@ declare
   v_voisine public.quiz_questions%rowtype;
   v_status  text;
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   if p_direction not in ('haut', 'bas') then raise exception 'DIRECTION_INVALIDE'; end if;
 
   select * into v_q from public.quiz_questions where id = p_id;
@@ -1207,7 +1207,7 @@ create or replace function public.admin_recent_spins(p_limit integer DEFAULT 30)
  SET search_path TO 'public'
 AS $function$
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   return coalesce((
     select json_agg(row_to_json(t)) from (
       select s.id, s.redeem_code, s.created_at, s.redeemed_at,
@@ -1231,7 +1231,7 @@ create or replace function public.admin_redeem(p_code text)
 AS $function$
 declare v_spin public.roulette_spins%rowtype; v_prize public.roulette_prizes%rowtype; v_player public.players%rowtype;
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   select * into v_spin from public.roulette_spins where redeem_code = upper(trim(p_code));
   if v_spin.id is null then raise exception 'BON_INCONNU'; end if;
   if v_spin.redeemed_at is not null then raise exception 'DEJA_RETIRE'; end if;
@@ -1279,7 +1279,7 @@ AS $function$
 declare
   v_session public.quiz_sessions%rowtype;
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
 
   select * into v_session from public.quiz_sessions where id = p_id;
   if v_session.id is null then raise exception 'QUIZ_INCONNU'; end if;
@@ -1369,7 +1369,7 @@ create or replace function public.admin_set_roulette_cost(p_cost integer)
  SET search_path TO 'public'
 AS $function$
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   if p_cost is null or p_cost < 1 or p_cost > 100000 then raise exception 'COUT_INVALIDE'; end if;
   update public.game_state set roulette_cost = p_cost where id = 1;
 end;
@@ -1443,7 +1443,7 @@ create or replace function public.admin_update_prize(p_id uuid, p_name text, p_i
 AS $function$
 declare v_p public.roulette_prizes%rowtype; v_kind text;
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   v_kind := coalesce(nullif(trim(coalesce(p_kind,'')),''), 'objet');
   if v_kind not in ('objet','xp','jetons','badge','rien') then raise exception 'GENRE_INCONNU'; end if;
   if v_kind = 'badge' and p_badge_id is null then raise exception 'BADGE_MANQUANT'; end if;
@@ -1469,7 +1469,7 @@ AS $function$
 declare
   v_q public.quiz_questions%rowtype;
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   if exists (select 1 from public.quiz_answers where question_id = p_id) then
     raise exception 'QUESTION_VERROUILLEE';
   end if;
@@ -1506,7 +1506,7 @@ AS $function$
 declare
   v_session public.quiz_sessions%rowtype;
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   select * into v_session from public.quiz_sessions where id = p_session_id;
   if v_session.id is null then raise exception 'QUIZ_INCONNU'; end if;
   if v_session.kind <> 'raid' then raise exception 'PAS_UN_RAID'; end if;
@@ -2128,42 +2128,6 @@ AS $function$
 $function$
 ;
 
-create or replace function public.leaderboard_view(p_player_id uuid DEFAULT NULL::uuid)
- RETURNS json
- LANGUAGE plpgsql
- STABLE SECURITY DEFINER
- SET search_path TO 'public'
-AS $function$
-declare
-  v_me json := null;
-begin
-  if p_player_id is not null then
-    select json_build_object(
-      'position', (select count(*) + 1 from public.players x
-                   where public._points_jour(x.xp_jour, x.jour) > public._points_jour(p.xp_jour, p.jour)),
-      'points_jour', public._points_jour(p.xp_jour, p.jour),
-      'player',   row_to_json(p))
-    into v_me
-    from public.players p where p.id = p_player_id;
-  end if;
-
-  return json_build_object(
-    'jour', public.jour_jeu(),
-    'jour_label', public.jour_festival_label(),
-    'roi_veille', public.roi_veille(),
-    'players', coalesce((select json_agg(row_to_json(t)) from (
-      select id, pseudo, archetype, xp, level,
-             public._points_jour(xp_jour, jour) as points_jour
-      from public.players
-      where status = 'actif'
-      order by public._points_jour(xp_jour, jour) desc, created_at asc
-      limit 50) t), '[]'::json),
-    'me', v_me,
-    'total', (select count(*) from public.players where status = 'actif'));
-end;
-$function$
-;
-
 create or replace function public.level_for_xp(p_xp integer)
  RETURNS integer
  LANGUAGE plpgsql
@@ -2180,47 +2144,6 @@ begin
   end loop;
   return v_level;
 end;
-$function$
-;
-
-create or replace function public.live_board()
- RETURNS json
- LANGUAGE sql
- STABLE SECURITY DEFINER
- SET search_path TO 'public'
-AS $function$
-  select json_build_object(
-    'jour', public.jour_jeu(),
-    'jour_label', public.jour_festival_label(),
-    'roi_veille', public.roi_veille(),
-    'players', coalesce((select json_agg(row_to_json(t)) from (
-      select id, pseudo, archetype, xp, level,
-             public._points_jour(xp_jour, jour) as points_jour
-      from public.players
-      where status = 'actif'
-      order by public._points_jour(xp_jour, jour) desc, created_at asc limit 10) t), '[]'::json),
-
-    'stats', json_build_object(
-      'players_total', (select count(*) from public.players where status = 'actif'),
-      'xp_total',      (select coalesce(sum(xp), 0) from public.players where status = 'actif'),
-      'scans_total',   (select count(*) from public.scans)),
-
-    'winners', coalesce((select json_agg(row_to_json(w)) from (
-      select e.type, e.payload, e.created_at,
-             (select json_build_object('pseudo', p.pseudo, 'archetype', p.archetype)
-              from public.players p where p.id = e.player_id) as players
-      from public.events e
-      -- 'roulette' ← AJOUT DU 37. La roulette n'écrit un événement que
-      -- pour un objet ou un badge (fichier 36) : le journal ne risque
-      -- donc pas d'être noyé par les gains d'XP et de jetons.
-      where e.type in ('badge','level_up','quete','bonus','roulette')
-         or (e.type = 'scan' and coalesce(e.payload->>'qr_type','') <> 'stand')
-      order by e.created_at desc limit 8) w), '[]'::json),
-
-    'announcements', coalesce((select json_agg(row_to_json(a)) from (
-      select message, type, created_at
-      from public.announcements
-      order by created_at desc limit 6) a), '[]'::json));
 $function$
 ;
 
@@ -3524,9 +3447,7 @@ grant execute on function public.is_gm() to anon, authenticated;
 grant execute on function public.is_staff() to anon, authenticated;
 grant execute on function public.is_vendeur() to anon, authenticated;
 grant execute on function public.jour_festival_label(p_jour date) to anon, authenticated;
-grant execute on function public.leaderboard_view(p_player_id uuid) to anon, authenticated;
 grant execute on function public.level_for_xp(p_xp integer) to anon, authenticated;
-grant execute on function public.live_board() to anon, authenticated;
 grant execute on function public.live_stats() to anon, authenticated;
 grant execute on function public.login_with_code(p_code text) to anon, authenticated;
 revoke all on function public.mon_acces() from public, anon, authenticated;
@@ -3890,7 +3811,7 @@ as $function$
 declare
   v_q public.quiz_questions%rowtype;
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   if coalesce(p_audio_debut, 0) not between 0 and 3600 then raise exception 'DEBUT_INVALIDE'; end if;
   if length(p_categorie) > 40 or length(p_reponse) > 160 or length(p_anecdote) > 400 then
     raise exception 'TEXTE_TROP_LONG';
@@ -4834,7 +4755,7 @@ declare
   v_rarete text := coalesce(nullif(lower(trim(coalesce(p_rarete, ''))), ''), 'commun');
   v_court  text := nullif(trim(coalesce(p_court, '')), '');
 begin
-  if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;
+  if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;
   if v_rarete not in ('commun', 'rare', 'epique', 'legendaire') then raise exception 'RARETE_INVALIDE'; end if;
   if char_length(v_court) > 12 then raise exception 'LIBELLE_TROP_LONG'; end if;
   update public.roulette_prizes set rarete = v_rarete, court = v_court where id = p_id;

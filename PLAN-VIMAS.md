@@ -15,16 +15,14 @@
 > Continue le projet **Vimas Quest** (dossier `C:\Users\HP\Documents\PROJETS\vimas\vimas-quest`, dépôt
 > GitHub `JarvisBG/vimas-quest`, branche `main` — commit + push à chaque fin de tâche, tu y es autorisé).
 > Lis d'abord `CLAUDE.md` et `PLAN-VIMAS.md`, et `docs/NOTES-MOTEUR-DOMAF.md` avant de toucher une page.
-> Étapes 1 à 4 terminées, 5.0 terminée, **5.1 faite sauf le tirage au sort final** (mis de côté par Jarvis,
-> proposition dans la case 5.1) : écrans Annonces, Roue et lots, Coups de cœur essayés sur une fausse base et poussés.
-> 5.2 (régie) et 5.3 (billetterie : carnets, tickets, espace vendeur) terminées. Attaque la **5.4 — statistiques**
-> (`admin/statistiques.html` : parcours, profil, micro-questions, consentements — `profil_stats`, `admin_stats`…)
-> **+ relecture des droits** : plusieurs fonctions acceptent `is_equipe()` et donc un vendeur (lots de la roue,
-> régie du blind test, `admin_set_phase`) ; retirer `live_board` / `leaderboard_view` si inutiles. Comparer d'abord
-> ce qui existe et soumettre à Jarvis ce qui manque avant d'écrire du SQL. Essai sans compte : copie de page + script qui remplace
-> `C.garde` / `C.appel` / `C.sb` / `C.confirmer` et force `document.hidden` à `false` (effacer ensuite) ; si
-> l'extension Chrome est déconnectée, Edge sans fenêtre (`--headless=new --dump-dom`, **profil neuf à chaque
-> essai**, sinon il ressert d'anciens fichiers) avec un script de scénario qui écrit ses résultats dans la page.
+> Étapes 1 à 4 terminées ; **étape 5 (console) terminée** sauf le tirage au sort final (mis de côté par Jarvis,
+> proposition dans la case 5.1). 5.4 : `admin/statistiques.html` faite ; correctif des droits
+> `supabase/correctifs/2026-09-28_vimas-5.4-droits.sql` **écrit et essayé (PGlite), PAS ENCORE APPLIQUÉ en ligne** :
+> demander à Jarvis de le coller dans l'éditeur SQL de Supabase (annulation prête : `…_ANNULER.sql`), puis coller la
+> requête de vérification en pied du fichier (10 fonctions attendues). Ensuite : **étape 6 — contenu de démo hors ligne**
+> (`app/data/mock.js` : 2 jours, scènes, line-up fictif, stands, questions du coffre, horaires de jour 10 h → 22 h).
+> Essai d'une page de console sans compte : copie de page + script qui remplace `C.garde` / `C.appel` / `C.sb` /
+> `C.confirmer` (effacer ensuite). Essai SQL sans PostgreSQL installé : `supabase/outils/banc/audit_pglite.mjs` (PGlite).
 > Rappels : base Supabase **partagée** avec l'ancien DOMAF (`domaf-quest`) → sauvegarde SQL avant toute écriture ;
 > festival supposé **de jour, 10 h → 22 h** (contenu à adapter en étape 6) ; serveur local
 > `app/lancer-serveur.bat` → http://localhost:8767 ; pour tester dans Chrome, désinscrire le service worker
@@ -50,6 +48,7 @@
 | 28/09/2026 | Shell revenu (hors mode automatique) : `node --check` OK, les trois écrans essayés dans Chrome sur une fausse base, un défaut d'affichage corrigé ; commit + push. |
 | 28/09/2026 | **5.2 terminée** : régie du blind test (aucun SQL), essayée dans Edge sans fenêtre (scénario complet), un doublon de question corrigé ; commit + push. |
 | 28/09/2026 | **5.3 terminée** : carnets (GM), impression des tickets, espace vendeur, sur le modèle d'Otaku (recherche du joueur par pseudo, décision de Jarvis), aucun SQL ; commit + push. |
+| 28/09/2026 | **5.4 terminée** (côté dépôt) : écran Statistiques (aucun SQL, modèle d'Otaku, CSV, impression), essayé dans Chrome sur une fausse base ; correctif des droits (décision de Jarvis : vendeur sans écriture sur la roue et le blind test, pilotage de secours gardé comme Otaku ; `live_board` / `leaderboard_view` retirées), essayé sur PGlite (aller-retour avec l'annulation) ; `sources/20_blind_test.sql` perdu depuis le DOMAF, restauré ; générateur et audit attendu à jour. **Correctif pas encore appliqué en ligne.** |
 
 ---
 
@@ -60,7 +59,7 @@
 | Base (schéma, sécurité, RPC) | ✅ complète, en ligne |
 | Pages festivalier (14) | ✅ branchées sur la base |
 | Écrans géants (mur, blind test) | ✅ branchés |
-| Console | ⏳ 2/3 : connexion, tableau de bord, joueurs, missions, badges, QR, programme. **Manquent** : animation, régie blind test, billetterie, statistiques |
+| Console | ✅ terminée pour Vimas (5.0 → 5.4), sauf le tirage au sort final |
 | Contenu | ❌ fictif DOMAF (Douala, 4 jours) |
 
 ---
@@ -129,7 +128,14 @@ Le moteur DOMAF est calé sur des **soirées de concerts** : à adapter (étapes
   - `admin/vendeur.html` + `console-vendeur.js` (rôle vendeur, une colonne pour téléphone) : recette du jour, mon carnet, mode sans papier (QR d'un code libre, codes déjà montrés retenus sur le téléphone), récompenser un joueur (pseudo → +25/+50/+100 avec motif, missions « validées par l'équipe »). Les comptes vendeurs y sont envoyés à la connexion (plus de message « bientôt »)
   - Essais : scénarios complets dans Edge sans fenêtre + contrôle visuel dans Chrome (table resserrée, grilles 2 × 2 sur téléphone, motif avant les montants) ; fichiers d'essai effacés
   - `inscription.js` modifié (page du téléphone) : penser à changer `VERSION` de `sw.js` à la mise en ligne
-- [ ] 5.4 Statistiques (parcours, profil, micro-questions, consentements) + relecture des droits ; retirer `live_board` / `leaderboard_view` si inutiles
+- [x] 5.4 Statistiques + relecture des droits (28/09) — **correctif à appliquer en ligne**
+  - `admin/statistiques.html` + `console-statistiques.js` (GM et staff, lecture seule, relue au bouton) : 6 chiffres (inscrits, ont joué, QR scannés, fiches complètes, contacts Vimas / partenaires), **le parcours** (retour au lendemain, heures passées, durée médiane, courbe des heures, journée par journée, profondeur, QR les plus scannés), **qui est venu** (6 champs de la fiche, libellés de `profil_options`), **ce qu'ils ont aimé** (artistes / stands), **questions du coffre** par thème (réponses « en moins d'une seconde » signalées, artistes nommés). Export CSV (« ; » + BOM, pour Excel), impression en clair. Aucun SQL. Essayée dans Chrome sur une fausse base (bureau, 390 px, CSV, erreurs) ; fichiers d'essai effacés
+  - ⚠ Les quartiers de la base sont encore ceux de Douala : une valeur de Yaoundé s'affiche brute (« ngoa-ekelle ») jusqu'au correctif de l'étape 8
+  - `correctifs/2026-09-28_vimas-5.4-droits.sql` : 17 fonctions (roue : lots, coût, bons, derniers tirages ; blind test : manches, questions, boss) passent de `is_equipe()` à `is_staff()` — seule la ligne de garde change (réécriture depuis `pg_get_functiondef`, s'arrête si déjà appliqué). Le vendeur garde ses outils (`admin_manual_quests`, `admin_validate_quest`, `vendeur_award_bonus`) et le **pilotage de secours** du blind test (liste, direct, lancer, suivante, terminer, `admin_set_phase`) — décision de Jarvis, comme Otaku. `live_board` / `leaderboard_view` retirées. Annulation : `…_ANNULER.sql`
+  - Essais (PostgreSQL absent du PC) : **PGlite** (`outils/banc/audit_pglite.mjs`) — l'audit de l'ancien schéma y est identique à `audit_attendu.csv` ; après correctif = nouveau schéma, après annulation = ancien schéma ; vendeur refusé / staff accepté ; second passage refusé
+  - Dépôt : `sources/20_blind_test.sql` (perdu dès le DOMAF, le générateur ne le trouvait plus) restauré depuis le schéma ; `fabriquer_schema.py`, `sources/60_roue.sql`, `00_schema.sql` régénéré, `audit_attendu.csv` à jour
+  - Reste : l'**écran de secours** du vendeur n'existe pas encore dans Vimas (Otaku : bloc « En cas de secours » de l'espace vendeur → raid.html) ; la base l'autorise déjà
+  - Inventaire (28/09) : **statistiques sans SQL** (`profil_stats` = fiche, contacts, questions du coffre, cœurs ; `stats_parcours` = jours, retour au lendemain, temps passé, heures, profondeur, top QR ; `admin_stats`) — le sondage de sortie d'Otaku a été retiré au DOMAF (6.3 bis). **Droits** : 29 fonctions acceptent un vendeur (`is_equipe`) ; aucune politique RLS. Otaku ouvrait exprès le *pilotage* du raid au vendeur (secours), jamais l'écriture. `live_board` / `leaderboard_view` : plus appelées par l'app. Proposition soumise à Jarvis.
 - [ ] Chaque sous-étape : essai au banc local (`supabase/outils/banc/`) avant la base en ligne
 
 ## Étape 6 — Contenu de démo hors ligne (`app/data/mock.js`)

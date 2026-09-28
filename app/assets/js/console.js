@@ -50,7 +50,7 @@
       { page: "vendeur.html", nom: "Espace vendeur", icone: "passeport", gm: true }
     ] },
     { groupe: "Bilan", liens: [
-      { page: "statistiques.html", nom: "Statistiques", icone: "onde", etape: "5.4" }
+      { page: "statistiques.html", nom: "Statistiques", icone: "onde" }
     ] }
   ];
 

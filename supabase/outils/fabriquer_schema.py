@@ -70,6 +70,8 @@ FONCTIONS_RETIREES = {
     # coffre du scan (coffre_ouvrir). Plus de cadence ni de plafond.
     "profil_etat", "profil_repondre", "contact_etat", "contact_enregistrer",
     "micro_prochaine", "micro_repondre",
+    # Écran géant : remplacées par mur_direct (5.1 DOMAF), retirées (Vimas 5.4)
+    "live_board", "leaderboard_view",
 }
 TYPES_QR = "'scene','stand','foodtruck','service','relique','dedicace','surprise'"
 # Réécrites à la main dans sources/ (le corps Otaku ne sert plus du tout)
@@ -404,8 +406,7 @@ f("scan_qr", bloc_types, """  if v_qr.type in ('relique', 'dedicace') then
   end if;
 """)
 
-# --- Écran géant et accueil joueur sans trésor ni duel ----------------------
-f("live_board", "('badge','level_up','quete','bonus','duel','tresor','roulette')", "('badge','level_up','quete','bonus','roulette')")
+# --- Accueil joueur sans trésor ni duel ----------------------
 bloc_tresor = re.search(r"    -- ⬇️ AJOUT DU FICHIER 87.*?      limit 1\),\n\n", fonctions["player_home"], re.S).group(0)
 f("player_home", bloc_tresor, "")
 
@@ -844,6 +845,21 @@ triggers = [minuscules(l).replace("EXECUTE FUNCTION pass_garde()", "EXECUTE FUNC
             for l in divers["triggers"].splitlines()]
 realtime = divers["realtime"].splitlines()
 
+
+# --- Droits (Vimas 5.4, correctifs/2026-09-28_vimas-5.4-droits.sql) ---------
+# Un vendeur n'écrit plus rien dans la roue ni dans le blind test : is_equipe()
+# devient is_staff(). Il garde ses outils et le pilotage de secours du blind
+# test (liste, direct, lancer, suivante, terminer, phase), comme dans Otaku.
+# admin_prize_affichage (sources/60_roue.sql) et admin_blind_question
+# (sources/20_blind_test.sql) sont corrigées dans leur source.
+for nom in ("admin_create_prize", "admin_update_prize", "admin_delete_prize",
+            "admin_set_roulette_cost", "admin_recent_spins", "admin_redeem",
+            "admin_create_quiz_session", "admin_rename_quiz_session", "admin_duplicate_quiz_session",
+            "admin_delete_quiz_session", "admin_update_raid_params",
+            "admin_create_quiz_question", "admin_update_quiz_question",
+            "admin_delete_quiz_question", "admin_move_quiz_question"):
+    f(nom, "if not public.is_equipe() then raise exception 'ACCES_REFUSE'; end if;",
+           "if not public.is_staff() then raise exception 'ACCES_REFUSE'; end if;")
 
 def corps_fonction(t):
     t = re.sub(r"^CREATE OR REPLACE FUNCTION", "create or replace function", t)

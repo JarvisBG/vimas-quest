@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <title>Statistiques | Console Vimas Quest</title>
+  <script src="../assets/js/console-theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/console.css">
+</head>
+<body class="sans-sw">
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <div class="bg-layer bg-glow"></div>
+  <div class="bg-layer bg-grid"></div>
+
+  <div class="console-grille">
+    <nav class="cnav" aria-label="Console">
+      <a class="cnav__marque" href="index.html"><i data-icon="onde"></i> VIMAS QUEST</a>
+      <p class="cnav__tag" data-console-tag>Game Master</p>
+      <div data-console-nav></div>
+      <div class="cnav__pied">
+        <p class="cnav__qui" data-console-qui></p>
+        <button class="cnav__sortir" type="button" data-console-sortir><i data-icon="sortie"></i> Déconnexion</button>
+      </div>
+    </nav>
+    <div class="console-voile" data-console-voile></div>
+    <button class="ctete__menu" type="button" aria-expanded="false" data-console-menu><i data-icon="menu"></i><span class="sr-only">Ouvrir le menu</span></button>
+
+    <div class="console-principal">
+      <div class="ccorps">
+        <header class="ctete">
+          <div class="ctete__titres">
+            <p class="ctete__sur">Bilan</p>
+            <h1 class="ctete__titre">Statistiques</h1>
+            <p class="ctete__sous" data-resume>Chargement…</p>
+          </div>
+          <div class="ctete__actions">
+            <button class="cbtn" type="button" data-relire><i data-icon="horloge"></i> Actualiser</button>
+            <button class="cbtn" type="button" data-csv disabled><i data-icon="partage"></i> Exporter (CSV)</button>
+            <button class="cbtn" type="button" data-imprimer><i data-icon="cadre"></i> Imprimer</button>
+            <span class="cpuce-admin"><i data-icon="cadenas"></i><span data-console-nom>GM</span></span>
+          </div>
+        </header>
+
+        <main class="ccontenu cstats" id="contenu" data-console-contenu>
+          <p class="message message--info"><i data-icon="info"></i><span><strong>Aucun nom, aucun numéro sur cette page</strong> : la base ne renvoie que des comptages. C'est ce qui rend ce bilan montrable à Vimas Production et aux partenaires.</span></p>
+          <p class="message" role="alert" data-erreur hidden></p>
+
+          <div class="cchiffres" data-chiffres></div>
+
+          <section class="cstats__bloc" aria-labelledby="t-parcours">
+            <div class="cstats__tete">
+              <h2 class="cstats__titre" id="t-parcours"><i data-icon="position"></i> Le parcours</h2>
+              <p>Le nombre de visiteurs se compte partout. Ce qui ne se compte nulle part ailleurs : <em>le temps qu'ils ont donné</em> et <em>s'ils sont revenus le lendemain</em>.</p>
+            </div>
+            <div class="cstats__heros" data-heros></div>
+            <div class="cstats__grille cstats__grille--large" data-jours-heures></div>
+            <div class="cstats__grille" data-engagement></div>
+          </section>
+
+          <section class="cstats__bloc" aria-labelledby="t-profil">
+            <div class="cstats__tete">
+              <h2 class="cstats__titre" id="t-profil"><i data-icon="passeport"></i> Qui est venu</h2>
+              <p>La fiche fan, remplie volontairement dans l'application. On ne vend pas une foule, on vend <em>un public qu'on connaît</em>.</p>
+            </div>
+            <div class="cstats__grille" data-profil></div>
+          </section>
+
+          <section class="cstats__bloc" aria-labelledby="t-coeurs">
+            <div class="cstats__tete">
+              <h2 class="cstats__titre" id="t-coeurs"><i data-icon="coeur"></i> Ce qu'ils ont aimé</h2>
+              <p>Le trafic dit combien sont passés ; les cœurs disent combien ont <em>aimé</em>. Un cœur ne se donne qu'à un artiste vu ou un stand visité.</p>
+            </div>
+            <div class="cstats__grille" data-coeurs></div>
+          </section>
+
+          <section class="cstats__bloc" aria-labelledby="t-coffre">
+            <div class="cstats__tete">
+              <h2 class="cstats__titre" id="t-coffre"><i data-icon="sondage"></i> Les questions du coffre</h2>
+              <p>Une question par scan, un seul geste pour ouvrir le coffre. C'est d'ici que vient <em>comment ils ont connu le festival</em> et comment ils écoutent la musique.</p>
+            </div>
+            <div class="cstats__grille" data-coffre></div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/config.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/vendor/supabase.min.js" defer></script>
+  <script src="../assets/js/serveur.js" defer></script>
+  <script src="../assets/js/console.js" defer></script>
+  <script src="../assets/js/pages/console-statistiques.js" defer></script>
+</body>
+</html>
