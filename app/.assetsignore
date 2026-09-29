@@ -3,3 +3,4 @@
 *.md
 wrangler.jsonc
 lancer-serveur.bat
+.wrangler
