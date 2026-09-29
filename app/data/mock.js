@@ -250,7 +250,7 @@ window.MOCK = {
 
     { id: "st-radio",     cat: "stand", nom: "Radio Écho",        x: 654, y: 322, desc: "Studio en direct et interviews d'artistes." },
     { id: "st-kora",      cat: "stand", nom: "Maison Kora",       x: 528, y: 518, desc: "Créateurs de mode et artisans." },
-    { id: "st-brasserie", cat: "stand", nom: "Brasserie du Port", x: 640, y: 497, desc: "Le bar du festival." },
+    { id: "st-brasserie", cat: "stand", nom: "Buvette du Majestic", x: 640, y: 497, desc: "Le bar du festival." },
     { id: "st-quest",     cat: "stand", nom: "Stand Vimas Quest", x: 605, y: 574, horaires: "10h à 21h30", desc: "Accueil du jeu, retrait des lots, recharge de téléphone, objets trouvés. Juste après l'entrée." },
 
     { id: "st-yassa",  cat: "food", nom: "Chez Yassa", x: 507, y: 161, desc: "Grillades et plats locaux, au nord de l'enceinte." },
@@ -594,7 +594,7 @@ window.MOCK = {
   stands: [
     { id: "st-kora",      nom: "Maison Kora",        type: "stand",     qr: "QR-KORA",      zone: "Près du Podium" },
     { id: "st-radio",     nom: "Radio Écho",         type: "stand",     qr: "QR-RADIO",     zone: "Près du Podium" },
-    { id: "st-brasserie", nom: "Brasserie du Port",  type: "stand",     qr: "QR-BRASS",     zone: "Le bar" },
+    { id: "st-brasserie", nom: "Buvette du Majestic", type: "stand",     qr: "QR-BRASS",     zone: "Le bar" },
     { id: "st-quest",     nom: "Stand Vimas Quest",  type: "stand",     qr: "QR-RSN",       zone: "Entrée" },
     { id: "st-yassa",     nom: "Chez Yassa",         type: "foodtruck", qr: "QR-FT-YASSA",  zone: "Nord de l'enceinte" },
     { id: "st-braise",    nom: "Le Braisé",          type: "foodtruck", qr: "QR-FT-BRAISE", zone: "Nord de l'enceinte" }

@@ -317,7 +317,7 @@ select.saisie option { background: var(--panel); color: var(--ink); }
 .bandeau-reseau.is-ok { background: var(--success); }
 
 /* ---------- Connexion (admin-login d'Otaku) ---------- */
-.cscene { position: relative; z-index: 5; min-height: 100svh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+.cscene { position: relative; z-index: 5; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 40px 20px; }
 .cretour {
   position: fixed; top: 22px; left: clamp(20px, 5vw, 44px); z-index: 40;
   display: flex; align-items: center; gap: 8px;
@@ -348,6 +348,10 @@ select.saisie option { background: var(--panel); color: var(--ink); }
 .cconnexion h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.3rem, 4vw, 1.6rem); text-align: center; }
 .cconnexion__pied { font-family: var(--font-mono); font-size: .62rem; color: var(--ink-faint); text-align: center; line-height: 1.5; }
 .cconnexion .cbtn--primaire { min-height: 52px; font-size: 1rem; }
+/* Écrans géants hors compte (comme le portail d'Otaku) : ouverts sans se connecter */
+.cecrans { width: 100%; max-width: 440px; display: grid; gap: 10px; }
+.cecrans__titre { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-faint); text-align: center; }
+.cecrans__liens { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
 /* ==========================================================================
    Écran Joueurs (6.2) : recherche, tableau, fiche, scan

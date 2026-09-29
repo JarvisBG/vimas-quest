@@ -50,7 +50,7 @@ insert into public.lieux (id, categorie, nom, description, horaires, x, y, pmr, 
 
   ('stand-radio',     'stand', 'Radio Écho',        'Studio en direct et interviews d''artistes entre deux concerts.', '10 h – 21 h', 654, 322, false, 10),
   ('stand-kora',      'stand', 'Maison Kora',       'Créateurs de mode et artisans : wax, streetwear, pièces uniques.', '10 h – 21 h', 528, 518, false, 11),
-  ('stand-bar',       'stand', 'Brasserie du Port', 'Le bar du festival.',                                              '10 h – 22 h', 640, 497, true,  12),
+  ('stand-bar',       'stand', 'Buvette du Majestic', 'Le bar du festival.',                                            '10 h – 22 h', 640, 497, true,  12),
   ('stand-quest',     'stand', 'Stand Vimas Quest',
    'Le stand du jeu : aide, missions validées, lots à retirer, recharge de téléphone, objets trouvés.', '10 h – 21 h 30', 605, 574, true, 13),
 
@@ -76,13 +76,13 @@ insert into public.scenes (id, couleur, ordre) values
 -- makossa, bikutsi, coupe-decale, rap, rnb-soul, gospel, reggae, rumba, jazz,
 -- electro, zouk, autre. photo_url reste vide (les fiches affichent l'initiale).
 insert into public.artistes (id, nom, genre, bio, tete_affiche, actif) values
-  ('mboa-brass-band', 'Mboa Brass Band', 'autre',
+  ('mboa-brass-band', 'Mboa Brass Band', 'jazz',
    'Onze musiciens qui ouvrent le festival en déambulant entre les stands, sans partition.', false, true),
   ('roots-mbeng',     'Roots Mbeng',     'reggae',
    'Reggae roots chanté en français, en anglais et en langues locales.', false, true),
-  ('defile-wax-roots','Défilé Wax & Roots', 'autre',
+  ('defile-wax-roots','Défilé Wax & Roots', null,
    'Les créateurs des stands défilent : wax, streetwear et silhouettes inspirées des Caraïbes.', false, true),
-  ('lady-soca',       'Lady Soca',       'autre',
+  ('lady-soca',       'Lady Soca',       'zouk',
    'L''énergie du carnaval de Trinidad en plein Yaoundé : drapeaux, sifflets et chorégraphies.', false, true),
   ('selecta-yard',    'Selecta Yard',    'reggae',
    'Sound system dancehall : dubplates et riddims jamaïcains et afro.', false, true),
@@ -145,7 +145,7 @@ insert into public.qr_codes (code, label, type, rarity, xp_reward, hint, active)
 
   ('DQ-VSTRAD', 'Radio Écho',           'stand',     null,  20, null, true),
   ('DQ-VSTKRA', 'Maison Kora',          'stand',     null,  20, null, true),
-  ('DQ-VSTBAR', 'Brasserie du Port',    'stand',     null,  20, null, true),
+  ('DQ-VSTBAR', 'Buvette du Majestic',  'stand',     null,  20, null, true),
   ('DQ-VSTQST', 'Stand Vimas Quest',    'stand',     null,  20, null, true),
 
   ('DQ-VFDYAS', 'Chez Yassa',           'foodtruck', null,  15, null, true),

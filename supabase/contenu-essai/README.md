@@ -51,7 +51,7 @@ imprimer : `<adresse du site>/scanner.html?code=DQ-XXXXXX`.
 | `DQ-VSCPDM` | scène | 30 | Le Podium Mode |
 | `DQ-VSTRAD` | stand | 20 | Radio Écho |
 | `DQ-VSTKRA` | stand | 20 | Maison Kora |
-| `DQ-VSTBAR` | stand | 20 | Brasserie du Port |
+| `DQ-VSTBAR` | stand | 20 | Buvette du Majestic |
 | `DQ-VSTQST` | stand | 20 | Stand Vimas Quest |
 | `DQ-VFDYAS` | food | 15 | Chez Yassa |
 | `DQ-VFDBRZ` | food | 15 | Le Braisé |

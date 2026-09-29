@@ -64,9 +64,12 @@ Joueur d'essai **`EssaiRecette1`** créé sur la vraie base (à effacer avant la
 - [x] Plan : enceinte du Majestic, 2 scènes, 4 stands, 2 food-trucks, points d'eau, toilettes, bouton Urgence ✔
 - [x] Coups de cœur : artistes verrouillés tant que le concert n'est pas vu ✔ ; stand voté (+10 XP) puis cœur retiré ;
   les XP ne se regagnent pas en revotant (« encore 2 fois » après donner + retirer) ✔
-- Contenu d'essai à corriger (SQL en ligne, en attente de l'accord de Jarvis) : Mboa Brass Band et Défilé Wax & Roots
-  ont le genre `autre`, affiché « Un autre » (le mode démo dit « Fanfare » / « Mode ») ; « Brasserie du Port » est
-  un nom hérité du DOMAF (Douala), pas de port à Yaoundé.
+- [x] Contenu d'essai corrigé et **appliqué en ligne** (accord de Jarvis) : `supabase/correctifs/2026-09-29_vimas-11-contenu.sql`.
+  Styles tirés de la liste du profil pour que la console les accepte (Mboa Brass Band → Jazz, Lady Soca → Zouk / Kompa,
+  Défilé Wax & Roots → non précisé) ; « Brasserie du Port » (nom DOMAF) → « Buvette du Majestic » (lieu + QR `DQ-VSTBAR`).
+  Vérifié sur le programme en ligne.
+- [x] Écran géant accessible **hors compte GM** (demande de Jarvis, comme le portail d'Otaku) : lien « Écran géant » dans le
+  pied de l'accueil ; « Mur en direct » et « Blind test » sous le formulaire de connexion de la console. En ligne (v8).
 - [x] Collection (5/36 : 3 badges, 2 stands) et classement (315 XP = 260 + 30 + 25 ✔)
 - Corrigé dans le dépôt (pas encore en ligne) : « 1 joueurs » → accord au singulier (`classement.js`, `blind-test.js`).
 - Remarques (mineures, non corrigées) : le pseudo proposé au hasard peut être « nocturne » (ex. `BasseMinuit57`)

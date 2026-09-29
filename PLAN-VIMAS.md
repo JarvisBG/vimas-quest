@@ -19,7 +19,7 @@
 > proposition dans la case 5.1). 5.4 : `admin/statistiques.html` faite ; correctif des droits
 > `supabase/correctifs/2026-09-28_vimas-5.4-droits.sql` **appliqué en ligne par Jarvis le 28/09** (annulation :
 > `…_ANNULER.sql`). **Site en ligne depuis le 29/09**. **Étape 6 (contenu de démo) terminée le 29/09**,
-> **mise en ligne le 29/09** (prochaine mise en ligne : `vimasquest-v8` puis `npx wrangler deploy`, wrangler connecté).
+> **mise en ligne le 29/09** (prochaine mise en ligne : `vimasquest-v9` puis `npx wrangler deploy`, wrangler connecté).
 > Étapes 6 et 7 en ligne (`vimasquest-v5`). **Étapes 8 et 9 faites le 29/09** : la base est au VIMAS FEST (correctif
 > `2026-09-29_vimas-8-base.sql` + `contenu-essai/contenu_essai.sql`, appliqués en ligne). **Étape 11 commencée le 29/09** : suivre `docs/RECETTE.md` (§A fait hors ligne ; §B–C avec Jarvis). Suite de l'**étape 11 — recette**
 > (parcours festivalier sur vrais téléphones avec les QR `DQ-V…`, écran géant, blind test depuis la régie, console par rôle ;
@@ -64,6 +64,7 @@
 | 29/09/2026 | Audit de la base en ligne (`audit_base.sql` lancé par Jarvis, export CSV) comparé par Claude : conforme (244 lignes, droits identiques) ; seules les empreintes de 6 fonctions du correctif de l'étape 8 différaient → `audit_attendu.csv` mis à jour. Lecture avec la clé publique : conforme. |
 | 29/09/2026 | **Mise en ligne v6** (`vimasquest-v6`, version `464060e0`) : badges de la console et mode démo. Un fichier interne de wrangler (`.wrangler/tmp/…map`) était parti en ligne → `.wrangler` ajouté à `app/.assetsignore`, republié, vérifié en 404. Étiquettes QR contrôlées : marque « VIMAS QUEST » et couleurs Vimas ; seul reste du DOMAF, le préfixe `DQ-` des codes (question posée à Jarvis). |
 | 29/09/2026 | Parcours joueur en ligne dans Chrome (joueur `EssaiRecette1`) : inscription, fiche, scans, coffres, refus du double scan, roue, collection, classement, programme, plan, coups de cœur — tout conforme (`docs/RECETTE.md` §B0). Corrigé : accord « 1 joueur(s) » (classement, blind test) ; mise en ligne `vimasquest-v7`. À corriger dans le contenu d'essai (accord de Jarvis) : genre `autre` de 2 artistes, « Brasserie du Port ». |
+| 29/09/2026 | Correctif de contenu `2026-09-29_vimas-11-contenu.sql` appliqué en ligne par Claude (éditeur SQL, Chrome) : styles de 3 artistes dans la liste du profil, « Brasserie du Port » → « Buvette du Majestic ». Demande de Jarvis : écran géant accessible hors compte GM → liens dans le pied de l'accueil et sous la connexion de la console. Mise en ligne `vimasquest-v8` (version `a800169a`), vérifiée. |
 ---
 
 ## État hérité du DOMAF (au 28/09/2026)
