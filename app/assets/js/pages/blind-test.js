@@ -59,7 +59,7 @@ document.addEventListener("app:ready", async () => {
         <div class="rdv">
           <p class="rdv__lib">${loin ? "Prochaine manche" : `Aujourd'hui à ${esc(fmt.heure(cfg.horaire))}, ${esc(cfg.lieu)}`}</p>
           <p class="rdv__compte" data-compte>${loin ? esc(fmt.heure(cfg.horaire)) : mmss(e.restant)}</p>
-          <p data-conseil>${e.restant < 10 * 60000 ? "Garde cette page ouverte : la manche démarre toute seule." : `${fmt.nombre(e.connectes)} joueurs déjà prêts.`}</p>
+          <p data-conseil>${e.restant < 10 * 60000 ? "Garde cette page ouverte : la manche démarre toute seule." : `${fmt.nombre(e.connectes)} joueur${e.connectes > 1 ? "s" : ""} déjà prêt${e.connectes > 1 ? "s" : ""}.`}</p>
         </div>
         <ol class="regles-bt">
           <li><span>Regarde l'<strong>écran géant</strong> et écoute l'extrait joué sur la scène.</span></li>
@@ -180,7 +180,7 @@ document.addEventListener("app:ready", async () => {
           <span><strong>${esc(q.choix[r.bonne])}</strong><span class="texte-clair">${esc(r.reponse)}</span></span>
         </div>
         <div class="position-j">
-          <span>Ta place<br><span class="texte-clair">sur ${fmt.nombre(s.participants)} joueurs</span></span>
+          <span>Ta place<br><span class="texte-clair">sur ${fmt.nombre(s.participants)} joueur${s.participants > 1 ? "s" : ""}</span></span>
           <span class="position-j__rang chiffres">${rangTxt(s.rang)}</span>
         </div>
         <p class="texte-clair">${s.bonnes} bonne${s.bonnes > 1 ? "s" : ""} réponse${s.bonnes > 1 ? "s" : ""} sur ${e.index + 1}. ${esc(r.anecdote)}</p>
@@ -195,7 +195,7 @@ document.addEventListener("app:ready", async () => {
       <div class="vue-j">
         <h2 class="affiche vue-j__titre">Après ${e.index + 1} questions</h2>
         <div class="position-j">
-          <span>Ta place, ${fmt.nombre(s.total)} pts<br><span class="texte-clair">sur ${fmt.nombre(s.participants)} joueurs</span></span>
+          <span>Ta place, ${fmt.nombre(s.total)} pts<br><span class="texte-clair">sur ${fmt.nombre(s.participants)} joueur${s.participants > 1 ? "s" : ""}</span></span>
           <span class="position-j__rang chiffres">${rangTxt(s.rang)}</span>
         </div>
         <p class="texte-clair">En tête en ce moment :</p>
@@ -593,7 +593,7 @@ document.addEventListener("app:ready", async () => {
           </div>
           ${moi.rang ? `
             <div class="position-j">
-              <span>Ta place, ${fmt.nombre(moi.total)} pts<br><span class="texte-clair">sur ${fmt.nombre(moi.participants)} joueurs</span></span>
+              <span>Ta place, ${fmt.nombre(moi.total)} pts<br><span class="texte-clair">sur ${fmt.nombre(moi.participants)} joueur${moi.participants > 1 ? "s" : ""}</span></span>
               <span class="position-j__rang chiffres">${rangTxt(moi.rang)}</span>
             </div>` : ""}
           ${e.tete.length ? `

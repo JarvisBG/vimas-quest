@@ -9,7 +9,7 @@
      écrans géants et supabase-js (écran, console) se mettent en cache à la demande.
    Changer VERSION à chaque mise en ligne pour renouveler le cache.
    ========================================================================== */
-const VERSION = "vimasquest-v6";
+const VERSION = "vimasquest-v7";
 const CACHE_APP = `${VERSION}-app`;
 const DELAI_RESEAU = 3000;
 

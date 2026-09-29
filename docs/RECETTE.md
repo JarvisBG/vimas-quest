@@ -48,6 +48,30 @@ lancées : elles demandent l'accord explicite de Jarvis.
   question ; une seule à la fin du chrono, étalée sur 1 s ; ~3 s pendant la révélation ; 1/min hors manche).
   300 joueurs ≈ 100 requêtes/s en pointe pendant la révélation : à vérifier au test de charge (D).
 
+## B0. Parcours joueur sur le site en ligne, dans Chrome sur PC (Claude, 29/09 vers 7 h)
+
+Joueur d'essai **`EssaiRecette1`** créé sur la vraie base (à effacer avant la démo avec les autres `Essai%`).
+- [x] Inscription : pseudo, pochette, règles ; code secret affiché ; case « j'ai noté mon code » obligatoire
+- [x] Fiche fan : 6 questions pour un 13-15 ans (pas de question téléphone pour un mineur), quartiers de Yaoundé ;
+  **+170 XP** annoncés = 6 × 20 + 50 ✔
+- [x] Scan de la Grande Scène `DQ-VSCGRD` : +80 XP, +8 jetons, coffre à question (+10 XP) ✔
+- [x] Tableau de bord : 260 XP = 170 + 80 + 10 ✔, 26 jetons, 3 badges, 1ᵉʳ, blind test « dans 9 h 45 » (17 h) ✔
+- [x] Même QR scanné une deuxième fois : écran « Déjà scanné aujourd'hui », propre, sans gain ✔
+- [x] Stand `DQ-VSTQST` (+20 +10 XP, +3 jetons) et food-truck `DQ-VFDYAS` ✔ ; questions des coffres adaptées à Vimas
+- [x] Roue : 31 jetons → un tour à 30 → « Sticker Vimas Quest », bon de retrait « avant dimanche 21h30 »,
+  lot listé dans « Mes lots », lieu de retrait au Stand Vimas Quest ✔
+- [x] Programme (sam. 26 / dim. 27, 2 scènes), favori ajouté → « Mon programme » le montre, suggestions « dans ton style » ✔
+- [x] Plan : enceinte du Majestic, 2 scènes, 4 stands, 2 food-trucks, points d'eau, toilettes, bouton Urgence ✔
+- [x] Coups de cœur : artistes verrouillés tant que le concert n'est pas vu ✔ ; stand voté (+10 XP) puis cœur retiré ;
+  les XP ne se regagnent pas en revotant (« encore 2 fois » après donner + retirer) ✔
+- Contenu d'essai à corriger (SQL en ligne, en attente de l'accord de Jarvis) : Mboa Brass Band et Défilé Wax & Roots
+  ont le genre `autre`, affiché « Un autre » (le mode démo dit « Fanfare » / « Mode ») ; « Brasserie du Port » est
+  un nom hérité du DOMAF (Douala), pas de port à Yaoundé.
+- [x] Collection (5/36 : 3 badges, 2 stands) et classement (315 XP = 260 + 30 + 25 ✔)
+- Corrigé dans le dépôt (pas encore en ligne) : « 1 joueurs » → accord au singulier (`classement.js`, `blind-test.js`).
+- Remarques (mineures, non corrigées) : le pseudo proposé au hasard peut être « nocturne » (ex. `BasseMinuit57`)
+  alors que le festival est de jour ; sur PC, la barre du bas cache la fin de la phrase sous le bouton de la roue.
+
 ## B. Parcours festivalier sur vrais téléphones (Jarvis)
 
 Lien : https://festival-quest.jarvismboummeu28.workers.dev — 2 ou 3 téléphones (un Android d'entrée de

@@ -75,8 +75,8 @@ document.addEventListener("app:ready", async () => {
     $("[data-sous-titre]").textContent = amis
       ? `${d.total} joueur${d.total > 1 ? "s" : ""} dans ta bande, classés à l'XP total`
       : etat.periode === "jour"
-        ? `${fmt.nombre(d.total)} joueurs actifs aujourd'hui, XP gagnés depuis l'ouverture`
-        : `${fmt.nombre(d.total)} joueurs depuis samedi`;
+        ? `${fmt.nombre(d.total)} joueur${d.total > 1 ? "s" : ""} actif${d.total > 1 ? "s" : ""} aujourd'hui, XP gagnés depuis l'ouverture`
+        : `${fmt.nombre(d.total)} joueur${d.total > 1 ? "s" : ""} depuis samedi`;
 
     rendrePodium(podium);
     rendreListe(d, amis);
@@ -159,7 +159,7 @@ document.addEventListener("app:ready", async () => {
     $("[data-mon-rang]").innerHTML = rangTxt(moi.rang);
     $("[data-mon-titre]").textContent = amis
       ? `Sur ${d.total} dans ta bande`
-      : `Sur ${fmt.nombre(d.total)} joueurs`;
+      : `Sur ${fmt.nombre(d.total)} joueur${d.total > 1 ? "s" : ""}`;
     $("[data-mon-ecart]").textContent = moi.prochain
       ? `Encore ${fmt.nombre(moi.prochain.ecart)} XP pour dépasser ${moi.prochain.pseudo}`
       : amis ? "Tu mènes la bande !" : "Tu es en tête, garde ta place !";
