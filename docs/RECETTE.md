@@ -23,6 +23,18 @@
 `audit_attendu.csv`. Les sondes d'écriture avec la clé publique contre la base en ligne n'ont pas été
 lancées : elles demandent l'accord explicite de Jarvis.
 
+### Base en ligne, lecture avec la clé publique (29/09, accord de Jarvis)
+- [x] **Lisibles** (18, attendu) : announcements (3), artistes (12), badges (15), billetterie_config,
+  coeur_config, contact_config, creneaux (12), dedicaces (3), game_state, lieux (16), micro_config,
+  micro_questions (42), profil_config, quests (11), roulette_prizes (11), scenes (2).
+- [x] **Rien de visible** : player_secrets, qr_codes (les codes des QR restent secrets), quiz_questions
+  (les réponses du blind test restent secrètes), player_profile, player_contact, tickets, carnets, coffres,
+  scans, roulette_spins, staff, console_journal… Conforme à l'audit.
+- [x] players, events, quest_progress et player_badges sont publics mais vides : aucun joueur en base à ce jour.
+- [ ] **Sondes d'écriture** (liste vide ou filtre sans résultat, donc sans effet) et comparaison
+  `audit_base.sql` : **bloquées par le mode automatique de Claude Code**, même avec l'accord de Jarvis.
+  À faire par Jarvis dans l'éditeur SQL, ou après une règle d'autorisation dans les réglages de Claude Code.
+
 ### Charge (forfait gratuit : 200 connexions temps réel)
 - [x] **Les téléphones n'ouvrent aucune connexion temps réel.** Seuls les écrans géants (mur, blind test) et
   la console en ouvrent (`ecran-mur.js`, `ecran-blind.js`, `console.js`). Il en faut environ 3 à 10 pour
