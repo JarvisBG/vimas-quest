@@ -53,11 +53,13 @@ pas un discours. **Le moins de travail possible** : on change la peau et le cont
 | `app/assets/js/config.js` | URL Supabase + clé publishable (publique). Jamais de `sb_secret_…` |
 | `app/data/mock.js` | Données du **mode démo** (`?mock=1`) — contenu Vimas de jour (étape 6, 29/09) |
 | `vimas_visuels/` | Maquette statique déjà ré-habillée Vimas (27/09) : **référence** pour l'habillage de `app/` |
-| `supabase/` | Scripts de la base (identiques à DOMAF). `contenu-essai/` = contenu fictif à remplacer par une version Vimas |
+| `supabase/` | Scripts de la base (moteur DOMAF). `contenu-essai/` = contenu d'essai **Vimas** fictif (en ligne depuis le 29/09) ; `correctifs/2026-09-29_*` = passage de la base au VIMAS FEST et corrections de la recette |
 | `QUESTIONS-VIMAS.md` | Banque de questions du coffre (adaptée Vimas le 29/09 ; source : `supabase/outils/banque_questions.py`) |
 | `outils/plan/` | Fond du plan (Majestic Cinéma, OpenStreetMap) : `python outils/plan/fond_plan.py` → `app/assets/js/plan-fond.js` |
 | `docs/NOTES-MOTEUR-DOMAF.md` | **Tous les pièges techniques du moteur** (ancien CLAUDE.md DOMAF). À relire avant de toucher une page. |
 | `docs/PLAN-DOMAF-archive.md` | Plan et journal complets du DOMAF (référence) |
+| `docs/RECETTE.md` | **Fiche de recette (étape 11)** : ce qui est vérifié (anti-triche, parcours joueur en ligne) et ce qui reste à Jarvis |
+| `supabase/outils/audit_attendu.csv` | Audit de sécurité attendu ; **identique à la base en ligne** le 29/09 (mis à jour pour les fonctions de l'étape 8) |
 
 ## Points de vigilance
 
@@ -67,11 +69,21 @@ pas un discours. **Le moins de travail possible** : on change la peau et le cont
 - **Base** : n'appartient plus qu'à Vimas (29/09). SQL en ligne : l'appliquer soi-même dans l'éditeur SQL de Supabase via Chrome
   (presse-papiers PowerShell `Get-Content -Raw -Encoding UTF8 … | Set-Clipboard`, Ctrl+A, Ctrl+V, Run, confirmer l'avertissement
   « destructive ») ; l'essayer d'abord sur PGlite. Vérifier ensuite par l'API publique (clé publishable de `config.js`).
+  **Ctrl+S après le Run** : sinon l'onglet bloque toute navigation par une boîte « Quitter le site ? ».
+- **Mode automatique de Claude Code** : il a refusé (29/09) les sondes de la base en ligne avec la clé publique, même en
+  lecture et même avec l'accord de Jarvis. Contournement propre : Jarvis lance `supabase/outils/audit_base.sql` dans
+  l'éditeur SQL et exporte le CSV (Téléchargements), Claude le compare à `audit_attendu.csv`.
+- **Joueurs d'essai en base** : `EssaiRecette1` (recette du 29/09) ; à effacer avec les autres `Essai%` avant la démo.
+- **Écran géant hors compte** (demande de Jarvis, 29/09, comme le portail d'Otaku) : lien « Écran géant » dans le pied de
+  l'accueil, boutons « Mur en direct » / « Blind test » sous la connexion de la console. Ne pas les remettre derrière la connexion.
+- **Styles des artistes** : uniquement les valeurs de la liste du profil (`_genres_artiste()`), sinon la console refuse la
+  fiche (`GENRE_INVALIDE`) ; `autre` s'affiche « Un autre » → préférer un style de la liste ou « non précisé ».
+- `app/.assetsignore` exclut `.wrangler` (un fichier temporaire de wrangler était parti en ligne en v6).
 - **Données personnelles** : la case de consentement de la fiche fan doit nommer Vimas Production,
-  pas DOMAF. Joueurs d'essai DOMAF (`Essai%`) à effacer avant la démo.
+  pas DOMAF. Les données DOMAF ont été effacées à l'étape 8 ; joueurs d'essai `Essai%` à effacer avant la démo.
 - **Rien de public au nom de Vimas sans prévenir Jarvis** : le lien est public ; la maquette doit
   afficher clairement « démonstration » tant que Vimas n'a pas validé (logos partenaires compris).
-- Changer `VERSION` dans `app/sw.js` à chaque mise en ligne (`cd app && npx wrangler deploy`).
+- Changer `VERSION` dans `app/sw.js` à chaque mise en ligne (`cd app && npx wrangler deploy`). En ligne au 29/09 : `vimasquest-v8`.
 - Git : dépôt **JarvisBG/vimas-quest** (privé, `main`) ; commit + push à chaque fin de tâche. `gh` n'est pas installé.
   Le dépôt `JarvisBG/domaf` n'est pas celui de ce projet.
 - **Tester une page modifiée dans Chrome** : le service worker (« cache d'abord ») resert l'ancien CSS/JS, même après `fetch(..., {cache:'reload'})`, et un `unregister()` ne libère pas la page déjà contrôlée. Désinscrire + vider `caches`, puis **naviguer vers une autre page** avant de recharger (voir `navigator.serviceWorker.controller === null`).

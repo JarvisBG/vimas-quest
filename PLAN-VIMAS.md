@@ -15,23 +15,24 @@
 > Continue le projet **Vimas Quest** (dossier `C:\Users\HP\Documents\PROJETS\vimas\vimas-quest`, dépôt
 > GitHub `JarvisBG/vimas-quest`, branche `main` — commit + push à chaque fin de tâche, tu y es autorisé).
 > Lis d'abord `CLAUDE.md` et `PLAN-VIMAS.md`, et `docs/NOTES-MOTEUR-DOMAF.md` avant de toucher une page.
-> Étapes 1 à 4 terminées ; **étape 5 (console) terminée** sauf le tirage au sort final (mis de côté par Jarvis,
-> proposition dans la case 5.1). 5.4 : `admin/statistiques.html` faite ; correctif des droits
-> `supabase/correctifs/2026-09-28_vimas-5.4-droits.sql` **appliqué en ligne par Jarvis le 28/09** (annulation :
-> `…_ANNULER.sql`). **Site en ligne depuis le 29/09**. **Étape 6 (contenu de démo) terminée le 29/09**,
-> **mise en ligne le 29/09** (prochaine mise en ligne : `vimasquest-v9` puis `npx wrangler deploy`, wrangler connecté).
-> Étapes 6 et 7 en ligne (`vimasquest-v5`). **Étapes 8 et 9 faites le 29/09** : la base est au VIMAS FEST (correctif
-> `2026-09-29_vimas-8-base.sql` + `contenu-essai/contenu_essai.sql`, appliqués en ligne). **Étape 11 commencée le 29/09** : suivre `docs/RECETTE.md` (§A fait hors ligne ; §B–C avec Jarvis). Suite de l'**étape 11 — recette**
-> (parcours festivalier sur vrais téléphones avec les QR `DQ-V…`, écran géant, blind test depuis la régie, console par rôle ;
-> créer un compte vendeur d'essai). Questions ouvertes : écran de secours du vendeur, tirage au sort final.
-> SQL en ligne : l'extension Chrome peut coller un script dans l'éditeur SQL de Supabase (presse-papiers + Ctrl+V + Run).
+> **Fait** : étapes 1 à 9 (console terminée sauf le tirage au sort final ; base 100 % Vimas, contenu d'essai fictif).
+> **En ligne** : `vimasquest-v8` (29/09) ; prochaine mise en ligne `vimasquest-v9` dans `app/sw.js` puis
+> `cd app && npx wrangler deploy` (wrangler connecté).
+> **En cours : étape 11 — recette**, fiche `docs/RECETTE.md`. Fait par Claude le 29/09 : anti-triche confirmé
+> (audit de la base en ligne = `supabase/outils/audit_attendu.csv`), parcours joueur complet en ligne dans Chrome
+> (joueur d'essai `EssaiRecette1`), correctif de contenu `2026-09-29_vimas-11-contenu.sql` appliqué, écran géant
+> accessible hors compte GM (pied de l'accueil + sous la connexion de la console).
+> **Reste (Jarvis)** : vrais téléphones (réseau faible, hors ligne), écran géant pendant que des téléphones jouent,
+> blind test de bout en bout, console par rôle (créer un compte vendeur d'essai), test de charge.
+> **Questions ouvertes** : écran de secours du vendeur, tirage au sort final. Préfixe `DQ-` gardé pour la démo (étape 13).
+> Avant la démo : effacer les joueurs `Essai%` (dont `EssaiRecette1`).
+> SQL en ligne : l'essayer sur PGlite (`supabase/outils/banc/audit_pglite.mjs`), puis le coller dans l'éditeur SQL de
+> Supabase via Chrome (presse-papiers + Ctrl+A, Ctrl+V + Run), **Ctrl+S avant de quitter** l'onglet.
 > Essai d'une page de console sans compte : copie de page + script qui remplace `C.garde` / `C.appel` / `C.sb` /
-> `C.confirmer` (effacer ensuite). Essai SQL sans PostgreSQL installé : `supabase/outils/banc/audit_pglite.mjs` (PGlite).
-> Rappels : base Supabase **partagée** avec l'ancien DOMAF (`domaf-quest`) → sauvegarde SQL avant toute écriture ;
-> festival supposé **de jour, 10 h → 22 h** (contenu de démo fait, base en étape 8) ; serveur local
-> `app/lancer-serveur.bat` → http://localhost:8767 ; pour tester dans Chrome, désinscrire le service worker
-> puis changer de page (voir `CLAUDE.md`). Travail étape par étape, validation de Jarvis avant la suivante,
-> échanges en français.
+> `C.confirmer` (effacer ensuite).
+> Rappels : festival supposé **de jour, 10 h → 22 h** ; serveur local `app/lancer-serveur.bat` → http://localhost:8767 ;
+> pour tester dans Chrome, désinscrire le service worker puis changer de page (voir `CLAUDE.md`). Travail étape par
+> étape, validation de Jarvis avant la suivante, échanges en français.
 
 ---
 
@@ -75,7 +76,7 @@
 | Pages festivalier (14) | ✅ branchées sur la base |
 | Écrans géants (mur, blind test) | ✅ branchés |
 | Console | ✅ terminée pour Vimas (5.0 → 5.4), sauf le tirage au sort final |
-| Contenu | ❌ fictif DOMAF (Douala, 4 jours) |
+| Contenu | ❌ fictif DOMAF (Douala, 4 jours) → ✅ remplacé par le contenu d'essai Vimas (29/09, étapes 6 et 9) |
 
 ---
 
@@ -190,6 +191,7 @@ Le moteur DOMAF est calé sur des **soirées de concerts** : à adapter (étapes
 - [x] Vérifier `app/.assetsignore` (aucun fichier interne en ligne) — 29/09 : `wrangler.jsonc`, `*.md`, `lancer-serveur.bat` en 404
 
 ## Étape 11 — Recette complète
+- [x] Parcours joueur complet sur le site en ligne, dans Chrome sur PC (Claude, 29/09, `docs/RECETTE.md` §B0)
 - [ ] Parcours festivalier sur 2–3 vrais téléphones, réseau dégradé, hors ligne
 - [ ] Écran géant en direct pendant que des téléphones jouent ; blind test de bout en bout
 - [ ] Console : chaque rôle (GM, staff, vendeur) ; [x] anti-triche (aucune écriture directe d'XP / jetons), RLS relue et **confirmée en ligne** le 29/09 (audit de la base en ligne = audit attendu, `docs/RECETTE.md` §A)
