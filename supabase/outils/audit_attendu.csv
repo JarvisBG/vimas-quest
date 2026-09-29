@@ -7,14 +7,14 @@ declencheur,scans / scans_compter,CREATE TRIGGER scans_compter AFTER INSERT OR D
 fonction,"_artistes_du_jour(p_player uuid, p_jour date)",invoker search_path=public anon=- auth=- corps=986a03d15f
 fonction,"_award_badge(p_player_id uuid, p_pseudo text, p_badge_name text",DEFINER search_path=public anon=- auth=- corps=3dd88415b5
 fonction,"_classement(p_periode text, p_moi uuid, p_jour date)",invoker search_path=public anon=- auth=- corps=5de8d37103
-fonction,_code_secret_tirage(),invoker search_path=public anon=- auth=- corps=199d285dd2
+fonction,_code_secret_tirage(),invoker search_path=public anon=- auth=- corps=bb359eaf3f
 fonction,_coeur_ouvert(p_categorie text),invoker search_path=public anon=- auth=- corps=4d732f7713
 fonction,"_coeur_votable(p_player uuid, p_categorie text, p_cible text)",invoker search_path=public anon=- auth=- corps=3d618a8e2c
 fonction,_coeurs_compter(),invoker search_path=public anon=- auth=- corps=97ede6bd8f
 fonction,_coffre_json(p_c coffres),invoker search_path=public anon=- auth=- corps=e8d8d7309b
 fonction,"_coffre_remplir(p_player uuid, p_xp integer, p_jetons integer)",invoker search_path=public anon=- auth=- corps=fb480064b2
 fonction,"_collecte_prochaine(p_player uuid, p_jour date, p_soir boolean)",invoker search_path=public anon=- auth=- corps=627fae7350
-fonction,_collecte_soir(),invoker search_path=public anon=- auth=- corps=c4dcdd1ff4
+fonction,_collecte_soir(),invoker search_path=public anon=- auth=- corps=f6938eaad7
 fonction,_compteurs_mission(),invoker search_path=public anon=- auth=- corps=e7df9c7457
 fonction,_debut_jour_jeu(),invoker search_path=public anon=- auth=- corps=3a6009e4d3
 fonction,_fiche_champs(),invoker search_path=public anon=- auth=- corps=5252120cd5
@@ -23,7 +23,7 @@ fonction,_fiche_majeur(p_tranche text),invoker search_path=public anon=- auth=- 
 fonction,_fiche_texte(p_champ text),invoker search_path=public anon=- auth=- corps=35ca06712c
 fonction,_gen_qr_code(),DEFINER search_path=public anon=- auth=- corps=240a6163cd
 fonction,_genres_artiste(),invoker search_path=public anon=- auth=- corps=7a6ec3d63d
-fonction,_is_system_badge(p_name text),invoker search_path=public anon=- auth=- corps=0907eabd75
+fonction,_is_system_badge(p_name text),invoker search_path=public anon=- auth=- corps=2bba3955d7
 fonction,"_json_entier(p jsonb, p_cle text)",invoker search_path=public anon=- auth=- corps=f2db48949e
 fonction,"_json_instant(p jsonb, p_cle text)",invoker search_path=public anon=- auth=- corps=61f8442816
 fonction,"_json_uuid(p jsonb, p_cle text)",invoker search_path=public anon=- auth=- corps=127df973b2
@@ -121,7 +121,7 @@ fonction,is_gm(),DEFINER search_path=public anon=X auth=X corps=d8edd41967
 fonction,is_staff(),DEFINER search_path=public anon=X auth=X corps=e975e2312b
 fonction,is_vendeur(),DEFINER search_path=public anon=X auth=X corps=cdb2b239ee
 fonction,jour_de(p_instant timestamp with time zone),invoker search_path=public anon=X auth=X corps=1260b5719c
-fonction,jour_festival_label(p_jour date),invoker search_path=public anon=X auth=X corps=3c0e6a9043
+fonction,jour_festival_label(p_jour date),invoker search_path=public anon=X auth=X corps=2193bb3bd6
 fonction,jour_jeu(),invoker search_path=public anon=X auth=X corps=1433b11ce7
 fonction,level_for_xp(p_xp integer),invoker search_path=public anon=X auth=X corps=075e12b99e
 fonction,live_stats(),DEFINER search_path=public anon=X auth=X corps=3577572732
@@ -133,7 +133,7 @@ fonction,pass_etat(p_secret_code text),DEFINER search_path=public anon=X auth=X 
 fonction,pass_garde(),DEFINER search_path=public anon=X auth=X corps=e1c2b633e0
 fonction,player_collection(p_secret_code text),DEFINER search_path=public anon=X auth=X corps=c1265f5db7
 fonction,player_home(p_secret_code text),DEFINER search_path=public anon=X auth=X corps=3ac46fe5b4
-fonction,profil_options(),invoker search_path=public anon=X auth=X corps=5bd90b2614
+fonction,profil_options(),invoker search_path=public anon=X auth=X corps=fa2eb8015e
 fonction,profil_public_stats(),DEFINER search_path=public anon=X auth=X corps=86dd553dfa
 fonction,profil_stats(),DEFINER search_path=public anon=- auth=X corps=c1bd2f0009
 fonction,profil_valeurs(p_champ text),invoker search_path=public anon=X auth=X corps=3bd678c3e5
@@ -149,7 +149,7 @@ fonction,rank_for_level(p_level integer),invoker search_path=public anon=X auth=
 fonction,regles_jeu(),DEFINER search_path=public anon=X auth=X corps=5a2f616a71
 fonction,roi_veille(),invoker search_path=public anon=X auth=X corps=85399f353e
 fonction,roulette_joueur(p_secret_code text),DEFINER search_path=public anon=X auth=X corps=269b19fc1a
-fonction,"scan_qr(p_secret_code text, p_code text)",DEFINER search_path=public anon=X auth=X corps=d79d19e751
+fonction,"scan_qr(p_secret_code text, p_code text)",DEFINER search_path=public anon=X auth=X corps=3604621c79
 fonction,spin_roulette(p_secret_code text),DEFINER search_path=public anon=X auth=X corps=5610f79adf
 fonction,staff_role(),DEFINER search_path=public anon=X auth=X corps=9cfa39c7a3
 fonction,stats_parcours(),DEFINER search_path=public anon=- auth=X corps=bee3e62591

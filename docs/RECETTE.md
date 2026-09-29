@@ -31,9 +31,14 @@ lancées : elles demandent l'accord explicite de Jarvis.
   (les réponses du blind test restent secrètes), player_profile, player_contact, tickets, carnets, coffres,
   scans, roulette_spins, staff, console_journal… Conforme à l'audit.
 - [x] players, events, quest_progress et player_badges sont publics mais vides : aucun joueur en base à ce jour.
-- [ ] **Sondes d'écriture** (liste vide ou filtre sans résultat, donc sans effet) et comparaison
-  `audit_base.sql` : **bloquées par le mode automatique de Claude Code**, même avec l'accord de Jarvis.
-  À faire par Jarvis dans l'éditeur SQL, ou après une règle d'autorisation dans les réglages de Claude Code.
+- [x] **Audit de la base en ligne** (`audit_base.sql` lancé par Jarvis le 29/09, export CSV) : 244 lignes,
+  **conforme** à `audit_attendu.csv`. Mêmes 42 tables, 40 politiques, 152 fonctions, mêmes droits `anon` et
+  `authenticated`. Seul écart : le contenu de 6 fonctions réécrites par le correctif de l'étape 8
+  (`_code_secret_tirage`, `_collecte_soir`, `_is_system_badge`, `jour_festival_label`, `profil_options`,
+  `scan_qr`), car la référence datait d'avant ce correctif. `audit_attendu.csv` a été mis à jour ; il
+  correspond désormais à la base en ligne. **L'anti-triche est donc confirmé en ligne.**
+- [ ] Sondes d'écriture avec la clé publique : bloquées par le mode automatique de Claude Code. Elles ne sont
+  plus indispensables, puisque l'audit en ligne confirme qu'aucune politique d'écriture n'est ouverte à `anon`.
 
 ### Charge (forfait gratuit : 200 connexions temps réel)
 - [x] **Les téléphones n'ouvrent aucune connexion temps réel.** Seuls les écrans géants (mur, blind test) et
