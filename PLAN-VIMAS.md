@@ -21,7 +21,7 @@
 > `…_ANNULER.sql`). **Site en ligne depuis le 29/09**. **Étape 6 (contenu de démo) terminée le 29/09**,
 > **mise en ligne le 29/09** (prochaine mise en ligne : `vimasquest-v6` puis `npx wrangler deploy`, wrangler connecté).
 > Étapes 6 et 7 en ligne (`vimasquest-v5`). **Étapes 8 et 9 faites le 29/09** : la base est au VIMAS FEST (correctif
-> `2026-09-29_vimas-8-base.sql` + `contenu-essai/contenu_essai.sql`, appliqués en ligne). Ensuite : **étape 11 — recette**
+> `2026-09-29_vimas-8-base.sql` + `contenu-essai/contenu_essai.sql`, appliqués en ligne). **Étape 11 commencée le 29/09** : suivre `docs/RECETTE.md` (§A fait hors ligne ; §B–C avec Jarvis). Suite de l'**étape 11 — recette**
 > (parcours festivalier sur vrais téléphones avec les QR `DQ-V…`, écran géant, blind test depuis la régie, console par rôle ;
 > créer un compte vendeur d'essai). Questions ouvertes : écran de secours du vendeur, tirage au sort final.
 > SQL en ligne : l'extension Chrome peut coller un script dans l'éditeur SQL de Supabase (presse-papiers + Ctrl+V + Run).
@@ -60,6 +60,7 @@
 | 29/09/2026 | **Étape 7 terminée (démo)** : fond du plan tiré d'OpenStreetMap autour du Majestic Cinéma (cinéma en plein air de l'Université de Yaoundé I). Jarvis : « le Vimas, ce n'est pas le DOMAF, c'est leur début » → site resserré dans l'enceinte : 2 scènes, 4 stands, 2 food-trucks, cadre de 200 m. Mis en ligne (`vimasquest-v5`, version `e66efd34`). |
 | 29/09/2026 | Jarvis : « l'ancienne base du DOMAF ne m'intéresse pas… tu peux tout remplacer ». **Étapes 8 et 9 faites et en ligne** : correctif `2026-09-29_vimas-8-base.sql` (tout le contenu et les données DOMAF effacés, fonctions Vimas : jours, codes, badges de jour, quartiers de Yaoundé, 18 h) puis contenu d'essai Vimas, collés par Claude dans l'éditeur SQL de Supabase (Chrome) ; essayés d'abord sur PGlite, vérifiés ensuite par l'API publique. |
 
+| 29/09/2026 | **Étape 11 commencée** : fiche `docs/RECETTE.md`. Anti-triche relu sur l'audit attendu (RLS sur les 42 tables, aucune écriture publique directe, les 48 fonctions publiques exigent le code secret ou ne font que lire) ; temps réel réservé aux écrans et à la console. Les sondes contre la base en ligne ont été refusées par le mode automatique : à lancer avec l'accord de Jarvis. Parcours sur vrais téléphones : à faire par Jarvis. |
 ---
 
 ## État hérité du DOMAF (au 28/09/2026)
@@ -187,8 +188,9 @@ Le moteur DOMAF est calé sur des **soirées de concerts** : à adapter (étapes
 ## Étape 11 — Recette complète
 - [ ] Parcours festivalier sur 2–3 vrais téléphones, réseau dégradé, hors ligne
 - [ ] Écran géant en direct pendant que des téléphones jouent ; blind test de bout en bout
-- [ ] Console : chaque rôle (GM, staff, vendeur) ; anti-triche (aucune écriture directe d'XP / jetons), RLS relue
-- [ ] Test de charge adapté au forfait gratuit (≤ 200 connexions temps réel)
+- [ ] Console : chaque rôle (GM, staff, vendeur) ; [x] anti-triche (aucune écriture directe d'XP / jetons), RLS relue sur l'audit attendu le 29/09 (`docs/RECETTE.md` §A) — reste à comparer avec la base en ligne (`audit_base.sql`)
+- [ ] Test de charge adapté au forfait gratuit (≤ 200 connexions temps réel) — analyse faite : les téléphones n'ouvrent aucune connexion temps réel (§A) ; essai réel à faire
+- Fiche de recette à suivre : **`docs/RECETTE.md`**
 
 ## Étape 12 — Présentation à Vimas
 - [ ] Scénario de 5 min : inscription → scan d'un QR → coffre → mission → roue → écran géant en direct → console
