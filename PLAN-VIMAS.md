@@ -61,6 +61,7 @@
 | 29/09/2026 | Jarvis : « l'ancienne base du DOMAF ne m'intéresse pas… tu peux tout remplacer ». **Étapes 8 et 9 faites et en ligne** : correctif `2026-09-29_vimas-8-base.sql` (tout le contenu et les données DOMAF effacés, fonctions Vimas : jours, codes, badges de jour, quartiers de Yaoundé, 18 h) puis contenu d'essai Vimas, collés par Claude dans l'éditeur SQL de Supabase (Chrome) ; essayés d'abord sur PGlite, vérifiés ensuite par l'API publique. |
 
 | 29/09/2026 | **Étape 11 commencée** : fiche `docs/RECETTE.md`. Anti-triche relu sur l'audit attendu (RLS sur les 42 tables, aucune écriture publique directe, les 48 fonctions publiques exigent le code secret ou ne font que lire) ; temps réel réservé aux écrans et à la console. Les sondes contre la base en ligne ont été refusées par le mode automatique : à lancer avec l'accord de Jarvis. Parcours sur vrais téléphones : à faire par Jarvis. |
+| 29/09/2026 | Audit de la base en ligne (`audit_base.sql` lancé par Jarvis, export CSV) comparé par Claude : conforme (244 lignes, droits identiques) ; seules les empreintes de 6 fonctions du correctif de l'étape 8 différaient → `audit_attendu.csv` mis à jour. Lecture avec la clé publique : conforme. |
 ---
 
 ## État hérité du DOMAF (au 28/09/2026)
@@ -188,7 +189,7 @@ Le moteur DOMAF est calé sur des **soirées de concerts** : à adapter (étapes
 ## Étape 11 — Recette complète
 - [ ] Parcours festivalier sur 2–3 vrais téléphones, réseau dégradé, hors ligne
 - [ ] Écran géant en direct pendant que des téléphones jouent ; blind test de bout en bout
-- [ ] Console : chaque rôle (GM, staff, vendeur) ; [x] anti-triche (aucune écriture directe d'XP / jetons), RLS relue sur l'audit attendu le 29/09 (`docs/RECETTE.md` §A) — reste à comparer avec la base en ligne (`audit_base.sql`)
+- [ ] Console : chaque rôle (GM, staff, vendeur) ; [x] anti-triche (aucune écriture directe d'XP / jetons), RLS relue et **confirmée en ligne** le 29/09 (audit de la base en ligne = audit attendu, `docs/RECETTE.md` §A)
 - [ ] Test de charge adapté au forfait gratuit (≤ 200 connexions temps réel) — analyse faite : les téléphones n'ouvrent aucune connexion temps réel (§A) ; essai réel à faire
 - Fiche de recette à suivre : **`docs/RECETTE.md`**
 
