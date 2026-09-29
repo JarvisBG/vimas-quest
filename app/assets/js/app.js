@@ -1541,7 +1541,7 @@
       const exemples = [
         { niveau: "info", type: "surprise", titre: "Battle surprise au Podium", texte: "Les danseurs du festival s'affrontent pendant 30 minutes, le public vote.", lien: { href: "plan.html?lieu=kiosque", libelle: "Voir le Podium Mode" } },
         { niveau: "important", type: "horaire", titre: "Changement d'horaire", texte: "Le set de Sœur Vinyle commence 15 minutes plus tôt.", lien: { href: "programme.html#a8", libelle: "Voir le concert" } },
-        { niveau: "urgent", type: "securite", titre: "Accès Majestic fermé", texte: "L'accès à la Salle Majestic par l'allée des stands est fermé. Passe par le Podium Mode.", lien: { href: "plan.html?lieu=dock", libelle: "Voir le plan" } }
+        { niveau: "urgent", type: "securite", titre: "Allée nord fermée", texte: "L'allée nord de l'enceinte est fermée pendant 20 minutes. Passe par le Podium Mode.", lien: { href: "plan.html?lieu=kiosque", libelle: "Voir le plan" } }
       ];
       const n = (window.MOCK.annonces.filter((a) => a.id.startsWith("demo")).length) % exemples.length;
       const maintenant = App.maintenant().getTime();

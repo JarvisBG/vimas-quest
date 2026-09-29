@@ -19,8 +19,8 @@
 > proposition dans la case 5.1). 5.4 : `admin/statistiques.html` faite ; correctif des droits
 > `supabase/correctifs/2026-09-28_vimas-5.4-droits.sql` **appliqué en ligne par Jarvis le 28/09** (annulation :
 > `…_ANNULER.sql`). **Site en ligne depuis le 29/09**. **Étape 6 (contenu de démo) terminée le 29/09**,
-> **mise en ligne le 29/09** (`vimasquest-v4` ; prochaine mise en ligne : `v5` puis `npx wrangler deploy`, wrangler connecté).
-> **Étape 7 (plan du Majestic, démo) terminée le 29/09**, pas encore remise en ligne. Ensuite : **étape 8 — base de données**
+> **mise en ligne le 29/09** (prochaine mise en ligne : `vimasquest-v6` puis `npx wrangler deploy`, wrangler connecté).
+> **Étape 7 (plan du Majestic, démo : 2 scènes, tout dans l'enceinte) terminée et en ligne le 29/09** (`vimasquest-v5`). Ensuite : **étape 8 — base de données**
 > (sauvegarde : `pg_dump` absent → demander à Jarvis un export depuis le tableau de bord Supabase ; effacer le contenu
 > d'essai DOMAF ; correctif Vimas : quartiers de Yaoundé, règles, badges liés à l'heure / aux jours, `soir_debut` 18 h).
 > Question ouverte : écran de secours du vendeur.
@@ -56,7 +56,7 @@
 | 29/09/2026 | **Première mise en ligne Vimas** sur festival-quest (demande de Jarvis) : `sw.js` → `vimasquest-v3`, `npx wrangler deploy` (version `3ba21ade`), wrangler connecté sur ce PC. Vérifié : accueil Vimas, compte à rebours, console et statistiques servies, fichiers internes en 404. La démo DOMAF est remplacée. Contenu encore fictif DOMAF (étape 6). |
 | 29/09/2026 | **Étape 6 terminée** : contenu de démo Vimas de jour (2 jours, 10 h → 22 h, line-up fictif recalé, blind test 17 h, annonces sur l'horloge de démo), banque de questions Vimas (démo + SQL), formulations de jour dans les pages, contrôle dans Chrome. Pas encore remis en ligne. |
 | 29/09/2026 | Étape 6 **mise en ligne** : `sw.js` → `vimasquest-v4`, `npx wrangler deploy` (version `41a35e22`) ; vérifié en ligne (sw v4, contenu Vimas de jour, fichiers internes en 404). |
-| 29/09/2026 | **Étape 7 terminée (démo)** : fond du plan tiré d'OpenStreetMap autour du Majestic Cinéma (cinéma en plein air de l'Université de Yaoundé I), lieux de démo placés dans l'enceinte et sur le terrain à l'est. Pas encore remis en ligne. |
+| 29/09/2026 | **Étape 7 terminée (démo)** : fond du plan tiré d'OpenStreetMap autour du Majestic Cinéma (cinéma en plein air de l'Université de Yaoundé I). Jarvis : « le Vimas, ce n'est pas le DOMAF, c'est leur début » → site resserré dans l'enceinte : 2 scènes, 4 stands, 2 food-trucks, cadre de 200 m. Mis en ligne (`vimasquest-v5`, version `e66efd34`). |
 
 ---
 
@@ -157,10 +157,10 @@ Le moteur DOMAF est calé sur des **soirées de concerts** : à adapter (étapes
 - **Reste pour la base (étapes 8 et 9)** : `micro_config.soir_debut` → 18 h, badges Noctambule / Lève-tôt / Marathonien (règles en SQL), banque de questions en base (`on conflict do nothing` : la mettre à jour, pas seulement l'insérer), heure du blind test. Plan : fond et positions encore ceux du Stade de Bonamoussadi → **étape 7**
 
 ## Étape 7 — Plan du site ✅ (29/09, démo)
-- [x] Fond du **Majestic Cinéma** (OpenStreetMap : way 881969107 « Majestic Yaoundé I University », cinéma **en plein air** de Bolloré, panneaux solaires, parking ; ouvert le samedi dès 10 h d'après OSM) : `outils/plan/fond_plan.py` réécrit, données `outils/plan/osm-majestic.json` (serveur Overpass **kumi.systems**, overpass-api.de refuse), cadre **280 m × 196 m** centré sur l'enceinte (1 unité = 0,28 m), couleurs Vimas, pelouses, bois, bassins, rangées solaires, murs, mention ODbL ; pas de nom de rue en travers de l'enceinte. Données du stade DOMAF retirées (historique Git)
-- [x] Lieux de **démo** placés (`mock.js` → `lieux`) : dans l'enceinte (≈ 80 m × 110 m) Grande Scène devant l'écran, Salle Majestic, Hall (abri), Podium Mode sur le parking, stand Vimas Quest près de l'entrée ; autour : Yard Reggae sous les arbres à l'est, **village de stands et food fictif** sur le terrain dégagé à l'est, Sound System sur la pelouse au sud-est, entrée principale sur l'axe du campus. `geo` / `metresParUnite` recopiés dans `planConfig`
-- Contrôle dans Chrome (390 px) : repères et étiquettes lisibles, fiche d'un lieu
-- ⚠ Emplacements **inventés** : l'enceinte est petite pour 5 scènes et un village ; les vrais emplacements viendront de Vimas (étape 13). En base (étape 9) : recopier les x / y des lieux par la console
+- [x] Fond du **Majestic Cinéma** (OpenStreetMap : way 881969107 « Majestic Yaoundé I University », cinéma **en plein air** de Bolloré, panneaux solaires, parking ; ouvert le samedi dès 10 h d'après OSM) : `outils/plan/fond_plan.py` réécrit, données `outils/plan/osm-majestic.json` (serveur Overpass **kumi.systems**, overpass-api.de refuse), cadre **200 m × 140 m** centré sur l'enceinte (1 unité = 0,20 m), couleurs Vimas, mention ODbL ; pas de nom de rue en travers de l'enceinte. Données du stade DOMAF retirées (historique Git)
+- [x] **Décision de Jarvis (29/09) : 1re édition, site modeste — tout tient dans l'enceinte du Majestic** (≈ 80 m × 110 m). **2 scènes** au lieu de 5 : Grande Scène (devant l'écran) et Podium Mode (parking : défilé, battle, fanfare, sets dancehall et DJ) ; les 12 artistes répartis sans chevauchement. **4 stands** (Radio Écho, Maison Kora, Brasserie du Port, Stand Vimas Quest) et **2 food-trucks** ; 2 points d'eau, 2 toilettes, 1 poste de secours, hall du Majestic en abri, tente dédicaces, 1 entrée sur l'axe du campus. Missions (Tournée des scènes : 2 scènes ; Gourmet : 2 food-trucks ; défi éclair au Podium), badge Curieux (3 stands), QR du Podium (`QR-PODIUM`), question de blind test « À quelle heure… » au lieu de « Sur quelle scène… », FAQ (plus de Wi-Fi Telco+ ni de consigne). `geo` / `metresParUnite` recopiés dans `planConfig`
+- Contrôle dans Chrome (390 px) : plan lisible, programme à 2 scènes. **Mis en ligne le 29/09** (`vimasquest-v5`)
+- ⚠ Emplacements **inventés** : les vrais viendront de Vimas (étape 13). En base (étape 9) : saisir scènes et lieux par la console
 
 ## Étape 8 — Base de données (partagée, `domaf-quest`)
 - [ ] **Sauvegarde SQL** avant toute écriture (`supabase/ROUTINE.md`)

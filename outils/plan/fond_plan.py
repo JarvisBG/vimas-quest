@@ -39,7 +39,7 @@ SOL, BATI, EAU = "#F1E7D0", "#E2D5B8", "#7FB4D9"
 
 # --- Cadre : 280 m de large, centré sur l'enceinte du Majestic --------------
 W, H = 1000, 700
-LARGEUR_M = 280
+LARGEUR_M = 200
 LAT_CENTRE, LON_CENTRE = 3.859211, 11.4966074      # enceinte (way 881969107)
 M_PAR_DEG_LAT = 110574
 M_PAR_DEG_LON = 111320 * math.cos(math.radians(LAT_CENTRE))

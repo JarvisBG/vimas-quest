@@ -22,11 +22,8 @@ window.MOCK = {
   ],
 
   scenes: [
-    { id: "soleil",    nom: "Grande Scène",      couleur: "sodium" },
-    { id: "clairiere", nom: "Le Yard Reggae",    couleur: "vert" },
-    { id: "dock",      nom: "La Salle Majestic", couleur: "rose" },
-    { id: "kiosque",   nom: "Le Podium Mode",    couleur: "bleu" },
-    { id: "chapiteau", nom: "Le Sound System",   couleur: "nuit" }
+    { id: "soleil",  nom: "Grande Scène",   couleur: "sodium" },
+    { id: "kiosque", nom: "Le Podium Mode", couleur: "bleu" }
   ],
 
   /* duree en minutes ; bio courte pour la fiche artiste.
@@ -38,27 +35,27 @@ window.MOCK = {
   artistes: [
     { id: "a3",  nom: "Mboa Brass Band",   genre: "Fanfare",   scene: "kiosque",   jour: "sam", debut: "11:00", duree: 60,
       bio: "Onze musiciens qui ouvrent le festival en déambulant entre les stands, sans partition, et finissent toujours au milieu du public." },
-    { id: "a2",  nom: "Roots Mbeng",       genre: "Reggae",    scene: "clairiere", jour: "sam", debut: "14:00", duree: 60,
+    { id: "a2",  nom: "Roots Mbeng",       genre: "Reggae",    scene: "soleil",    jour: "sam", debut: "14:00", duree: 60,
       bio: "Reggae roots chanté en français, en anglais et en langues locales : des basses lourdes et des messages qui font lever les poings." },
     { id: "a5",  nom: "Défilé Wax & Roots", genre: "Mode",     scene: "kiosque",   jour: "sam", debut: "16:00", duree: 45,
       bio: "Les créateurs des stands défilent sur le podium : wax, streetwear et silhouettes inspirées des Caraïbes." },
-    { id: "a6",  nom: "Lady Soca",         genre: "Soca",      scene: "dock",      jour: "sam", debut: "17:30", duree: 60,
+    { id: "a6",  nom: "Lady Soca",         genre: "Soca",      scene: "soleil",    jour: "sam", debut: "17:30", duree: 60,
       bio: "L'énergie du carnaval de Trinidad en plein Yaoundé : drapeaux, sifflets et chorégraphies reprises par toute la salle." },
-    { id: "a4",  nom: "Selecta Yard",      genre: "Dancehall", scene: "chapiteau", jour: "sam", debut: "19:00", duree: 90,
+    { id: "a4",  nom: "Selecta Yard",      genre: "Dancehall", scene: "kiosque",   jour: "sam", debut: "19:00", duree: 90,
       bio: "Sound system dancehall : dubplates, riddims jamaïcains et afro, pour danser jusqu'à la fermeture." },
     { id: "a1",  nom: "Nova Kassa",        genre: "Afro-pop",  scene: "soleil",    jour: "sam", debut: "20:30", duree: 90, tete: true,
       photo: "assets/photos/demo-artiste-1.webp",
       bio: "Voix solaire et refrains qui restent en tête : Nova Kassa clôture le samedi avec son deuxième album, porté par une section de cuivres." },
-    { id: "a12", nom: "Ilé Sound System",  genre: "Dub",       scene: "clairiere", jour: "dim", debut: "12:00", duree: 60,
-      bio: "Un mur d'enceintes, des basses profondes et un MC qui fait chanter tout le Yard dès midi." },
+    { id: "a12", nom: "Ilé Sound System",  genre: "Dub",       scene: "soleil",    jour: "dim", debut: "12:00", duree: 60,
+      bio: "Un mur d'enceintes, des basses profondes et un MC qui fait chanter tout le Majestic dès midi." },
     { id: "a10", nom: "Battle Kompa & Coupé-décalé", genre: "Danse", scene: "kiosque", jour: "dim", debut: "15:00", duree: 60,
       bio: "Duels de danseurs en un contre un, jugés par le public : kompa, coupé-décalé, dancehall et bikutsi." },
-    { id: "a8",  nom: "Sœur Vinyle",       genre: "Reggae",    scene: "chapiteau", jour: "dim", debut: "16:30", duree: 90,
+    { id: "a8",  nom: "Sœur Vinyle",       genre: "Reggae",    scene: "kiosque",   jour: "dim", debut: "16:30", duree: 90,
       bio: "Uniquement des vinyles : du ska des années 60 au reggae de la semaine, en passant par le dub." },
-    { id: "a7",  nom: "Ama Rise",          genre: "Zouk",      scene: "dock",      jour: "dim", debut: "17:00", duree: 60, tete: true,
+    { id: "a7",  nom: "Ama Rise",          genre: "Zouk",      scene: "soleil",    jour: "dim", debut: "17:00", duree: 60, tete: true,
       photo: "assets/photos/demo-artiste-2.webp",
       bio: "La révélation zouk de l'année, chantée en trois langues, accompagnée d'un chœur de huit voix." },
-    { id: "a11", nom: "Kalé & les Ondes",  genre: "Makossa",   scene: "clairiere", jour: "dim", debut: "18:30", duree: 60,
+    { id: "a11", nom: "Kalé & les Ondes",  genre: "Makossa",   scene: "soleil",    jour: "dim", debut: "18:30", duree: 60,
       bio: "La makossa revisitée avec une kora, des synthés et beaucoup d'énergie." },
     { id: "a9",  nom: "Tanka",             genre: "Rap",       scene: "soleil",    jour: "dim", debut: "20:30", duree: 90, tete: true,
       photo: "assets/photos/demo-artiste-3.webp",
@@ -91,7 +88,7 @@ window.MOCK = {
       { icone: "eclair", titre: "Vélos et trottinettes", texte: "Stationnement gratuit et surveillé près de l'entrée nord." }
     ],
     accessibilite: [
-      "Plateformes surélevées devant la Grande Scène, le Yard Reggae, la Salle Majestic et le Podium Mode",
+      "Plateformes surélevées devant la Grande Scène et le Podium Mode",
       "Toilettes adaptées dans chaque bloc sanitaire",
       "Prêt de fauteuils et de sièges-cannes au Point info",
       "Boucle magnétique à la Grande Scène, gilets vibrants sur réservation",
@@ -111,8 +108,8 @@ window.MOCK = {
       { id: "code-perdu", q: "J'ai perdu mon code secret, comment récupérer ma partie ?", r: "Passe au stand Vimas Quest avec ton pseudo : l'équipe retrouve ton code. Tant que tu joues sur le même téléphone, tu n'as besoin de rien." },
       { id: "qr-illisible", q: "Un QR du site ne se scanne pas.", r: "Essaie avec la lampe du scanner, puis utilise « Saisir un code » : chaque QR a un code court imprimé en dessous (par exemple SOL-4821)." },
       { id: "rescanner", q: "Puis-je scanner le même QR plusieurs fois ?", r: "Chaque QR rapporte des XP une fois par jour. Le lendemain, il redevient actif." },
-      { id: "reseau", q: "Le réseau ne passe pas, je perds mes points ?", r: "Non. Tes réponses au blind test sont renvoyées automatiquement, et le Wi-Fi gratuit Telco+ est disponible près des scènes." },
-      { id: "batterie", q: "Mon téléphone n'a plus de batterie.", r: "Des bornes de recharge gratuites sont à la Consigne (10h à 22h) et au Salon Telco+. Ta partie est sauvegardée : rien n'est perdu." },
+      { id: "reseau", q: "Le réseau ne passe pas, je perds mes points ?", r: "Non. Tes réponses au blind test sont renvoyées automatiquement, et ta partie est enregistrée dès que le réseau revient." },
+      { id: "batterie", q: "Mon téléphone n'a plus de batterie.", r: "Une borne de recharge gratuite t'attend au Stand Vimas Quest (10h à 21h30). Ta partie est sauvegardée : rien n'est perdu." },
       { id: "lots", q: "Jusqu'à quand puis-je retirer mes lots ?", r: "Jusqu'au dimanche 21h30 au Stand Vimas Quest, avec ton bon de retrait et ton billet. Les lots non retirés ne sont pas envoyés par la poste." },
       { id: "mineurs", q: "Les mineurs peuvent-ils jouer ?", r: "Oui, à partir de 12 ans, accompagnés d'un adulte sur le site. Les lots avec de l'alcool ne sont jamais remis aux mineurs." },
       { id: "sortie", q: "Puis-je sortir et revenir ?", r: "Oui, ton bracelet permet de sortir et de revenir autant de fois que tu veux jusqu'à 20h." },
@@ -221,15 +218,15 @@ window.MOCK = {
 
 
   /* ---------- Plan (page 7) ----------
-     Coordonnées dans le dessin (1000 × 700, nord en haut). 1 unité = 0,28 m. */
+     Coordonnées dans le dessin (1000 × 700, nord en haut). 1 unité = 0,20 m. */
   planConfig: {
-    metresParUnite: 0.28,    // = App.planFond.metresParUnite (outils/plan/fond_plan.py)
+    metresParUnite: 0.2,     // = App.planFond.metresParUnite (outils/plan/fond_plan.py)
     metresParMinute: 60,     // marche dans la foule
     telephoneSecurite: "0800000000",   // FICTIF : à remplacer par le numéro réel de la sécurité du festival
     libelleTelephone: "Sécurité du festival (numéro de démo)",
     // Emprise du plan (Majestic Cinéma, Université de Yaoundé I), pour placer le joueur grâce au GPS
     // = App.planFond.geo : si le fond est régénéré, recopier ici
-    geo: { nord: 3.860097, sud: 3.858325, ouest: 11.495347, est: 11.497868 }
+    geo: { nord: 3.859844, sud: 3.858578, ouest: 11.495707, est: 11.497508 }
   },
   categoriesLieux: {
     scene:     { nom: "Scènes",        icone: "micro",    couleur: "nuit" },
@@ -243,51 +240,33 @@ window.MOCK = {
     entree:    { nom: "Entrées",       icone: "entree",   couleur: "papier" }
   },
   /* Lieux de DÉMO placés sur le vrai fond (Majestic Cinéma, assets/js/plan-fond.js,
-     1 unité = 0,28 m). Enceinte du Majestic : x 357 → 643, y 155 → 545 (écran et bâtiments
+     1 unité = 0,20 m). Enceinte du Majestic : x 300 → 700, y 77 → 623 (écran et bâtiments
      à l'ouest, parking à l'est) ; l'axe principal du campus longe l'enceinte au sud-ouest.
-     Village des stands (fictif) sur le terrain dégagé à l'est. Les vrais emplacements
-     viendront de Vimas Production (table lieux, colonnes x / y). */
+     1re édition : tout tient dans l'enceinte (2 scènes, quelques stands). Les vrais
+     emplacements viendront de Vimas Production (table lieux, colonnes x / y). */
   lieux: [
-    { id: "soleil",          cat: "scene", nom: "Grande Scène",      x: 455, y: 280, pmr: true, desc: "Devant l'écran du Majestic : concerts et écran géant. Plateforme PMR à droite de la régie." },
-    { id: "dock",            cat: "scene", nom: "La Salle Majestic", x: 415, y: 390, pmr: true, desc: "La salle du Majestic transformée en scène couverte." },
-    { id: "kiosque",         cat: "scene", nom: "Le Podium Mode",    x: 560, y: 395, pmr: true, desc: "Podium des défilés de mode et des battles de danse, sur le parking du Majestic." },
-    { id: "clairiere",       cat: "scene", nom: "Le Yard Reggae",    x: 800, y: 320, pmr: true, desc: "Scène reggae en plein air, sous les arbres, à l'est du Majestic." },
-    { id: "chapiteau",       cat: "scene", nom: "Le Sound System",   x: 880, y: 650, pmr: false, desc: "Mur d'enceintes des sets dancehall et dub, sur la pelouse au sud-est. Accès PMR par le chemin de gauche, demande à un bénévole." },
+    { id: "soleil",  cat: "scene", nom: "Grande Scène",   x: 437, y: 252, pmr: true, desc: "Devant l'écran du Majestic : concerts et écran géant. Plateforme PMR à droite de la régie." },
+    { id: "kiosque", cat: "scene", nom: "Le Podium Mode", x: 584, y: 413, pmr: true, desc: "Podium des défilés, des battles de danse et des sets dancehall, sur le parking du Majestic." },
 
-    { id: "st-radio",        cat: "stand", nom: "Radio Écho",        x: 700, y: 400, desc: "Studio en direct et interviews d'artistes." },
-    { id: "st-telco",        cat: "stand", nom: "Salon Telco+",      x: 760, y: 425, desc: "Wi-Fi du festival et bornes de recharge." },
-    { id: "st-kora",         cat: "stand", nom: "Maison Kora",       x: 700, y: 470, desc: "Artisans, créateurs de mode et essais d'instruments." },
-    { id: "st-brasserie",    cat: "stand", nom: "Brasserie du Port", x: 770, y: 485, desc: "Bar central du village." },
-    { id: "st-fraicheur",    cat: "stand", nom: "Fraîcheur Lab",     x: 835, y: 455, desc: "Brumisateurs et gourdes à remplir." },
-    { id: "st-quest",        cat: "stand", nom: "Stand Vimas Quest", x: 575, y: 505, horaires: "10h à 21h30", desc: "Accueil du jeu, retrait des lots, aide aux joueurs. Juste après l'entrée." },
+    { id: "st-radio",     cat: "stand", nom: "Radio Écho",        x: 654, y: 322, desc: "Studio en direct et interviews d'artistes." },
+    { id: "st-kora",      cat: "stand", nom: "Maison Kora",       x: 528, y: 518, desc: "Créateurs de mode et artisans." },
+    { id: "st-brasserie", cat: "stand", nom: "Brasserie du Port", x: 640, y: 497, desc: "Le bar du festival." },
+    { id: "st-quest",     cat: "stand", nom: "Stand Vimas Quest", x: 605, y: 574, horaires: "10h à 21h30", desc: "Accueil du jeu, retrait des lots, recharge de téléphone, objets trouvés. Juste après l'entrée." },
 
-    { id: "st-yassa",        cat: "food", nom: "Chez Yassa",       x: 865, y: 520, desc: "Village food, à l'est du Majestic." },
-    { id: "st-braise",       cat: "food", nom: "Le Braisé",        x: 910, y: 495, desc: "Village food." },
-    { id: "st-sucre",        cat: "food", nom: "Sucre & Sel",      x: 945, y: 535, desc: "Village food, desserts." },
-    { id: "st-plantain",     cat: "food", nom: "Plantain Express", x: 830, y: 545, desc: "Village food." },
+    { id: "st-yassa",  cat: "food", nom: "Chez Yassa", x: 507, y: 161, desc: "Grillades et plats locaux, au nord de l'enceinte." },
+    { id: "st-braise", cat: "food", nom: "Le Braisé",  x: 563, y: 119, desc: "Soya et braisés, au nord de l'enceinte." },
 
-    { id: "eau-1", cat: "eau", nom: "Point d'eau Grande Scène",  x: 415, y: 245, desc: "Eau potable gratuite, derrière la Grande Scène." },
-    { id: "eau-2", cat: "eau", nom: "Point d'eau Yard Reggae",   x: 760, y: 355, desc: "Eau potable gratuite." },
-    { id: "eau-3", cat: "eau", nom: "Point d'eau Sound System",  x: 930, y: 620, desc: "Eau potable gratuite." },
-    { id: "eau-4", cat: "eau", nom: "Point d'eau Village",       x: 730, y: 530, desc: "Eau potable gratuite." },
+    { id: "eau-1", cat: "eau", nom: "Point d'eau Grande Scène", x: 381, y: 203, desc: "Eau potable gratuite, derrière la Grande Scène." },
+    { id: "eau-2", cat: "eau", nom: "Point d'eau Podium",       x: 654, y: 420, desc: "Eau potable gratuite." },
 
-    { id: "wc-1", cat: "toilettes", nom: "Toilettes Nord",     x: 545, y: 180, pmr: true },
-    { id: "wc-2", cat: "toilettes", nom: "Toilettes Yard",     x: 880, y: 380, pmr: true },
-    { id: "wc-3", cat: "toilettes", nom: "Toilettes Majestic", x: 620, y: 460, pmr: true },
-    { id: "wc-4", cat: "toilettes", nom: "Toilettes Village",  x: 760, y: 540, pmr: true },
+    { id: "wc-1", cat: "toilettes", nom: "Toilettes Nord",     x: 612, y: 196, pmr: true },
+    { id: "wc-2", cat: "toilettes", nom: "Toilettes Majestic", x: 381, y: 406, pmr: true },
 
-    { id: "secours-1", cat: "secours", nom: "Poste de secours principal", x: 615, y: 420, horaires: "Ouvert en continu", desc: "Médecins, infirmiers, point d'écoute. Signalé par un grand drapeau rouge." },
-    { id: "secours-2", cat: "secours", nom: "Point secours Grande Scène", x: 525, y: 320, horaires: "Pendant les concerts", desc: "Équipe de secouristes près de la grande scène." },
+    { id: "secours-1", cat: "secours", nom: "Poste de secours", x: 507, y: 343, horaires: "Ouvert en continu", desc: "Secouristes et point d'écoute, entre la Grande Scène et le Podium. Signalé par un drapeau rouge." },
+    { id: "abri-2",    cat: "abri",    nom: "Hall du Majestic", x: 385, y: 308, desc: "Le hall du Majestic sert d'abri en cas d'averse." },
+    { id: "dedicaces", cat: "service", nom: "Tente dédicaces",  x: 654, y: 371, desc: "Séances de dédicaces des artistes, près du Podium Mode. Voir le programme." },
 
-    { id: "abri-1", cat: "abri", nom: "Abri Yard Reggae", x: 850, y: 300, desc: "Abri couvert sous les arbres en cas d'averse." },
-    { id: "abri-2", cat: "abri", nom: "Hall du Majestic", x: 505, y: 215, desc: "Le hall du Majestic sert d'abri en cas d'averse." },
-
-    { id: "dedicaces",    cat: "service", nom: "Tente dédicaces",       x: 600, y: 350, desc: "Séances de dédicaces des artistes, près du Podium Mode. Voir le programme." },
-    { id: "consigne",     cat: "service", nom: "Consigne et recharge",  x: 665, y: 520, horaires: "10h à 22h", desc: "Casiers et recharge de téléphone." },
-    { id: "info",         cat: "service", nom: "Point info",            x: 690, y: 565, desc: "Objets trouvés, informations, accessibilité." },
-
-    { id: "entree-principale", cat: "entree", nom: "Entrée principale", x: 630, y: 575, desc: "Sur l'axe principal du campus. Contrôle des tickets et bracelets." },
-    { id: "entree-nord",       cat: "entree", nom: "Entrée nord",       x: 470, y: 150, desc: "Sortie de secours et accès livraisons." }
+    { id: "entree-principale", cat: "entree", nom: "Entrée", x: 682, y: 665, desc: "Sur l'axe principal du campus. Contrôle des tickets et bracelets." }
   ],
 
 
@@ -334,7 +313,7 @@ window.MOCK = {
     { categorie: "Année",      question: "En quelle année est sorti ce titre ?",         choix: ["2009", "2014", "2019", "2023"],                                               bonne: 2, reponse: "Roots Mbeng, « Jah au marché »",           anecdote: "Leur premier disque, pressé à 300 exemplaires.",       motif: [62, 65, 69, 72, 71, 67, 64, 62], onde: "sine",     tempo: 88 },
     { categorie: "Artiste",    question: "Quel groupe de l'affiche joue ici ?",          choix: ["Roots Mbeng", "Lady Soca", "Mboa Brass Band", "Selecta Yard"],                bonne: 2, reponse: "Mboa Brass Band, « Grand défilé »",        anecdote: "Onze musiciens, zéro partition.",                       motif: [60, 64, 67, 72, 67, 64, 65, 67], onde: "sawtooth", tempo: 126 },
     { categorie: "Instrument", question: "Quel instrument tient la mélodie ?",           choix: ["Trompette", "Violon", "Flûte", "Synthétiseur"],                               bonne: 3, reponse: "Selecta Yard, « Riddim maison »",          anecdote: "Le riddim a été composé sur un synthé fait maison.",   motif: [72, 74, 76, 79, 76, 74, 72, 67], onde: "square",   tempo: 128 },
-    { categorie: "Scène",      question: "Sur quelle scène joue cette artiste samedi ?", choix: ["La Salle Majestic", "Le Yard Reggae", "Le Podium Mode", "Le Sound System"], bonne: 0, reponse: "Lady Soca, « Carnaval »",                  anecdote: "Rendez-vous samedi à 17h30 dans la Salle Majestic.",   motif: [57, 60, 64, 63, 60, 57, 55, 57], onde: "sawtooth", tempo: 100 },
+    { categorie: "Horaire",    question: "À quelle heure joue cette artiste samedi ?",   choix: ["14h00", "16h00", "17h30", "20h30"],                                        bonne: 2, reponse: "Lady Soca, « Carnaval »",                  anecdote: "Rendez-vous samedi à 17h30 sur la Grande Scène.",   motif: [57, 60, 64, 63, 60, 57, 55, 57], onde: "sawtooth", tempo: 100 },
     { categorie: "Tempo",      question: "Ce morceau est plutôt…",                       choix: ["Très lent", "Modéré", "Rapide", "Très rapide"],                               bonne: 2, reponse: "Tanka, « Pas de côté »",                   anecdote: "140 battements par minute.",                            motif: [67, 67, 70, 67, 65, 63, 65, 67], onde: "triangle", tempo: 140 },
     { categorie: "Artiste",    question: "Qui joue ce morceau ?",                         choix: ["Sœur Vinyle", "Selecta Yard", "Roots Mbeng", "Kalé & les Ondes"],             bonne: 2, reponse: "Roots Mbeng, « Rue des Palmiers »",        anecdote: "Chanté en trois langues sur le même refrain.",          motif: [64, 68, 71, 76, 75, 71, 68, 64], onde: "triangle", tempo: 118 },
     { categorie: "Style",      question: "De quel style s'agit-il ?",                    choix: ["Zouk", "Reggae", "Fanfare", "Dancehall"],                                     bonne: 0, reponse: "Ama Rise, « Encore une fois »",            anecdote: "Un chœur de huit voix sur le refrain.",                 motif: [60, 63, 67, 70, 68, 67, 63, 60], onde: "sine",     tempo: 80 },
@@ -433,18 +412,18 @@ window.MOCK = {
      categorie : exploration | musique | gourmand | social | defi
      rangMin : rang requis ; finHeure + jour : mission éclair limitée dans le temps */
   missions: [
-    { id: "m1",  titre: "Tournée des scènes",    categorie: "musique",     action: "scanner",    objectif: 3,  xp: 150, jetons: 3,
-      texte: "Assiste à 3 concerts sur 3 scènes différentes et scanne le QR de chaque scène." },
+    { id: "m1",  titre: "Tournée des scènes",    categorie: "musique",     action: "scanner",    objectif: 2,  xp: 150, jetons: 3,
+      texte: "Assiste à un concert sur chacune des 2 scènes et scanne leur QR." },
     { id: "m2",  titre: "La relique",            categorie: "exploration", action: "scanner",    objectif: 1,  xp: 200, jetons: 5, lieu: "soleil",
       texte: "Une relique est cachée près de la Grande Scène. À toi de la trouver." },
-    { id: "m3",  titre: "Gourmet du festival",   categorie: "gourmand",    action: "scanner",    objectif: 4,  xp: 80,  jetons: 2,
-      texte: "Scanne le QR de 4 food-trucks différents." },
+    { id: "m3",  titre: "Gourmet du festival",   categorie: "gourmand",    action: "scanner",    objectif: 2,  xp: 80,  jetons: 2,
+      texte: "Scanne le QR des 2 food-trucks du festival." },
     { id: "m4",  titre: "Chasseur de dédicaces", categorie: "musique",     action: "staff",      objectif: 1,  xp: 250, jetons: 5, lieu: "kiosque",
       texte: "Passe à la séance de dédicaces et fais valider ta mission par l'équipe sur place." },
     { id: "m5",  titre: "Première note",         categorie: "exploration", action: "scanner",    objectif: 1,  xp: 30,  jetons: 1, lieu: "soleil",
       texte: "Scanne le QR de la Grande Scène." },
-    { id: "m6",  titre: "Défi éclair : la Salle Majestic", categorie: "defi", action: "scanner", objectif: 1,  xp: 120, jetons: 4, lieu: "dock",
-      texte: "Scanne le QR de la Salle Majestic avant 18h.", jour: "sam", finHeure: "18:00" },
+    { id: "m6",  titre: "Défi éclair : le Podium", categorie: "defi",      action: "scanner",    objectif: 1,  xp: 120, jetons: 4, lieu: "kiosque",
+      texte: "Scanne le QR du Podium Mode avant 18h.", jour: "sam", finHeure: "18:00" },
     { id: "m7",  titre: "Oreille absolue",       categorie: "musique",     action: "blind-test", objectif: 10, xp: 300, jetons: 8, rangMin: "Groupie",
       texte: "Donne 10 bonnes réponses au blind test géant." },
     { id: "m8",  titre: "Jury du festival",      categorie: "social",      action: "votes",      objectif: 3,  xp: 60,  jetons: 2,
@@ -473,7 +452,7 @@ window.MOCK = {
       classement: { general: 412, jour: 87, total: 18400 },
       jour: { scans: 7, xp: 320 },
       favoris: ["a1", "a6", "a7", "a12", "a11", "a9"],
-      progression: { m1: 2, m3: 1, m2: 0, m4: 0, m5: 1, m9: 1, m8: 1, m10: 0 },
+      progression: { m1: 1, m3: 1, m2: 0, m4: 0, m5: 1, m9: 1, m8: 1, m10: 0 },
       terminees: { m5: { heure: "11:02" }, m9: { heure: "15:15", par: "Awa, équipe Vimas Quest" } },
       collection: {
         badges: {
@@ -504,8 +483,8 @@ window.MOCK = {
       },
       activite: [
         { heure: "14:12", type: "scan",    texte: "Stand Maison Kora",                    xp: 20 },
-        { heure: "13:48", type: "mission", texte: "Gourmet du festival, 1 sur 4",         xp: 20 },
-        { heure: "12:40", type: "scan",    texte: "Scène Le Yard Reggae",                 xp: 30 },
+        { heure: "13:48", type: "mission", texte: "Gourmet du festival, 1 sur 2",         xp: 20 },
+        { heure: "12:40", type: "scan",    texte: "Grande Scène",                         xp: 30 },
         { heure: "12:05", type: "scan",    texte: "Stand Radio Écho",                     xp: 20 }
       ]
     },
@@ -526,8 +505,8 @@ window.MOCK = {
      jour + heure = publication ; fin = fin de validité (même jour, ou le lendemain si avant 8h). */
   annonces: [
     { id: "n1", niveau: "important", type: "meteo", jour: "sam", heure: "15:55", fin: "18:00",
-      titre: "Averse possible vers 18h", texte: "En cas de pluie, abris ouverts près du Yard Reggae et dans le hall du Majestic. Suis les consignes des bénévoles.",
-      lien: { href: "plan.html?lieu=abri-1", libelle: "Voir les abris" }, lu: false },
+      titre: "Averse possible vers 18h", texte: "En cas de pluie, le hall du Majestic sert d'abri. Suis les consignes des bénévoles.",
+      lien: { href: "plan.html?lieu=abri-2", libelle: "Voir l'abri" }, lu: false },
     { id: "n5", niveau: "important", type: "jeu", jour: "sam", heure: "16:00", fin: "17:00",
       titre: "Blind test géant à 17h", texte: "Rendez-vous devant l'écran de la Grande Scène : 15 questions, des jetons pour le top 10.",
       lien: { href: "blind-test.html", libelle: "Préparer mon téléphone" }, lu: false },
@@ -590,7 +569,7 @@ window.MOCK = {
   badges: [
     { id: "b-premiere-note", nom: "Première note",  texte: "Scanner ton premier QR de scène.",                 rarete: "commun",     forme: "rond",    icone: "onde",     pctJoueurs: 91, lien: "scanner.html" },
     { id: "b-leve-tot",      nom: "Lève-tôt",       texte: "Scanner un QR avant midi.",                         rarete: "commun",     forme: "hexa",    icone: "horloge",  pctJoueurs: 44, lien: "scanner.html" },
-    { id: "b-curieux",       nom: "Curieux",        texte: "Scanner 5 stands différents.",                     rarete: "commun",     forme: "rond",    icone: "plan",     pctJoueurs: 38, lien: "plan.html" },
+    { id: "b-curieux",       nom: "Curieux",        texte: "Scanner 3 stands différents.",                     rarete: "commun",     forme: "rond",    icone: "plan",     pctJoueurs: 38, lien: "plan.html" },
     { id: "b-echauffement",  nom: "Échauffement",   texte: "Réussir la mission Échauffement.",                 rarete: "commun",     forme: "hexa",    icone: "eclair",   pctJoueurs: 27, lien: "missions.html#m9" },
     { id: "b-gourmet",       nom: "Gourmet",        texte: "Terminer la mission Gourmet du festival.",         rarete: "rare",       forme: "rond",    icone: "couverts", pctJoueurs: 22, lien: "missions.html#m3" },
     { id: "b-tournee",       nom: "En tournée",     texte: "Terminer la mission Tournée des scènes.",          rarete: "rare",       forme: "etoile",  icone: "micro",    pctJoueurs: 19, lien: "missions.html#m1" },
@@ -613,16 +592,12 @@ window.MOCK = {
   },
 
   stands: [
-    { id: "st-kora",      nom: "Maison Kora",        type: "stand",     qr: "QR-KORA",     zone: "Allée des artisans" },
-    { id: "st-radio",     nom: "Radio Écho",         type: "stand",     qr: "QR-RADIO",    zone: "Près de la Grande Scène" },
-    { id: "st-brasserie", nom: "Brasserie du Port",  type: "stand",     qr: "QR-BRASS",    zone: "Bar central" },
-    { id: "st-telco",     nom: "Salon Telco+",       type: "stand",     qr: "QR-TELCO",    zone: "Entrée nord" },
-    { id: "st-fraicheur", nom: "Fraîcheur Lab",      type: "stand",     qr: "QR-FRAICH",   zone: "Derrière la Salle Majestic" },
-    { id: "st-quest", nom: "Stand Vimas Quest",    type: "stand",     qr: "QR-RSN",      zone: "Entrée principale" },
-    { id: "st-yassa",     nom: "Chez Yassa",         type: "foodtruck", qr: "QR-FT-YASSA", zone: "Village food" },
-    { id: "st-braise",    nom: "Le Braisé",          type: "foodtruck", qr: "QR-FT-BRAISE", zone: "Village food" },
-    { id: "st-sucre",     nom: "Sucre & Sel",        type: "foodtruck", qr: "QR-FT-SUCRE", zone: "Village food" },
-    { id: "st-plantain",  nom: "Plantain Express",   type: "foodtruck", qr: "QR-FT-PLANT", zone: "Près du Yard Reggae" }
+    { id: "st-kora",      nom: "Maison Kora",        type: "stand",     qr: "QR-KORA",      zone: "Près du Podium" },
+    { id: "st-radio",     nom: "Radio Écho",         type: "stand",     qr: "QR-RADIO",     zone: "Près du Podium" },
+    { id: "st-brasserie", nom: "Brasserie du Port",  type: "stand",     qr: "QR-BRASS",     zone: "Le bar" },
+    { id: "st-quest",     nom: "Stand Vimas Quest",  type: "stand",     qr: "QR-RSN",       zone: "Entrée" },
+    { id: "st-yassa",     nom: "Chez Yassa",         type: "foodtruck", qr: "QR-FT-YASSA",  zone: "Nord de l'enceinte" },
+    { id: "st-braise",    nom: "Le Braisé",          type: "foodtruck", qr: "QR-FT-BRAISE", zone: "Nord de l'enceinte" }
   ],
 
   /* ---------- Coups de cœur (page 13) ----------
@@ -636,8 +611,7 @@ window.MOCK = {
   /* Totaux simulés des autres festivaliers (futur : GET /api/votes/tendances) */
   votesTendances: {
     artistes: { a1: 2140, a2: 980, a3: 1260, a4: 1710, a5: 1490, a6: 620, a7: 1980, a8: 540, a9: 0, a10: 0, a11: 0, a12: 0 },
-    stands: { "st-kora": 860, "st-radio": 410, "st-brasserie": 1120, "st-telco": 300, "st-fraicheur": 520, "st-quest": 690,
-              "st-yassa": 1340, "st-braise": 980, "st-sucre": 760, "st-plantain": 450 }
+    stands: { "st-kora": 860, "st-radio": 410, "st-brasserie": 1120, "st-quest": 690, "st-yassa": 1340, "st-braise": 980 }
   },
   votesDeBase: { j1: { artistes: ["a5"], stands: ["st-kora"] } },
 
@@ -667,7 +641,7 @@ window.MOCK = {
      Futur : POST /api/scans { code } — la liste complète ne sera jamais envoyée au téléphone. */
   qrcodes: [
     { code: "QR-SOLEIL",   court: "SOL-4821", type: "scene",     nom: "Grande Scène",          xp: 30,  jetons: 1, lieu: "soleil",    missions: ["m5", "m1"] },
-    { code: "QR-DOCK",     court: "DCK-3307", type: "scene",     nom: "La Salle Majestic",     xp: 30,  jetons: 1, lieu: "dock",      missions: ["m1", "m6"] },
+    { code: "QR-PODIUM",   court: "POD-3307", type: "scene",     nom: "Le Podium Mode",        xp: 30,  jetons: 1, lieu: "kiosque",   missions: ["m1", "m6"] },
     { code: "QR-RADIO",    court: "RAD-5510", type: "stand",     nom: "Stand Radio Écho",      xp: 20,  jetons: 1 },
     { code: "QR-FT-BRAISE", court: "BRA-7781", type: "foodtruck", nom: "Food-truck Le Braisé",  xp: 15,  jetons: 0, missions: ["m3"] },
     { code: "QR-EAU-1",    court: "EAU-1001", type: "service",   nom: "Point d'eau Grande Scène", xp: 10,  jetons: 0, missions: ["m10"] },
