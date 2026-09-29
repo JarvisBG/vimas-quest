@@ -36,7 +36,7 @@ pas un discours. **Le moins de travail possible** : on change la peau et le cont
 
 | Sujet | Décision |
 |---|---|
-| Base de données | **La même que DOMAF** : Supabase `domaf-quest` (`greawdlzcuewlcndddxq`), compte 2utilisateursivraj@gmail.com, forfait gratuit. Le contenu d'essai DOMAF y sera remplacé par un contenu d'essai Vimas. |
+| Base de données | Supabase `domaf-quest` (`greawdlzcuewlcndddxq`), compte 2utilisateursivraj@gmail.com, forfait gratuit. **Entièrement passée au VIMAS FEST le 29/09** (données DOMAF effacées, décision de Jarvis) : contenu d'essai Vimas fictif. La démo DOMAF ne doit plus être redéployée sur cette base. |
 | Lien en ligne | **Le même** : Worker Cloudflare `festival-quest` (https://festival-quest.jarvismboummeu28.workers.dev). La démo DOMAF est **débranchée** (écrasée) ; elle se redéploie à tout moment depuis `../domaf/app`. |
 | Moteur | **Inchangé**. Aucune modification SQL de structure. Tout identifiant côté base reste tel quel (préfixe de QR `DQ-`, noms de fonctions, `jour_jeu()` à l'heure de Douala = même fuseau que Yaoundé). |
 | Dossier | `vimas/vimas-quest/` = copie de `domaf/` (app, supabase, outils) sans offre ni archives. |
@@ -64,8 +64,9 @@ pas un discours. **Le moins de travail possible** : on change la peau et le cont
 - **Bandeau « maquette »** : `App.config.maquette = true` (`app/assets/js/app.js`) affiche « Maquette de démonstration · contenu fictif » sur les pages du téléphone. À passer à `false` si Vimas signe.
 - Le mode démo est retenu sous `vimasquest.mock` : les réglages d'un navigateur qui a vu la version DOMAF (`domafquest.*`) sont ignorés.
 
-- **Base partagée** : tant que Vimas n'a pas signé, toute écriture en base écrase le contenu DOMAF.
-  Avant de toucher la base : exporter une sauvegarde SQL (`supabase/ROUTINE.md`).
+- **Base** : n'appartient plus qu'à Vimas (29/09). SQL en ligne : l'appliquer soi-même dans l'éditeur SQL de Supabase via Chrome
+  (presse-papiers PowerShell `Get-Content -Raw -Encoding UTF8 … | Set-Clipboard`, Ctrl+A, Ctrl+V, Run, confirmer l'avertissement
+  « destructive ») ; l'essayer d'abord sur PGlite. Vérifier ensuite par l'API publique (clé publishable de `config.js`).
 - **Données personnelles** : la case de consentement de la fiche fan doit nommer Vimas Production,
   pas DOMAF. Joueurs d'essai DOMAF (`Essai%`) à effacer avant la démo.
 - **Rien de public au nom de Vimas sans prévenir Jarvis** : le lien est public ; la maquette doit

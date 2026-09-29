@@ -20,10 +20,11 @@
 > `supabase/correctifs/2026-09-28_vimas-5.4-droits.sql` **appliqué en ligne par Jarvis le 28/09** (annulation :
 > `…_ANNULER.sql`). **Site en ligne depuis le 29/09**. **Étape 6 (contenu de démo) terminée le 29/09**,
 > **mise en ligne le 29/09** (prochaine mise en ligne : `vimasquest-v6` puis `npx wrangler deploy`, wrangler connecté).
-> **Étape 7 (plan du Majestic, démo : 2 scènes, tout dans l'enceinte) terminée et en ligne le 29/09** (`vimasquest-v5`). Ensuite : **étape 8 — base de données**
-> (sauvegarde : `pg_dump` absent → demander à Jarvis un export depuis le tableau de bord Supabase ; effacer le contenu
-> d'essai DOMAF ; correctif Vimas : quartiers de Yaoundé, règles, badges liés à l'heure / aux jours, `soir_debut` 18 h).
-> Question ouverte : écran de secours du vendeur.
+> Étapes 6 et 7 en ligne (`vimasquest-v5`). **Étapes 8 et 9 faites le 29/09** : la base est au VIMAS FEST (correctif
+> `2026-09-29_vimas-8-base.sql` + `contenu-essai/contenu_essai.sql`, appliqués en ligne). Ensuite : **étape 11 — recette**
+> (parcours festivalier sur vrais téléphones avec les QR `DQ-V…`, écran géant, blind test depuis la régie, console par rôle ;
+> créer un compte vendeur d'essai). Questions ouvertes : écran de secours du vendeur, tirage au sort final.
+> SQL en ligne : l'extension Chrome peut coller un script dans l'éditeur SQL de Supabase (presse-papiers + Ctrl+V + Run).
 > Essai d'une page de console sans compte : copie de page + script qui remplace `C.garde` / `C.appel` / `C.sb` /
 > `C.confirmer` (effacer ensuite). Essai SQL sans PostgreSQL installé : `supabase/outils/banc/audit_pglite.mjs` (PGlite).
 > Rappels : base Supabase **partagée** avec l'ancien DOMAF (`domaf-quest`) → sauvegarde SQL avant toute écriture ;
@@ -57,6 +58,7 @@
 | 29/09/2026 | **Étape 6 terminée** : contenu de démo Vimas de jour (2 jours, 10 h → 22 h, line-up fictif recalé, blind test 17 h, annonces sur l'horloge de démo), banque de questions Vimas (démo + SQL), formulations de jour dans les pages, contrôle dans Chrome. Pas encore remis en ligne. |
 | 29/09/2026 | Étape 6 **mise en ligne** : `sw.js` → `vimasquest-v4`, `npx wrangler deploy` (version `41a35e22`) ; vérifié en ligne (sw v4, contenu Vimas de jour, fichiers internes en 404). |
 | 29/09/2026 | **Étape 7 terminée (démo)** : fond du plan tiré d'OpenStreetMap autour du Majestic Cinéma (cinéma en plein air de l'Université de Yaoundé I). Jarvis : « le Vimas, ce n'est pas le DOMAF, c'est leur début » → site resserré dans l'enceinte : 2 scènes, 4 stands, 2 food-trucks, cadre de 200 m. Mis en ligne (`vimasquest-v5`, version `e66efd34`). |
+| 29/09/2026 | Jarvis : « l'ancienne base du DOMAF ne m'intéresse pas… tu peux tout remplacer ». **Étapes 8 et 9 faites et en ligne** : correctif `2026-09-29_vimas-8-base.sql` (tout le contenu et les données DOMAF effacés, fonctions Vimas : jours, codes, badges de jour, quartiers de Yaoundé, 18 h) puis contenu d'essai Vimas, collés par Claude dans l'éditeur SQL de Supabase (Chrome) ; essayés d'abord sur PGlite, vérifiés ensuite par l'API publique. |
 
 ---
 
@@ -162,17 +164,20 @@ Le moteur DOMAF est calé sur des **soirées de concerts** : à adapter (étapes
 - Contrôle dans Chrome (390 px) : plan lisible, programme à 2 scènes. **Mis en ligne le 29/09** (`vimasquest-v5`)
 - ⚠ Emplacements **inventés** : les vrais viendront de Vimas (étape 13). En base (étape 9) : saisir scènes et lieux par la console
 
-## Étape 8 — Base de données (partagée, `domaf-quest`)
-- [ ] **Sauvegarde SQL** avant toute écriture (`supabase/ROUTINE.md`)
-- [ ] Effacer le contenu d'essai DOMAF (`contenu-essai/effacer_contenu_essai.sql`) + joueurs `Essai%`
-- [ ] Correctif Vimas : quartiers de Yaoundé (`profil_options`), textes des règles (`regles_jeu`), badges liés au nombre de jours, commentaires « DOMAF » des sources
-- [ ] Régénérer `00_schema.sql` (générateur) pour que le dépôt reflète la base
+## Étape 8 — Base de données (partagée, `domaf-quest`) ✅ (29/09)
+- [x] ~~Sauvegarde SQL~~ : **décision de Jarvis (29/09)** : « l'ancienne base du DOMAF ne m'intéresse pas, on n'y a rien fait, tu peux tout remplacer » → pas de sauvegarde
+- [x] `correctifs/2026-09-29_vimas-8-base.sql` **appliqué en ligne le 29/09** (par Claude, dans l'éditeur SQL de Supabase via Chrome) : efface **toutes** les données de jeu et tout le contenu DOMAF (joueurs, scans, QR, lieux, programme, lots, annonces, blind tests, réponses, tickets, carnets…) ; garde les comptes de la console, les réglages et le catalogue des badges. Fonctions : jours 26–27/12 (`jour_festival_label`), mots des codes secrets de Yaoundé (MELEN, ESSOS, OBILI, VIMAS…), badges de jour (Lève-tôt avant midi, **« Jusqu'au bout »** au lieu de Noctambule dès 20 h, Marathonien sur 2 jours, Curieux à 3 stands), **quartiers de Yaoundé** (la base refusait jusque-là ceux du téléphone), questions de fin de journée dès **18 h**, clôture des cœurs le 27/12 à 20 h, message de billetterie, banque de questions Vimas
+- [x] Générateur, `sources/92_collecte.sql`, `01_reference.sql`, `00_schema.sql` régénéré ; console : règles des badges système à jour
+- Essais sur **PGlite** : ancien schéma + joueur + compte GM → correctif → le joueur part, le compte reste, structure identique au nouveau schéma, correctif rejouable
+- Vérifié en ligne par l'API publique : samedi 26, 22 quartiers de Yaoundé, 42 questions, badges renommés, 0 joueur
+- ⚠ La démo DOMAF (`../domaf/app`) lirait maintenant le contenu Vimas : ne plus la redéployer sur cette base
 
-## Étape 9 — Contenu d'essai Vimas en base
-- [ ] Programme, scènes, lieux, artistes fictifs (reprend l'étape 6), saisis **par la console** (valide la console au passage)
-- [ ] QR (scènes, stands, reliques), missions, badges, lots de la roue, annonces, manches du blind test
-- [ ] Banque de questions du coffre en base
-- [ ] Compte GM Vimas de démo + un compte vendeur d'essai
+## Étape 9 — Contenu d'essai Vimas en base ✅ (29/09)
+- [x] `contenu-essai/contenu_essai.sql` réécrit pour Vimas et **posé en ligne le 29/09** (même méthode) : 16 lieux (2 scènes, 4 stands, 2 food, services) aux positions de la démo, 12 artistes **fictifs**, 12 concerts (26–27/12, 11 h → 22 h), 3 dédicaces avec QR, 16 QR (`DQ-V…`, liste dans `contenu-essai/README.md`), 11 missions, 11 lots, 3 annonces, 2 manches de blind test (boss fictifs : musiques du week-end, le VIMAS FEST). Rejouable ; `effacer_contenu_essai.sql` à jour
+- Saisi par SQL plutôt que par la console (plus rapide) : la console sera éprouvée à l'étape 11
+- [x] Banque de questions du coffre en base (42 questions Vimas)
+- [ ] Compte vendeur d'essai (le compte GM existant est gardé)
+- Essai PGlite : contenu posé deux fois de suite, un joueur s'inscrit et scanne la Grande Scène → 80 XP, badges Première note + Échauffement
 
 ## Étape 10 — Mise en ligne sur festival-quest
 - [x] `VERSION` de `sw.js`, `cd app && npx wrangler deploy` (remplace la démo DOMAF) — première fois le 29/09 (`vimasquest-v3`) ; à refaire après l'étape 6/9
