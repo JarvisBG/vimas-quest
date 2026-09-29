@@ -40,14 +40,14 @@ document.addEventListener("app:ready", async () => {
   /* Règles des badges système (même liste que _is_system_badge en base) */
   const REGLES = {
     "Première note": "Premier QR scanné",
-    "Curieux": "5 stands différents scannés",
+    "Curieux": "3 stands différents scannés",
     "Fouineur": "Première relique trouvée",
     "Autographe": "Première séance de dédicaces",
     "Jury": "3e stand dans les coups de cœur",
     "Oreille d'or": "Top 10 d'une manche de blind test",
-    "Lève-tôt": "Un scan entre 6 h et 17 h (heure du Cameroun)",
-    "Noctambule": "Une scène scannée pendant un concert, entre minuit et 6 h",
-    "Marathonien": "Au moins un scan chacune des 4 journées",
+    "Lève-tôt": "Un scan entre 6 h et midi (heure du Cameroun)",
+    "Jusqu'au bout": "Une scène scannée pendant un concert, à partir de 20 h",
+    "Marathonien": "Au moins un scan chacune des 2 journées",
     "Podium": "Top 3 de la journée à la clôture (phase « Clôture »)"
   };
   /* Pages du site joueur (contrainte badges.lien : « page.html ») */

@@ -39,7 +39,7 @@ alter table public.micro_config drop column if exists scans_avant_premier;
 alter table public.micro_config drop column if exists scans_entre_deux;
 alter table public.micro_config drop column if exists max_par_jour;
 alter table public.micro_config drop column if exists xp_bonus_complet;
-alter table public.micro_config add column if not exists soir_debut time not null default '20:00';
+alter table public.micro_config add column if not exists soir_debut time not null default '18:00';   -- festival de jour (Vimas)
 
 -- Banque : thème, moment (toujours / soir), reposée chaque jour ou non,
 -- ordre des réponses fixe (échelles) ou mélangé, choix = liste ou artistes du jour
@@ -97,29 +97,30 @@ as $function$
       json_build_object('valeur','garcon','libelle','Un homme'),
       json_build_object('valeur','fille','libelle','Une femme')
     ),
-    -- Les axes les plus peuplés d'abord, le centre ensuite, les sorties en dernier
+    -- Yaoundé (Vimas, 29/09) : les quartiers autour du campus d'abord, puis le
+    -- reste de la ville. Mêmes valeurs que app/data/mock.js (fiche.champs).
     'quartier', json_build_array(
-      json_build_object('valeur','ndokotti','libelle','Ndokotti'),
-      json_build_object('valeur','bassa','libelle','Bassa'),
-      json_build_object('valeur','logbaba','libelle','Logbaba'),
-      json_build_object('valeur','village-ndogpassi','libelle','Village / Ndogpassi'),
-      json_build_object('valeur','pk-8-14','libelle','PK 8 à PK 14'),
-      json_build_object('valeur','pk-15-plus','libelle','PK 15 et au-delà'),
-      json_build_object('valeur','nyalla','libelle','Nyalla'),
-      json_build_object('valeur','yassa-japoma','libelle','Yassa / Japoma'),
-      json_build_object('valeur','bepanda','libelle','Bépanda'),
-      json_build_object('valeur','makepe','libelle','Makepè'),
-      json_build_object('valeur','bonamoussadi','libelle','Bonamoussadi'),
-      json_build_object('valeur','kotto-palmiers','libelle','Kotto / Cité des Palmiers'),
-      json_build_object('valeur','akwa','libelle','Akwa'),
-      json_build_object('valeur','deido','libelle','Deïdo'),
-      json_build_object('valeur','new-bell','libelle','New Bell'),
-      json_build_object('valeur','bali','libelle','Bali'),
-      json_build_object('valeur','bonanjo','libelle','Bonanjo'),
-      json_build_object('valeur','bonapriso','libelle','Bonapriso'),
-      json_build_object('valeur','bonaberi','libelle','Bonabéri'),
-      json_build_object('valeur','bonendale-sodiko','libelle','Bonendale / Sodiko'),
-      json_build_object('valeur','autre-douala','libelle','Un autre quartier de Douala'),
+      json_build_object('valeur','ngoa-ekelle-obili','libelle','Ngoa-Ekellé / Obili'),
+      json_build_object('valeur','melen-mini-ferme','libelle','Melen / Mini Ferme'),
+      json_build_object('valeur','biyem-assi','libelle','Biyem-Assi'),
+      json_build_object('valeur','mendong-simbock','libelle','Mendong / Simbock'),
+      json_build_object('valeur','etoug-ebe','libelle','Etoug-Ébé'),
+      json_build_object('valeur','mvog-mbi','libelle','Mvog-Mbi'),
+      json_build_object('valeur','mvog-ada','libelle','Mvog-Ada'),
+      json_build_object('valeur','essos','libelle','Essos'),
+      json_build_object('valeur','mimboman','libelle','Mimboman'),
+      json_build_object('valeur','ekounou','libelle','Ekounou'),
+      json_build_object('valeur','odza-nkoabang','libelle','Odza / Nkoabang'),
+      json_build_object('valeur','nsam-efoulan','libelle','Nsam / Efoulan'),
+      json_build_object('valeur','bastos','libelle','Bastos'),
+      json_build_object('valeur','etoudi-olembe','libelle','Etoudi / Olembé'),
+      json_build_object('valeur','emana','libelle','Emana'),
+      json_build_object('valeur','tsinga-nlongkak','libelle','Tsinga / Nlongkak'),
+      json_build_object('valeur','mokolo-madagascar','libelle','Mokolo / Madagascar'),
+      json_build_object('valeur','nkolbisson','libelle','Nkolbisson'),
+      json_build_object('valeur','mvan-ahala','libelle','Mvan / Ahala'),
+      json_build_object('valeur','centre-ville','libelle','Centre-ville'),
+      json_build_object('valeur','autre-yaounde','libelle','Un autre quartier de Yaoundé'),
       json_build_object('valeur','autre-ville','libelle','Une autre ville')
     ),
     'genre_prefere', json_build_array(
@@ -233,7 +234,7 @@ create or replace function public._collecte_soir()
  set search_path to 'public'
 as $function$
   select (now() at time zone 'Africa/Douala')::time
-           >= coalesce((select soir_debut from public.micro_config where id = 1), time '20:00')
+           >= coalesce((select soir_debut from public.micro_config where id = 1), time '18:00')
       or (now() at time zone 'Africa/Douala')::time < time '06:00';
 $function$;
 

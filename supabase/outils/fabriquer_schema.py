@@ -179,7 +179,7 @@ for r in lire("q1_tables.csv"):
         # Étape 4.9 : les votes se ferment à une date (et à la phase CLOTURE)
         ddl = remplacer(ddl, """  actif boolean default true not null
 );""", """  actif boolean default true not null,
-  cloture timestamp with time zone default '2026-11-29 20:00:00+01'::timestamp with time zone not null
+  cloture timestamp with time zone default '2026-12-27 20:00:00+01'::timestamp with time zone not null
 );""", "coeur_config")
     if r["table_name"] == "game_state":
         # Étape 4.8 : plafond de tirages par journée de jeu (0 = sans plafond)
@@ -267,7 +267,7 @@ RYTHME ACCORD GAMME NOTE SOLO DUO TRIO CHOEUR CHANT VOIX
 MICRO SCENE LIVE SHOW BRAVO RAPPEL ALBUM VINYLE DISQUE TUBE
 PIANO ORGUE VIOLON HARPE FLUTE SAXO TUBA CUIVRE BASSE CAISSE
 AMPLI CASQUE SONO ECHO ONDE NEON LASER FIESTA DANSE RAGGA
-WOURI AKWA DEIDO BALI MBOA SAWA KOLA NDOLE BRAISE DOMAF
+MELEN ESSOS OBILI MVOG BASTOS EMANA NGOA MOKOLO ETOUDI VIMAS
 LION AIGLE COBRA ZEBRE LUNE ETOILE SOLEIL FLAMME IDOLE STAR
 """.split()
 MOTS = [m for m in MOTS if len(m) <= 6]
@@ -287,7 +287,7 @@ f("_code_secret_tirage", ancien_tableau, ",\n".join(lignes_mots))
 f("_code_secret_tirage", "    select unnest(array[", "    select t.mot from unnest(array[")
 f("_code_secret_tirage", "    ]) as mot", "    ]) as t(mot)")
 f("_code_secret_tirage", "-- 100 mots, tous de 6 lettres au maximum",
-  "-- 100 mots de musique et de Douala (DOMAF Quest), tous de 6 lettres au maximum")
+  "-- 100 mots de musique et de Yaoundé (Vimas Quest), tous de 6 lettres au maximum")
 
 # --- Préfixes propres à DOMAF Quest ----------------------------------------
 f("_gen_qr_code", "v_code := 'OQ-';", "v_code := 'DQ-';")
@@ -309,10 +309,11 @@ f("_is_system_badge",
   "select p_name in ('Premier Scan', 'Chasseur Assidu', 'Boss Vaincu',\n                    'Grand Explorateur', 'Maître Pokédex');",
   # Étape 6.3 : tout badge donné par son NOM dans une fonction est protégé
   # (renommé, il ne serait plus jamais donné) : Jury (coeur_donner), Oreille
-  # d'or (admin_quiz_end), Lève-tôt / Noctambule / Marathonien (scan_qr),
+  # d'or (admin_quiz_end), Lève-tôt / Jusqu'au bout / Marathonien (scan_qr),
   # Podium (admin_set_phase, clôture de la journée).
+  # Vimas (29/09) : « Noctambule » devient « Jusqu'au bout » (festival de jour).
   """select p_name in ('Première note', 'Curieux', 'Fouineur', 'Autographe',
-                    'Jury', 'Oreille d''or', 'Lève-tôt', 'Noctambule', 'Marathonien', 'Podium');""")
+                    'Jury', 'Oreille d''or', 'Lève-tôt', 'Jusqu''au bout', 'Marathonien', 'Podium');""")
 
 # --- Rangs DOMAF (niveau → rang) --------------------------------------------
 f("rank_for_level",
@@ -334,10 +335,8 @@ f("rank_for_level",
 f("jour_festival_label",
   """    when date '2026-08-15' then 'samedi'
     when date '2026-08-16' then 'dimanche'""",
-  """    when date '2026-11-26' then 'jeudi'
-    when date '2026-11-27' then 'vendredi'
-    when date '2026-11-28' then 'samedi'
-    when date '2026-11-29' then 'dimanche'""")
+  """    when date '2026-12-26' then 'samedi'
+    when date '2026-12-27' then 'dimanche'""")
 
 # --- Types de QR ---------------------------------------------------------------
 # Barème par type : console_qr_enregistrer (sources/99_console_contenu.sql, 6.3).
@@ -375,31 +374,31 @@ f("scan_qr", bloc_types, """  if v_qr.type in ('relique', 'dedicace') then
     select count(distinct s.qr_code_id) into v_count
     from public.scans s join public.qr_codes q on q.id = s.qr_code_id
     where s.player_id = v_player.id and q.type = 'stand';
-    if v_count = 5 then
+    if v_count = 3 then
       v_new_badges := array_append(v_new_badges,
         public._award_badge(v_player.id, v_player.pseudo, 'Curieux'));
     end if;
   end if;
 
-  -- Étape 6.3 : heure de Douala. Lève-tôt = un scan avant 17 h (la journée
-  -- de jeu commence à 6 h) ; Noctambule = une scène scannée pendant un
-  -- concert, entre minuit et 6 h.
+  -- Heure du Cameroun (festival de jour, Vimas). Lève-tôt = un scan avant
+  -- midi (la journée de jeu commence à 6 h) ; Jusqu'au bout = une scène
+  -- scannée pendant un concert, à partir de 20 h.
   v_heure := extract(hour from now() at time zone 'Africa/Douala')::int;
-  if v_heure between 6 and 16 then
+  if v_heure between 6 and 11 then
     v_new_badges := array_append(v_new_badges,
       public._award_badge(v_player.id, v_player.pseudo, 'Lève-tôt'));
   end if;
-  if v_creneau is not null and v_heure < 6 then
+  if v_creneau is not null and (v_heure >= 20 or v_heure < 6) then
     v_new_badges := array_append(v_new_badges,
-      public._award_badge(v_player.id, v_player.pseudo, 'Noctambule'));
+      public._award_badge(v_player.id, v_player.pseudo, 'Jusqu''au bout'));
   end if;
-  -- Marathonien : un scan chacune des 4 journées. Compté seulement au
+  -- Marathonien : un scan chacune des 2 journées. Compté seulement au
   -- premier scan de la journée (les autres ne peuvent rien changer).
   if not v_rejeu and not exists (
     select 1 from public.scans
     where player_id = v_player.id and day = public.jour_jeu() and id <> v_scan_id) then
     select count(distinct day) into v_count from public.scans where player_id = v_player.id;
-    if v_count >= 4 then
+    if v_count >= 2 then
       v_new_badges := array_append(v_new_badges,
         public._award_badge(v_player.id, v_player.pseudo, 'Marathonien'));
     end if;
@@ -660,7 +659,7 @@ f("scan_qr",
   """    'quetes', to_json(v_quetes),""",
   """    'quetes', to_json(v_quetes),
     'artiste', v_artiste,""")
-# Étape 6.3 : Lève-tôt, Noctambule, Marathonien (bloc des badges plus haut)
+# Étape 6.3 : Lève-tôt, Jusqu'au bout (ex-Noctambule), Marathonien (bloc des badges plus haut)
 f("scan_qr",
   """  v_artiste  json;""",
   """  v_artiste  json;
@@ -872,7 +871,7 @@ nb_tables_prog = len(re.findall(r"^create table ", programme, re.M))
 nb_fonctions_prog = len(re.findall(r"^create or replace function ", programme, re.M))
 
 sortie = f"""-- ============================================================================
--- DOMAF Quest — 00_schema.sql
+-- Vimas Quest (moteur DOMAF Quest) — 00_schema.sql
 -- ----------------------------------------------------------------------------
 -- Structure complète de la base, à coller UNE FOIS dans l'éditeur SQL d'un
 -- projet Supabase NEUF, puis 01_reference.sql.
@@ -888,7 +887,7 @@ sortie = f"""-- ================================================================
 --   · types de QR : {TYPES_QR.replace("'", "")} ;
 --   · rangs : Spectateur, Fan, Groupie, Backstage, Tête d'affiche ;
 --   · badges système : Première note, Curieux, Fouineur, Autographe, Jury, Oreille d'or,
---     Lève-tôt, Noctambule, Marathonien, Podium ;
+--     Lève-tôt, Jusqu'au bout, Marathonien, Podium ;
 --   · profil : genre musical préféré (genre_prefere) au lieu de l'animé ;
 --   · raids = blind test (mêmes tables, textes adaptés) ;
 --   · blind test : catégorie, réponse, anecdote, extrait audio, pochette ;

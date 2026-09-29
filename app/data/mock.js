@@ -573,7 +573,7 @@ window.MOCK = {
     { id: "b-echauffement",  nom: "Échauffement",   texte: "Réussir la mission Échauffement.",                 rarete: "commun",     forme: "hexa",    icone: "eclair",   pctJoueurs: 27, lien: "missions.html#m9" },
     { id: "b-gourmet",       nom: "Gourmet",        texte: "Terminer la mission Gourmet du festival.",         rarete: "rare",       forme: "rond",    icone: "couverts", pctJoueurs: 22, lien: "missions.html#m3" },
     { id: "b-tournee",       nom: "En tournée",     texte: "Terminer la mission Tournée des scènes.",          rarete: "rare",       forme: "etoile",  icone: "micro",    pctJoueurs: 19, lien: "missions.html#m1" },
-    { id: "b-noctambule",    nom: "Jusqu'au bout",  texte: "Scanner une scène pendant le dernier concert de la journée.", rarete: "rare",     forme: "ecusson", icone: "etoile",   pctJoueurs: 17, lien: "programme.html" },
+    { id: "b-noctambule",    nom: "Jusqu'au bout",  texte: "Scanner une scène pendant un concert après 20h.", rarete: "rare",     forme: "ecusson", icone: "etoile",   pctJoueurs: 17, lien: "programme.html" },
     { id: "b-jury",          nom: "Jury",           texte: "Voter pour 3 stands dans les Coups de cœur.",      rarete: "commun",     forme: "ecusson", icone: "coeur",    pctJoueurs: 31, lien: "coups-de-coeur.html" },
     { id: "b-fouineur",      nom: "Fouineur",       texte: "Trouver une relique.",                            rarete: "epique",     forme: "etoile",  icone: "cible",    pctJoueurs: 9,  lien: "collection.html" },
     { id: "b-autographe",    nom: "Autographe",     texte: "Rencontrer un artiste en séance de dédicaces.",    rarete: "epique",     forme: "ecusson", icone: "etoile",   pctJoueurs: 7,  lien: "missions.html#m4" },

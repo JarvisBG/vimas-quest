@@ -1,5 +1,5 @@
 -- ============================================================================
--- DOMAF Quest — 01_reference.sql
+-- Vimas Quest — 01_reference.sql
 -- ----------------------------------------------------------------------------
 -- Données de départ, à coller APRÈS 00_schema.sql dans un projet neuf.
 -- Rejouable sans risque : chaque insertion ignore ce qui existe déjà.
@@ -24,7 +24,7 @@ on conflict (id) do nothing;
 -- de la journée fixé avec les organisateurs (500 FCFA = valeur d'Otaku).
 insert into public.billetterie_config (id, prix_journee, actif, message)
 values (1, 500, false,
-        'Le jeu DOMAF Quest se joue avec un ticket. Demande-le à un membre de l''équipe, il en a sur lui.')
+        'Le jeu Vimas Quest se joue avec un ticket. Demande-le à un membre de l''équipe, il en a sur lui.')
 on conflict (id) do nothing;
 
 insert into public.coeur_config   (id) values (1) on conflict (id) do nothing;
@@ -40,26 +40,26 @@ insert into public.profil_config  (id) values (1) on conflict (id) do nothing;
 -- l'étape 6.
 -- Badges « système », attribués AUTOMATIQUEMENT et protégés par
 -- _is_system_badge (ni renommables, ni supprimables) : Première note,
--- Curieux, Fouineur, Autographe, Lève-tôt, Noctambule, Marathonien
+-- Curieux, Fouineur, Autographe, Lève-tôt, Jusqu'au bout, Marathonien
 -- (scan_qr), Jury (coeur_donner), Oreille d'or (admin_quiz_end), Podium
 -- (clôture de la journée, admin_set_phase). Les autres se gagnent par une
 -- mission ou un QR liés, ou sont remis par l'équipe (console, étape 6.3).
 -- rarete / forme / secret / lien : ce que la page Collection affiche (étape 4.5).
 insert into public.badges (name, icon, description, rarete, forme, secret, lien) values
   ('Première note',    'onde',       'Scanner ton tout premier QR.',                         'commun',     'rond',    false, 'scanner.html'),
-  ('Curieux',          'plan',       'Scanner 5 stands différents.',                         'commun',     'rond',    false, 'plan.html'),
+  ('Curieux',          'plan',       'Scanner 3 stands différents.',                         'commun',     'rond',    false, 'plan.html'),
   ('Fouineur',         'cible',      'Trouver une relique.',                                 'epique',     'etoile',  false, 'collection.html'),
   ('Autographe',       'etoile',     'Rencontrer un artiste en séance de dédicaces.',        'epique',     'ecusson', false, 'programme.html'),
-  ('Lève-tôt',         'horloge',    'Scanner un QR avant 17h.',                             'commun',     'hexa',    false, 'scanner.html'),
+  ('Lève-tôt',         'horloge',    'Scanner un QR avant midi.',                            'commun',     'hexa',    false, 'scanner.html'),
   ('Échauffement',     'eclair',     'Réussir la mission Échauffement.',                     'commun',     'hexa',    false, 'missions.html'),
   ('Gourmet',          'couverts',   'Terminer la mission Gourmet du festival.',             'rare',       'rond',    false, 'missions.html'),
   ('En tournée',       'micro',      'Terminer la mission Tournée des scènes.',              'rare',       'etoile',  false, 'missions.html'),
-  ('Noctambule',       'etoile',     'Scanner une scène pendant un concert après minuit.',   'rare',       'ecusson', false, 'programme.html'),
+  ('Jusqu''au bout',   'etoile',     'Scanner une scène pendant un concert après 20h.',      'rare',       'ecusson', false, 'programme.html'),
   ('Jury',             'coeur',      'Voter pour 3 stands dans les Coups de cœur.',          'commun',     'ecusson', false, 'coups-de-coeur.html'),
   ('Oreille d''or',    'micro',      'Finir dans le top 10 d''une manche du blind test.',    'epique',     'etoile',  false, 'blind-test.html'),
-  ('Marathonien',      'calendrier', 'Scanner au moins un QR chacun des 4 jours.',           'rare',       'hexa',    false, 'scanner.html'),
+  ('Marathonien',      'calendrier', 'Scanner au moins un QR les deux jours.',               'rare',       'hexa',    false, 'scanner.html'),
   ('Podium',           'trophee',    'Finir une journée dans le top 3 du classement.',       'legendaire', 'etoile',  false, 'classement.html'),
-  ('Sous les étoiles', 'etoile',     'Être là au bon moment, au bon endroit.',               'legendaire', 'rond',    true,  null),
+  ('Sous le soleil',   'etoile',     'Être là au bon moment, au bon endroit.',               'legendaire', 'rond',    true,  null),
   ('Backstage',        'cadenas',    'Quelqu''un en coulisses détient la clé.',              'epique',     'ecusson', true,  null)
 on conflict (name) do nothing;
 
@@ -69,7 +69,7 @@ on conflict (name) do nothing;
 -- Posées une par une après un scan réussi : l'XP du scan attend la réponse.
 -- Réponses en listes fermées : le joueur ne tape rien. Les valeurs ne
 -- doivent plus changer une fois le festival commencé (les réponses y renvoient).
--- moment = soir : après micro_config.soir_debut (20 h) ; chaque_jour : reposée
+-- moment = soir : après micro_config.soir_debut (18 h, festival de jour) ; chaque_jour : reposée
 -- chaque journée de jeu ; ordre_fixe : échelles, jamais mélangées ; « bas » :
 -- reste en bas quand l'ordre est mélangé. N2 : les artistes du jour.
 -- Fabriqué par supabase/outils/banque_questions.py (même source que mock.js).
