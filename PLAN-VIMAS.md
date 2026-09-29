@@ -200,6 +200,7 @@ Le moteur DOMAF est calé sur des **soirées de concerts** : à adapter (étapes
 
 ## Étape 13 — Si Vimas signe
 - [ ] Vrai line-up, vraies photos (droit à l'image, `outils/photos.py`), vrais stands et partenaires
+- [ ] Préfixe des codes `DQ-` (initiales DOMAF, imprimé sur les étiquettes et tickets) → `VQ-` : fonction de la base + codes + lecture (scanner, `DQ-BON:`, `DQ-JOUEUR:`, tickets). Gardé pour la démo (décision de Jarvis, 29/09)
 - [ ] Retirer le bandeau « démonstration », les faux joueurs et `assets/photos/demo-artiste-*.webp`
 - [ ] Forfait Supabase selon l'affluence attendue ; éventuellement renommer le projet Supabase (Settings → General, la référence ne change pas)
 - [ ] Répétition générale, remise à zéro des données de test, réveil de la base avant le 26/12
